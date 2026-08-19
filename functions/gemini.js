@@ -1,115 +1,192 @@
-const ALLOWED_MODELS = new Set([
-  "gemini-2.5-flash"
-]);
+exports.handler = async function (event) {
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store"
+  };
 
-const MAX_PROMPT_LENGTH = 12000;
-
-export default async (request) => {
-  if (request.method !== "POST") {
-    return jsonResponse({ error: "Mètode no permès." }, 405, {
-      Allow: "POST"
-    });
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({
+        error: "Method not allowed"
+      })
+    };
   }
 
-  const apiKey = Netlify.env.get("GEMINI_API_KEY");
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    console.error("Missing GEMINI_API_KEY environment variable");
-    return jsonResponse(
-      { error: "La clau de Gemini no està configurada al servidor." },
-      500
-    );
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        error: "GEMINI_API_KEY is not configured in Netlify."
+      })
+    };
   }
 
-  let body;
+  let input;
+
   try {
-    body = await request.json();
+    input = JSON.parse(event.body || "{}");
   } catch {
-    return jsonResponse({ error: "La petició no conté JSON vàlid." }, 400);
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
+        error: "Invalid JSON request."
+      })
+    };
   }
 
-  const prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
+  const prompt =
+    typeof input.prompt === "string"
+      ? input.prompt.trim()
+      : "";
+
   const requestedModel =
-    typeof body.model === "string" ? body.model : "gemini-2.5-flash";
-  const temperature = Number.isFinite(Number(body.temperature))
-    ? Math.min(2, Math.max(0, Number(body.temperature)))
-    : 0.8;
+    typeof input.model === "string" && input.model.trim()
+      ? input.model.trim()
+      : "gemini-2.5-flash";
+
+  const temperature =
+    Number.isFinite(Number(input.temperature))
+      ? Math.min(2, Math.max(0, Number(input.temperature)))
+      : 0.7;
 
   if (!prompt) {
-    return jsonResponse({ error: "Falta el text de la petició." }, 400);
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
+        error: "No prompt was supplied."
+      })
+    };
   }
 
-  if (prompt.length > MAX_PROMPT_LENGTH) {
-    return jsonResponse({ error: "La petició és massa llarga." }, 413);
+  if (prompt.length > 15000) {
+    return {
+      statusCode: 413,
+      headers,
+      body: JSON.stringify({
+        error: "Prompt is too long."
+      })
+    };
   }
 
-  const model = ALLOWED_MODELS.has(requestedModel)
+  const allowedModels = new Set([
+    "gemini-2.5-flash"
+  ]);
+
+  const model = allowedModels.has(requestedModel)
     ? requestedModel
     : "gemini-2.5-flash";
 
-  const apiUrl =
-    `https://generativelanguage.googleapis.com/v1/models/` +
-    `${encodeURIComponent(model)}:generateContent`;
+  const url =
+    `https://generativelanguage.googleapis.com/v1beta/models/` +
+    `${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
   try {
-    const geminiResponse = await fetch(apiUrl, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         contents: [
           {
-            parts: [{ text: prompt }]
+            role: "user",
+            parts: [
+              {
+                text: prompt
+              }
+            ]
           }
         ],
         generationConfig: {
           temperature,
-          maxOutputTokens: 2048
+          maxOutputTokens: 4096
         }
       })
     });
 
-    const responseText = await geminiResponse.text();
+    const responseText = await response.text();
 
-    let responseData;
+    let data;
+
     try {
-      responseData = JSON.parse(responseText);
+      data = JSON.parse(responseText);
     } catch {
-      responseData = {
-        error: "Gemini ha retornat una resposta no vàlida."
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
+          error: "Gemini returned an invalid server response."
+        })
       };
     }
 
-    if (!geminiResponse.ok) {
+    if (!response.ok) {
       const providerMessage =
-        responseData?.error?.message || "No s’ha pogut generar l’exercici.";
-      console.error("Gemini API error:", geminiResponse.status, providerMessage);
+        data?.error?.message ||
+        `Gemini request failed with status ${response.status}.`;
 
-      return jsonResponse(
-        { error: `Error de Gemini (${geminiResponse.status}): ${providerMessage}` },
-        geminiResponse.status
+      console.error(
+        "Gemini API error:",
+        response.status,
+        providerMessage
       );
+
+      return {
+        statusCode: response.status,
+        headers,
+        body: JSON.stringify({
+          error: providerMessage
+        })
+      };
     }
 
-    return jsonResponse(responseData, 200);
+    const text =
+      data?.candidates?.[0]?.content?.parts
+        ?.map(part => part?.text || "")
+        .join("")
+        .trim() || "";
+
+    if (!text) {
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
+          error: "Gemini returned an empty response."
+        })
+      };
+    }
+
+    /*
+      IMPORTANT:
+      The existing LingoTotal test pages expect the original
+      Gemini response structure, including candidates/content/parts.
+      Therefore we return the complete Gemini response unchanged.
+    */
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(data)
+    };
+
   } catch (error) {
-    console.error("Function error:", error);
-    return jsonResponse(
-      { error: "No s’ha pogut connectar amb Gemini." },
-      502
-    );
+    console.error("Gemini function error:", error);
+
+    return {
+      statusCode: 502,
+      headers,
+      body: JSON.stringify({
+        error:
+          error?.message ||
+          "Unable to connect to Gemini."
+      })
+    };
   }
 };
-
-function jsonResponse(data, status = 200, extraHeaders = {}) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store",
-      ...extraHeaders
-    }
-  });
-}
