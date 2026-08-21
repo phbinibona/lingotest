@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingoTotal · What Happens Next?</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1267d6;
+  --primary-dark:#084ca8;
+  --primary-light:#e8f2ff;
+  --accent:#25b7d3;
+  --success:#198754;
+  --danger:#c83d4f;
+  --ink:#172033;
+  --muted:#5f6b7a;
+  --surface:#fff;
+  --soft:#f5f8fc;
+  --border:#d9e2ef;
+  --shadow:0 10px 28px rgba(26,69,120,.12);
+  --radius:18px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Quicksand',sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);
+  line-height:1.5;
+}
+
+button,input{font:inherit}
+
+.banner{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  min-height:82px;
+  padding:12px clamp(14px,3vw,34px);
+  background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);
+  color:#fff;
+  box-shadow:0 3px 14px rgba(8,76,168,.25);
+}
+
+.brand-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:210px;
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  color:var(--primary);
+  font-weight:800;
+  box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.brand{
+  font-size:1.35rem;
+  font-weight:800;
+  letter-spacing:.055em;
+}
+
+.tagline{font-size:.78rem;opacity:.9}
+
+.header-tools{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.language-pair{
+  padding:8px 12px;
+  border:1px solid rgba(255,255,255,.5);
+  border-radius:9px;
+  background:rgba(255,255,255,.12);
+  font-size:.78rem;
+  font-weight:700;
+}
+
+.home-link{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 12px;
+  border-radius:9px;
+  background:#fff;
+  color:var(--primary-dark);
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:800;
+}
+
+.page{
+  width:min(760px,calc(100% - 22px));
+  margin:20px auto 40px;
+}
+
+.panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:clamp(16px,3vw,28px);
+  margin-bottom:18px;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#fff,#edf5ff);
+}
+
+.hero:before{
+  content:"🎭";
+  position:absolute;
+  right:-10px;
+  top:-18px;
+  font-size:9rem;
+  opacity:.08;
+  transform:rotate(8deg);
+}
+
+h1{
+  position:relative;
+  z-index:1;
+  margin:0 0 7px;
+  font-size:clamp(1.65rem,4vw,2.3rem);
+  line-height:1.12;
+}
+
+.hero p{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:var(--muted);
+}
+
+.badge-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--border);
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.number{
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--primary);
+  color:#fff;
+  font-weight:800;
+}
+
+.section-title{
+  font-size:1.16rem;
+  font-weight:800;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:700;
+}
+
+input[type=text]{
+  width:100%;
+  min-height:48px;
+  padding:11px 13px;
+  border:2px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  color:var(--ink);
+}
+
+input[type=text]:focus{
+  outline:0;
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(18,103,214,.13);
+}
+
+#themeInput.attention{
+  border-color:var(--accent);
+  animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+  50%{box-shadow:0 0 0 8px rgba(37,183,211,0)}
+  0%,100%{box-shadow:0 0 0 0 rgba(37,183,211,.35)}
+}
+
+.level-grid,.example-grid{
+  display:grid;
+  gap:9px;
+  margin-top:12px;
+}
+
+.level-grid{grid-template-columns:1fr 1fr}
+.example-grid{grid-template-columns:repeat(4,1fr)}
+
+.choice{
+  padding:11px 8px;
+  border:2px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  font-weight:700;
+  cursor:pointer;
+}
+
+.choice:hover,.choice.selected{
+  border-color:var(--primary);
+  background:var(--primary-light);
+  color:var(--primary-dark);
+}
+
+.helper{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:.88rem;
+}
+
+.primary-btn,.secondary-btn{
+  border:0;
+  border-radius:11px;
+  padding:13px 18px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.primary-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  color:#fff;
+}
+
+.primary-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.secondary-btn{
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--ink);
+}
+
+.status{
+  display:none;
+  text-align:center;
+  margin:16px 0;
+  color:var(--muted);
+}
+
+.spinner{
+  width:30px;
+  height:30px;
+  margin:0 auto 8px;
+  border:3px solid #dbe7f7;
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.story{display:none}
+
+.story-top{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.stage{
+  font-weight:800;
+  color:var(--primary-dark);
+}
+
+.score-pill{
+  padding:8px 12px;
+  border-radius:999px;
+  background:var(--primary-light);
+  color:var(--primary-dark);
+  font-weight:800;
+}
+
+.progress{
+  height:9px;
+  background:#e8eef6;
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:18px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--accent),var(--primary));
+  transition:width .3s ease;
+}
+
+.story-card{
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.story-banner{
+  padding:16px 18px;
+  background:linear-gradient(135deg,#edf5ff,#f8fcff);
+  border-bottom:1px solid var(--border);
+}
+
+.story-emoji{
+  font-size:2rem;
+  margin-bottom:6px;
+}
+
+.scene-title{
+  font-size:.74rem;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.scene-text{
+  margin-top:7px;
+  font-size:1.04rem;
+  font-weight:700;
+}
+
+.dialogue{
+  padding:18px;
+}
+
+.speaker{
+  font-size:.74rem;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.line{
+  padding:13px 14px;
+  border-radius:14px 14px 14px 4px;
+  background:var(--soft);
+  border:1px solid var(--border);
+  font-weight:700;
+  margin-bottom:16px;
+}
+
+.prompt{
+  font-size:clamp(1.08rem,3vw,1.28rem);
+  font-weight:800;
+  margin-bottom:11px;
+}
+
+.options{
+  display:grid;
+  gap:10px;
+}
+
+.option{
+  width:100%;
+  text-align:left;
+  padding:13px 14px;
+  border:2px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  color:var(--ink);
+  font-weight:700;
+  cursor:pointer;
+  transition:.12s;
+}
+
+.option:hover{
+  transform:translateY(-1px);
+  border-color:#abc6e8;
+}
+
+.option.best{
+  border-color:#70b98e;
+  background:#eaf8f0;
+}
+
+.option.weak{
+  border-color:#df8c98;
+  background:#fff0f2;
+}
+
+.option:disabled{
+  cursor:default;
+  transform:none;
+}
+
+.consequence{
+  display:none;
+  margin-top:16px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--soft);
+}
+
+.consequence.show{display:block}
+
+.consequence-title{
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.consequence-title.good{color:#136c45}
+.consequence-title.bad{color:#a72f40}
+
+.consequence-text{
+  margin-bottom:10px;
+}
+
+.listen-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.listen-btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 12px;
+  background:var(--primary-light);
+  color:var(--primary-dark);
+  font-weight:800;
+  cursor:pointer;
+}
+
+.next-btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 12px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.results{
+  display:none;
+  text-align:center;
+}
+
+.final-score{
+  font-size:clamp(2.4rem,8vw,4rem);
+  font-weight:800;
+  color:var(--primary);
+  line-height:1;
+  margin:8px 0 4px;
+}
+
+.final-label{
+  color:var(--muted);
+  font-weight:700;
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin:20px 0;
+}
+
+.result-card{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--soft);
+}
+
+.result-value{
+  font-size:1.35rem;
+  font-weight:800;
+}
+
+.result-label{
+  font-size:.74rem;
+  color:var(--muted);
+  font-weight:700;
+  margin-top:4px;
+}
+
+.story-ending{
+  margin-top:18px;
+  padding:16px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#edf5ff,#f9fcff);
+  border:1px solid var(--border);
+  text-align:left;
+}
+
+.story-ending-title{
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.actions .primary-btn{
+  width:auto;
+  flex:1;
+}
+
+.notice{
+  position:fixed;
+  right:18px;
+  top:98px;
+  z-index:200;
+  max-width:min(360px,calc(100% - 36px));
+  padding:12px 15px;
+  border-radius:10px;
+  color:#fff;
+  font-weight:700;
+  box-shadow:var(--shadow);
+  transform:translateX(130%);
+  transition:.25s;
+}
+
+.notice.show{transform:translateX(0)}
+.notice.info{background:#1267d6}
+.notice.success{background:#198754}
+.notice.error{background:#c83d4f}
+
+.target-rtl{direction:rtl;text-align:right}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:.72rem;
+  padding:0 10px 24px;
+}
+
+@media(max-width:700px){
+  .banner{align-items:flex-start;flex-direction:column}
+  .brand-wrap{min-width:0}
+  .header-tools{width:100%;justify-content:space-between}
+  .language-pair{flex:1}
+  .page{margin-top:12px}
+  .example-grid{grid-template-columns:1fr 1fr}
+  .actions{flex-direction:column}
+  .actions .primary-btn,.actions .secondary-btn{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<header class="banner">
+  <div class="brand-wrap">
+    <div class="brand-mark">LT</div>
+    <div>
+      <div class="brand">LINGOTOTAL</div>
+      <div class="tagline" data-i18n="tagline">Learn any language your way</div>
+    </div>
+  </div>
+
+  <div class="header-tools">
+    <div class="language-pair" id="languagePair">English → Català</div>
+    <a class="home-link" href="index.html">
+      <span>⌂</span>
+      <span data-i18n="changeLanguages">Activities / change languages</span>
+    </a>
+  </div>
+</header>
+
+<main class="page">
+
+<section class="panel hero">
+  <h1>🎭 <span data-i18n="title">What Happens Next?</span></h1>
+  <p data-i18n="intro">Choose your words. Change the story.</p>
+
+  <div class="badge-row">
+    <span class="badge">🎬 <span data-i18n="scenes">5 scenes</span></span>
+    <span class="badge">🗣️ <span data-i18n="choices">Real-life choices</span></span>
+    <span class="badge">🔊 <span data-i18n="audio">Hear the best reply</span></span>
+  </div>
+</section>
+
+<section class="panel" id="setupPanel">
+  <div class="section-head">
+    <div class="number">1</div>
+    <div class="section-title" data-i18n="chooseChallenge">Choose a story</div>
+  </div>
+
+  <label for="themeInput" data-i18n="ownSituation">Write your own situation</label>
+
+  <input
+    id="themeInput"
+    class="attention"
+    type="text"
+    data-i18n-placeholder="topicPlaceholder"
+    placeholder="For example: a missed flight, a first date, a hotel problem..."
+  >
+
+  <div class="level-grid">
+    <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
+    <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
+  </div>
+
+  <div class="helper" data-i18n="inspiration">Choose a story starter:</div>
+
+  <div class="example-grid">
+    <button class="choice example" data-key="airport" data-i18n="airport">✈️ Airport</button>
+    <button class="choice example" data-key="restaurant" data-i18n="restaurant">🍕 Restaurant</button>
+    <button class="choice example" data-key="hotel" data-i18n="hotel">🏨 Hotel</button>
+    <button class="choice example" data-key="party" data-i18n="party">🎉 Party</button>
+  </div>
+</section>
+
+<section class="panel" id="startPanel">
+  <div class="section-head">
+    <div class="number">2</div>
+    <div class="section-title" data-i18n="ready">Ready?</div>
+  </div>
+
+  <button id="generateBtn" class="primary-btn" data-i18n="start">🎭 Start the story</button>
+
+  <div id="loading" class="status">
+    <div class="spinner"></div>
+    <span data-i18n="generating">Creating your story…</span>
+  </div>
+</section>
+
+<section class="panel story" id="storyPanel">
+
+  <div class="story-top">
+    <div id="stage" class="stage">Scene 1 / 5</div>
+    <div id="scorePill" class="score-pill">0 / 5</div>
+  </div>
+
+  <div class="progress">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+
+  <div class="story-card">
+
+    <div class="story-banner">
+      <div id="sceneEmoji" class="story-emoji">🎭</div>
+      <div class="scene-title" data-i18n="sceneLabel">Scene</div>
+      <div id="sceneText" class="scene-text"></div>
+    </div>
+
+    <div class="dialogue">
+      <div id="speaker" class="speaker"></div>
+      <div id="line" class="line"></div>
+
+      <div id="prompt" class="prompt"></div>
+
+      <div id="options" class="options"></div>
+
+      <div id="consequence" class="consequence">
+        <div id="consequenceTitle" class="consequence-title"></div>
+        <div id="consequenceText" class="consequence-text"></div>
+
+        <div class="listen-row">
+          <button id="listenBtn" class="listen-btn" data-i18n="listen">🔊 Hear the best reply</button>
+          <button id="nextBtn" class="next-btn" data-i18n="next">What happens next? →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="panel results" id="resultsPanel">
+  <div class="section-head">
+    <div class="number">✓</div>
+    <div class="section-title" data-i18n="finished">Story complete</div>
+  </div>
+
+  <div id="finalScore" class="final-score">0/5</div>
+  <div class="final-label" data-i18n="goodChoices">good choices</div>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <div id="correctResult" class="result-value">0</div>
+      <div class="result-label" data-i18n="bestChoices">Best choices</div>
+    </div>
+
+    <div class="result-card">
+      <div id="accuracyResult" class="result-value">0%</div>
+      <div class="result-label" data-i18n="accuracy">Accuracy</div>
+    </div>
+
+    <div class="result-card">
+      <div id="levelResult" class="result-value">—</div>
+      <div class="result-label" data-i18n="levelLabel">Level</div>
+    </div>
+  </div>
+
+  <div id="resultMessage" class="helper"></div>
+
+  <div class="story-ending">
+    <div class="story-ending-title" data-i18n="endingTitle">How the story ended</div>
+    <div id="endingText"></div>
+  </div>
+
+  <div class="actions">
+    <button id="playAgainBtn" class="primary-btn" data-i18n="playAgain">🎭 Play again</button>
+    <button id="changeBtn" class="secondary-btn" data-i18n="changeStory">Choose another story</button>
+  </div>
+</section>
+
+</main>
+
+<div id="notice" class="notice"></div>
+
+<footer class="footer">
+  LingoTotal · <span data-i18n="tagline">Learn any language your way</span>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+
+const $=id=>document.getElementById(id);
+
+const T={
+en:{
+  tagline:'Learn any language your way',
+  changeLanguages:'Activities / change languages',
+  title:'What Happens Next?',
+  intro:'Choose your words. Change the story.',
+  scenes:'5 scenes',
+  choices:'Real-life choices',
+  audio:'Hear the best reply',
+  chooseChallenge:'Choose a story',
+  ownSituation:'Write your own situation',
+  topicPlaceholder:'For example: a missed flight, a first date, a hotel problem...',
+  beginner:'Beginner (A1–A2)',
+  intermediate:'Intermediate (B1–B2)',
+  inspiration:'Choose a story starter:',
+  airport:'✈️ Airport',
+  restaurant:'🍕 Restaurant',
+  hotel:'🏨 Hotel',
+  party:'🎉 Party',
+  ready:'Ready?',
+  start:'🎭 Start the story',
+  generating:'Creating your story…',
+  sceneLabel:'Scene',
+  listen:'🔊 Hear the best reply',
+  next:'What happens next? →',
+  finished:'Story complete',
+  goodChoices:'good choices',
+  bestChoices:'Best choices',
+  accuracy:'Accuracy',
+  levelLabel:'Level',
+  endingTitle:'How the story ended',
+  playAgain:'🎭 Play again',
+  changeStory:'Choose another story',
+  selectLevel:'Choose a level first.',
+  enterTopic:'Write a situation or choose a story starter.',
+  serverError:'The story could not be generated.',
+  good:'🔥 Good choice!',
+  weak:'😬 That could make the situation harder.',
+  brilliant:'🔥 Excellent. You handled the story naturally.',
+  strong:'😎 Good choices. You kept the conversation moving.',
+  keepGoing:'🎯 Interesting story! Look at the consequences and try another route.'
+},
+ca:{
+  tagline:'Aprèn qualsevol llengua a la teva manera',
+  changeLanguages:'Activitats / canvia les llengües',
+  title:'Què passa després?',
+  intro:'Tria les paraules. Canvia la història.',
+  scenes:'5 escenes',
+  choices:'Decisions reals',
+  audio:'Escolta la millor resposta',
+  chooseChallenge:'Tria una història',
+  ownSituation:'Escriu la teva pròpia situació',
+  topicPlaceholder:'Per exemple: perdre un vol, una primera cita, un problema a l’hotel...',
+  beginner:'Inicial (A1–A2)',
+  intermediate:'Intermedi (B1–B2)',
+  inspiration:'Tria un inici:',
+  airport:'✈️ Aeroport',
+  restaurant:'🍕 Restaurant',
+  hotel:'🏨 Hotel',
+  party:'🎉 Festa',
+  ready:'Preparat?',
+  start:'🎭 Comença la història',
+  generating:'Creant la història…',
+  sceneLabel:'Escena',
+  listen:'🔊 Escolta la millor resposta',
+  next:'Què passa després? →',
+  finished:'Història acabada',
+  goodChoices:'bones decisions',
+  bestChoices:'Millors decisions',
+  accuracy:'Precisió',
+  levelLabel:'Nivell',
+  endingTitle:'Com acaba la història',
+  playAgain:'🎭 Torna-hi',
+  changeStory:'Tria una altra història',
+  selectLevel:'Tria primer un nivell.',
+  enterTopic:'Escriu una situació o tria un inici.',
+  serverError:'No s’ha pogut generar la història.',
+  good:'🔥 Bona decisió!',
+  weak:'😬 Això podria complicar la situació.',
+  brilliant:'🔥 Excel·lent. Has gestionat la història amb naturalitat.',
+  strong:'😎 Bones decisions. Has mantingut la conversa.',
+  keepGoing:'🎯 Història interessant! Mira les conseqüències i prova un altre camí.'
+},
+es:{
+  tagline:'Aprende cualquier idioma a tu manera',
+  changeLanguages:'Actividades / cambiar idiomas',
+  title:'¿Qué pasa después?',
+  intro:'Elige tus palabras. Cambia la historia.',
+  scenes:'5 escenas',
+  choices:'Decisiones reales',
+  audio:'Escucha la mejor respuesta',
+  chooseChallenge:'Elige una historia',
+  ownSituation:'Escribe tu propia situación',
+  topicPlaceholder:'Por ejemplo: perder un vuelo, una primera cita, un problema en el hotel...',
+  beginner:'Inicial (A1–A2)',
+  intermediate:'Intermedio (B1–B2)',
+  inspiration:'Elige un inicio:',
+  airport:'✈️ Aeropuerto',
+  restaurant:'🍕 Restaurante',
+  hotel:'🏨 Hotel',
+  party:'🎉 Fiesta',
+  ready:'¿Listo?',
+  start:'🎭 Empezar la historia',
+  generating:'Creando tu historia…',
+  sceneLabel:'Escena',
+  listen:'🔊 Escuchar la mejor respuesta',
+  next:'¿Qué pasa después? →',
+  finished:'Historia terminada',
+  goodChoices:'buenas decisiones',
+  bestChoices:'Mejores decisiones',
+  accuracy:'Precisión',
+  levelLabel:'Nivel',
+  endingTitle:'Cómo termina la historia',
+  playAgain:'🎭 Jugar otra vez',
+  changeStory:'Elegir otra historia',
+  selectLevel:'Elige primero un nivel.',
+  enterTopic:'Escribe una situación o elige un inicio.',
+  serverError:'No se ha podido generar la historia.',
+  good:'🔥 ¡Buena decisión!',
+  weak:'😬 Eso podría complicar la situación.',
+  brilliant:'🔥 Excelente. Has manejado la historia con naturalidad.',
+  strong:'😎 Buenas decisiones. Has mantenido la conversación.',
+  keepGoing:'🎯 ¡Historia interesante! Mira las consecuencias y prueba otra ruta.'
+},
+fr:{
+  tagline:'Apprenez n’importe quelle langue à votre façon',
+  changeLanguages:'Activités / changer les langues',
+  title:'Que se passe-t-il ensuite ?',
+  intro:'Choisissez vos mots. Changez l’histoire.',
+  scenes:'5 scènes',
+  choices:'Choix réalistes',
+  audio:'Écoutez la meilleure réponse',
+  chooseChallenge:'Choisissez une histoire',
+  ownSituation:'Écrivez votre propre situation',
+  topicPlaceholder:'Par exemple : un vol raté, un premier rendez-vous, un problème à l’hôtel...',
+  beginner:'Débutant (A1–A2)',
+  intermediate:'Intermédiaire (B1–B2)',
+  inspiration:'Choisissez un début :',
+  airport:'✈️ Aéroport',
+  restaurant:'🍕 Restaurant',
+  hotel:'🏨 Hôtel',
+  party:'🎉 Fête',
+  ready:'Prêt ?',
+  start:'🎭 Commencer l’histoire',
+  generating:'Création de votre histoire…',
+  sceneLabel:'Scène',
+  listen:'🔊 Écouter la meilleure réponse',
+  next:'Que se passe-t-il ensuite ? →',
+  finished:'Histoire terminée',
+  goodChoices:'bons choix',
+  bestChoices:'Meilleurs choix',
+  accuracy:'Précision',
+  levelLabel:'Niveau',
+  endingTitle:'Comment l’histoire se termine',
+  playAgain:'🎭 Rejouer',
+  changeStory:'Choisir une autre histoire',
+  selectLevel:'Choisissez d’abord un niveau.',
+  enterTopic:'Écrivez une situation ou choisissez un début.',
+  serverError:'Impossible de générer l’histoire.',
+  good:'🔥 Bon choix !',
+  weak:'😬 Cela pourrait compliquer la situation.',
+  brilliant:'🔥 Excellent. Vous avez géré l’histoire naturellement.',
+  strong:'😎 Bons choix. Vous avez fait avancer la conversation.',
+  keepGoing:'🎯 Histoire intéressante ! Regardez les conséquences et essayez une autre route.'
+},
+de:{
+  tagline:'Lerne jede Sprache auf deine Art',
+  changeLanguages:'Aktivitäten / Sprachen ändern',
+  title:'Was passiert als Nächstes?',
+  intro:'Wähle deine Worte. Verändere die Geschichte.',
+  scenes:'5 Szenen',
+  choices:'Echte Entscheidungen',
+  audio:'Beste Antwort anhören',
+  chooseChallenge:'Wähle eine Geschichte',
+  ownSituation:'Schreibe deine eigene Situation',
+  topicPlaceholder:'Zum Beispiel: Flug verpasst, erstes Date, Hotelproblem...',
+  beginner:'Anfänger (A1–A2)',
+  intermediate:'Mittelstufe (B1–B2)',
+  inspiration:'Wähle einen Einstieg:',
+  airport:'✈️ Flughafen',
+  restaurant:'🍕 Restaurant',
+  hotel:'🏨 Hotel',
+  party:'🎉 Party',
+  ready:'Bereit?',
+  start:'🎭 Geschichte starten',
+  generating:'Geschichte wird erstellt…',
+  sceneLabel:'Szene',
+  listen:'🔊 Beste Antwort anhören',
+  next:'Was passiert als Nächstes? →',
+  finished:'Geschichte beendet',
+  goodChoices:'gute Entscheidungen',
+  bestChoices:'Beste Entscheidungen',
+  accuracy:'Genauigkeit',
+  levelLabel:'Niveau',
+  endingTitle:'Wie die Geschichte endet',
+  playAgain:'🎭 Noch einmal',
+  changeStory:'Andere Geschichte wählen',
+  selectLevel:'Wähle zuerst ein Niveau.',
+  enterTopic:'Schreibe eine Situation oder wähle einen Einstieg.',
+  serverError:'Die Geschichte konnte nicht erstellt werden.',
+  good:'🔥 Gute Wahl!',
+  weak:'😬 Das könnte die Situation schwieriger machen.',
+  brilliant:'🔥 Hervorragend. Du hast die Geschichte natürlich gemeistert.',
+  strong:'😎 Gute Entscheidungen. Du hast das Gespräch am Laufen gehalten.',
+  keepGoing:'🎯 Interessante Geschichte! Schau dir die Folgen an und probiere einen anderen Weg.'
+}
+};
+
+const uiNames={
+  en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',
+  eu:'Euskara',cy:'Cymraeg',gd:'Gàidhlig',ja:'日本語',ar:'العربية'
+};
+
+const targetNames={
+  English:'English',
+  Catalan:'Català',
+  Spanish:'Español',
+  French:'Français',
+  German:'Deutsch',
+  Basque:'Euskara',
+  Welsh:'Cymraeg',
+  Gaelic:'Gàidhlig',
+  Japanese:'日本語',
+  Arabic:'العربية'
+};
+
+const voices={
+  English:'en-GB',
+  Catalan:'ca-ES',
+  Spanish:'es-ES',
+  French:'fr-FR',
+  German:'de-DE',
+  Basque:'eu-ES',
+  Welsh:'cy-GB',
+  Gaelic:'gd-GB',
+  Japanese:'ja-JP',
+  Arabic:'ar-SA'
+};
+
+const ttsCache=new Map();
+let currentCloudAudio=null;
+
+function stopAudio(){
+  if(currentCloudAudio){
+    try{
+      currentCloudAudio.pause();
+      currentCloudAudio.currentTime=0;
+    }catch(e){}
+    currentCloudAudio=null;
+  }
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+  }
+}
+
+async function cloudSpeak(text,rate=.96){
+  if(!text)return;
+  stopAudio();
+  const languageCode=voices[targetLanguage]||'en-GB';
+  const cacheKey=`${languageCode}|${rate}|${text}`;
+  try{
+    let src=ttsCache.get(cacheKey);
+    if(!src){
+      const response=await fetch('/.netlify/functions/tts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({text,languageCode,speakingRate:rate})
+      });
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok||!data.audioContent){
+        throw new Error(data?.error||'Cloud audio unavailable');
+      }
+      src=`data:${data.mimeType||'audio/mpeg'};base64,${data.audioContent}`;
+      ttsCache.set(cacheKey,src);
+    }
+    currentCloudAudio=new Audio(src);
+    await currentCloudAudio.play();
+  }catch(error){
+    console.error('Google Cloud TTS error:',error);
+    if('speechSynthesis' in window){
+      const utterance=new SpeechSynthesisUtterance(text);
+      utterance.lang=languageCode;
+      utterance.rate=rate;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+}
+
+const storedUi=
+  localStorage.getItem('lingototal_uiLanguage') ||
+  localStorage.getItem('uiLanguage') ||
+  'en';
+
+const storedTarget=
+  localStorage.getItem('lingototal_targetLanguage') ||
+  localStorage.getItem('targetLanguage') ||
+  'Catalan';
+
+let uiLanguage=T[storedUi]?storedUi:'en';
+let targetLanguage=targetNames[storedTarget]?storedTarget:'Catalan';
+
+let level='';
+let story=null;
+let currentIndex=0;
+let correctCount=0;
+let answered=false;
+
+function tr(key){
+  return T[uiLanguage]?.[key] ?? T.en[key] ?? key;
+}
+
+function applyLanguage(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.dataset.i18n;
+    if(T[uiLanguage]?.[key]!==undefined){
+      el.textContent=T[uiLanguage][key];
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.dataset.i18nPlaceholder;
+    if(T[uiLanguage]?.[key]!==undefined){
+      el.placeholder=T[uiLanguage][key];
+    }
+  });
+
+  document.querySelectorAll('.example').forEach(btn=>{
+    btn.dataset.theme=tr(btn.dataset.key);
+  });
+
+  $('languagePair').textContent=
+    `${uiNames[uiLanguage]||'English'} → ${targetNames[targetLanguage]||targetLanguage}`;
+}
+
+function notice(msg,type='info'){
+  const n=$('notice');
+  n.textContent=msg;
+  n.className='notice show '+type;
+  clearTimeout(notice.timer);
+  notice.timer=setTimeout(()=>n.classList.remove('show'),3000);
+}
+
+function setLoading(on){
+  $('generateBtn').disabled=on;
+  $('loading').style.display=on?'block':'none';
+}
+
+function levelInstruction(){
+  if(level==='beginner'){
+    return `
+CEFR A1-A2.
+Use short, clear dialogue and familiar everyday vocabulary.
+Choices should be easy to read.
+The best reply should be natural and useful.
+`.trim();
+  }
+
+  return `
+CEFR B1-B2.
+Use natural conversational language, useful idiomatic phrasing and realistic social interaction.
+Avoid literary or artificially formal language.
+Some weaker choices may be grammatically possible but pragmatically awkward.
+`.trim();
+}
+
+function interfaceName(){
+  return uiNames[uiLanguage]||'English';
+}
+
+async function api(prompt){
+  const r=await fetch('/.netlify/functions/gemini',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      prompt,
+      model:'gemini-2.5-flash',
+      temperature:.72
+    })
+  });
+
+  const d=await r.json().catch(()=>({}));
+
+  if(!r.ok){
+    throw new Error(d?.error||'Server error');
+  }
+
+  const text=d?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  if(!text){
+    throw new Error('Empty AI response');
+  }
+
+  return text;
+}
+
+function parseJSON(raw){
+  const clean=String(raw)
+    .replace(/```json/gi,'')
+    .replace(/```/g,'')
+    .trim();
+
+  const a=clean.indexOf('{');
+  const b=clean.lastIndexOf('}');
+
+  if(a<0||b<a){
+    throw new Error('AI format error');
+  }
+
+  const data=JSON.parse(clean.slice(a,b+1));
+
+  if(
+    !data ||
+    !Array.isArray(data.scenes) ||
+    data.scenes.length<5 ||
+    typeof data.ending!=='string'
+  ){
+    throw new Error('AI format error');
+  }
+
+  const scenes=data.scenes.filter(s=>
+    s &&
+    typeof s.scene==='string' &&
+    typeof s.speaker==='string' &&
+    typeof s.line==='string' &&
+    typeof s.prompt==='string' &&
+    Array.isArray(s.options) &&
+    s.options.length===3 &&
+    Number.isInteger(s.best) &&
+    s.best>=0 &&
+    s.best<3 &&
+    Array.isArray(s.consequences) &&
+    s.consequences.length===3 &&
+    typeof s.speak==='string'
+  ).slice(0,5);
+
+  if(scenes.length<5){
+    throw new Error('Too few valid scenes');
+  }
+
+  return {
+    title:typeof data.title==='string'?data.title:'',
+    emoji:typeof data.emoji==='string'?data.emoji:'🎭',
+    scenes,
+    ending:data.ending
+  };
+}
+
+function buildPrompt(topic){
+return `
+Create an interactive language-learning story called "What Happens Next?" for a learner of ${targetLanguage}.
+
+STORY IDEA: ${topic}
+LEVEL: ${levelInstruction()}
+
+Create exactly 5 connected scenes that form ONE short story.
+
+Each scene must:
+- continue logically from the previous scene
+- describe the situation briefly in the interface language: ${interfaceName()}
+- include one short line spoken by another person in ${targetLanguage}
+- ask the learner what they should say next
+- provide exactly 3 possible replies in ${targetLanguage}
+- identify the BEST reply for natural, appropriate communication
+- give a short consequence for EACH of the 3 choices in ${interfaceName()}
+- provide the COMPLETE best reply again in "speak" for audio; never shorten it to only the final words
+
+IMPORTANT:
+1. This is an interactive story, not a grammar test.
+2. The story should feel playful, realistic and slightly dramatic or surprising.
+3. The learner's choice should appear to influence what happens next, even though the 5 scenes remain in one coherent path.
+4. Wrong choices should not be absurd. They may be too blunt, too formal, unhelpful, awkward, or simply less appropriate.
+5. Keep every scene short enough for a phone screen.
+6. Use natural everyday ${targetLanguage}.
+7. Avoid literary or pompous language.
+8. Avoid unsafe, sexual, violent or offensive scenarios.
+9. For Basque, use natural standard Euskara.
+10. For Japanese, use natural Japanese without artificial spaces.
+11. For Arabic, use natural Arabic script and punctuation.
+12. Make the final ending short and satisfying.
+
+Return ONLY valid JSON:
+
+{
+  "title":"short story title in ${interfaceName()}",
+  "emoji":"one suitable emoji",
+  "scenes":[
+    {
+      "scene":"brief scene description in ${interfaceName()}",
+      "speaker":"speaker name or role",
+      "line":"short target-language line spoken to learner",
+      "prompt":"short question in ${interfaceName()} asking what the learner should say",
+      "options":["reply 1","reply 2","reply 3"],
+      "best":0,
+      "consequences":[
+        "short consequence if option 1 is chosen",
+        "short consequence if option 2 is chosen",
+        "short consequence if option 3 is chosen"
+      ],
+      "speak":"complete best target-language reply"
+    }
+  ],
+  "ending":"short ending in ${interfaceName()}"
+}
+
+Return exactly 5 scene objects.
+Do not add markdown or commentary.
+`.trim();
+}
+
+function resetStory(){
+  currentIndex=0;
+  correctCount=0;
+  answered=false;
+  $('scorePill').textContent='0 / 5';
+}
+
+function renderScene(){
+  if(currentIndex>=story.scenes.length){
+    finishStory();
+    return;
+  }
+
+  answered=false;
+
+  const scene=story.scenes[currentIndex];
+
+  $('stage').textContent=`${tr('sceneLabel')} ${currentIndex+1} / ${story.scenes.length}`;
+  $('scorePill').textContent=`${correctCount} / ${story.scenes.length}`;
+  $('progressBar').style.width=`${(currentIndex/story.scenes.length)*100}%`;
+
+  $('sceneEmoji').textContent=story.emoji||'🎭';
+  $('sceneText').textContent=scene.scene;
+  $('speaker').textContent=scene.speaker;
+  $('line').textContent=scene.line;
+  $('prompt').textContent=scene.prompt;
+
+  $('line').classList.toggle('target-rtl',targetLanguage==='Arabic');
+
+  const wrap=$('options');
+  wrap.innerHTML='';
+
+  scene.options.forEach((opt,index)=>{
+    const btn=document.createElement('button');
+    btn.className='option';
+    btn.type='button';
+    btn.textContent=opt;
+
+    if(targetLanguage==='Arabic'){
+      btn.classList.add('target-rtl');
+    }
+
+    btn.addEventListener('click',()=>chooseOption(index));
+    wrap.appendChild(btn);
+  });
+
+  $('consequence').classList.remove('show');
+  $('consequenceTitle').textContent='';
+  $('consequenceText').textContent='';
+}
+
+function chooseOption(selectedIndex){
+  if(answered){
+    return;
+  }
+
+  answered=true;
+
+  const scene=story.scenes[currentIndex];
+  const buttons=[...$('options').querySelectorAll('.option')];
+
+  buttons.forEach((btn,index)=>{
+    btn.disabled=true;
+
+    if(index===scene.best){
+      btn.classList.add('best');
+    }else if(index===selectedIndex){
+      btn.classList.add('weak');
+    }
+  });
+
+  if(selectedIndex===scene.best){
+    correctCount++;
+    $('consequenceTitle').textContent=tr('good');
+    $('consequenceTitle').className='consequence-title good';
+  }else{
+    $('consequenceTitle').textContent=tr('weak');
+    $('consequenceTitle').className='consequence-title bad';
+  }
+
+  $('scorePill').textContent=`${correctCount} / ${story.scenes.length}`;
+  $('consequenceText').textContent=scene.consequences[selectedIndex];
+  $('consequence').classList.add('show');
+}
+
+async function speakBest(){
+  const scene=story?.scenes?.[currentIndex];
+  if(!scene)return;
+
+  const bestReply=scene?.options?.[scene.best]||scene.speak||'';
+  const parts=[scene.line,bestReply]
+    .map(x=>String(x||'').trim())
+    .filter(Boolean);
+
+  const fullText=parts.join(' ... ');
+  if(!fullText)return;
+
+  await cloudSpeak(fullText,.96);
+}
+
+function nextScene(){
+  if(!answered){
+    return;
+  }
+
+  currentIndex++;
+
+  if(currentIndex>=story.scenes.length){
+    finishStory();
+  }else{
+    renderScene();
+  }
+}
+
+function finishStory(){
+  speechSynthesis?.cancel();
+
+  $('storyPanel').style.display='none';
+  $('resultsPanel').style.display='block';
+
+  const total=story.scenes.length;
+  const accuracy=Math.round((correctCount/total)*100);
+
+  $('finalScore').textContent=`${correctCount}/${total}`;
+  $('correctResult').textContent=correctCount;
+  $('accuracyResult').textContent=`${accuracy}%`;
+  $('levelResult').textContent=level==='beginner'?'A1–A2':'B1–B2';
+  $('endingText').textContent=story.ending;
+
+  let msg=tr('keepGoing');
+
+  if(accuracy>=80){
+    msg=tr('brilliant');
+  }else if(accuracy>=60){
+    msg=tr('strong');
+  }
+
+  $('resultMessage').textContent=msg;
+
+  $('resultsPanel').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+async function generateStory(){
+  const topic=$('themeInput').value.trim();
+
+  if(!level){
+    notice(tr('selectLevel'),'error');
+    return;
+  }
+
+  if(!topic){
+    notice(tr('enterTopic'),'error');
+    $('themeInput').focus();
+    return;
+  }
+
+  setLoading(true);
+
+  try{
+    let raw=await api(buildPrompt(topic));
+    let parsed;
+
+    try{
+      parsed=parseJSON(raw);
+    }catch{
+      raw=await api(
+        buildPrompt(topic) +
+        '\nIMPORTANT: Your previous response was invalid. Return ONLY the valid JSON object with exactly 5 scenes.'
+      );
+      parsed=parseJSON(raw);
+    }
+
+    story=parsed;
+
+    $('setupPanel').style.display='none';
+    $('startPanel').style.display='none';
+    $('resultsPanel').style.display='none';
+    $('storyPanel').style.display='block';
+
+    resetStory();
+    renderScene();
+
+    $('storyPanel').scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+
+  }catch(err){
+    console.error(err);
+    notice(tr('serverError'),'error');
+  }finally{
+    setLoading(false);
+  }
+}
+
+function playAgain(){
+  if(!story){
+    return;
+  }
+
+  $('resultsPanel').style.display='none';
+  $('storyPanel').style.display='block';
+
+  resetStory();
+  renderScene();
+
+  $('storyPanel').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+function changeStory(){
+  speechSynthesis?.cancel();
+
+  $('resultsPanel').style.display='none';
+  $('storyPanel').style.display='none';
+  $('setupPanel').style.display='block';
+  $('startPanel').style.display='block';
+
+  $('setupPanel').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+$('themeInput').addEventListener('focus',()=>{
+  $('themeInput').classList.remove('attention');
+},{once:true});
+
+document.querySelectorAll('.level').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.level').forEach(b=>{
+      b.classList.remove('selected');
+    });
+
+    btn.classList.add('selected');
+    level=btn.dataset.level;
+  });
+});
+
+document.querySelectorAll('.example').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.example').forEach(b=>{
+      b.classList.remove('selected');
+    });
+
+    btn.classList.add('selected');
+    $('themeInput').value=btn.dataset.theme;
+    $('themeInput').classList.remove('attention');
+  });
+});
+
+$('generateBtn').addEventListener('click',generateStory);
+$('listenBtn').addEventListener('click',speakBest);
+$('nextBtn').addEventListener('click',nextScene);
+$('playAgainBtn').addEventListener('click',playAgain);
+$('changeBtn').addEventListener('click',changeStory);
+
+applyLanguage();
+
+});
+</script>
+
+</body>
+</html>

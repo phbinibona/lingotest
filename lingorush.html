@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingoTotal · LingoRush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1267d6;--primary-dark:#084ca8;--primary-light:#e8f2ff;--accent:#25b7d3;--success:#198754;--danger:#c83d4f;--ink:#172033;--muted:#5f6b7a;--surface:#fff;--soft:#f5f8fc;--border:#d9e2ef;--shadow:0 10px 28px rgba(26,69,120,.12);--radius:18px}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Quicksand',sans-serif;color:var(--ink);background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);line-height:1.45}
+button,input{font:inherit}
+.banner{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:82px;padding:12px clamp(14px,3vw,34px);background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);color:#fff;box-shadow:0 3px 14px rgba(8,76,168,.25)}
+.brand-wrap{display:flex;align-items:center;gap:12px;min-width:210px}.brand-mark{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#fff;color:var(--primary);font-weight:800;box-shadow:0 6px 14px rgba(0,0,0,.18)}
+.brand{font-size:1.35rem;font-weight:800;letter-spacing:.055em}.tagline{font-size:.78rem;opacity:.9}
+.header-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.language-pair{padding:8px 12px;border:1px solid rgba(255,255,255,.5);border-radius:9px;background:rgba(255,255,255,.12);font-size:.78rem;font-weight:700}
+.home-link{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:9px;background:#fff;color:var(--primary-dark);text-decoration:none;font-size:.78rem;font-weight:800}
+.page{width:min(760px,calc(100% - 22px));margin:20px auto 40px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(16px,3vw,28px);margin-bottom:18px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff,#edf5ff)}.hero:before{content:"⚡";position:absolute;right:-8px;top:-28px;font-size:10rem;opacity:.07;transform:rotate(10deg)}
+h1{position:relative;z-index:1;margin:0 0 7px;font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.12}.hero p{position:relative;z-index:1;margin:0;color:var(--muted)}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:.82rem;font-weight:800}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.number{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:#fff;font-weight:800}.section-title{font-size:1.16rem;font-weight:800}
+label{display:block;margin-bottom:6px;font-weight:700}input[type=text]{width:100%;min-height:48px;padding:11px 13px;border:2px solid var(--border);border-radius:11px;background:#fff;color:var(--ink)}input[type=text]:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(18,103,214,.13)}
+#themeInput.attention{border-color:var(--accent);animation:pulse 1.4s infinite}@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(37,183,211,0)}0%,100%{box-shadow:0 0 0 0 rgba(37,183,211,.35)}}
+.level-grid,.example-grid{display:grid;gap:9px;margin-top:12px}.level-grid{grid-template-columns:1fr 1fr}.example-grid{grid-template-columns:repeat(4,1fr)}
+.choice{padding:11px 8px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}.choice:hover,.choice.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}
+.helper{margin-top:14px;color:var(--muted);font-size:.88rem}
+.primary-btn,.secondary-btn{border:0;border-radius:11px;padding:13px 18px;font-weight:800;cursor:pointer}.primary-btn{width:100%;background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff}.primary-btn:disabled{opacity:.5;cursor:not-allowed}.secondary-btn{background:#fff;border:1px solid var(--border);color:var(--ink)}
+.status{display:none;text-align:center;margin:16px 0;color:var(--muted)}.spinner{width:30px;height:30px;margin:0 auto 8px;border:3px solid #dbe7f7;border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.game{display:none}.game-top{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat{text-align:center;border-radius:13px;padding:12px 8px;background:var(--soft);border:1px solid var(--border)}.stat-value{font-size:1.5rem;font-weight:800;color:var(--primary);line-height:1}.stat-label{margin-top:5px;font-size:.72rem;color:var(--muted);font-weight:700}.timer-danger .stat-value{color:var(--danger)}
+.progress{height:9px;background:#e8eef6;border-radius:999px;overflow:hidden;margin-bottom:18px}.progress-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--accent),var(--primary));transition:width .25s linear}
+.question-card{padding:20px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#fff,#f8fbff)}.question-type{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);font-size:.75rem;font-weight:800;margin-bottom:12px}
+.prompt{font-size:clamp(1.15rem,3vw,1.45rem);font-weight:800;line-height:1.35;margin-bottom:12px}.context{margin:-2px 0 14px;color:var(--muted);font-size:.92rem}.listen-row{display:flex;justify-content:flex-end;margin-bottom:12px}.listen-btn{border:0;border-radius:9px;padding:8px 11px;background:var(--primary-light);color:var(--primary-dark);font-weight:800;cursor:pointer}
+.options{display:grid;gap:9px}.option{width:100%;min-height:50px;text-align:left;padding:11px 13px;border:2px solid var(--border);border-radius:11px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer;transition:.12s}.option:hover{transform:translateY(-1px);border-color:#a9c5e8}.option.correct{border-color:#6eb68c;background:#eaf8f0}.option.incorrect{border-color:#df8c98;background:#fff0f2}.option:disabled{cursor:default;transform:none}
+.feedback-pop{min-height:44px;margin-top:14px;padding:11px 13px;border-radius:11px;display:none;font-weight:800;text-align:center}.feedback-pop.good{display:block;background:#eaf8f0;color:#136c45;border:1px solid #9bd2b5;animation:pop .18s ease-out}.feedback-pop.bad{display:block;background:#fff0f2;color:#a72f40;border:1px solid #efb6bf;animation:pop .18s ease-out}@keyframes pop{from{transform:scale(.96);opacity:.2}to{transform:scale(1);opacity:1}}
+.results{display:none;text-align:center}.final-score{font-size:clamp(2.4rem,8vw,4rem);font-weight:800;color:var(--primary);line-height:1;margin:8px 0 4px}.final-label{color:var(--muted);font-weight:700}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0}.result-card{padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--soft)}.result-value{font-size:1.35rem;font-weight:800}.result-label{font-size:.74rem;color:var(--muted);font-weight:700;margin-top:4px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.actions .primary-btn{width:auto;flex:1}
+.notice{position:fixed;right:18px;top:98px;z-index:200;max-width:min(360px,calc(100% - 36px));padding:12px 15px;border-radius:10px;color:#fff;font-weight:700;box-shadow:var(--shadow);transform:translateX(130%);transition:.25s}.notice.show{transform:translateX(0)}.notice.info{background:#1267d6}.notice.success{background:#198754}.notice.error{background:#c83d4f}
+.target-rtl{direction:rtl;text-align:right}.footer{text-align:center;color:var(--muted);font-size:.72rem;padding:0 10px 24px}
+@media(max-width:700px){.banner{align-items:flex-start;flex-direction:column}.brand-wrap{min-width:0}.header-tools{width:100%;justify-content:space-between}.language-pair{flex:1}.page{margin-top:12px}.example-grid{grid-template-columns:1fr 1fr}.actions{flex-direction:column}.actions .primary-btn,.actions .secondary-btn{width:100%}}
+</style>
+</head>
+<body>
+
+<header class="banner">
+  <div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline">Learn any language your way</div></div></div>
+  <div class="header-tools">
+    <div class="language-pair" id="languagePair">English → Català</div>
+    <a class="home-link" href="index.html"><span>⌂</span><span data-i18n="changeLanguages">Activities / change languages</span></a>
+  </div>
+</header>
+
+<main class="page">
+<section class="panel hero">
+  <h1>⚡ <span>LingoRush</span></h1>
+  <p data-i18n="intro">How much can you get right in 60 seconds?</p>
+  <div class="badge-row"><span class="badge">⏱️ 60 sec</span><span class="badge">🔥 <span data-i18n="streaks">Streaks</span></span><span class="badge">🎯 <span data-i18n="instant">Instant feedback</span></span></div>
+</section>
+
+<section class="panel" id="setupPanel">
+  <div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Choose your challenge</div></div>
+  <label for="themeInput" data-i18n="ownTopic">Write a topic</label>
+  <input id="themeInput" class="attention" type="text" data-i18n-placeholder="topicPlaceholder" placeholder="For example: travel, food, sport, everyday life...">
+  <div class="level-grid">
+    <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
+    <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
+  </div>
+  <div class="helper" data-i18n="inspiration">Need inspiration?</div>
+  <div class="example-grid">
+    <button class="choice example" data-key="travel" data-i18n="travel">Travel</button>
+    <button class="choice example" data-key="food" data-i18n="food">Food</button>
+    <button class="choice example" data-key="daily" data-i18n="daily">Everyday life</button>
+    <button class="choice example" data-key="fun" data-i18n="fun">Fun & leisure</button>
+  </div>
+</section>
+
+<section class="panel" id="startPanel">
+  <div class="section-head"><div class="number">2</div><div class="section-title" data-i18n="ready">Ready?</div></div>
+  <button id="generateBtn" class="primary-btn" data-i18n="start">⚡ Start 60-second challenge</button>
+  <div id="loading" class="status"><div class="spinner"></div><span data-i18n="generating">Building your challenge…</span></div>
+</section>
+
+<section class="panel game" id="gamePanel">
+  <div class="game-top">
+    <div class="stat" id="timeStat"><div id="timeValue" class="stat-value">60</div><div class="stat-label" data-i18n="time">SECONDS</div></div>
+    <div class="stat"><div id="scoreValue" class="stat-value">0</div><div class="stat-label" data-i18n="score">SCORE</div></div>
+    <div class="stat"><div id="streakValue" class="stat-value">0 🔥</div><div class="stat-label" data-i18n="streak">STREAK</div></div>
+  </div>
+  <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+  <div class="question-card">
+    <div id="questionType" class="question-type">Quick choice</div>
+    <div id="prompt" class="prompt"></div>
+    <div id="context" class="context"></div>
+    <div class="listen-row"><button id="listenBtn" class="listen-btn" data-i18n="listen">🔊 Hear it</button></div>
+    <div id="options" class="options"></div>
+    <div id="feedbackPop" class="feedback-pop"></div>
+  </div>
+</section>
+
+<section class="panel results" id="resultsPanel">
+  <div class="section-head"><div class="number">✓</div><div class="section-title" data-i18n="finished">Challenge complete</div></div>
+  <div id="finalScore" class="final-score">0</div><div class="final-label" data-i18n="points">points</div>
+  <div class="result-grid">
+    <div class="result-card"><div id="correctResult" class="result-value">0</div><div class="result-label" data-i18n="correct">Correct</div></div>
+    <div class="result-card"><div id="answeredResult" class="result-value">0</div><div class="result-label" data-i18n="answered">Answered</div></div>
+    <div class="result-card"><div id="bestStreakResult" class="result-value">0 🔥</div><div class="result-label" data-i18n="bestStreak">Best streak</div></div>
+  </div>
+  <div id="resultMessage" class="helper"></div>
+  <div class="actions"><button id="playAgainBtn" class="primary-btn" data-i18n="playAgain">⚡ Play again</button><button id="changeBtn" class="secondary-btn" data-i18n="changeChallenge">Change challenge</button></div>
+</section>
+</main>
+
+<div id="notice" class="notice"></div>
+<footer class="footer">LingoTotal · <span data-i18n="tagline">Learn any language your way</span></footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+const $=id=>document.getElementById(id);
+
+const T={
+en:{tagline:'Learn any language your way',changeLanguages:'Activities / change languages',intro:'How much can you get right in 60 seconds?',streaks:'Streaks',instant:'Instant feedback',choose:'Choose your challenge',ownTopic:'Write a topic',topicPlaceholder:'For example: travel, food, sport, everyday life...',beginner:'Beginner (A1–A2)',intermediate:'Intermediate (B1–B2)',inspiration:'Need inspiration?',travel:'Travel',food:'Food',daily:'Everyday life',fun:'Fun & leisure',ready:'Ready?',start:'⚡ Start 60-second challenge',generating:'Building your challenge…',time:'SECONDS',score:'SCORE',streak:'STREAK',listen:'🔊 Hear it',finished:'Challenge complete',points:'points',correct:'Correct',answered:'Answered',bestStreak:'Best streak',playAgain:'⚡ Play again',changeChallenge:'Change challenge',selectLevel:'Choose a level first.',enterTopic:'Write a topic or choose an example.',serverError:'The challenge could not be generated.',good:['🔥 Great!','⚡ Yes!','🎯 Correct!','🙌 Nice one!'],bad:['😬 Not quite','💡 Try the next one','Almost!'],brilliant:'🔥 Excellent rush! You were flying.',strong:'⚡ Strong score. Go again and beat it.',keepGoing:'🎯 Good start. Another round will feel easier.',types:{fill:'Finish it!',meaning:'What does it mean?',natural:'Which sounds natural?',odd:'Odd one out',mistake:'Spot the mistake',quick:'Quick choice'}},
+ca:{tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',intro:'Quantes en pots encertar en 60 segons?',streaks:'Ratxes',instant:'Feedback immediat',choose:'Tria el repte',ownTopic:'Escriu un tema',topicPlaceholder:'Per exemple: viatges, menjar, esport, vida quotidiana...',beginner:'Inicial (A1–A2)',intermediate:'Intermedi (B1–B2)',inspiration:'Necessites inspiració?',travel:'Viatges',food:'Menjar',daily:'Vida quotidiana',fun:'Oci i diversió',ready:'Preparat?',start:'⚡ Comença el repte de 60 segons',generating:'Preparant el repte…',time:'SEGONS',score:'PUNTS',streak:'RATXA',listen:'🔊 Escolta',finished:'Repte completat',points:'punts',correct:'Correctes',answered:'Respostes',bestStreak:'Millor ratxa',playAgain:'⚡ Torna-hi',changeChallenge:'Canvia el repte',selectLevel:'Tria primer un nivell.',enterTopic:'Escriu un tema o tria un exemple.',serverError:'No s’ha pogut generar el repte.',good:['🔥 Molt bé!','⚡ Sí!','🎯 Correcte!','🙌 Genial!'],bad:['😬 No ben bé','💡 Continua','Gairebé!'],brilliant:'🔥 Excel·lent! Has anat rapidíssim.',strong:'⚡ Molt bon resultat. Torna-hi i supera’l.',keepGoing:'🎯 Bon començament. Una altra ronda serà més fàcil.',types:{fill:'Completa!',meaning:'Què vol dir?',natural:'Quina sona natural?',odd:'Quina sobra?',mistake:'Troba l’error',quick:'Tria ràpid'}},
+es:{tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',intro:'¿Cuántas puedes acertar en 60 segundos?',streaks:'Rachas',instant:'Feedback inmediato',choose:'Elige tu reto',ownTopic:'Escribe un tema',topicPlaceholder:'Por ejemplo: viajes, comida, deporte, vida cotidiana...',beginner:'Inicial (A1–A2)',intermediate:'Intermedio (B1–B2)',inspiration:'¿Necesitas inspiración?',travel:'Viajes',food:'Comida',daily:'Vida cotidiana',fun:'Ocio y diversión',ready:'¿Listo?',start:'⚡ Empezar reto de 60 segundos',generating:'Preparando tu reto…',time:'SEGUNDOS',score:'PUNTOS',streak:'RACHA',listen:'🔊 Escuchar',finished:'Reto completado',points:'puntos',correct:'Correctas',answered:'Respondidas',bestStreak:'Mejor racha',playAgain:'⚡ Jugar otra vez',changeChallenge:'Cambiar reto',selectLevel:'Elige primero un nivel.',enterTopic:'Escribe un tema o elige un ejemplo.',serverError:'No se ha podido generar el reto.',good:['🔥 ¡Muy bien!','⚡ ¡Sí!','🎯 ¡Correcto!','🙌 ¡Genial!'],bad:['😬 No exactamente','💡 Sigue','¡Casi!'],brilliant:'🔥 Excelente. Has ido rapidísimo.',strong:'⚡ Muy buen resultado. Intenta superarlo.',keepGoing:'🎯 Buen comienzo. Otra ronda será más fácil.',types:{fill:'¡Completa!',meaning:'¿Qué significa?',natural:'¿Cuál suena natural?',odd:'¿Cuál sobra?',mistake:'Encuentra el error',quick:'Elige rápido'}},
+fr:{tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',intro:'Combien de bonnes réponses en 60 secondes ?',streaks:'Séries',instant:'Retour immédiat',choose:'Choisissez votre défi',ownTopic:'Écrivez un thème',topicPlaceholder:'Par exemple : voyages, nourriture, sport, vie quotidienne...',beginner:'Débutant (A1–A2)',intermediate:'Intermédiaire (B1–B2)',inspiration:'Besoin d’inspiration ?',travel:'Voyages',food:'Nourriture',daily:'Vie quotidienne',fun:'Loisirs',ready:'Prêt ?',start:'⚡ Lancer le défi de 60 secondes',generating:'Préparation du défi…',time:'SECONDES',score:'SCORE',streak:'SÉRIE',listen:'🔊 Écouter',finished:'Défi terminé',points:'points',correct:'Correctes',answered:'Réponses',bestStreak:'Meilleure série',playAgain:'⚡ Rejouer',changeChallenge:'Changer le défi',selectLevel:'Choisissez d’abord un niveau.',enterTopic:'Écrivez un thème ou choisissez un exemple.',serverError:'Impossible de générer le défi.',good:['🔥 Super !','⚡ Oui !','🎯 Correct !','🙌 Bravo !'],bad:['😬 Pas tout à fait','💡 Continuez','Presque !'],brilliant:'🔥 Excellent ! Vous étiez très rapide.',strong:'⚡ Très bon score. Essayez de le battre.',keepGoing:'🎯 Bon début. Une autre partie sera plus facile.',types:{fill:'Complétez !',meaning:'Que signifie ceci ?',natural:'Quelle phrase est naturelle ?',odd:'L’intrus',mistake:'Trouvez l’erreur',quick:'Choisissez vite'}},
+de:{tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',intro:'Wie viele schaffst du in 60 Sekunden?',streaks:'Serien',instant:'Sofortiges Feedback',choose:'Wähle deine Challenge',ownTopic:'Schreibe ein Thema',topicPlaceholder:'Zum Beispiel: Reisen, Essen, Sport, Alltag...',beginner:'Anfänger (A1–A2)',intermediate:'Mittelstufe (B1–B2)',inspiration:'Brauchst du eine Idee?',travel:'Reisen',food:'Essen',daily:'Alltag',fun:'Freizeit',ready:'Bereit?',start:'⚡ 60-Sekunden-Challenge starten',generating:'Challenge wird erstellt…',time:'SEKUNDEN',score:'PUNKTE',streak:'SERIE',listen:'🔊 Anhören',finished:'Challenge beendet',points:'Punkte',correct:'Richtig',answered:'Beantwortet',bestStreak:'Beste Serie',playAgain:'⚡ Noch einmal',changeChallenge:'Challenge ändern',selectLevel:'Wähle zuerst ein Niveau.',enterTopic:'Schreibe ein Thema oder wähle ein Beispiel.',serverError:'Die Challenge konnte nicht erstellt werden.',good:['🔥 Super!','⚡ Ja!','🎯 Richtig!','🙌 Klasse!'],bad:['😬 Nicht ganz','💡 Weiter geht’s','Fast!'],brilliant:'🔥 Hervorragend! Du warst richtig schnell.',strong:'⚡ Starkes Ergebnis. Versuch es zu schlagen.',keepGoing:'🎯 Guter Anfang. Die nächste Runde wird leichter.',types:{fill:'Ergänze!',meaning:'Was bedeutet das?',natural:'Was klingt natürlich?',odd:'Was passt nicht?',mistake:'Finde den Fehler',quick:'Schnell wählen'}}
+};
+
+const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',eu:'Euskara',cy:'Cymraeg',gd:'Gàidhlig',ja:'日本語',ar:'العربية'};
+const targetNames={English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',Basque:'Euskara',Welsh:'Cymraeg',Gaelic:'Gàidhlig',Japanese:'日本語',Arabic:'العربية'};
+const voices={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Basque:'eu-ES',Welsh:'cy-GB',Gaelic:'gd-GB',Japanese:'ja-JP',Arabic:'ar-SA'};
+
+
+const ttsCache=new Map();
+let currentCloudAudio=null;
+
+function stopAudio(){
+  if(currentCloudAudio){
+    try{
+      currentCloudAudio.pause();
+      currentCloudAudio.currentTime=0;
+    }catch(e){}
+    currentCloudAudio=null;
+  }
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+  }
+}
+
+async function cloudSpeak(text,rate=.96){
+  if(!text)return;
+
+  stopAudio();
+
+  const languageCode=voices[targetLanguage]||'en-GB';
+  const cacheKey=`${languageCode}|${rate}|${text}`;
+
+  try{
+    let src=ttsCache.get(cacheKey);
+
+    if(!src){
+      const response=await fetch('/.netlify/functions/tts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          text,
+          languageCode,
+          speakingRate:rate
+        })
+      });
+
+      const data=await response.json().catch(()=>({}));
+
+      if(!response.ok||!data.audioContent){
+        throw new Error(data?.error||'Cloud audio unavailable');
+      }
+
+      src=`data:${data.mimeType||'audio/mpeg'};base64,${data.audioContent}`;
+      ttsCache.set(cacheKey,src);
+    }
+
+    currentCloudAudio=new Audio(src);
+    await currentCloudAudio.play();
+
+  }catch(error){
+    console.error('Google Cloud TTS error:',error);
+
+    if('speechSynthesis' in window){
+      const utterance=new SpeechSynthesisUtterance(text);
+      utterance.lang=languageCode;
+      utterance.rate=rate;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+}
+
+const storedUi=localStorage.getItem('lingototal_ui_language')||localStorage.getItem('lingototal_uiLanguage')||localStorage.getItem('uiLanguage')||'en';
+const storedTarget=localStorage.getItem('lingototal_target_language')||localStorage.getItem('lingototal_targetLanguage')||localStorage.getItem('targetLanguage')||'Catalan';
+let uiLanguage=T[storedUi]?storedUi:'en';
+let targetLanguage=targetNames[storedTarget]?storedTarget:'Catalan';
+
+let level='',questions=[],currentIndex=0,score=0,correctCount=0,answeredCount=0,streak=0,bestStreak=0,timeLeft=60,timer=null,running=false,locked=false;
+
+function tr(key){return T[uiLanguage]?.[key]??T.en[key]??key}
+function applyLanguage(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(T[uiLanguage]?.[k]!==undefined)el.textContent=T[uiLanguage][k]});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(T[uiLanguage]?.[k]!==undefined)el.placeholder=T[uiLanguage][k]});
+  document.querySelectorAll('.example').forEach(btn=>btn.dataset.theme=tr(btn.dataset.key));
+  $('languagePair').textContent=`${uiNames[uiLanguage]||'English'} → ${targetNames[targetLanguage]||targetLanguage}`;
+}
+function notice(msg,type='info'){const n=$('notice');n.textContent=msg;n.className='notice show '+type;clearTimeout(notice.timer);notice.timer=setTimeout(()=>n.classList.remove('show'),3000)}
+function setLoading(on){$('generateBtn').disabled=on;$('loading').style.display=on?'block':'none'}
+function levelInstruction(){return level==='beginner'?'CEFR A1-A2. Use very common everyday vocabulary, short sentences and clear meanings. Avoid obscure grammar.':'CEFR B1-B2. Use natural everyday language, useful topic vocabulary, common idiomatic phrasing and realistic conversational choices.'}
+function interfaceName(){return uiNames[uiLanguage]||'English'}
+
+async function api(prompt){
+  const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.65})});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d?.error||'Server error');
+  const text=d?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if(!text)throw new Error('Empty AI response');
+  return text;
+}
+
+function parseJSON(raw){
+  const clean=String(raw).replace(/```json/gi,'').replace(/```/g,'').trim();
+  const a=clean.indexOf('['),b=clean.lastIndexOf(']');
+  if(a<0||b<a)throw new Error('AI format error');
+  const data=JSON.parse(clean.slice(a,b+1));
+  if(!Array.isArray(data)||data.length<8)throw new Error('AI format error');
+  return data.filter(q=>q&&typeof q.prompt==='string'&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.correct)&&q.correct>=0&&q.correct<4).slice(0,12);
+}
+
+function buildPrompt(topic){
+return `
+Create a fast mobile language-learning quiz for a learner of ${targetLanguage}.
+
+TOPIC: ${topic}
+LEVEL: ${levelInstruction()}
+
+Create exactly 12 SHORT multiple-choice questions.
+The learner has only 60 seconds, so every item must be fast to read and answer.
+
+Mix these question types:
+- fill: complete a short target-language sentence
+- meaning: choose the meaning of a useful target-language word or phrase
+- natural: choose which target-language sentence or expression sounds natural
+- odd: choose the word that does not belong
+- mistake: choose the incorrect word or expression
+- quick: a simple fast vocabulary or usage choice
+
+RULES:
+1. The main learning content must be in ${targetLanguage}.
+2. Instructions/questions may be in ${interfaceName()} where helpful.
+3. Keep prompts brief.
+4. Each question has exactly 4 options.
+5. Exactly one option is correct.
+6. Avoid trick questions.
+7. Prefer useful everyday language over obscure facts.
+8. Do not repeat the same vocabulary excessively.
+9. For Basque, use natural standard Euskara.
+10. For Japanese, use natural Japanese without artificial spaces.
+11. For Arabic, use natural Arabic script and punctuation.
+12. "speak" must contain the COMPLETE target-language wording the learner should hear for this item, not just the missing word, final phrase, or answer fragment.
+   - For fill questions, put the FULL completed target-language sentence in "speak".
+   - For natural/mistake questions, put the FULL target-language sentence or expression being tested in "speak".
+   - For meaning/odd/quick questions, include the complete useful target-language word, phrase, or sentence that appears in the item.
+   - Never put only the last part of a longer sentence in "speak".
+13. "context" is optional and must be very short.
+
+Return ONLY valid JSON as an array:
+[
+ {"type":"fill","prompt":"short question","context":"","speak":"complete target-language sentence or expression to read aloud","options":["one","two","three","four"],"correct":0}
+]
+Return exactly 12 objects and no markdown.
+`.trim()
+}
+
+function randomItem(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function questionTypeLabel(type){return T[uiLanguage]?.types?.[type]||T.en.types[type]||T.en.types.quick}
+function resetGameStats(){currentIndex=0;score=0;correctCount=0;answeredCount=0;streak=0;bestStreak=0;timeLeft=60;locked=false;$('timeValue').textContent='60';$('scoreValue').textContent='0';$('streakValue').textContent='0 🔥';$('progressBar').style.width='100%';$('timeStat').classList.remove('timer-danger')}
+
+function startTimer(){
+  clearInterval(timer);running=true;
+  timer=setInterval(()=>{timeLeft--;$('timeValue').textContent=timeLeft;$('progressBar').style.width=Math.max(0,(timeLeft/60)*100)+'%';if(timeLeft<=10)$('timeStat').classList.add('timer-danger');if(timeLeft<=0)finishGame()},1000)
+}
+
+function renderQuestion(){
+  if(!running)return;
+  if(currentIndex>=questions.length){finishGame();return}
+  locked=false;
+  const q=questions[currentIndex];
+  $('questionType').textContent=questionTypeLabel(q.type||'quick');
+  $('prompt').textContent=q.prompt||'';
+  $('context').textContent=q.context||'';
+  $('context').style.display=q.context?'block':'none';
+  $('feedbackPop').className='feedback-pop';$('feedbackPop').textContent='';
+  $('listenBtn').style.display=q.speak&&q.speak.trim()?'inline-block':'none';
+  $('prompt').classList.toggle('target-rtl',targetLanguage==='Arabic');
+  const wrap=$('options');wrap.innerHTML='';
+  q.options.forEach((opt,oi)=>{const btn=document.createElement('button');btn.className='option';btn.type='button';btn.textContent=opt;if(targetLanguage==='Arabic')btn.classList.add('target-rtl');btn.addEventListener('click',()=>answerQuestion(oi));wrap.appendChild(btn)})
+}
+
+function answerQuestion(selectedIndex){
+  if(!running||locked)return;
+  locked=true;
+  const q=questions[currentIndex];
+  const buttons=[...$('options').querySelectorAll('.option')];
+  answeredCount++;
+  buttons.forEach((btn,oi)=>{btn.disabled=true;if(oi===q.correct)btn.classList.add('correct');else if(oi===selectedIndex)btn.classList.add('incorrect')});
+  if(selectedIndex===q.correct){
+    correctCount++;streak++;bestStreak=Math.max(bestStreak,streak);
+    score+=100+Math.min(streak-1,5)*20;
+    $('feedbackPop').textContent=randomItem(tr('good'));$('feedbackPop').className='feedback-pop good';
+  }else{
+    streak=0;$('feedbackPop').textContent=randomItem(tr('bad'));$('feedbackPop').className='feedback-pop bad';
+  }
+  $('scoreValue').textContent=score;$('streakValue').textContent=streak+' 🔥';
+  setTimeout(()=>{currentIndex++;renderQuestion()},650)
+}
+
+async function speakCurrent(){
+  if(!running||currentIndex>=questions.length)return;
+  const q=questions[currentIndex];
+  const fullText=String(q?.speak||q?.prompt||q?.context||'').trim();
+  if(!fullText)return;
+  await cloudSpeak(fullText,.96);
+}
+
+function finishGame(){
+  if(!running)return;
+  running=false;clearInterval(timer);stopAudio();
+  $('gamePanel').style.display='none';$('resultsPanel').style.display='block';
+  $('finalScore').textContent=score;$('correctResult').textContent=correctCount;$('answeredResult').textContent=answeredCount;$('bestStreakResult').textContent=bestStreak+' 🔥';
+  const ratio=answeredCount?correctCount/answeredCount:0;
+  $('resultMessage').textContent=(ratio>=.85&&answeredCount>=6)?tr('brilliant'):ratio>=.65?tr('strong'):tr('keepGoing');
+  $('resultsPanel').scrollIntoView({behavior:'smooth',block:'start'})
+}
+
+async function generateChallenge(){
+  const topic=$('themeInput').value.trim();
+  if(!level){notice(tr('selectLevel'),'error');return}
+  if(!topic){notice(tr('enterTopic'),'error');$('themeInput').focus();return}
+  setLoading(true);
+  try{
+    let raw=await api(buildPrompt(topic)),parsed;
+    try{parsed=parseJSON(raw)}
+    catch{raw=await api(buildPrompt(topic)+'\nIMPORTANT: Your previous response was invalid. Return ONLY the JSON array.');parsed=parseJSON(raw)}
+    if(parsed.length<8)throw new Error('Too few valid questions');
+    questions=parsed.sort(()=>Math.random()-.5);
+    $('setupPanel').style.display='none';$('startPanel').style.display='none';$('resultsPanel').style.display='none';$('gamePanel').style.display='block';
+    resetGameStats();running=true;renderQuestion();startTimer();$('gamePanel').scrollIntoView({behavior:'smooth',block:'start'})
+  }catch(err){console.error(err);notice(tr('serverError'),'error')}
+  finally{setLoading(false)}
+}
+
+function playAgain(){if(!questions.length)return;questions=questions.sort(()=>Math.random()-.5);$('resultsPanel').style.display='none';$('gamePanel').style.display='block';resetGameStats();running=true;renderQuestion();startTimer();$('gamePanel').scrollIntoView({behavior:'smooth',block:'start'})}
+function changeChallenge(){clearInterval(timer);running=false;stopAudio();$('resultsPanel').style.display='none';$('gamePanel').style.display='none';$('setupPanel').style.display='block';$('startPanel').style.display='block';$('setupPanel').scrollIntoView({behavior:'smooth',block:'start'})}
+
+$('themeInput').addEventListener('focus',()=>{$('themeInput').classList.remove('attention')},{once:true});
+document.querySelectorAll('.level').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');level=btn.dataset.level}));
+document.querySelectorAll('.example').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.example').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');$('themeInput').value=btn.dataset.theme;$('themeInput').classList.remove('attention')}));
+$('generateBtn').addEventListener('click',generateChallenge);$('listenBtn').addEventListener('click',speakCurrent);$('playAgainBtn').addEventListener('click',playAgain);$('changeBtn').addEventListener('click',changeChallenge);
+applyLanguage();
+});
+</script>
+</body>
+</html>
