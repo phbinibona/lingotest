@@ -54,7 +54,7 @@ label{display:block;margin-bottom:6px;font-weight:700}input[type=text]{width:100
 <section class="panel hero"><h1>🎭 <span id="gameTitle">What Would You Say?</span></h1><p id="gameIntro">Choose the response that fits the situation best.</p><div class="badge-row"><span class="badge">🗣️ Real situations</span><span class="badge">🎯 Natural choices</span><span class="badge">🔊 Hear the response</span></div></section>
 <section class="panel setup-panel" id="setupPanel"><div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Choose your challenge</div></div><div class="level-grid level-first">
 <button class="choice level" data-level="beginner"><span class="level-icon">🌱</span><span class="level-name" data-i18n="beginner">Build Confidence</span><span class="level-note" data-i18n="beginnerNote">Clear, useful everyday language</span></button>
-<button class="choice level" data-level="intermediate"><span class="level-icon">🚀</span><span class="level-name" data-i18n="intermediate">Go Further</span><span class="level-note" data-i18n="intermediateNote">More natural, conversational language</span></button></div><div class="topic-priority"><label data-i18n="topic" for="themeInput">Write a topic or situation</label><p class="topic-guidance-standard">Choose something that interests you — the activity will be built around it.</p><input class="attention" id="themeInput" placeholder="For example: at work, travelling, meeting friends..." type="text"/></div>
+<button class="choice level" data-level="intermediate"><span class="level-icon">🚀</span><span class="level-name" data-i18n="intermediate">Go Further</span><span class="level-note" data-i18n="intermediateNote">More natural, conversational language</span></button></div><div class="topic-priority"><label data-i18n="topic" for="themeInput">Write a topic or situation</label><p class="topic-guidance-standard" data-theme-guidance>Choose something that interests you — the activity will be built around it.</p><input class="attention" id="themeInput" placeholder="For example: at work, travelling, meeting friends..." type="text"/></div>
 
 <div class="level-prompt" data-i18n="chooseLevel">Choose your level</div>
 <div class="helper quiet-helper" data-i18n="inspiration">Need inspiration?</div><div class="example-grid quiet-examples"><button class="choice example" data-i18n="friends" data-key="friends">Friends</button><button class="choice example" data-i18n="work" data-key="work">Work</button><button class="choice example" data-i18n="travel" data-key="travel">Travel</button><button class="choice example" data-i18n="messages" data-key="messages">Messages</button></div></section>
@@ -123,4 +123,20 @@ applyLanguage();
 });
 </script><script>
 document.addEventListener('DOMContentLoaded',()=>{const t=document.getElementById('themeInput');if(!t)return;document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{t.focus({preventScroll:true});t.closest('.topic-priority')?.scrollIntoView({behavior:'smooth',block:'nearest'});},160)));});
-</script></body></html>
+</script>
+<script>
+(function(){
+  const themeGuidanceTranslations = {"en": "Choose something that interests you — the activity will be built around it.", "ca": "Tria alguna cosa que t’interessi — l’activitat es crearà al voltant del teu tema.", "es": "Elige algo que te interese — la actividad se creará alrededor de tu tema.", "fr": "Choisissez un sujet qui vous intéresse — l’activité sera construite autour de votre thème.", "de": "Wähle etwas, das dich interessiert — die Aktivität wird rund um dein Thema erstellt.", "it": "Scegli qualcosa che ti interessa — l’attività sarà costruita intorno al tuo argomento.", "pt": "Escolha algo que lhe interesse — a atividade será criada à volta do seu tema.", "eu": "Aukeratu interesatzen zaizun zerbait — jarduera zure gaiaren inguruan sortuko da.", "ja": "興味のあるテーマを選んでください。アクティビティはそのテーマに合わせて作られます。", "ar": "اختر موضوعًا يهمك — سيُنشأ النشاط حول موضوعك."};
+  function applyThemeGuidance(){
+    const params = new URLSearchParams(location.search);
+    const ui = params.get('ui') || localStorage.getItem('lingototal_ui_language') || 'en';
+    document.querySelectorAll('[data-theme-guidance]').forEach(el=>{
+      el.textContent = themeGuidanceTranslations[ui] || themeGuidanceTranslations.en;
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyThemeGuidance);
+  else applyThemeGuidance();
+})();
+</script>
+
+</body></html>
