@@ -7,590 +7,265 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --primary:#1267d6;
-  --primary-dark:#084ca8;
-  --primary-light:#e8f2ff;
-  --accent:#25b7d3;
-  --success:#198754;
-  --danger:#c43c3c;
-  --warning:#d97706;
-  --ink:#17324d;
-  --muted:#667788;
-  --bg:#f4f8fc;
-  --card:#ffffff;
-  --line:#d9e5f3;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:"Quicksand",Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-header{
-  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
-  color:#fff;
-  padding:18px 22px;
-  box-shadow:0 3px 12px rgba(0,0,0,.14);
-}
-.header-wrap{
-  max-width:1080px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.brand{font-weight:700;font-size:1.45rem}
-.tagline{font-size:.88rem;opacity:.92;margin-top:3px}
-.nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.pair,.home{
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:12px;
-  padding:8px 12px;
-  color:#fff;
-  font-size:.9rem;
-}
-.home{text-decoration:none}
-main{
-  max-width:1080px;
-  margin:28px auto;
-  padding:0 18px 50px;
-}
-.hero{text-align:center;margin-bottom:22px}
-.hero h1{font-size:2.05rem;margin:0 0 8px}
-.hero p{max-width:760px;margin:0 auto;color:var(--muted);line-height:1.55}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:22px;
-  margin:18px 0;
-  box-shadow:0 7px 22px rgba(18,103,214,.06);
-}
-.step{
-  display:inline-block;
-  background:var(--primary-light);
-  color:var(--primary-dark);
-  font-weight:700;
-  border-radius:999px;
-  padding:6px 10px;
-  margin-bottom:10px;
-  font-size:.84rem;
-}
-h2{margin:4px 0 8px;font-size:1.35rem}
-p{line-height:1.55}
-.small{font-size:.9rem;color:var(--muted)}
-.prompt-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-  margin:16px 0;
-}
-.prompt{
-  border:1px solid var(--line);
-  background:#fbfdff;
-  padding:12px;
-  border-radius:14px;
-  cursor:pointer;
-}
-.prompt:hover{background:#f4f9ff;border-color:#9bc3f4}
-textarea{
-  width:100%;
-  min-height:130px;
-  resize:vertical;
-  border:2px solid #cfe0f3;
-  border-radius:16px;
-  padding:14px;
-  font:inherit;
-  font-size:1rem;
-  outline:none;
-  background:#fff;
-}
+:root{--primary:#1267d6;--primary-dark:#084ca8;--primary-light:#e8f2ff;--success:#198754;--danger:#c43c3c;--warning:#d97706;--ink:#17324d;--muted:#667788;--bg:#f4f8fc;--card:#fff;--line:#d9e5f3}
+*{box-sizing:border-box}body{margin:0;font-family:"Quicksand",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:18px 22px;box-shadow:0 3px 12px rgba(0,0,0,.14)}
+.header-wrap{max-width:1080px;margin:auto;display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:700;font-size:1.45rem}.tagline{font-size:.88rem;opacity:.92;margin-top:3px}.nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pair,.home{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:8px 12px;color:#fff;font-size:.9rem}.home{text-decoration:none}
+main{max-width:1080px;margin:28px auto;padding:0 18px 50px}.hero{text-align:center;margin-bottom:22px}.hero h1{font-size:2.05rem;margin:0 0 8px}.hero p{max-width:760px;margin:0 auto;color:var(--muted);line-height:1.55}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin:18px 0;box-shadow:0 7px 22px rgba(18,103,214,.06)}
+.step{display:inline-block;background:var(--primary-light);color:var(--primary-dark);font-weight:700;border-radius:999px;padding:6px 10px;margin-bottom:10px;font-size:.84rem}
+h2{margin:4px 0 8px;font-size:1.35rem}p{line-height:1.55}.small{font-size:.9rem;color:var(--muted)}
+.prompt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}.prompt{border:1px solid var(--line);background:#fbfdff;padding:12px;border-radius:14px;cursor:pointer}.prompt:hover{background:#f4f9ff;border-color:#9bc3f4}
+textarea{width:100%;min-height:130px;resize:vertical;border:2px solid #cfe0f3;border-radius:16px;padding:14px;font:inherit;font-size:1rem;outline:none;background:#fff}
 textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(18,103,214,.1)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-button{
-  border:0;
-  border-radius:13px;
-  padding:11px 16px;
-  font:inherit;
-  font-weight:700;
-  cursor:pointer;
-}
-.primary{background:var(--primary);color:#fff}
-.secondary{background:#e9eef5;color:var(--ink)}
-.hint{background:#fff3d6;color:#8a5700}
-button:disabled{opacity:.55;cursor:wait}
-.feedback{
-  border-left:5px solid var(--primary);
-  background:#f7fbff;
-  padding:14px 16px;
-  border-radius:12px;
-  margin:14px 0;
-}
-.feedback.good{border-left-color:var(--success);background:#f3fbf6}
-.feedback.notice{border-left-color:var(--warning);background:#fffaf0}
-.feedback.error{border-left-color:var(--danger);background:#fff3f3}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.chip{
-  display:inline-block;
-  background:#eef5ff;
-  color:#24598f;
-  border-radius:999px;
-  padding:7px 10px;
-  font-size:.88rem;
-}
-.option-row{display:grid;gap:10px;margin:14px 0}
-.option{
-  text-align:left;
-  border:1px solid var(--line);
-  background:#fff;
-  padding:12px 14px;
-  border-radius:12px;
-  font-weight:600;
-}
-.option:hover{background:#f7fbff}
-.option.correct{border-color:#8dc9a8;background:#eefaf3}
-.option.wrong{border-color:#efb2b2;background:#fff1f1}
-.hidden{display:none}
-.loading{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--primary-dark);
-  font-weight:600;
-}
-.spinner{
-  width:18px;height:18px;border-radius:50%;
-  border:3px solid #d6e6fa;
-  border-top-color:var(--primary);
-  animation:spin .8s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:13px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--primary);color:#fff}.secondary{background:#e9eef5;color:var(--ink)}.hint{background:#fff3d6;color:#8a5700}button:disabled{opacity:.55;cursor:wait}
+.feedback{border-left:5px solid var(--primary);background:#f7fbff;padding:14px 16px;border-radius:12px;margin:14px 0}.feedback.good{border-left-color:var(--success);background:#f3fbf6}.feedback.notice{border-left-color:var(--warning);background:#fffaf0}.feedback.error{border-left-color:var(--danger);background:#fff3f3}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{display:inline-block;background:#eef5ff;color:#24598f;border-radius:999px;padding:7px 10px;font-size:.88rem}
+.option-row{display:grid;gap:10px;margin:14px 0}.option{text-align:left;border:1px solid var(--line);background:#fff;padding:12px 14px;border-radius:12px;font-weight:600}.option:hover{background:#f7fbff}.option.correct{border-color:#8dc9a8;background:#eefaf3}.option.wrong{border-color:#efb2b2;background:#fff1f1}
+.hidden{display:none}.loading{display:flex;align-items:center;gap:10px;color:var(--primary-dark);font-weight:600}.spinner{width:18px;height:18px;border-radius:50%;border:3px solid #d6e6fa;border-top-color:var(--primary);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 footer{text-align:center;color:#7b8793;font-size:.85rem;padding:12px 20px 32px}
-@media(max-width:700px){
-  .prompt-grid{grid-template-columns:1fr}
-  .hero h1{font-size:1.7rem}
-  .card{padding:18px}
-}
+html[dir="rtl"] .option{text-align:right}
+html[dir="rtl"] .feedback{border-left:1px solid var(--line);border-right:5px solid var(--primary)}
+html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"] .feedback.notice{border-right-color:var(--warning)}html[dir="rtl"] .feedback.error{border-right-color:var(--danger)}
+@media(max-width:700px){.prompt-grid{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.card{padding:18px}}
 </style>
 </head>
-
 <body>
 <header>
   <div class="header-wrap">
     <div>
-      <div class="brand">LINGOTOTAL · Learn from Me</div>
-      <div class="tagline">Use your own language to create your lesson.</div>
+      <div class="brand" data-i18n="brand">LINGOTOTAL · Learn from Me</div>
+      <div class="tagline" data-i18n="tagline">Use your own language to create your lesson.</div>
     </div>
     <div class="nav">
-      <div class="pair" id="pairDisplay">English → German</div>
-      <a class="home" href="index.html">Activities / change languages</a>
+      <div class="pair" id="pairDisplay"></div>
+      <a class="home" id="homeLink" href="index.html" data-i18n="home">Activities / change languages</a>
     </div>
   </div>
 </header>
 
 <main>
   <section class="hero">
-    <h1>Your words become the lesson.</h1>
-    <p>
-      Write something real. LingoTotal reads what you can already do, chooses one useful improvement,
-      and creates a short activity from your own language.
-    </p>
+    <h1 data-i18n="heroTitle">Your words become the lesson.</h1>
+    <p data-i18n="heroText">Write something real. LingoTotal reads what you can already do, chooses one useful improvement, and creates a short activity from your own language.</p>
   </section>
 
   <section class="card">
-    <div class="step">STEP 1 · TELL ME SOMETHING</div>
-    <h2>What would you like to talk about?</h2>
-    <p class="small">Choose an idea, or write about anything you like in the language you are learning.</p>
+    <div class="step" data-i18n="step1">STEP 1 · TELL ME SOMETHING</div>
+    <h2 data-i18n="talkTitle">What would you like to talk about?</h2>
+    <p class="small" data-i18n="talkHelp">Choose an idea, or write about anything you like in the language you are learning.</p>
 
     <div class="prompt-grid">
-      <div class="prompt" onclick="usePrompt('Tell me what you did yesterday.')">🕒 What did you do yesterday?</div>
-      <div class="prompt" onclick="usePrompt('Tell me what you are doing this weekend.')">🌤️ What are you doing this weekend?</div>
-      <div class="prompt" onclick="usePrompt('Tell me about your town or neighbourhood.')">🏘️ Tell me about your town.</div>
-      <div class="prompt" onclick="usePrompt('Tell me about something that is annoying you at the moment.')">😤 What is annoying you?</div>
+      <div class="prompt" onclick="usePrompt('yesterday')" data-i18n="promptYesterday">🕒 What did you do yesterday?</div>
+      <div class="prompt" onclick="usePrompt('weekend')" data-i18n="promptWeekend">🌤️ What are you doing this weekend?</div>
+      <div class="prompt" onclick="usePrompt('town')" data-i18n="promptTown">🏘️ Tell me about your town.</div>
+      <div class="prompt" onclick="usePrompt('annoying')" data-i18n="promptAnnoying">😤 What is annoying you?</div>
     </div>
 
     <div id="topicSuggestion" class="feedback hidden"></div>
-
-    <textarea id="learnerText" placeholder="Write 2–4 sentences here..."></textarea>
+    <textarea id="learnerText" data-i18n-placeholder="writePlaceholder" placeholder="Write 2–4 sentences here..."></textarea>
 
     <div class="actions">
-      <button id="buildBtn" class="primary" onclick="buildLesson()">Build my mini-lesson</button>
-      <button class="secondary" onclick="resetAll()">Start again</button>
+      <button id="buildBtn" class="primary" onclick="buildLesson()" data-i18n="build">Build my mini-lesson</button>
+      <button class="secondary" onclick="resetAll()" data-i18n="restart">Start again</button>
     </div>
 
-    <div id="loadingBox" class="feedback hidden">
-      <div class="loading"><span class="spinner"></span> LingoTotal is building your lesson…</div>
-    </div>
+    <div id="loadingBox" class="feedback hidden"><div class="loading"><span class="spinner"></span><span data-i18n="loading">LingoTotal is building your lesson…</span></div></div>
     <div id="errorBox" class="feedback error hidden"></div>
   </section>
 
   <section class="card hidden" id="lessonCard">
-    <div class="step">STEP 2 · NOTICE</div>
-    <h2 id="lessonTitle">Let’s improve one useful thing.</h2>
-
+    <div class="step" data-i18n="step2">STEP 2 · NOTICE</div>
+    <h2 id="lessonTitle"></h2>
     <div id="meaningFeedback" class="feedback good"></div>
     <div id="focusFeedback" class="feedback notice"></div>
-
     <div class="chips" id="chips"></div>
-
-    <h2 style="margin-top:24px;">What do you notice?</h2>
+    <h2 style="margin-top:24px;" data-i18n="noticeTitle">What do you notice?</h2>
     <p id="noticeQuestion"></p>
     <div class="option-row" id="optionRow"></div>
     <div id="optionFeedback" class="feedback hidden"></div>
   </section>
 
   <section class="card hidden" id="repairCard">
-    <div class="step">STEP 3 · TRY AGAIN</div>
-    <h2>Use the idea yourself.</h2>
+    <div class="step" data-i18n="step3">STEP 3 · TRY AGAIN</div>
+    <h2 data-i18n="useTitle">Use the idea yourself.</h2>
     <p id="repairInstruction"></p>
     <div id="repairPrompt" class="feedback"></div>
-    <textarea id="repairText" style="min-height:90px" placeholder="Write your answer..."></textarea>
-
+    <textarea id="repairText" style="min-height:90px" data-i18n-placeholder="answerPlaceholder" placeholder="Write your answer..."></textarea>
     <div class="actions">
-      <button class="primary" onclick="checkRepair()">Check my version</button>
-      <button class="hint" onclick="showHint()">Give me a clue</button>
-      <button class="secondary" onclick="showAnswer()">Show answer</button>
+      <button class="primary" onclick="checkRepair()" data-i18n="check">Check my version</button>
+      <button class="hint" onclick="showHint()" data-i18n="clue">Give me a clue</button>
+      <button class="secondary" onclick="showAnswer()" data-i18n="showAnswer">Show answer</button>
     </div>
-
     <div id="repairFeedback" class="feedback hidden"></div>
   </section>
 
   <section class="card hidden" id="continueCard">
-    <div class="step">STEP 4 · KEEP GOING</div>
-    <h2>The conversation continues.</h2>
+    <div class="step" data-i18n="step4">STEP 4 · KEEP GOING</div>
+    <h2 data-i18n="continueTitle">The conversation continues.</h2>
     <div id="followUpQuestion" class="feedback"></div>
-    <textarea id="followUpText" placeholder="Answer in the language you are learning..."></textarea>
-    <div class="actions">
-      <button class="primary" onclick="buildFollowUp()">Build the next mini-lesson</button>
-    </div>
+    <textarea id="followUpText" data-i18n-placeholder="followPlaceholder" placeholder="Answer in the language you are learning..."></textarea>
+    <div class="actions"><button class="primary" onclick="buildFollowUp()" data-i18n="nextLesson">Build the next mini-lesson</button></div>
   </section>
 </main>
 
-<footer>
-  LingoTotal · Adaptive language learning from the learner's own language
-</footer>
+<footer data-i18n="footer">LingoTotal · Adaptive language learning from the learner's own language</footer>
 
 <script>
-const GEMINI_ENDPOINT = "/.netlify/functions/gemini";
+const GEMINI_ENDPOINT="/.netlify/functions/gemini";
 
-let lesson = null;
-let selectedPrompt = "";
-
-const LANG_NAMES = {
-  en:"English", es:"Español", ca:"Català", fr:"Français", de:"Deutsch",
-  eu:"Euskara", cy:"Cymraeg", gd:"Gàidhlig", ja:"日本語", ar:"العربية", sv:"Svenska"
+const T={
+en:{brand:"LINGOTOTAL · Learn from Me",tagline:"Use your own language to create your lesson.",home:"Activities / change languages",heroTitle:"Your words become the lesson.",heroText:"Write something real. LingoTotal reads what you can already do, chooses one useful improvement, and creates a short activity from your own language.",step1:"STEP 1 · TELL ME SOMETHING",talkTitle:"What would you like to talk about?",talkHelp:"Choose an idea, or write about anything you like in the language you are learning.",promptYesterday:"🕒 What did you do yesterday?",promptWeekend:"🌤️ What are you doing this weekend?",promptTown:"🏘️ Tell me about your town.",promptAnnoying:"😤 What is annoying you?",writePlaceholder:"Write 2–4 sentences here...",build:"Build my mini-lesson",restart:"Start again",loading:"LingoTotal is building your lesson…",step2:"STEP 2 · NOTICE",noticeTitle:"What do you notice?",step3:"STEP 3 · TRY AGAIN",useTitle:"Use the idea yourself.",answerPlaceholder:"Write your answer...",check:"Check my version",clue:"Give me a clue",showAnswer:"Show answer",step4:"STEP 4 · KEEP GOING",continueTitle:"The conversation continues.",followPlaceholder:"Answer in the language you are learning...",nextLesson:"Build the next mini-lesson",footer:"LingoTotal · Adaptive language learning from the learner's own language",errWrite:"Write 2–4 sentences first.",errGenerate:"The lesson could not be generated. Check that the Gemini Netlify function is deployed and that GEMINI_API_KEY is available.",errAnswer:"Write an answer first.",errFollow:"Write your follow-up answer first.",model:"Model",fallbackCorrect:"Exactly.",fallbackWrong:"Try again. Look carefully at the context.",fallbackTry:"Try once more before asking for a clue.",fallbackHint:"Look again at the model in the noticing activity.",defaultTitle:"Your mini-lesson",defaultFocus:"One useful improvement",prompts:{yesterday:"Tell me what you did yesterday.",weekend:"Tell me what you are doing this weekend.",town:"Tell me about your town or neighbourhood.",annoying:"Tell me about something that is annoying you at the moment."}},
+ca:{brand:"LINGOTOTAL · Aprèn de mi",tagline:"Fes servir la teva pròpia llengua per crear la lliçó.",home:"Activitats / canvia les llengües",heroTitle:"Les teves paraules es converteixen en la lliçó.",heroText:"Escriu alguna cosa real. LingoTotal observa què ja saps fer, tria una millora útil i crea una activitat breu a partir de la teva pròpia llengua.",step1:"PAS 1 · EXPLICA'M ALGUNA COSA",talkTitle:"De què t'agradaria parlar?",talkHelp:"Tria una idea o escriu sobre qualsevol tema que vulguis en la llengua que estàs aprenent.",promptYesterday:"🕒 Què vas fer ahir?",promptWeekend:"🌤️ Què faràs aquest cap de setmana?",promptTown:"🏘️ Parla'm del teu poble o ciutat.",promptAnnoying:"😤 Què et molesta ara mateix?",writePlaceholder:"Escriu aquí 2–4 frases...",build:"Crea la meva mini lliçó",restart:"Torna a començar",loading:"LingoTotal està creant la teva lliçó…",step2:"PAS 2 · OBSERVA",noticeTitle:"Què hi observes?",step3:"PAS 3 · TORNA-HO A PROVAR",useTitle:"Ara fes servir tu mateix aquesta idea.",answerPlaceholder:"Escriu la teva resposta...",check:"Comprova la meva versió",clue:"Dona'm una pista",showAnswer:"Mostra la resposta",step4:"PAS 4 · CONTINUA",continueTitle:"La conversa continua.",followPlaceholder:"Respon en la llengua que estàs aprenent...",nextLesson:"Crea la següent mini lliçó",footer:"LingoTotal · Aprenentatge adaptatiu a partir de la llengua de l'aprenent",errWrite:"Escriu primer 2–4 frases.",errGenerate:"No s'ha pogut generar la lliçó. Comprova que la funció Gemini de Netlify estigui desplegada i que GEMINI_API_KEY estigui disponible.",errAnswer:"Escriu primer una resposta.",errFollow:"Escriu primer la teva resposta de continuació.",model:"Model",fallbackCorrect:"Exacte.",fallbackWrong:"Torna-ho a provar. Mira bé el context.",fallbackTry:"Prova-ho una vegada més abans de demanar una pista.",fallbackHint:"Torna a mirar el model de l'activitat d'observació.",defaultTitle:"La teva mini lliçó",defaultFocus:"Una millora útil",prompts:{yesterday:"Explica'm què vas fer ahir.",weekend:"Explica'm què faràs aquest cap de setmana.",town:"Explica'm com és el teu poble, ciutat o barri.",annoying:"Explica'm alguna cosa que et molesta ara mateix."}},
+es:{brand:"LINGOTOTAL · Aprende de mí",tagline:"Usa tu propio lenguaje para crear tu lección.",home:"Actividades / cambiar idiomas",heroTitle:"Tus palabras se convierten en la lección.",heroText:"Escribe algo real. LingoTotal observa lo que ya sabes hacer, elige una mejora útil y crea una actividad breve a partir de tu propio lenguaje.",step1:"PASO 1 · CUÉNTAME ALGO",talkTitle:"¿De qué te gustaría hablar?",talkHelp:"Elige una idea o escribe sobre cualquier tema que quieras en el idioma que estás aprendiendo.",promptYesterday:"🕒 ¿Qué hiciste ayer?",promptWeekend:"🌤️ ¿Qué vas a hacer este fin de semana?",promptTown:"🏘️ Háblame de tu pueblo o ciudad.",promptAnnoying:"😤 ¿Qué te molesta en este momento?",writePlaceholder:"Escribe aquí 2–4 frases...",build:"Crear mi mini lección",restart:"Empezar de nuevo",loading:"LingoTotal está creando tu lección…",step2:"PASO 2 · OBSERVA",noticeTitle:"¿Qué observas?",step3:"PASO 3 · INTÉNTALO DE NUEVO",useTitle:"Ahora usa tú mismo esta idea.",answerPlaceholder:"Escribe tu respuesta...",check:"Comprobar mi versión",clue:"Dame una pista",showAnswer:"Mostrar respuesta",step4:"PASO 4 · CONTINÚA",continueTitle:"La conversación continúa.",followPlaceholder:"Responde en el idioma que estás aprendiendo...",nextLesson:"Crear la siguiente mini lección",footer:"LingoTotal · Aprendizaje adaptativo a partir del lenguaje del alumno",errWrite:"Escribe primero 2–4 frases.",errGenerate:"No se ha podido generar la lección. Comprueba que la función Gemini de Netlify esté desplegada y que GEMINI_API_KEY esté disponible.",errAnswer:"Escribe primero una respuesta.",errFollow:"Escribe primero tu respuesta de continuación.",model:"Modelo",fallbackCorrect:"Exacto.",fallbackWrong:"Inténtalo de nuevo. Fíjate bien en el contexto.",fallbackTry:"Inténtalo una vez más antes de pedir una pista.",fallbackHint:"Vuelve a mirar el modelo de la actividad de observación.",defaultTitle:"Tu mini lección",defaultFocus:"Una mejora útil",prompts:{yesterday:"Cuéntame qué hiciste ayer.",weekend:"Cuéntame qué vas a hacer este fin de semana.",town:"Háblame de tu pueblo, ciudad o barrio.",annoying:"Cuéntame algo que te moleste en este momento."}},
+fr:{brand:"LINGOTOTAL · Apprends de moi",tagline:"Utilisez votre propre langue pour créer votre leçon.",home:"Activités / changer les langues",heroTitle:"Vos mots deviennent la leçon.",heroText:"Écrivez quelque chose de réel. LingoTotal observe ce que vous savez déjà faire, choisit une amélioration utile et crée une courte activité à partir de votre propre langue.",step1:"ÉTAPE 1 · PARLEZ-MOI DE VOUS",talkTitle:"De quoi aimeriez-vous parler ?",talkHelp:"Choisissez une idée ou écrivez sur le sujet de votre choix dans la langue que vous apprenez.",promptYesterday:"🕒 Qu'avez-vous fait hier ?",promptWeekend:"🌤️ Que faites-vous ce week-end ?",promptTown:"🏘️ Parlez-moi de votre ville.",promptAnnoying:"😤 Qu'est-ce qui vous agace en ce moment ?",writePlaceholder:"Écrivez 2 à 4 phrases ici...",build:"Créer ma mini-leçon",restart:"Recommencer",loading:"LingoTotal crée votre leçon…",step2:"ÉTAPE 2 · OBSERVEZ",noticeTitle:"Que remarquez-vous ?",step3:"ÉTAPE 3 · RÉESSAYEZ",useTitle:"Utilisez maintenant cette idée vous-même.",answerPlaceholder:"Écrivez votre réponse...",check:"Vérifier ma version",clue:"Donnez-moi un indice",showAnswer:"Afficher la réponse",step4:"ÉTAPE 4 · CONTINUEZ",continueTitle:"La conversation continue.",followPlaceholder:"Répondez dans la langue que vous apprenez...",nextLesson:"Créer la mini-leçon suivante",footer:"LingoTotal · Apprentissage adaptatif à partir de la langue de l'apprenant",errWrite:"Écrivez d'abord 2 à 4 phrases.",errGenerate:"La leçon n'a pas pu être générée. Vérifiez que la fonction Gemini de Netlify est déployée et que GEMINI_API_KEY est disponible.",errAnswer:"Écrivez d'abord une réponse.",errFollow:"Écrivez d'abord votre réponse de suivi.",model:"Modèle",fallbackCorrect:"Exactement.",fallbackWrong:"Réessayez. Observez bien le contexte.",fallbackTry:"Essayez encore une fois avant de demander un indice.",fallbackHint:"Regardez à nouveau le modèle de l'activité d'observation.",defaultTitle:"Votre mini-leçon",defaultFocus:"Une amélioration utile",prompts:{yesterday:"Parlez-moi de ce que vous avez fait hier.",weekend:"Parlez-moi de ce que vous allez faire ce week-end.",town:"Parlez-moi de votre ville ou de votre quartier.",annoying:"Parlez-moi de quelque chose qui vous agace en ce moment."}},
+de:{brand:"LINGOTOTAL · Lerne von mir",tagline:"Nutze deine eigene Sprache, um deine Lektion zu erstellen.",home:"Aktivitäten / Sprachen ändern",heroTitle:"Deine Worte werden zur Lektion.",heroText:"Schreibe etwas Echtes. LingoTotal erkennt, was du bereits kannst, wählt eine nützliche Verbesserung und erstellt daraus eine kurze Aktivität.",step1:"SCHRITT 1 · ERZÄHL MIR ETWAS",talkTitle:"Worüber möchtest du sprechen?",talkHelp:"Wähle eine Idee oder schreibe über ein beliebiges Thema in der Sprache, die du lernst.",promptYesterday:"🕒 Was hast du gestern gemacht?",promptWeekend:"🌤️ Was machst du dieses Wochenende?",promptTown:"🏘️ Erzähl mir von deinem Wohnort.",promptAnnoying:"😤 Was nervt dich gerade?",writePlaceholder:"Schreibe hier 2–4 Sätze...",build:"Meine Mini-Lektion erstellen",restart:"Neu anfangen",loading:"LingoTotal erstellt deine Lektion…",step2:"SCHRITT 2 · BEOBACHTE",noticeTitle:"Was fällt dir auf?",step3:"SCHRITT 3 · VERSUCH ES NOCH EINMAL",useTitle:"Wende die Idee jetzt selbst an.",answerPlaceholder:"Schreibe deine Antwort...",check:"Meine Version prüfen",clue:"Gib mir einen Hinweis",showAnswer:"Antwort zeigen",step4:"SCHRITT 4 · WEITERMACHEN",continueTitle:"Das Gespräch geht weiter.",followPlaceholder:"Antworte in der Sprache, die du lernst...",nextLesson:"Nächste Mini-Lektion erstellen",footer:"LingoTotal · Adaptives Lernen aus der Sprache des Lernenden",errWrite:"Schreibe zuerst 2–4 Sätze.",errGenerate:"Die Lektion konnte nicht erstellt werden. Prüfe, ob die Gemini-Netlify-Funktion bereitgestellt ist und GEMINI_API_KEY verfügbar ist.",errAnswer:"Schreibe zuerst eine Antwort.",errFollow:"Schreibe zuerst deine Folgeantwort.",model:"Modell",fallbackCorrect:"Genau.",fallbackWrong:"Versuch es noch einmal. Achte genau auf den Kontext.",fallbackTry:"Versuch es noch einmal, bevor du um einen Hinweis bittest.",fallbackHint:"Sieh dir das Modell in der Beobachtungsaufgabe noch einmal an.",defaultTitle:"Deine Mini-Lektion",defaultFocus:"Eine nützliche Verbesserung",prompts:{yesterday:"Erzähl mir, was du gestern gemacht hast.",weekend:"Erzähl mir, was du dieses Wochenende machst.",town:"Erzähl mir von deinem Wohnort oder Viertel.",annoying:"Erzähl mir von etwas, das dich gerade nervt."}},
+it:{brand:"LINGOTOTAL · Impara da me",tagline:"Usa la tua lingua per creare la tua lezione.",home:"Attività / cambia lingue",heroTitle:"Le tue parole diventano la lezione.",heroText:"Scrivi qualcosa di reale. LingoTotal osserva ciò che sai già fare, sceglie un miglioramento utile e crea una breve attività a partire dalla tua lingua.",step1:"PASSO 1 · RACCONTAMI QUALCOSA",talkTitle:"Di cosa vorresti parlare?",talkHelp:"Scegli un'idea o scrivi di qualsiasi argomento nella lingua che stai imparando.",promptYesterday:"🕒 Cosa hai fatto ieri?",promptWeekend:"🌤️ Cosa fai questo fine settimana?",promptTown:"🏘️ Parlami della tua città.",promptAnnoying:"😤 Cosa ti dà fastidio in questo momento?",writePlaceholder:"Scrivi qui 2–4 frasi...",build:"Crea la mia mini-lezione",restart:"Ricomincia",loading:"LingoTotal sta creando la tua lezione…",step2:"PASSO 2 · OSSERVA",noticeTitle:"Cosa noti?",step3:"PASSO 3 · RIPROVA",useTitle:"Ora usa tu stesso questa idea.",answerPlaceholder:"Scrivi la tua risposta...",check:"Controlla la mia versione",clue:"Dammi un indizio",showAnswer:"Mostra la risposta",step4:"PASSO 4 · CONTINUA",continueTitle:"La conversazione continua.",followPlaceholder:"Rispondi nella lingua che stai imparando...",nextLesson:"Crea la prossima mini-lezione",footer:"LingoTotal · Apprendimento adattivo a partire dalla lingua dello studente",errWrite:"Scrivi prima 2–4 frasi.",errGenerate:"Non è stato possibile generare la lezione. Controlla che la funzione Gemini di Netlify sia distribuita e che GEMINI_API_KEY sia disponibile.",errAnswer:"Scrivi prima una risposta.",errFollow:"Scrivi prima la tua risposta successiva.",model:"Modello",fallbackCorrect:"Esatto.",fallbackWrong:"Riprova. Osserva bene il contesto.",fallbackTry:"Prova ancora una volta prima di chiedere un indizio.",fallbackHint:"Guarda di nuovo il modello nell'attività di osservazione.",defaultTitle:"La tua mini-lezione",defaultFocus:"Un miglioramento utile",prompts:{yesterday:"Raccontami cosa hai fatto ieri.",weekend:"Raccontami cosa farai questo fine settimana.",town:"Parlami della tua città o del tuo quartiere.",annoying:"Raccontami qualcosa che ti dà fastidio in questo momento."}},
+pt:{brand:"LINGOTOTAL · Aprende comigo",tagline:"Usa a tua própria língua para criar a tua lição.",home:"Atividades / mudar idiomas",heroTitle:"As tuas palavras tornam-se a lição.",heroText:"Escreve algo real. O LingoTotal observa o que já sabes fazer, escolhe uma melhoria útil e cria uma atividade curta a partir da tua própria língua.",step1:"PASSO 1 · CONTA-ME ALGO",talkTitle:"Sobre o que gostarias de falar?",talkHelp:"Escolhe uma ideia ou escreve sobre qualquer assunto na língua que estás a aprender.",promptYesterday:"🕒 O que fizeste ontem?",promptWeekend:"🌤️ O que vais fazer este fim de semana?",promptTown:"🏘️ Fala-me da tua cidade.",promptAnnoying:"😤 O que te incomoda neste momento?",writePlaceholder:"Escreve aqui 2–4 frases...",build:"Criar a minha mini-lição",restart:"Começar de novo",loading:"O LingoTotal está a criar a tua lição…",step2:"PASSO 2 · OBSERVA",noticeTitle:"O que notas?",step3:"PASSO 3 · TENTA OUTRA VEZ",useTitle:"Agora usa tu próprio esta ideia.",answerPlaceholder:"Escreve a tua resposta...",check:"Verificar a minha versão",clue:"Dá-me uma pista",showAnswer:"Mostrar resposta",step4:"PASSO 4 · CONTINUA",continueTitle:"A conversa continua.",followPlaceholder:"Responde na língua que estás a aprender...",nextLesson:"Criar a próxima mini-lição",footer:"LingoTotal · Aprendizagem adaptativa a partir da língua do aluno",errWrite:"Escreve primeiro 2–4 frases.",errGenerate:"Não foi possível gerar a lição. Verifica se a função Gemini do Netlify está implementada e se GEMINI_API_KEY está disponível.",errAnswer:"Escreve primeiro uma resposta.",errFollow:"Escreve primeiro a tua resposta de continuação.",model:"Modelo",fallbackCorrect:"Exatamente.",fallbackWrong:"Tenta novamente. Observa bem o contexto.",fallbackTry:"Tenta mais uma vez antes de pedir uma pista.",fallbackHint:"Volta a olhar para o modelo da atividade de observação.",defaultTitle:"A tua mini-lição",defaultFocus:"Uma melhoria útil",prompts:{yesterday:"Conta-me o que fizeste ontem.",weekend:"Conta-me o que vais fazer este fim de semana.",town:"Fala-me da tua cidade ou bairro.",annoying:"Conta-me algo que te incomoda neste momento."}},
+eu:{brand:"LINGOTOTAL · Ikasi nigandik",tagline:"Erabili zure hizkuntza zeure ikasgaia sortzeko.",home:"Jarduerak / aldatu hizkuntzak",heroTitle:"Zure hitzak ikasgai bihurtzen dira.",heroText:"Idatzi benetako zerbait. LingoTotalek dagoeneko zer dakizun aztertzen du, hobekuntza erabilgarri bat aukeratzen du eta zure hizkuntzatik jarduera labur bat sortzen du.",step1:"1. URRATSA · KONTATU ZERBAIT",talkTitle:"Zeri buruz hitz egin nahi duzu?",talkHelp:"Aukeratu ideia bat edo idatzi nahi duzun gaiari buruz ikasten ari zaren hizkuntzan.",promptYesterday:"🕒 Zer egin zenuen atzo?",promptWeekend:"🌤️ Zer egingo duzu asteburu honetan?",promptTown:"🏘️ Kontatu zure herriari edo hiriari buruz.",promptAnnoying:"😤 Zerk gogaitzen zaitu orain?",writePlaceholder:"Idatzi hemen 2–4 esaldi...",build:"Sortu nire mini-ikasgaia",restart:"Hasi berriro",loading:"LingoTotal zure ikasgaia sortzen ari da…",step2:"2. URRATSA · BEHATU",noticeTitle:"Zer nabaritzen duzu?",step3:"3. URRATSA · SAIATU BERRIRO",useTitle:"Orain erabili ideia hori zeuk.",answerPlaceholder:"Idatzi zure erantzuna...",check:"Egiaztatu nire bertsioa",clue:"Eman pista bat",showAnswer:"Erakutsi erantzuna",step4:"4. URRATSA · JARRAITU",continueTitle:"Elkarrizketak jarraitzen du.",followPlaceholder:"Erantzun ikasten ari zaren hizkuntzan...",nextLesson:"Sortu hurrengo mini-ikasgaia",footer:"LingoTotal · Ikaslearen hizkuntzatik abiatutako ikaskuntza moldagarria",errWrite:"Idatzi lehenik 2–4 esaldi.",errGenerate:"Ezin izan da ikasgaia sortu. Egiaztatu Netlify-ko Gemini funtzioa argitaratuta dagoela eta GEMINI_API_KEY erabilgarri dagoela.",errAnswer:"Idatzi lehenik erantzun bat.",errFollow:"Idatzi lehenik jarraipen-erantzuna.",model:"Eredua",fallbackCorrect:"Hori da.",fallbackWrong:"Saiatu berriro. Begiratu ondo testuinguruari.",fallbackTry:"Saiatu beste behin pista eskatu aurretik.",fallbackHint:"Begiratu berriro behaketa-jarduerako eredua.",defaultTitle:"Zure mini-ikasgaia",defaultFocus:"Hobekuntza erabilgarri bat",prompts:{yesterday:"Kontatu zer egin zenuen atzo.",weekend:"Kontatu zer egingo duzun asteburu honetan.",town:"Kontatu zure herriari, hiriari edo auzoari buruz.",annoying:"Kontatu une honetan gogaitzen zaituen zerbait."}},
+ja:{brand:"LINGOTOTAL · 私から学ぶ",tagline:"自分の言葉から自分だけのレッスンを作ります。",home:"アクティビティ / 言語を変更",heroTitle:"あなたの言葉がレッスンになります。",heroText:"実際のことを書いてください。LingoTotalは、すでにできることを見つけ、役立つ改善点を1つ選び、あなたの表現から短いアクティビティを作ります。",step1:"ステップ1 · 何か話してください",talkTitle:"何について話したいですか？",talkHelp:"アイデアを選ぶか、学習中の言語で好きなことについて書いてください。",promptYesterday:"🕒 昨日は何をしましたか？",promptWeekend:"🌤️ 今週末は何をしますか？",promptTown:"🏘️ あなたの町について教えてください。",promptAnnoying:"😤 今、何が気になりますか？",writePlaceholder:"ここに2〜4文を書いてください...",build:"ミニレッスンを作る",restart:"最初からやり直す",loading:"LingoTotalがレッスンを作成しています…",step2:"ステップ2 · 気づく",noticeTitle:"何に気づきますか？",step3:"ステップ3 · もう一度挑戦",useTitle:"今度は自分で使ってみましょう。",answerPlaceholder:"答えを書いてください...",check:"自分の文を確認する",clue:"ヒントを見る",showAnswer:"答えを表示",step4:"ステップ4 · 続ける",continueTitle:"会話を続けましょう。",followPlaceholder:"学習中の言語で答えてください...",nextLesson:"次のミニレッスンを作る",footer:"LingoTotal · 学習者自身の言葉から作る適応型言語学習",errWrite:"まず2〜4文を書いてください。",errGenerate:"レッスンを生成できませんでした。NetlifyのGemini関数がデプロイされ、GEMINI_API_KEYが利用可能か確認してください。",errAnswer:"まず答えを書いてください。",errFollow:"まず続きの答えを書いてください。",model:"例",fallbackCorrect:"その通りです。",fallbackWrong:"もう一度試してください。文脈をよく見てください。",fallbackTry:"ヒントを見る前に、もう一度試してみてください。",fallbackHint:"気づきのアクティビティの例をもう一度見てください。",defaultTitle:"あなたのミニレッスン",defaultFocus:"役立つ改善点",prompts:{yesterday:"昨日したことを教えてください。",weekend:"今週末にすることを教えてください。",town:"あなたの町や地域について教えてください。",annoying:"今、気になっていることを教えてください。"}},
+ar:{brand:"LINGOTOTAL · تعلّم مني",tagline:"استخدم لغتك أنت لإنشاء درسك.",home:"الأنشطة / تغيير اللغات",heroTitle:"كلماتك تصبح هي الدرس.",heroText:"اكتب شيئًا حقيقيًا. يلاحظ LingoTotal ما تستطيع فعله بالفعل، ويختار تحسينًا واحدًا مفيدًا، ثم ينشئ نشاطًا قصيرًا انطلاقًا من لغتك.",step1:"الخطوة 1 · أخبرني بشيء",talkTitle:"عمّ تود أن تتحدث؟",talkHelp:"اختر فكرة أو اكتب عن أي موضوع تريده باللغة التي تتعلمها.",promptYesterday:"🕒 ماذا فعلت أمس؟",promptWeekend:"🌤️ ماذا ستفعل في عطلة نهاية الأسبوع؟",promptTown:"🏘️ أخبرني عن مدينتك.",promptAnnoying:"😤 ما الذي يزعجك الآن؟",writePlaceholder:"اكتب هنا جملتين إلى أربع جمل...",build:"أنشئ درسي القصير",restart:"ابدأ من جديد",loading:"يقوم LingoTotal بإنشاء درسك…",step2:"الخطوة 2 · لاحظ",noticeTitle:"ماذا تلاحظ؟",step3:"الخطوة 3 · حاول مرة أخرى",useTitle:"استخدم الفكرة بنفسك الآن.",answerPlaceholder:"اكتب إجابتك...",check:"تحقق من إجابتي",clue:"أعطني تلميحًا",showAnswer:"أظهر الإجابة",step4:"الخطوة 4 · واصل",continueTitle:"تستمر المحادثة.",followPlaceholder:"أجب باللغة التي تتعلمها...",nextLesson:"أنشئ الدرس القصير التالي",footer:"LingoTotal · تعلم تكيفي انطلاقًا من لغة المتعلم نفسه",errWrite:"اكتب أولًا جملتين إلى أربع جمل.",errGenerate:"تعذر إنشاء الدرس. تحقق من نشر وظيفة Gemini في Netlify ومن توفر GEMINI_API_KEY.",errAnswer:"اكتب إجابة أولًا.",errFollow:"اكتب إجابتك التالية أولًا.",model:"نموذج",fallbackCorrect:"بالضبط.",fallbackWrong:"حاول مرة أخرى. انتبه جيدًا إلى السياق.",fallbackTry:"حاول مرة أخرى قبل طلب تلميح.",fallbackHint:"انظر مرة أخرى إلى النموذج في نشاط الملاحظة.",defaultTitle:"درسك القصير",defaultFocus:"تحسين مفيد",prompts:{yesterday:"أخبرني بما فعلته أمس.",weekend:"أخبرني بما ستفعله في عطلة نهاية الأسبوع.",town:"أخبرني عن مدينتك أو حيّك.",annoying:"أخبرني بشيء يزعجك في الوقت الحالي."}}
 };
 
-function getSettings(){
-  const params = new URLSearchParams(location.search);
-  const interfaceLang =
-    params.get("ui") ||
-    params.get("interface") ||
-    localStorage.getItem("interfaceLanguage") ||
-    localStorage.getItem("uiLanguage") ||
-    "en";
+const LANG_DISPLAY={
+  en:{English:"English",Catalan:"Catalan",Spanish:"Spanish",French:"French",German:"German",Italian:"Italian",Portuguese:"Portuguese",Basque:"Basque",Japanese:"Japanese",Arabic:"Arabic"},
+  ca:{English:"anglès",Catalan:"català",Spanish:"castellà",French:"francès",German:"alemany",Italian:"italià",Portuguese:"portuguès",Basque:"basc",Japanese:"japonès",Arabic:"àrab"},
+  es:{English:"inglés",Catalan:"catalán",Spanish:"español",French:"francés",German:"alemán",Italian:"italiano",Portuguese:"portugués",Basque:"euskera",Japanese:"japonés",Arabic:"árabe"},
+  fr:{English:"anglais",Catalan:"catalan",Spanish:"espagnol",French:"français",German:"allemand",Italian:"italien",Portuguese:"portugais",Basque:"basque",Japanese:"japonais",Arabic:"arabe"},
+  de:{English:"Englisch",Catalan:"Katalanisch",Spanish:"Spanisch",French:"Französisch",German:"Deutsch",Italian:"Italienisch",Portuguese:"Portugiesisch",Basque:"Baskisch",Japanese:"Japanisch",Arabic:"Arabisch"},
+  it:{English:"inglese",Catalan:"catalano",Spanish:"spagnolo",French:"francese",German:"tedesco",Italian:"italiano",Portuguese:"portoghese",Basque:"basco",Japanese:"giapponese",Arabic:"arabo"},
+  pt:{English:"inglês",Catalan:"catalão",Spanish:"espanhol",French:"francês",German:"alemão",Italian:"italiano",Portuguese:"português",Basque:"basco",Japanese:"japonês",Arabic:"árabe"},
+  eu:{English:"ingelesa",Catalan:"katalana",Spanish:"gaztelania",French:"frantsesa",German:"alemana",Italian:"italiera",Portuguese:"portugesa",Basque:"euskara",Japanese:"japoniera",Arabic:"arabiera"},
+  ja:{English:"英語",Catalan:"カタルーニャ語",Spanish:"スペイン語",French:"フランス語",German:"ドイツ語",Italian:"イタリア語",Portuguese:"ポルトガル語",Basque:"バスク語",Japanese:"日本語",Arabic:"アラビア語"},
+  ar:{English:"الإنجليزية",Catalan:"الكتالانية",Spanish:"الإسبانية",French:"الفرنسية",German:"الألمانية",Italian:"الإيطالية",Portuguese:"البرتغالية",Basque:"الباسكية",Japanese:"اليابانية",Arabic:"العربية"}
+};
 
-  const targetLang =
-    params.get("target") ||
-    params.get("lang") ||
-    localStorage.getItem("targetLanguage") ||
-    localStorage.getItem("learningLanguage") ||
-    "de";
+const UI_NAMES={en:"English",ca:"Catalan",es:"Spanish",fr:"French",de:"German",it:"Italian",pt:"Portuguese",eu:"Basque",ja:"Japanese",ar:"Arabic"};
+const TARGET_NAMES=["English","Catalan","Spanish","French","German","Italian","Portuguese","Basque","Japanese","Arabic"];
 
-  return { interfaceLang, targetLang };
+function settings(){
+  const p=new URLSearchParams(location.search);
+  const ui=p.get("ui")||localStorage.getItem("lingototal_ui_language")||"en";
+  const target=p.get("target")||localStorage.getItem("lingototal_target_language")||"German";
+  return {ui:T[ui]?ui:"en",target:TARGET_NAMES.includes(target)?target:"German"};
 }
+const S=settings();
+const tr=(k)=>T[S.ui]?.[k]??T.en[k]??k;
 
-const settings = getSettings();
-document.getElementById("pairDisplay").textContent =
-  `${LANG_NAMES[settings.interfaceLang] || settings.interfaceLang} → ${LANG_NAMES[settings.targetLang] || settings.targetLang}`;
-
-if(settings.targetLang === "ar"){
-  document.getElementById("learnerText").dir = "rtl";
-  document.getElementById("repairText").dir = "rtl";
-  document.getElementById("followUpText").dir = "rtl";
+function applyInterface(){
+  document.documentElement.lang=S.ui;
+  document.documentElement.dir=S.ui==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=tr(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=tr(el.dataset.i18nPlaceholder));
+  document.title="LingoTotal · "+tr("brand").replace(/^LINGOTOTAL · /,"");
+  document.getElementById("pairDisplay").textContent=(LANG_DISPLAY[S.ui]?.[S.target]||S.target);
+  document.getElementById("homeLink").href=`index.html?ui=${encodeURIComponent(S.ui)}&target=${encodeURIComponent(S.target)}`;
+  ["learnerText","repairText","followUpText"].forEach(id=>document.getElementById(id).dir=(S.target==="Arabic"?"rtl":"ltr"));
 }
+applyInterface();
 
-function usePrompt(text){
-  selectedPrompt = text;
-  const box = document.getElementById("topicSuggestion");
-  box.textContent = text;
-  box.classList.remove("hidden");
+let lesson=null,selectedPrompt="";
+
+function usePrompt(key){
+  selectedPrompt=tr("prompts")[key]||"";
+  const box=document.getElementById("topicSuggestion");
+  box.textContent=selectedPrompt; box.classList.remove("hidden");
   document.getElementById("learnerText").focus();
 }
 
 async function callGemini(prompt){
-  const response = await fetch(GEMINI_ENDPOINT,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({prompt})
-  });
-
-  if(!response.ok){
-    const raw = await response.text();
-    throw new Error(raw || `Server error ${response.status}`);
-  }
-
-  const data = await response.json();
-
-  if(typeof data === "string") return data;
-  if(data.text) return data.text;
-  if(data.response) return data.response;
-  if(data.output) return data.output;
-  if(data.result) return data.result;
-  if(data.candidates?.[0]?.content?.parts?.[0]?.text){
-    return data.candidates[0].content.parts[0].text;
-  }
-
-  throw new Error("Gemini returned an unexpected response format.");
+  const r=await fetch(GEMINI_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt})});
+  if(!r.ok) throw new Error(await r.text());
+  const d=await r.json();
+  if(typeof d==="string") return d;
+  return d.text||d.response||d.output||d.result||d.candidates?.[0]?.content?.parts?.[0]?.text||"";
 }
-
 function extractJSON(text){
-  let cleaned = String(text || "").trim();
-  cleaned = cleaned.replace(/^```json\s*/i,"").replace(/^```\s*/,"").replace(/```$/,"").trim();
-  const first = cleaned.indexOf("{");
-  const last = cleaned.lastIndexOf("}");
-  if(first >= 0 && last > first) cleaned = cleaned.slice(first,last+1);
-  return JSON.parse(cleaned);
+  let s=String(text||"").trim().replace(/^```json\s*/i,"").replace(/^```\s*/,"").replace(/```$/,"").trim();
+  const a=s.indexOf("{"),b=s.lastIndexOf("}"); if(a>=0&&b>a)s=s.slice(a,b+1);
+  return JSON.parse(s);
 }
-
 async function buildLesson(){
-  const learnerText = document.getElementById("learnerText").value.trim();
-  if(!learnerText){
-    showError("Write 2–4 sentences first.");
-    return;
-  }
-
-  hideError();
-  setLoading(true);
-
-  const targetName = LANG_NAMES[settings.targetLang] || settings.targetLang;
-  const interfaceName = LANG_NAMES[settings.interfaceLang] || settings.interfaceLang;
-
-  const prompt = `
-You are the pedagogical engine for LingoTotal, an adult language-learning website.
-
-INTERFACE LANGUAGE: ${interfaceName}
-TARGET LANGUAGE: ${targetName}
-LEARNER'S CHOSEN TOPIC/PROMPT: ${selectedPrompt || "free choice"}
-LEARNER'S TEXT:
-"""${learnerText}"""
+  const learnerText=document.getElementById("learnerText").value.trim();
+  if(!learnerText){showError(tr("errWrite"));return}
+  hideError();setLoading(true);
+  const prompt=`You are the pedagogical engine for LingoTotal.
+INTERFACE LANGUAGE: ${UI_NAMES[S.ui]}
+TARGET LANGUAGE: ${S.target}
+LEARNER'S CHOSEN TOPIC/PROMPT: ${selectedPrompt||"free choice"}
+LEARNER'S TEXT: """${learnerText}"""
 
 Create ONE short personalised micro-lesson from the learner's own language.
 
-PEDAGOGICAL RULES:
+CRITICAL LANGUAGE RULES:
+- EVERY instruction, explanation, comment, feedback message, title, tag and response to the learner must be in the INTERFACE LANGUAGE (${UI_NAMES[S.ui]}).
+- ONLY practice examples, answer options, model answers, repair prompts and the follow-up question should be in the TARGET LANGUAGE (${S.target}).
+- Never fall back to English unless English is the interface language.
+- If discussing a target-language word inside feedback, the surrounding explanation must still be in the interface language.
+
+PEDAGOGY:
 - Prioritise meaning before correction.
-- Do not overwhelm the learner.
 - Choose ONE high-value improvement only.
-- Prefer useful, natural, contemporary spoken language.
-- Do not be literary or pompous.
+- Prefer natural contemporary spoken language.
 - Do not correct every error.
-- If the learner's text is already strong, focus on naturalness, precision, collocation or idiomaticity.
-- The lesson must encourage noticing before explanation.
-- The learner should try before seeing the final answer.
-- Feedback and instructions must be in the INTERFACE LANGUAGE.
-- Examples, model answers and target-language practice must be in the TARGET LANGUAGE.
+- If the learner is already strong, focus on naturalness, precision, collocation or idiomaticity.
+- Encourage noticing before explanation.
+- Let the learner try before seeing the answer.
 - Treat partial knowledge positively.
-- Make the follow-up question related to what the learner originally wrote.
+- Connect the follow-up question to the learner's original content.
 
-Return ONLY valid JSON. No Markdown. No code fences.
-
-Use exactly this structure:
-{
-  "title": "short encouraging title in interface language",
-  "meaning_feedback": "1-2 sentences showing that you understood the learner's message",
-  "focus_label": "very short label for the language opportunity",
-  "focus_explanation": "brief explanation in interface language, without a long grammar lecture",
-  "tags": ["tag 1","tag 2","tag 3"],
-  "notice_question": "a noticing question in interface language",
-  "notice_options": [
-    {"text":"target-language option","correct":false},
-    {"text":"target-language option","correct":true},
-    {"text":"target-language option","correct":false}
-  ],
-  "correct_feedback": "brief feedback in interface language",
-  "incorrect_feedback": "brief clue in interface language without giving the answer immediately",
-  "repair_instruction": "instruction in interface language",
-  "repair_prompt": "a new target-language sentence or mini-context requiring the same feature",
-  "repair_keywords": ["one or more lowercase strings that should normally occur in a successful answer"],
-  "hint": "a useful clue in interface language",
-  "model_answer": "one natural target-language answer",
-  "follow_up_question": "a natural personal question connected to the learner's original content, in the target language"
+Return ONLY valid JSON, no Markdown:
+{"title":"","meaning_feedback":"","focus_label":"","focus_explanation":"","tags":["","",""],"notice_question":"","notice_options":[{"text":"","correct":false},{"text":"","correct":true},{"text":"","correct":false}],"correct_feedback":"","incorrect_feedback":"","repair_instruction":"","repair_prompt":"","repair_keywords":[""],"hint":"","model_answer":"","follow_up_question":""}`;
+  try{lesson=extractJSON(await callGemini(prompt));renderLesson(lesson)}
+  catch(e){console.error(e);showError(tr("errGenerate"))}
+  finally{setLoading(false)}
 }
-`;
-
-  try{
-    const raw = await callGemini(prompt);
-    lesson = extractJSON(raw);
-    renderLesson(lesson);
-  }catch(err){
-    console.error(err);
-    showError("The lesson could not be generated. Check that the Gemini Netlify function is deployed and that GEMINI_API_KEY is available.");
-  }finally{
-    setLoading(false);
-  }
-}
-
-function renderLesson(data){
-  document.getElementById("lessonTitle").textContent = data.title || "Your mini-lesson";
-  document.getElementById("meaningFeedback").textContent = data.meaning_feedback || "";
-  document.getElementById("focusFeedback").innerHTML =
-    `<strong>${escapeHtml(data.focus_label || "One useful improvement")}</strong><br>${escapeHtml(data.focus_explanation || "")}`;
-
-  const chips = document.getElementById("chips");
-  chips.innerHTML = "";
-  (data.tags || []).slice(0,3).forEach(tag=>{
-    const span = document.createElement("span");
-    span.className = "chip";
-    span.textContent = tag;
-    chips.appendChild(span);
-  });
-
-  document.getElementById("noticeQuestion").textContent = data.notice_question || "";
-  const row = document.getElementById("optionRow");
-  row.innerHTML = "";
-
-  (data.notice_options || []).forEach(opt=>{
-    const b = document.createElement("button");
-    b.className = "option";
-    b.textContent = opt.text;
-    b.onclick = ()=>chooseNoticeOption(b, !!opt.correct);
-    row.appendChild(b);
-  });
-
-  document.getElementById("repairInstruction").textContent = data.repair_instruction || "";
-  document.getElementById("repairPrompt").textContent = data.repair_prompt || "";
-  document.getElementById("followUpQuestion").innerHTML =
-    `<strong>${escapeHtml(data.follow_up_question || "")}</strong>`;
-
+function renderLesson(d){
+  document.getElementById("lessonTitle").textContent=d.title||tr("defaultTitle");
+  document.getElementById("meaningFeedback").textContent=d.meaning_feedback||"";
+  document.getElementById("focusFeedback").innerHTML=`<strong>${esc(d.focus_label||tr("defaultFocus"))}</strong><br>${esc(d.focus_explanation||"")}`;
+  const chips=document.getElementById("chips");chips.innerHTML="";
+  (d.tags||[]).slice(0,3).forEach(x=>{const s=document.createElement("span");s.className="chip";s.textContent=x;chips.appendChild(s)});
+  document.getElementById("noticeQuestion").textContent=d.notice_question||"";
+  const row=document.getElementById("optionRow");row.innerHTML="";
+  (d.notice_options||[]).forEach(o=>{const b=document.createElement("button");b.className="option";b.textContent=o.text;b.onclick=()=>chooseNoticeOption(b,!!o.correct);row.appendChild(b)});
+  document.getElementById("repairInstruction").textContent=d.repair_instruction||"";
+  document.getElementById("repairPrompt").textContent=d.repair_prompt||"";
+  document.getElementById("followUpQuestion").innerHTML=`<strong>${esc(d.follow_up_question||"")}</strong>`;
   document.getElementById("lessonCard").classList.remove("hidden");
-  document.getElementById("repairCard").classList.add("hidden");
-  document.getElementById("continueCard").classList.add("hidden");
-  document.getElementById("optionFeedback").classList.add("hidden");
-  document.getElementById("repairFeedback").classList.add("hidden");
-  document.getElementById("repairText").value = "";
-  document.getElementById("followUpText").value = "";
-
+  ["repairCard","continueCard","optionFeedback","repairFeedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById("repairText").value="";document.getElementById("followUpText").value="";
   document.getElementById("lessonCard").scrollIntoView({behavior:"smooth"});
 }
-
-function chooseNoticeOption(button, correct){
-  document.querySelectorAll("#optionRow .option").forEach(b=>b.classList.remove("correct","wrong"));
-  button.classList.add(correct ? "correct" : "wrong");
-
-  const box = document.getElementById("optionFeedback");
-  box.classList.remove("hidden");
-
-  if(correct){
-    box.className = "feedback good";
-    box.textContent = lesson.correct_feedback || "Exactly.";
-    document.getElementById("repairCard").classList.remove("hidden");
-    setTimeout(()=>document.getElementById("repairCard").scrollIntoView({behavior:"smooth"}),300);
-  }else{
-    box.className = "feedback notice";
-    box.textContent = lesson.incorrect_feedback || "Try again. Look carefully at the context.";
-  }
+function chooseNoticeOption(btn,correct){
+  document.querySelectorAll("#optionRow .option").forEach(b=>b.classList.remove("correct","wrong"));btn.classList.add(correct?"correct":"wrong");
+  const box=document.getElementById("optionFeedback");box.classList.remove("hidden");
+  if(correct){box.className="feedback good";box.textContent=lesson.correct_feedback||tr("fallbackCorrect");document.getElementById("repairCard").classList.remove("hidden");setTimeout(()=>document.getElementById("repairCard").scrollIntoView({behavior:"smooth"}),250)}
+  else{box.className="feedback notice";box.textContent=lesson.incorrect_feedback||tr("fallbackWrong")}
 }
-
 function checkRepair(){
-  if(!lesson) return;
-
-  const answer = document.getElementById("repairText").value.trim();
-  if(!answer){
-    const box = document.getElementById("repairFeedback");
-    box.className = "feedback notice";
-    box.textContent = "Write an answer first.";
-    box.classList.remove("hidden");
-    return;
-  }
-
-  const keys = (lesson.repair_keywords || []).map(x=>String(x).toLowerCase()).filter(Boolean);
-  const low = answer.toLowerCase();
-  const success = keys.length ? keys.every(k=>low.includes(k)) : answer.length > 5;
-
-  const box = document.getElementById("repairFeedback");
-  box.classList.remove("hidden");
-
-  if(success){
-    box.className = "feedback good";
-    box.textContent = lesson.correct_feedback || "Good. You used the new pattern.";
-    document.getElementById("continueCard").classList.remove("hidden");
-    setTimeout(()=>document.getElementById("continueCard").scrollIntoView({behavior:"smooth"}),300);
-  }else{
-    box.className = "feedback notice";
-    box.textContent = lesson.incorrect_feedback || "Try once more before asking for a clue.";
-  }
+  const answer=document.getElementById("repairText").value.trim();const box=document.getElementById("repairFeedback");
+  if(!answer){box.className="feedback notice";box.textContent=tr("errAnswer");box.classList.remove("hidden");return}
+  const keys=(lesson?.repair_keywords||[]).map(x=>String(x).toLowerCase()).filter(Boolean),low=answer.toLowerCase();
+  const ok=keys.length?keys.every(k=>low.includes(k)):answer.length>5;box.classList.remove("hidden");
+  if(ok){box.className="feedback good";box.textContent=lesson.correct_feedback||tr("fallbackCorrect");document.getElementById("continueCard").classList.remove("hidden");setTimeout(()=>document.getElementById("continueCard").scrollIntoView({behavior:"smooth"}),250)}
+  else{box.className="feedback notice";box.textContent=lesson.incorrect_feedback||tr("fallbackTry")}
 }
-
-function showHint(){
-  if(!lesson) return;
-  const box = document.getElementById("repairFeedback");
-  box.className = "feedback notice";
-  box.textContent = lesson.hint || "Look again at the model in the noticing activity.";
-  box.classList.remove("hidden");
-}
-
-function showAnswer(){
-  if(!lesson) return;
-  const box = document.getElementById("repairFeedback");
-  box.className = "feedback";
-  box.innerHTML = `<strong>Model:</strong> ${escapeHtml(lesson.model_answer || "")}`;
-  box.classList.remove("hidden");
-  document.getElementById("continueCard").classList.remove("hidden");
-}
-
+function showHint(){const b=document.getElementById("repairFeedback");b.className="feedback notice";b.textContent=lesson?.hint||tr("fallbackHint");b.classList.remove("hidden")}
+function showAnswer(){const b=document.getElementById("repairFeedback");b.className="feedback";b.innerHTML=`<strong>${esc(tr("model"))}:</strong> ${esc(lesson?.model_answer||"")}`;b.classList.remove("hidden");document.getElementById("continueCard").classList.remove("hidden")}
 async function buildFollowUp(){
-  const text = document.getElementById("followUpText").value.trim();
-  if(!text){
-    showError("Write your follow-up answer first.");
-    return;
-  }
-
-  document.getElementById("learnerText").value = text;
-  selectedPrompt = lesson?.follow_up_question || "";
-  document.getElementById("continueCard").classList.add("hidden");
-  document.getElementById("repairCard").classList.add("hidden");
-  document.getElementById("lessonCard").classList.add("hidden");
-  await buildLesson();
+  const text=document.getElementById("followUpText").value.trim();if(!text){showError(tr("errFollow"));return}
+  document.getElementById("learnerText").value=text;selectedPrompt=lesson?.follow_up_question||"";
+  ["continueCard","repairCard","lessonCard"].forEach(id=>document.getElementById(id).classList.add("hidden"));await buildLesson();
 }
-
-function setLoading(on){
-  document.getElementById("loadingBox").classList.toggle("hidden",!on);
-  document.getElementById("buildBtn").disabled = on;
-}
-
-function showError(msg){
-  const box = document.getElementById("errorBox");
-  box.textContent = msg;
-  box.classList.remove("hidden");
-}
-function hideError(){
-  document.getElementById("errorBox").classList.add("hidden");
-}
-function resetAll(){
-  lesson = null;
-  selectedPrompt = "";
-  document.getElementById("learnerText").value = "";
-  document.getElementById("repairText").value = "";
-  document.getElementById("followUpText").value = "";
-  ["topicSuggestion","lessonCard","repairCard","continueCard","loadingBox","errorBox","optionFeedback","repairFeedback"]
-    .forEach(id=>document.getElementById(id).classList.add("hidden"));
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function escapeHtml(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+function setLoading(x){document.getElementById("loadingBox").classList.toggle("hidden",!x);document.getElementById("buildBtn").disabled=x}
+function showError(s){const b=document.getElementById("errorBox");b.textContent=s;b.classList.remove("hidden")}
+function hideError(){document.getElementById("errorBox").classList.add("hidden")}
+function resetAll(){lesson=null;selectedPrompt="";["learnerText","repairText","followUpText"].forEach(id=>document.getElementById(id).value="");["topicSuggestion","lessonCard","repairCard","continueCard","loadingBox","errorBox","optionFeedback","repairFeedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));window.scrollTo({top:0,behavior:"smooth"})}
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 </script>
 </body>
 </html>
