@@ -31,6 +31,39 @@ html[dir="rtl"] .option{text-align:right}
 html[dir="rtl"] .feedback{border-left:1px solid var(--line);border-right:5px solid var(--primary)}
 html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"] .feedback.notice{border-right-color:var(--warning)}html[dir="rtl"] .feedback.error{border-right-color:var(--danger)}
 @media(max-width:700px){.prompt-grid{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.card{padding:18px}}
+
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
 </style>
 </head>
 <body>
@@ -43,6 +76,13 @@ html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"]
     <div class="nav">
       <div class="pair" id="pairDisplay"></div>
       <a class="home" id="homeLink" href="index.html" data-i18n="home">Activities / change languages</a>
+    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 11.5 12 4l9 7.5"></path>
+    <path d="M5.5 10.5V20h13v-9.5"></path>
+    <path d="M9.5 20v-6h5v6"></path>
+  </svg>
+</a>
     </div>
   </div>
 </header>
@@ -149,12 +189,10 @@ const TARGET_NAMES=["English","Catalan","Spanish","French","German","Italian","P
 function settings(){
   const p=new URLSearchParams(location.search);
   const ui=p.get("ui")||localStorage.getItem("lingototal_ui_language")||"en";
-  const target=p.get("target")||localStorage.getItem("lingototal_target_language")||"English";
-  return {ui:T[ui]?ui:"en",target:TARGET_NAMES.includes(target)?target:"English"};
+  const target=p.get("target")||localStorage.getItem("lingototal_target_language")||"German";
+  return {ui:T[ui]?ui:"en",target:TARGET_NAMES.includes(target)?target:"German"};
 }
 const S=settings();
-localStorage.setItem('lingototal_ui_language',S.ui);
-localStorage.setItem('lingototal_target_language',S.target);
 const tr=(k)=>T[S.ui]?.[k]??T.en[k]??k;
 
 function applyInterface(){
@@ -268,21 +306,6 @@ function showError(s){const b=document.getElementById("errorBox");b.textContent=
 function hideError(){document.getElementById("errorBox").classList.add("hidden")}
 function resetAll(){lesson=null;selectedPrompt="";["learnerText","repairText","followUpText"].forEach(id=>document.getElementById(id).value="");["topicSuggestion","lessonCard","repairCard","continueCard","loadingBox","errorBox","optionFeedback","repairFeedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));window.scrollTo({top:0,behavior:"smooth"})}
 function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-</script>
-<script id="lingototal-language-state-v2">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
-  const q=new URLSearchParams(window.location.search);
-  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  if(!VALID_UI.includes(ui)) ui='en';
-  if(!VALID_TARGET.includes(target)) target='English';
-  localStorage.setItem('lingototal_ui_language',ui);
-  localStorage.setItem('lingototal_target_language',target);
-  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
-  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
-})();
 </script>
 </body>
 </html>

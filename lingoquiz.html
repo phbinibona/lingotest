@@ -206,6 +206,39 @@ h2{font-size:1.2rem;margin:0;color:var(--blue-950)}
   .home-link{padding:8px 10px}
   .pair-pill{width:100%;text-align:center}
 }
+
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
 </style>
 </head>
 <body>
@@ -220,6 +253,13 @@ h2{font-size:1.2rem;margin:0;color:var(--blue-950)}
   <div class="banner-actions">
     <div class="pair-pill" id="languagePair">English → Spanish</div>
     <a class="home-link" href="index.html" data-i18n="changeLanguages">Change languages</a>
+    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 11.5 12 4l9 7.5"></path>
+    <path d="M5.5 10.5V20h13v-9.5"></path>
+    <path d="M9.5 20v-6h5v6"></path>
+  </svg>
+</a>
   </div>
 </header>
 
@@ -489,10 +529,8 @@ function readSettings(){
   targetLanguage=params.get('target')||localStorage.getItem('lingototal_target_language')||'Spanish';
 
   if(!T[uiLanguage]) uiLanguage='en';
-  if(!TARGET_TO_CODE[targetLanguage]) targetLanguage='English';
+  if(!TARGET_TO_CODE[targetLanguage]) targetLanguage='Spanish';
 
-  localStorage.setItem('lingototal_ui_language',uiLanguage);
-  localStorage.setItem('lingototal_target_language',targetLanguage);
   document.documentElement.lang=uiLanguage;
   document.documentElement.dir=uiLanguage==='ar'?'rtl':'ltr';
 }
@@ -508,8 +546,6 @@ function applyTranslations(){
   const uiName=LANGUAGE_NAMES[uiLanguage]||'English';
   const targetName=DISPLAY_NAMES[uiLanguage]?.[targetLanguage]||targetLanguage;
   $('languagePair').textContent=`${uiName} → ${targetName}`;
-  const home=document.querySelector('a.home-link');
-  if(home) home.href=`index.html?ui=${encodeURIComponent(uiLanguage)}&target=${encodeURIComponent(targetLanguage)}`;
 }
 
 function notice(message,type='info'){
@@ -773,21 +809,6 @@ $('answerInput').addEventListener('keydown',e=>{
 
 readSettings();
 applyTranslations();
-</script>
-<script id="lingototal-language-state-v2">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
-  const q=new URLSearchParams(window.location.search);
-  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  if(!VALID_UI.includes(ui)) ui='en';
-  if(!VALID_TARGET.includes(target)) target='English';
-  localStorage.setItem('lingototal_ui_language',ui);
-  localStorage.setItem('lingototal_target_language',target);
-  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
-  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
-})();
 </script>
 </body>
 </html>

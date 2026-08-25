@@ -608,7 +608,40 @@
       .controls button{width:100%}
       .report-grid{grid-template-columns:1fr}
     }
-  </style>
+  
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
+</style>
 </head>
 
 <body>
@@ -623,10 +656,15 @@
 
     <div class="header-tools">
       <div class="language-pair" id="languagePair">English → Català</div>
-      <a class="home" href="index.html">
-        <span>⌂</span>
-        <span data-i18n="home">Activities / change languages</span>
+      <a class="home" href="index.html"><span data-i18n="home">Activities / change languages</span>
       </a>
+    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 11.5 12 4l9 7.5"></path>
+    <path d="M5.5 10.5V20h13v-9.5"></path>
+    <path d="M9.5 20v-6h5v6"></path>
+  </svg>
+</a>
     </div>
   </header>
 
@@ -2165,21 +2203,6 @@ Ensure the sentence-builder words recreate the answer exactly when joined with s
   }
 
   applyLanguage();
-})();
-</script>
-<script id="lingototal-language-state-v2">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
-  const q=new URLSearchParams(window.location.search);
-  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  if(!VALID_UI.includes(ui)) ui='en';
-  if(!VALID_TARGET.includes(target)) target='English';
-  localStorage.setItem('lingototal_ui_language',ui);
-  localStorage.setItem('lingototal_target_language',target);
-  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
-  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
 })();
 </script>
 </body>

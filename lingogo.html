@@ -28,12 +28,52 @@ input[type=text]{width:100%;min-height:48px;padding:11px 13px;border:2px solid v
 .collection-bar{display:flex;justify-content:flex-end;margin:0 0 14px}.collection-btn{border:0;border-radius:10px;padding:10px 14px;background:#fff;color:var(--primary-dark);font-weight:800;cursor:pointer;box-shadow:var(--shadow)}.collection-panel{display:none}.collection-list{display:grid;gap:10px;margin-top:14px}.collection-item{padding:12px;border:1px solid var(--border);border-radius:11px;background:#fff}.collection-sentence{font-weight:800}.collection-meta{font-size:.78rem;color:var(--muted);margin-top:4px}
 .notice{position:fixed;right:18px;top:98px;z-index:200;max-width:min(360px,calc(100% - 36px));padding:12px 15px;border-radius:10px;color:#fff;font-weight:700;box-shadow:var(--shadow);transform:translateX(130%);transition:.25s}.notice.show{transform:translateX(0)}.notice.info{background:#1267d6}.notice.success{background:#198754}.notice.error{background:#c83d4f}.footer{text-align:center;color:var(--muted);font-size:.72rem;padding:0 10px 24px}
 @media(max-width:700px){.banner{align-items:flex-start;flex-direction:column}.header-tools{width:100%;justify-content:space-between}.language-pair{flex:1}.level-grid{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.page{margin-top:12px}}
+
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
 </style>
 </head>
 <body>
 <header class="banner">
 <div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline"></div></div></div>
-<div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="https://lingototal.com/"><span>⌂</span><span data-i18n="changeLanguages"></span></a></div>
+<div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="https://lingototal.com/"><span data-i18n="changeLanguages"></span></a>
+    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 11.5 12 4l9 7.5"></path>
+    <path d="M5.5 10.5V20h13v-9.5"></path>
+    <path d="M9.5 20v-6h5v6"></path>
+  </svg>
+</a></div>
 </header>
 
 <main class="page">
@@ -148,21 +188,6 @@ applyLanguage();$('collectionCount').textContent=getCollection().length;
 </script>
 <script>
 (function(){const cache=new Map();let audio=null;async function speak(text,language='en-GB',speakingRate=.95){if(audio){try{audio.pause()}catch{}}const key=language+'|'+speakingRate+'|'+text;let src=cache.get(key);if(!src){const r=await fetch('/.netlify/functions/google-tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,language,speakingRate})});if(!r.ok)throw new Error('Audio error');const b=await r.blob();src=URL.createObjectURL(b);cache.set(key,src)}audio=new Audio(src);await audio.play()}window.LingoTTS={speak}})();
-</script>
-<script id="lingototal-language-state-v2">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
-  const q=new URLSearchParams(window.location.search);
-  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  if(!VALID_UI.includes(ui)) ui='en';
-  if(!VALID_TARGET.includes(target)) target='English';
-  localStorage.setItem('lingototal_ui_language',ui);
-  localStorage.setItem('lingototal_target_language',target);
-  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
-  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
-})();
 </script>
 </body>
 </html>

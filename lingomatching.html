@@ -146,6 +146,39 @@ input[type=text]:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4p
   .page{margin-top:12px}
   .score{grid-template-columns:1fr}
 }
+
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
 </style>
 </head>
 <body>
@@ -159,7 +192,14 @@ input[type=text]:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4p
   </div>
   <div class="header-tools">
     <div class="language-pair" id="languagePair">English → Catalan</div>
-    <a class='home-link' href='/'><span>⌂</span><span data-i18n="changeLanguages">Activities / change languages</span></a>
+    <a class="home-link" href="index.html"><span data-i18n="changeLanguages">Activities / change languages</span></a>
+    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 11.5 12 4l9 7.5"></path>
+    <path d="M5.5 10.5V20h13v-9.5"></path>
+    <path d="M9.5 20v-6h5v6"></path>
+  </svg>
+</a>
   </div>
 </header>
 
@@ -365,69 +405,14 @@ function completeMatching(){
     const row=document.createElement('div');row.className='correct-row';
     const span=document.createElement('span');span.textContent=sentence;
     const sound=document.createElement('button');sound.className='sound-btn';sound.textContent='🔊';
-    sound.type='button';sound.title=tr('reading');sound.setAttribute('aria-label',tr('reading'));
     sound.addEventListener('click',()=>speak(sentence));row.append(span,sound);rows.appendChild(row)
   });
   buildGapExercise()
 }
-const audioCache=new Map();
-let currentAudio=null;
-
-async function speak(text){
-  const language=voiceLocales[targetLanguage]||'en-GB';
-  const speakingRate=0.90;
-  const cacheKey=`${language}|${speakingRate}|${text}`;
-
-  try{
-    notice(tr('reading'),'info');
-
-    let audioSrc=audioCache.get(cacheKey);
-
-    if(!audioSrc){
-      const response=await fetch('/.netlify/functions/tts',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          text,
-          languageCode:language,
-          speakingRate
-        })
-      });
-
-      let data;
-      try{data=await response.json()}
-      catch{throw new Error('Invalid audio server response')}
-
-      if(!response.ok)throw new Error(data?.error||'Audio server error');
-      if(!data?.audioContent)throw new Error('No audio returned');
-
-      audioSrc=`data:${data.mimeType||'audio/mpeg'};base64,${data.audioContent}`;
-      audioCache.set(cacheKey,audioSrc);
-    }
-
-    if(currentAudio){
-      currentAudio.pause();
-      currentAudio.currentTime=0;
-    }
-
-    currentAudio=new Audio(audioSrc);
-    await currentAudio.play();
-
-  }catch(err){
-    console.error('Cloud TTS error:',err);
-
-    // Fallback: use the device voice only if cloud TTS is unavailable.
-    if('speechSynthesis' in window){
-      speechSynthesis.cancel();
-      const u=new SpeechSynthesisUtterance(text);
-      u.lang=language;
-      u.rate=speakingRate;
-      speechSynthesis.speak(u);
-      notice('Cloud audio unavailable — using this device\'s voice.','error');
-    }else{
-      notice('Audio is unavailable on this device.','error');
-    }
-  }
+function speak(text){
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);
+  u.lang=voiceLocales[targetLanguage]||'en-GB';u.rate=.9;speechSynthesis.speak(u);notice(tr('reading'),'info')
 }
 function thematicCandidates(sentence){
   const stop=new Set(['the','and','but','that','this','with','from','have','has','are','was','were','for','you','your','their',
@@ -530,21 +515,6 @@ $('clearBtn').addEventListener('click',()=>{
 });
 applyLanguage();
 });
-</script>
-<script id="lingototal-language-state-v2">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
-  const q=new URLSearchParams(window.location.search);
-  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  if(!VALID_UI.includes(ui)) ui='en';
-  if(!VALID_TARGET.includes(target)) target='English';
-  localStorage.setItem('lingototal_ui_language',ui);
-  localStorage.setItem('lingototal_target_language',target);
-  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
-  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
-})();
 </script>
 </body>
 </html>
