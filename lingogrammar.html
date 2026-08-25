@@ -1,888 +1,2186 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="LingoTotal Grammar Practice – simple AI-generated grammar lessons." name="description"/>
-<title>LingoTotal · Grammar Practice</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --primary:#1267d6;
-  --primary-dark:#084ca8;
-  --primary-light:#e8f2ff;
-  --accent:#25b7d3;
-  --success:#198754;
-  --danger:#c83d4f;
-  --ink:#172033;
-  --muted:#5f6b7a;
-  --surface:#fff;
-  --soft:#f5f8fc;
-  --border:#d9e2ef;
-  --shadow:0 10px 28px rgba(26,69,120,.12);
-  --radius:18px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:'Quicksand',sans-serif;
-  color:var(--ink);
-  background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);
-  line-height:1.55;
-}
-button,input,select{font:inherit}
-.banner{
-  position:sticky;
-  top:0;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  min-height:82px;
-  padding:12px clamp(14px,3vw,34px);
-  background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);
-  color:#fff;
-  box-shadow:0 3px 14px rgba(8,76,168,.25);
-}
-.brand-wrap{display:flex;align-items:center;gap:12px;min-width:210px}
-.brand-mark{
-  width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
-  background:#fff;color:var(--primary);font-weight:800;
-  box-shadow:0 6px 14px rgba(0,0,0,.18)
-}
-.brand{font-size:1.35rem;font-weight:800;letter-spacing:.055em}
-.tagline{font-size:.78rem;opacity:.9}
-.header-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
-.language-pair{
-  padding:8px 12px;border:1px solid rgba(255,255,255,.5);border-radius:9px;
-  background:rgba(255,255,255,.12);font-size:.78rem;font-weight:700
-}
-.home-link{
-  display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:9px;
-  background:#fff;color:var(--primary-dark);text-decoration:none;font-size:.78rem;font-weight:800
-}
-.page{width:min(820px,calc(100% - 22px));margin:20px auto 40px}
-.panel{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:clamp(16px,3vw,28px);margin-bottom:18px
-}
-.hero{background:linear-gradient(135deg,#fff,#edf5ff)}
-h1{margin:0 0 7px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.16}
-.hero p{margin:0;color:var(--muted)}
-.section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.number{
-  width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;
-  background:var(--primary);color:#fff;font-weight:800
-}
-.section-title{font-size:1.16rem;font-weight:800}
-label{display:block;margin:14px 0 6px;font-weight:700}
-select,input[type=text]{
-  width:100%;min-height:48px;padding:11px 13px;border:2px solid var(--border);
-  border-radius:11px;background:#fff;color:var(--ink)
-}
-select:focus,input[type=text]:focus{
-  outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(18,103,214,.13)
-}
-.level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
-.choice{
-  padding:11px 8px;border:2px solid var(--border);border-radius:10px;background:#fff;
-  color:var(--ink);font-weight:700;cursor:pointer
-}
-.choice:hover,.choice.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}
-.helper{margin-top:8px;color:var(--muted);font-size:.86rem}
-.primary-btn,.secondary-btn{
-  border:0;border-radius:11px;padding:13px 18px;font-weight:800;cursor:pointer
-}
-.primary-btn{width:100%;background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff}
-.primary-btn:disabled{opacity:.5;cursor:not-allowed}
-.secondary-btn{background:#fff;border:1px solid var(--border);color:var(--ink)}
-.status{display:none;text-align:center;margin:16px 0;color:var(--muted)}
-.spinner{
-  width:30px;height:30px;margin:0 auto 8px;border:3px solid #dbe7f7;
-  border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.exercise{display:none}
-.explanation{
-  padding:16px;border-radius:12px;background:var(--soft);border-left:5px solid var(--accent);
-  white-space:pre-wrap;margin-bottom:14px
-}
-.examples{display:grid;gap:9px;margin:12px 0 20px}
-.example{
-  padding:12px 14px;border:1px solid var(--border);border-radius:11px;background:#fff
-}
-.listen-row{display:flex;justify-content:flex-end;margin:8px 0 20px}
-.listen-btn{
-  border:0;border-radius:9px;padding:9px 12px;background:var(--primary-light);
-  color:var(--primary-dark);font-weight:800;cursor:pointer
-}
-.question-card{
-  padding:15px;margin-top:12px;border:1px solid var(--border);border-radius:12px;background:var(--soft)
-}
-.question{font-weight:800;margin-bottom:10px}
-.options{display:grid;gap:8px}
-.option{
-  width:100%;text-align:left;padding:10px 12px;border:2px solid var(--border);
-  border-radius:10px;background:#fff;cursor:pointer;font-weight:700
-}
-.option.selected{border-color:var(--primary);background:var(--primary-light)}
-.option.correct{border-color:#78bd96;background:#eefaf3}
-.option.incorrect{border-color:#e09aa4;background:#fff4f5}
-.gap-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
-.gap-input{width:min(260px,100%)!important;min-height:42px!important}
-.feedback{
-  display:none;margin-top:15px;padding:12px 14px;border-radius:10px;font-weight:700
-}
-.feedback.success{background:#e9f7ef;color:#136c45;border:1px solid #9bd2b5}
-.feedback.error{background:#fff0f2;color:#a72f40;border:1px solid #efb6bf}
-.score{
-  display:none;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px
-}
-.score-card{
-  padding:14px;text-align:center;border:1px solid var(--border);border-radius:11px;background:#fff
-}
-.score-value{font-size:1.45rem;font-weight:800;color:var(--primary)}
-.score-label{font-size:.78rem;color:var(--muted)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
-.actions .primary-btn{width:auto;flex:1}
-.notice{
-  position:fixed;right:18px;top:98px;z-index:200;max-width:min(360px,calc(100% - 36px));
-  padding:12px 15px;border-radius:10px;color:white;font-weight:700;box-shadow:var(--shadow);
-  transform:translateX(130%);transition:.25s
-}
-.notice.show{transform:translateX(0)}
-.notice.info{background:#1267d6}.notice.success{background:#198754}.notice.error{background:#c83d4f}
-.target-rtl{direction:rtl;text-align:right}
-.footer{text-align:center;color:var(--muted);font-size:.72rem;padding:0 10px 24px}
-@media(max-width:700px){
-  .banner{align-items:flex-start;flex-direction:column}
-  .brand-wrap{min-width:0}.header-tools{width:100%;justify-content:space-between}
-  .language-pair{flex:1}.page{margin-top:12px}
-  .level-grid{grid-template-columns:1fr}
-  .actions{flex-direction:column}.actions .primary-btn,.actions .secondary-btn{width:100%}
-  .score{grid-template-columns:1fr}
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lingototal Grammar Masterclass – AI-generated grammar lessons in any language and at any CEFR level.">
+  <title>LingoTotal · Grammar Masterclass</title>
 
-.item-feedback{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.9rem;font-weight:700;line-height:1.45}
-.item-feedback.show{display:block}
-.item-feedback.good{background:#eaf8f0;border:1px solid #8bc9a5;color:#136c45}
-.item-feedback.hint{background:#fff8e8;border:1px solid #e5c879;color:#795c0d}
-.item-feedback.bad{background:#fff0f2;border:1px solid #dfa0aa;color:#9d3040}
-.gap-instruction{margin:18px 0 10px;padding:12px 14px;border-radius:12px;background:var(--primary-light);color:var(--primary-dark);font-weight:800}
-.gap-input:disabled{opacity:1}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-</style>
-<style id="lt-level-refresh-style">
-.lt-level-prompt{margin:14px 0 8px;font-weight:800;color:var(--ink,#172033);font-size:1rem}
-.level-grid .level{min-height:88px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;line-height:1.15}
-.lt-level-icon{font-size:1.55rem;line-height:1;margin-bottom:3px}
-.lt-level-name{font-weight:800;font-size:.98rem}
-.lt-level-desc{font-size:.72rem;font-weight:600;color:var(--muted,#5f6b7a);line-height:1.2;margin-top:2px}
-.level-grid .level.selected .lt-level-desc,.level-grid .level:hover .lt-level-desc{color:inherit;opacity:.82}
-@media(max-width:700px){.level-grid{grid-template-columns:1fr!important}.level-grid .level{min-height:78px}}
+  <style>
+    :root{
+      --navy:#084ca8;
+      --blue:#1267d6;
+      --sky:#25b7d3;
+      --pale:#e8f2ff;
+      --ice:#f5f8fc;
+      --ink:#172033;
+      --muted:#607087;
+      --line:#d7e6ef;
+      --good:#15803d;
+      --goodbg:#ecfdf3;
+      --bad:#b42318;
+      --badbg:#fff1f0;
+      --warn:#9a6700;
+      --warnbg:#fff8db;
+      --white:#fff;
+      --shadow:0 16px 40px rgba(8,47,73,.12);
+      --radius:22px;
+    }
 
-/* LingoTotal learner-first setup */
-.setup-panel{padding-top:22px}
-.setup-panel .level-first{margin-top:10px}
-.setup-panel .level-first .level{min-height:74px;padding:14px 12px;font-size:1rem;font-weight:800}
-.topic-priority{margin-top:24px;padding-top:20px;border-top:1px solid var(--border,#d9e2ef)}
-.topic-priority label{font-size:1.06rem;font-weight:800;margin-bottom:5px}
-.topic-guidance-standard{margin:0 0 10px;color:var(--muted,#5f6b7a);font-size:.88rem;font-weight:600}
-.quiet-examples{margin-top:8px!important;gap:7px!important}
-.quiet-examples .choice{padding:8px 7px!important;border:1px solid #e0e6ee!important;background:#f8fafc!important;color:#657181!important;font-size:.78rem!important;font-weight:650!important;box-shadow:none!important;min-height:0!important}
-.quiet-helper{margin-top:14px!important;color:#7b8796!important;font-size:.78rem!important}
-@media(max-width:700px){.setup-panel .level-first{grid-template-columns:1fr!important}.setup-panel .level-first .level{min-height:64px}}
-</style>
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:'Quicksand',sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);
+    }
+
+    button,select,input,textarea{font:inherit}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      min-height:82px;
+      padding:12px clamp(14px,3vw,34px);
+      color:#fff;
+      background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);
+      box-shadow:0 3px 14px rgba(8,76,168,.25);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:210px;
+    }
+
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      color:var(--blue);
+      font-size:1.05rem;
+      font-weight:800;
+      box-shadow:0 6px 14px rgba(0,0,0,.18);
+    }
+
+    .brand strong{
+      font-size:1.35rem;
+      font-weight:800;
+      letter-spacing:.055em;
+    }
+
+    .tagline{
+      font-size:.78rem;
+      opacity:.9;
+      margin-top:0;
+    }
+
+    .header-tools{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .language-pair{
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.5);
+      border-radius:9px;
+      background:rgba(255,255,255,.12);
+      font-size:.78rem;
+      font-weight:700;
+    }
+
+    .home{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:9px 12px;
+      border-radius:9px;
+      background:#fff;
+      color:#084ca8;
+      text-decoration:none;
+      font-size:.78rem;
+      font-weight:800;
+    }
+
+    main{
+      width:min(1180px,94%);
+      margin:34px auto 70px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .card{
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(215,230,239,.92);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-copy{padding:clamp(28px,5vw,52px)}
+
+    .eyebrow{
+      font-size:.78rem;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      color:var(--blue);
+    }
+
+    h1{
+      font-size:clamp(2.1rem,5vw,4.2rem);
+      line-height:1.02;
+      margin:12px 0 18px;
+      color:var(--navy);
+    }
+
+    .lead{
+      font-size:clamp(1rem,2vw,1.2rem);
+      line-height:1.65;
+      color:var(--muted);
+      max-width:720px;
+    }
+
+    .feature-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      margin-top:24px;
+    }
+
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:var(--ice);
+      color:var(--blue);
+      font-weight:850;
+      font-size:.82rem;
+    }
+
+    .setup{padding:24px}
+    .setup h2,.lesson-card h2,.results h2{margin:0 0 18px;color:var(--navy)}
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .field.full{grid-column:1/-1}
+
+    label{
+      font-weight:850;
+      font-size:.9rem;
+      color:#334155;
+    }
+
+    select,input,textarea{
+      width:100%;
+      border:1px solid #c9dce8;
+      border-radius:13px;
+      background:#fff;
+      padding:12px 13px;
+      color:var(--ink);
+      outline:none;
+    }
+
+    select:focus,input:focus,textarea:focus{
+      border-color:var(--sky);
+      box-shadow:0 0 0 4px rgba(14,165,233,.12);
+    }
+
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .primary,.secondary{
+      border:0;
+      border-radius:13px;
+      padding:13px 18px;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .15s,opacity .15s,box-shadow .15s;
+    }
+
+    .primary{
+      color:#fff;
+      background:linear-gradient(120deg,var(--blue),var(--sky));
+      box-shadow:0 10px 20px rgba(2,132,199,.22);
+    }
+
+    .secondary{
+      color:var(--blue);
+      background:var(--pale);
+    }
+
+    .generate{width:100%;margin-top:17px}
+
+    button:hover{transform:translateY(-1px)}
+    button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .status{
+      min-height:24px;
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .status.error{
+      color:var(--bad);
+      font-weight:850;
+    }
+
+    .workspace{
+      display:none;
+      margin-top:24px;
+    }
+
+    .workspace.active{display:block}
+
+    .progress{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      margin-bottom:16px;
+      box-shadow:0 10px 25px rgba(8,47,73,.06);
+    }
+
+    .progress-head{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      font-weight:850;
+      font-size:.9rem;
+      margin-bottom:9px;
+    }
+
+    .bar{
+      height:9px;
+      border-radius:999px;
+      background:#e7f1f6;
+      overflow:hidden;
+    }
+
+    .bar span{
+      display:block;
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--blue),var(--sky));
+      transition:width .35s;
+    }
+
+    .lesson-card{padding:clamp(22px,4vw,38px)}
+
+    .journey{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:8px;
+      margin-bottom:18px;
+    }
+
+    .step-dot{
+      min-width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#e7f2f8;
+      color:#648096;
+      font-weight:900;
+      border:2px solid transparent;
+    }
+
+    .step-dot.active{
+      background:var(--pale);
+      color:var(--blue);
+      border-color:var(--sky);
+    }
+
+    .step-dot.done{
+      background:#dcfce7;
+      color:var(--good);
+    }
+
+    .stage-title{
+      font-size:clamp(1.55rem,3vw,2.25rem);
+      line-height:1.15;
+      color:var(--navy);
+      margin:8px 0 10px;
+    }
+
+    .instruction{
+      color:var(--muted);
+      line-height:1.6;
+      margin:0 0 18px;
+    }
+
+    .content-box{
+      padding:18px;
+      border-left:5px solid var(--sky);
+      border-radius:12px;
+      background:var(--ice);
+      line-height:1.75;
+      margin-bottom:18px;
+      white-space:pre-wrap;
+    }
+
+    .example-box{
+      padding:15px 16px;
+      border-radius:13px;
+      background:#fff;
+      border:1px solid var(--line);
+      margin:12px 0;
+      line-height:1.65;
+    }
+
+    .highlight{
+      padding:2px 5px;
+      border-radius:6px;
+      background:#bae6fd;
+      color:#075985;
+      font-weight:850;
+    }
+
+    .listen-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:16px;
+    }
+
+    .options{
+      display:grid;
+      gap:11px;
+      margin-top:14px;
+    }
+
+    .option{
+      width:100%;
+      text-align:left;
+      border:2px solid #dce9f0;
+      border-radius:15px;
+      background:#fff;
+      padding:15px 16px;
+      cursor:pointer;
+      line-height:1.45;
+    }
+
+    .option:hover{
+      border-color:var(--sky);
+      background:var(--ice);
+    }
+
+    .option.selected{
+      border-color:var(--blue);
+      background:var(--pale);
+    }
+
+    .option.correct{
+      border-color:var(--good);
+      background:var(--goodbg);
+    }
+
+    .option.incorrect{
+      border-color:var(--bad);
+      background:var(--badbg);
+    }
+
+    .option:disabled{
+      cursor:default;
+      color:inherit;
+      opacity:1;
+    }
+
+    .gap-line{
+      font-size:1.15rem;
+      line-height:1.8;
+      margin:12px 0;
+    }
+
+    .gap-input{
+      width:min(280px,100%);
+      display:inline-block;
+      margin:0 5px;
+    }
+
+    .word-bank{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      margin:14px 0;
+    }
+
+    .word-chip{
+      border:1px solid #b8d8e8;
+      border-radius:999px;
+      padding:8px 12px;
+      background:#fff;
+      color:var(--blue);
+      font-weight:850;
+      cursor:pointer;
+    }
+
+    .word-chip.used{
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    .sentence-builder{
+      min-height:70px;
+      padding:13px;
+      border:2px dashed #b8d8e8;
+      border-radius:14px;
+      background:#fff;
+      display:flex;
+      align-items:flex-start;
+      align-content:flex-start;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:12px 0;
+    }
+
+    .built-word{
+      border:0;
+      border-radius:999px;
+      padding:8px 12px;
+      background:var(--pale);
+      color:var(--blue);
+      font-weight:850;
+      cursor:pointer;
+    }
+
+    .feedback{
+      display:none;
+      margin-top:18px;
+      padding:16px;
+      border-radius:14px;
+      line-height:1.55;
+    }
+
+    .feedback.show{display:block}
+
+    .feedback.good{
+      background:var(--goodbg);
+      color:#14532d;
+      border:1px solid #bbf7d0;
+    }
+
+    .feedback.bad{
+      background:var(--badbg);
+      color:#7f1d1d;
+      border:1px solid #fecaca;
+    }
+
+    .feedback.neutral{
+      background:var(--warnbg);
+      color:#713f12;
+      border:1px solid #fde68a;
+    }
+
+    .model-answer{
+      margin-top:12px;
+      padding:13px 14px;
+      border-radius:12px;
+      background:#fff;
+      border:1px dashed #9dcfe7;
+    }
+
+    .controls{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .controls-right{
+      display:flex;
+      gap:10px;
+    }
+
+    .results{
+      display:none;
+      text-align:center;
+      padding:clamp(30px,5vw,54px);
+      margin-top:24px;
+    }
+
+    .results.show{display:block}
+
+    .score-ring{
+      width:140px;
+      height:140px;
+      border-radius:50%;
+      margin:18px auto 20px;
+      display:grid;
+      place-items:center;
+      background:conic-gradient(var(--sky) var(--score,0%),#dcecf5 0);
+      position:relative;
+    }
+
+    .score-ring::after{
+      content:"";
+      position:absolute;
+      inset:13px;
+      border-radius:50%;
+      background:#fff;
+    }
+
+    .score-ring strong{
+      position:relative;
+      z-index:1;
+      font-size:2rem;
+      color:var(--navy);
+    }
+
+    .report-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:22px 0;
+      text-align:left;
+    }
+
+    .report-item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:15px;
+      background:var(--ice);
+    }
+
+    .report-item strong{
+      display:block;
+      color:var(--navy);
+      margin-bottom:6px;
+    }
+
+    .note{
+      text-align:center;
+      color:var(--muted);
+      font-size:.82rem;
+      margin-top:28px;
+    }
+
+    @media(max-width:850px){
+      .hero{grid-template-columns:1fr}
+      .topbar{position:static}
+    }
+
+    @media(max-width:650px){
+      .topbar{align-items:flex-start;flex-direction:column}
+      .brand{min-width:0}
+      .header-tools{width:100%;justify-content:space-between}
+      .language-pair{flex:1}
+      .form-grid{grid-template-columns:1fr}
+      .field.full{grid-column:auto}
+      .controls{flex-direction:column}
+      .controls-right{flex-direction:column}
+      .controls button{width:100%}
+      .report-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
+
 <body>
-<header class="banner">
-<div class="brand-wrap">
-<div class="brand-mark">LT</div>
-<div>
-<div class="brand">LINGOTOTAL</div>
-<div class="tagline" data-i18n="tagline">Learn any language your way</div>
-</div>
-</div>
-<div class="header-tools">
-<div class="language-pair" id="languagePair">English → Català</div>
-<a class="home-link" href="index.html">
-<span>⌂</span><span data-i18n="changeLanguages">Activities / change languages</span>
-</a>
-</div>
-</header>
-<main class="page">
-<section class="panel hero">
-<h1 data-i18n="title">Grammar Practice</h1>
-<p data-i18n="intro">Choose a grammar point, read a short explanation and practise it with eight questions and detailed feedback.</p>
-</section>
-<section class="panel setup-panel">
-<div class="section-head">
-<div class="number">1</div>
-<div class="section-title" data-i18n="choose">Choose your lesson</div>
-</div>
-<label data-i18n="level">Level</label>
-<div class="level-grid level-first">
-<button class="choice level" data-i18n="beginner" data-level="beginner">Beginner </button>
-<button class="choice level" data-i18n="intermediate" data-level="intermediate">Intermediate </button>
-</div>
-<label data-i18n="grammarTopic" for="grammarTopic">Grammar point</label>
-<select id="grammarTopic">
-<option data-grammar-key="present" value="Present tense">Present tense</option>
-<option data-grammar-key="past" value="Past tenses">Past tenses</option>
-<option data-grammar-key="future" value="Future forms">Future forms</option>
-<option data-grammar-key="questions" value="Questions">Questions</option>
-<option data-grammar-key="negatives" value="Negatives">Negatives</option>
-<option data-grammar-key="articles" value="Articles">Articles</option>
-<option data-grammar-key="prepositions" value="Prepositions">Prepositions</option>
-<option data-grammar-key="pronouns" value="Pronouns">Pronouns</option>
-<option data-grammar-key="adjectives" value="Adjectives">Adjectives</option>
-<option data-grammar-key="comparatives" value="Comparatives">Comparatives</option>
-<option data-grammar-key="modals" value="Modal verbs">Modal verbs</option>
-<option data-grammar-key="conditionals" value="Conditionals">Conditionals</option>
-<option data-grammar-key="relatives" value="Relative clauses">Relative clauses</option>
-<option data-grammar-key="wordOrder" value="Word order">Word order</option>
-<option data-grammar-key="custom" value="custom">My own grammar point</option>
-</select>
-<div id="customWrap" style="display:none">
-<label data-i18n="customGrammar" for="customGrammar">Write your grammar point</label>
-<input id="customGrammar" maxlength="100" placeholder="e.g. por and para" type="text"/>
-</div>
-<div class="topic-priority"><label data-i18n="context" for="context">Optional topic or context</label><input data-i18n-placeholder="contextPlaceholder" id="context" maxlength="100" placeholder="For example: travel, work, family..." type="text"/></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">LT</div>
+      <div>
+        <strong>LINGOTOTAL</strong>
+        <div class="tagline" data-i18n="tagline">Learn any language your way</div>
+      </div>
+    </div>
 
-<div class="helper" data-i18n="contextHelp">Leave this blank if you do not need a special context.</div>
-</section>
-<section class="panel">
-<div class="section-head">
-<div class="number">2</div>
-<div class="section-title" data-i18n="generateTitle">Generate grammar activity</div>
-</div>
-<button class="primary-btn" data-i18n="generate" id="generateBtn">Generate grammar practice</button>
-<div class="status" id="loading">
-<div class="spinner"></div>
-<span data-i18n="generating">Generating your grammar activity…</span>
-</div>
-<div class="helper" data-i18n="waiting" id="waiting" style="margin-top:14px">Your lesson will appear here.</div>
-</section>
-<section class="panel exercise" id="exercise">
-<div class="section-head">
-<div class="number">3</div>
-<div class="section-title" id="lessonTitle">Grammar explanation</div>
-</div>
-<div class="explanation" id="explanation"></div>
-<div class="examples" id="examples"></div>
-<div class="listen-row">
-<button class="listen-btn" data-i18n="listen" id="listenBtn">🔊 Listen to the examples</button>
-</div>
-<div class="section-head" style="margin-top:22px">
-<div class="number">4</div>
-<div class="section-title" data-i18n="practice">Practice</div>
-</div>
-<div id="mcq"></div>
-<div id="gaps"></div>
-<div class="actions">
-<button class="primary-btn" data-i18n="check" id="checkBtn">Check answers</button>
-<button class="secondary-btn" data-i18n="newLesson" id="newBtn">New lesson</button>
-</div>
-<div class="feedback success" id="feedbackOk"></div>
-<div class="feedback error" id="feedbackBad"></div>
-<div class="score" id="score">
-<div class="score-card">
-<div class="score-value" id="choiceScore">0/4</div>
-<div class="score-label" data-i18n="choices">Multiple choice</div>
-</div>
-<div class="score-card">
-<div class="score-value" id="gapScore">0/4</div>
-<div class="score-label" data-i18n="gaps">Gap fill</div>
-</div>
-<div class="score-card">
-<div class="score-value" id="totalScore">0/8</div>
-<div class="score-label" data-i18n="total">Total</div>
-</div>
-</div>
-</section>
-<section class="panel">
-<div class="section-head">
-<div class="number">5</div>
-<div class="section-title" data-i18n="restart">Restart</div>
-</div>
-<button class="secondary-btn" data-i18n="clear" id="clearBtn">Clear everything</button>
-</section>
-</main>
-<div class="notice" id="notice"></div>
-<footer class="footer">LingoTotal · <span data-i18n="tagline">Learn any language your way</span></footer>
+    <div class="header-tools">
+      <div class="language-pair" id="languagePair">English → Català</div>
+      <a class="home" href="index.html">
+        <span>⌂</span>
+        <span data-i18n="home">Activities / change languages</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <article class="hero-copy card">
+        <div class="eyebrow" data-i18n="eyebrow">AI grammar in real context</div>
+        <h1 data-i18n="title">Grammar Masterclass</h1>
+        <p class="lead" data-i18n="intro">
+          Choose your level and grammar point. Work through a complete lesson that helps you notice, understand, practise and use grammar naturally.
+        </p>
+
+        <div class="feature-row">
+          <span class="pill" data-i18n="f1">Grammar in context</span>
+          <span class="pill" data-i18n="f2">Immediate feedback</span>
+          <span class="pill" data-i18n="f3">A1–C2</span>
+          <span class="pill" data-i18n="f4">Listening and production</span>
+        </div>
+      </article>
+
+      <aside class="setup card">
+        <h2 data-i18n="create">Create your grammar lesson</h2>
+
+        <div class="form-grid">
+          <input type="hidden" id="uiLanguage" value="English">
+          <input type="hidden" id="targetLanguage" value="English">
+
+<div class="field">
+            <label for="level" data-i18n="level">Level</label>
+            <select id="level">
+              <option>A1</option>
+              <option>A2</option>
+              <option selected>B1</option>
+              <option>B2</option>
+              <option>C1</option>
+              <option>C2</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="grammarTopic" data-i18n="grammarTopic">Grammar topic</label>
+            <select id="grammarTopic">
+              <option value="Present tense">Present tense</option>
+              <option value="Past tenses">Past tenses</option>
+              <option value="Future forms">Future forms</option>
+              <option value="Conditionals">Conditionals</option>
+              <option value="Modal verbs">Modal verbs</option>
+              <option value="Passive voice">Passive voice</option>
+              <option value="Reported speech">Reported speech</option>
+              <option value="Relative clauses">Relative clauses</option>
+              <option value="Articles">Articles</option>
+              <option value="Prepositions">Prepositions</option>
+              <option value="Pronouns">Pronouns</option>
+              <option value="Word order">Word order</option>
+              <option value="Questions">Questions</option>
+              <option value="Subjunctive">Subjunctive</option>
+              <option value="custom">My own grammar point</option>
+            </select>
+          </div>
+
+          <div class="field full" id="customGrammarWrap" hidden>
+            <label for="customGrammar" data-i18n="customGrammar">Write your grammar point</label>
+            <input id="customGrammar" maxlength="160" placeholder="e.g. the difference between por and para">
+          </div>
+
+          <div class="field full">
+            <label for="context" data-i18n="context">Context or theme</label>
+            <input id="context" maxlength="160" placeholder="e.g. travel, work, relationships, everyday conversation">
+          </div>
+
+          <div class="field full">
+            <label for="specialFocus" data-i18n="specialFocus">Special focus</label>
+            <input id="specialFocus" maxlength="180" placeholder="e.g. informal spoken language, common mistakes, exam preparation">
+          </div>
+        </div>
+
+        <button class="primary generate" id="generateBtn" data-i18n="generate">Generate lesson</button>
+        <div class="status" id="status" aria-live="polite"></div>
+      </aside>
+    </section>
+
+    <section class="workspace" id="workspace">
+      <div class="progress">
+        <div class="progress-head">
+          <span id="progressText">Stage 1 of 10</span>
+          <span id="scoreText">Score: 0</span>
+        </div>
+        <div class="bar"><span id="progressBar"></span></div>
+      </div>
+
+      <article class="lesson-card card">
+        <div class="journey" id="journey"></div>
+
+        <div class="eyebrow" id="stageLabel">Stage 1</div>
+        <h2 class="stage-title" id="stageTitle"></h2>
+        <p class="instruction" id="instruction"></p>
+
+        <button class="secondary listen-btn" id="listenBtn">
+          🔊 <span data-i18n="listen">Listen</span>
+        </button>
+
+        <div id="stageContent"></div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+
+        <div class="controls">
+          <button class="secondary" id="restartLessonBtn" data-i18n="newLesson">New lesson</button>
+
+          <div class="controls-right">
+            <button class="secondary" id="showAnswerBtn" data-i18n="showAnswer">Show answer</button>
+            <button class="primary" id="nextBtn" disabled data-i18n="next">Next stage</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="results card" id="results">
+      <div class="eyebrow" data-i18n="complete">Lesson complete</div>
+      <h2 data-i18n="resultTitle">Your grammar report</h2>
+
+      <div class="score-ring" id="scoreRing">
+        <strong id="finalScore">0%</strong>
+      </div>
+
+      <p id="resultMessage"></p>
+
+      <div class="report-grid">
+        <div class="report-item">
+          <strong data-i18n="recognition">Recognition</strong>
+          <span id="recognitionResult">0%</span>
+        </div>
+
+        <div class="report-item">
+          <strong data-i18n="accuracy">Accuracy</strong>
+          <span id="accuracyResult">0%</span>
+        </div>
+
+        <div class="report-item">
+          <strong data-i18n="production">Production</strong>
+          <span id="productionResult">Completed</span>
+        </div>
+      </div>
+
+      <p id="nextSuggestion"></p>
+      <button class="primary" id="restartBtn" data-i18n="again">Create another lesson</button>
+    </section>
+
+    <p class="note">Lingototal · AI-generated language may occasionally require teacher review.</p>
+  </main>
+
 <script>
-document.addEventListener('DOMContentLoaded',()=>{
+(() => {
+  "use strict";
 
-const T={
- en:{tagline:'Learn any language your way',changeLanguages:'Activities / change languages',title:'Grammar Practice',intro:'Choose a grammar point, read a short explanation and practise it with eight questions and detailed feedback.',choose:'Start by choosing your level',level:'Level',beginner:'Revising the basics',intermediate:'Building confidence',grammarTopic:'Grammar point',customGrammar:'Write your grammar point',context:'Optional topic or context',contextPlaceholder:'For example: travel, work, family...',contextHelp:'Leave this blank if you do not need a special context.',generateTitle:'Generate grammar activity',generate:'Generate grammar practice',generating:'Generating your grammar activity…',waiting:'Your lesson will appear here.',listen:'🔊 Listen to the examples',practice:'Practice',check:'Check answers',newLesson:'New lesson',choices:'Multiple choice',gaps:'Gap fill',total:'Total',restart:'Restart',clear:'Clear everything',selectLevel:'Select a level first.',enterGrammar:'Write your grammar point.',answerAll:'Complete all unanswered questions first.',serverError:'The lesson could not be generated.',perfect:'Excellent. All six answers are correct.',some:'Good work. Review the explanation and the answers marked in red.',playing:'Playing examples…'},
- ca:{tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',title:'Pràctica de gramàtica',intro:'Tria un punt gramatical, llegeix una explicació breu i practica amb vuit preguntes i feedback detallat.',choose:'Comença triant el teu nivell',level:'Nivell',beginner:'Repassar les bases',intermediate:'Guanyar confiança',grammarTopic:'Punt gramatical',customGrammar:'Escriu el punt gramatical',context:'Tema o context opcional',contextPlaceholder:'Per exemple: viatges, feina, família...',contextHelp:'Deixa-ho en blanc si no necessites un context especial.',generateTitle:'Genera l’activitat de gramàtica',generate:'Genera la pràctica de gramàtica',generating:'Generant l’activitat de gramàtica…',waiting:'La lliçó apareixerà aquí.',listen:'🔊 Escolta els exemples',practice:'Pràctica',check:'Comprova les respostes',newLesson:'Nova lliçó',choices:'Opció múltiple',gaps:'Omplir buits',total:'Total',restart:'Reinicia',clear:'Esborra-ho tot',selectLevel:'Primer selecciona un nivell.',enterGrammar:'Escriu el punt gramatical.',answerAll:'Completa totes les preguntes pendents.',serverError:'No s’ha pogut generar la lliçó.',perfect:'Excel·lent. Les sis respostes són correctes.',some:'Bona feina. Repassa l’explicació i les respostes marcades en vermell.',playing:'Reproduint els exemples…'},
- es:{tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',title:'Práctica de gramática',intro:'Elige un punto gramatical, lee una explicación breve y practica con ocho preguntas y feedback detallado.',choose:'Empieza eligiendo tu nivel',level:'Nivel',beginner:'Repasar lo básico',intermediate:'Ganar confianza',grammarTopic:'Punto gramatical',customGrammar:'Escribe el punto gramatical',context:'Tema o contexto opcional',contextPlaceholder:'Por ejemplo: viajes, trabajo, familia...',contextHelp:'Déjalo en blanco si no necesitas un contexto especial.',generateTitle:'Genera la actividad de gramática',generate:'Generar práctica de gramática',generating:'Generando la actividad de gramática…',waiting:'La lección aparecerá aquí.',listen:'🔊 Escuchar los ejemplos',practice:'Práctica',check:'Comprobar respuestas',newLesson:'Nueva lección',choices:'Opción múltiple',gaps:'Completar huecos',total:'Total',restart:'Reiniciar',clear:'Borrar todo',selectLevel:'Primero selecciona un nivel.',enterGrammar:'Escribe el punto gramatical.',answerAll:'Completa todas las preguntas pendientes.',serverError:'No se ha podido generar la lección.',perfect:'Excelente. Las seis respuestas son correctas.',some:'Buen trabajo. Revisa la explicación y las respuestas marcadas en rojo.',playing:'Reproduciendo los ejemplos…'},
- fr:{tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',title:'Pratique de grammaire',intro:'Choisissez un point grammatical, lisez une courte explication et entraînez-vous avec huit questions et un retour détaillé.',choose:'Commencez par choisir votre niveau',level:'Niveau',beginner:'Revoir les bases',intermediate:'Prendre confiance',grammarTopic:'Point grammatical',customGrammar:'Écrivez votre point grammatical',context:'Thème ou contexte facultatif',contextPlaceholder:'Par exemple : voyages, travail, famille...',contextHelp:'Laissez vide si vous ne souhaitez pas de contexte particulier.',generateTitle:'Générez l’activité de grammaire',generate:'Générer la pratique de grammaire',generating:'Génération de l’activité de grammaire…',waiting:'La leçon apparaîtra ici.',listen:'🔊 Écouter les exemples',practice:'Pratique',check:'Vérifier les réponses',newLesson:'Nouvelle leçon',choices:'Choix multiple',gaps:'Texte à trous',total:'Total',restart:'Recommencer',clear:'Tout effacer',selectLevel:'Choisissez d’abord un niveau.',enterGrammar:'Écrivez le point grammatical.',answerAll:'Complétez d’abord toutes les questions restantes.',serverError:'Impossible de générer la leçon.',perfect:'Excellent. Les six réponses sont correctes.',some:'Bon travail. Relisez l’explication et les réponses en rouge.',playing:'Lecture des exemples…'},
- de:{tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',title:'Grammatikübung',intro:'Wähle ein Grammatikthema, lies eine kurze Erklärung und übe mit acht Fragen und detaillierter Rückmeldung.',choose:'Starte mit deinem Niveau',level:'Niveau',beginner:'Grundlagen auffrischen',intermediate:'Sicherheit gewinnen',grammarTopic:'Grammatikthema',customGrammar:'Grammatikthema eingeben',context:'Optionales Thema oder Kontext',contextPlaceholder:'Zum Beispiel: Reisen, Arbeit, Familie...',contextHelp:'Lass das Feld leer, wenn du keinen besonderen Kontext brauchst.',generateTitle:'Grammatikübung erstellen',generate:'Grammatikübung erstellen',generating:'Grammatikübung wird erstellt…',waiting:'Die Lektion erscheint hier.',listen:'🔊 Beispiele anhören',practice:'Übung',check:'Antworten prüfen',newLesson:'Neue Lektion',choices:'Multiple Choice',gaps:'Lückentext',total:'Gesamt',restart:'Neu starten',clear:'Alles löschen',selectLevel:'Wähle zuerst ein Niveau.',enterGrammar:'Gib dein Grammatikthema ein.',answerAll:'Beantworte zuerst alle noch offenen Fragen.',serverError:'Die Lektion konnte nicht erstellt werden.',perfect:'Ausgezeichnet. Alle sechs Antworten sind richtig.',some:'Gute Arbeit. Lies die Erklärung und die rot markierten Antworten noch einmal.',playing:'Beispiele werden vorgelesen…'}
-};
+  const API_ENDPOINT = "/.netlify/functions/gemini";
 
-const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',cy:'Cymraeg',gd:'Gàidhlig',ja:'日本語',ar:'العربية'};
-const grammarLabels={
- en:{present:'Present tense',past:'Past tenses',future:'Future forms',questions:'Questions',negatives:'Negatives',articles:'Articles',prepositions:'Prepositions',pronouns:'Pronouns',adjectives:'Adjectives',comparatives:'Comparatives',modals:'Modal verbs',conditionals:'Conditionals',relatives:'Relative clauses',wordOrder:'Word order',custom:'My own grammar point'},
- ca:{present:'Present',past:'Temps de passat',future:'Formes de futur',questions:'Preguntes',negatives:'Negació',articles:'Articles',prepositions:'Preposicions',pronouns:'Pronoms',adjectives:'Adjectius',comparatives:'Comparatius',modals:'Verbs modals',conditionals:'Condicionals',relatives:'Oracions de relatiu',wordOrder:'Ordre de les paraules',custom:'El meu propi punt gramatical'},
- es:{present:'Presente',past:'Tiempos de pasado',future:'Formas de futuro',questions:'Preguntas',negatives:'Negación',articles:'Artículos',prepositions:'Preposiciones',pronouns:'Pronombres',adjectives:'Adjetivos',comparatives:'Comparativos',modals:'Verbos modales',conditionals:'Condicionales',relatives:'Oraciones de relativo',wordOrder:'Orden de las palabras',custom:'Mi propio punto gramatical'},
- fr:{present:'Présent',past:'Temps du passé',future:'Formes du futur',questions:'Questions',negatives:'Négation',articles:'Articles',prepositions:'Prépositions',pronouns:'Pronoms',adjectives:'Adjectifs',comparatives:'Comparatifs',modals:'Verbes modaux',conditionals:'Conditionnels',relatives:'Propositions relatives',wordOrder:'Ordre des mots',custom:'Mon propre point grammatical'},
- de:{present:'Präsens',past:'Vergangenheitsformen',future:'Zukunftsformen',questions:'Fragen',negatives:'Verneinung',articles:'Artikel',prepositions:'Präpositionen',pronouns:'Pronomen',adjectives:'Adjektive',comparatives:'Vergleichsformen',modals:'Modalverben',conditionals:'Konditionalsätze',relatives:'Relativsätze',wordOrder:'Wortstellung',custom:'Eigenes Grammatikthema'},
- eu:{present:'Orainaldia',past:'Iraganeko denborak',future:'Etorkizuneko formak',questions:'Galderak',negatives:'Ezezko formak',articles:'Artikuluak',prepositions:'Postposizioak / preposizioak',pronouns:'Izenordainak',adjectives:'Adjektiboak',comparatives:'Konparatiboak',modals:'Aditz modalak',conditionals:'Baldintzak',relatives:'Erlatibozko perpausak',wordOrder:'Hitzen ordena',custom:'Nire gramatika-puntua'},
- cy:{present:'Amser presennol',past:'Amserau gorffennol',future:'Ffurfiau dyfodol',questions:'Cwestiynau',negatives:'Negyddion',articles:'Erthyglau',prepositions:'Arddodiaid',pronouns:'Rhagenwau',adjectives:'Ansoddeiriau',comparatives:'Cymariaethau',modals:'Berfau moddol',conditionals:'Amodau',relatives:'Cymalau perthynol',wordOrder:'Trefn geiriau',custom:'Fy mhwynt gramadeg fy hun'},
- gd:{present:'Tràth làthaireach',past:'Tràthan caithte',future:'Foirmean teachdail',questions:'Ceistean',negatives:'Àicheadh',articles:'Artaigilean',prepositions:'Roimhearan',pronouns:'Riochdairean',adjectives:'Buadhairean',comparatives:'Coimeasan',modals:'Gnìomhairean modail',conditionals:'Cumhaichean',relatives:'Clàsan dàimheach',wordOrder:'Òrdugh fhaclan',custom:'Mo phuing gràmair fhèin'},
- ja:{present:'現在形',past:'過去形',future:'未来表現',questions:'疑問文',negatives:'否定文',articles:'冠詞',prepositions:'前置詞',pronouns:'代名詞',adjectives:'形容詞',comparatives:'比較表現',modals:'助動詞',conditionals:'条件文',relatives:'関係節',wordOrder:'語順',custom:'自分で文法項目を入力'},
- ar:{present:'زمن الحاضر',past:'أزمنة الماضي',future:'صيغ المستقبل',questions:'الأسئلة',negatives:'النفي',articles:'أدوات التعريف والتنكير',prepositions:'حروف الجر',pronouns:'الضمائر',adjectives:'الصفات',comparatives:'المقارنة',modals:'الأفعال الناقصة',conditionals:'الجمل الشرطية',relatives:'الجمل الموصولة',wordOrder:'ترتيب الكلمات',custom:'نقطة نحوية من اختياري'}
-};
+  const translations = {
+    English:{
+      tagline:"Learn any language your way",
+      home:"Activities / change languages",
+      eyebrow:"AI grammar in real context",
+      title:"Grammar Masterclass",
+      intro:"Choose your level and grammar point. Work through a complete lesson that helps you notice, understand, practise and use grammar naturally.",
+      f1:"Grammar in context",
+      f2:"Immediate feedback",
+      f3:"A1–C2",
+      f4:"Listening and production",
+      create:"Create your grammar lesson",
+      uiLanguage:"Website language",
+      targetLanguage:"Target language",
+      level:"Level",
+      grammarTopic:"Grammar topic",
+      customGrammar:"Write your grammar point",
+      context:"Context or theme",
+      specialFocus:"Special focus",
+      generate:"Generate lesson",
+      listen:"Listen",
+      newLesson:"New lesson",
+      showAnswer:"Show answer",
+      hideAnswer:"Hide answer",
+      next:"Next stage",
+      finish:"See report",
+      complete:"Lesson complete",
+      resultTitle:"Your grammar report",
+      recognition:"Recognition",
+      accuracy:"Accuracy",
+      production:"Production",
+      again:"Create another lesson",
+      loading:"Creating your grammar lesson…",
+      error:"The lesson could not be generated.",
+      stage:"Stage",
+      of:"of",
+      score:"Score",
+      check:"Check answer",
+      correct:"Correct!",
+      notQuite:"Not quite.",
+      model:"Model answer",
+      completed:"Completed",
+      writeAnswer:"Write your answer here…",
+      buildInstruction:"Select the words in the correct order. Click a selected word to remove it.",
+      chooseInstruction:"Choose the best answer.",
+      gapInstruction:"Complete the sentence.",
+      correctionInstruction:"Correct the mistake.",
+      productionInstruction:"Write your own example using the target grammar."
+    },
 
-const feedbackText={
- en:{gapIntro:'Complete each sentence with the form required by the grammar point.',correct:'Correct',tryAgain:'Try again',hint:'Hint',answer:'Correct answer',why:'Why',mcCorrect:'Correct.',mcWrong:'Not quite.',answerAll:'Complete all unanswered questions first.',perfect:'Excellent — all eight answers are correct.',some:'Good work. Use the individual feedback below each question to improve your answers.'},
- ca:{gapIntro:'Completa cada frase amb la forma que exigeix el punt gramatical.',correct:'Correcte',tryAgain:'Torna-ho a provar',hint:'Pista',answer:'Resposta correcta',why:'Per què',mcCorrect:'Correcte.',mcWrong:'No ben bé.',answerAll:'Completa primer totes les preguntes pendents.',perfect:'Excel·lent: les vuit respostes són correctes.',some:'Bona feina. Fes servir el feedback de cada pregunta per millorar les respostes.'},
- es:{gapIntro:'Completa cada frase con la forma que exige el punto gramatical.',correct:'Correcto',tryAgain:'Inténtalo de nuevo',hint:'Pista',answer:'Respuesta correcta',why:'Por qué',mcCorrect:'Correcto.',mcWrong:'No exactamente.',answerAll:'Completa primero todas las preguntas pendientes.',perfect:'Excelente: las ocho respuestas son correctas.',some:'Buen trabajo. Usa el feedback de cada pregunta para mejorar tus respuestas.'},
- fr:{gapIntro:'Complétez chaque phrase avec la forme exigée par le point grammatical.',correct:'Correct',tryAgain:'Réessayez',hint:'Indice',answer:'Bonne réponse',why:'Pourquoi',mcCorrect:'Correct.',mcWrong:'Pas tout à fait.',answerAll:'Complétez d’abord toutes les questions restantes.',perfect:'Excellent : les huit réponses sont correctes.',some:'Bon travail. Utilisez le retour sous chaque question pour améliorer vos réponses.'},
- de:{gapIntro:'Ergänze jeden Satz mit der Form, die das Grammatikthema verlangt.',correct:'Richtig',tryAgain:'Versuch es noch einmal',hint:'Hinweis',answer:'Richtige Antwort',why:'Warum',mcCorrect:'Richtig.',mcWrong:'Nicht ganz.',answerAll:'Beantworte zuerst alle noch offenen Fragen.',perfect:'Ausgezeichnet – alle acht Antworten sind richtig.',some:'Gute Arbeit. Nutze die Rückmeldung unter jeder Frage, um deine Antworten zu verbessern.'},
- eu:{gapIntro:'Osatu esaldi bakoitza hautatutako gramatika-puntuak eskatzen duen formarekin.',correct:'Zuzena',tryAgain:'Saiatu berriro',hint:'Pista',answer:'Erantzun zuzena',why:'Zergatik',mcCorrect:'Zuzena.',mcWrong:'Ez guztiz.',answerAll:'Osatu lehenik erantzun gabe dauden galdera guztiak.',perfect:'Bikain — zortzi erantzunak zuzenak dira.',some:'Lan ona. Erabili galdera bakoitzaren azpiko feedbacka erantzunak hobetzeko.'},
- cy:{gapIntro:'Cwblhewch bob brawddeg gyda’r ffurf sy’n ofynnol gan y pwynt gramadeg.',correct:'Cywir',tryAgain:'Rhowch gynnig arall',hint:'Awgrym',answer:'Ateb cywir',why:'Pam',mcCorrect:'Cywir.',mcWrong:'Ddim yn hollol.',answerAll:'Cwblhewch bob cwestiwn sydd heb ei ateb yn gyntaf.',perfect:'Ardderchog — mae pob un o’r wyth ateb yn gywir.',some:'Gwaith da. Defnyddiwch yr adborth o dan bob cwestiwn i wella’ch atebion.'},
- gd:{gapIntro:'Lìon gach seantans leis an fhoirm a tha a dhìth airson a’ phuing gràmair.',correct:'Ceart',tryAgain:'Feuch a-rithist',hint:'Beachd-cuideachaidh',answer:'Freagairt cheart',why:'Carson',mcCorrect:'Ceart.',mcWrong:'Chan eil buileach.',answerAll:'Lìon a h-uile ceist gun fhreagairt an toiseach.',perfect:'Sgoinneil — tha na h-ochd freagairtean ceart.',some:'Obair mhath. Cleachd am fios-air-ais fo gach ceist gus na freagairtean agad a leasachadh.'},
- ja:{gapIntro:'選んだ文法項目に合う形を入れて、各文を完成させてください。',correct:'正解',tryAgain:'もう一度',hint:'ヒント',answer:'正解',why:'理由',mcCorrect:'正解です。',mcWrong:'もう少しです。',answerAll:'未回答の問題をすべて完成させてください。',perfect:'すばらしいです。8問すべて正解です。',some:'よくできました。各問題のフィードバックを使って答えを改善しましょう。'},
- ar:{gapIntro:'أكمل كل جملة بالصيغة التي تتطلبها النقطة النحوية.',correct:'صحيح',tryAgain:'حاول مرة أخرى',hint:'تلميح',answer:'الإجابة الصحيحة',why:'السبب',mcCorrect:'صحيح.',mcWrong:'ليس تمامًا.',answerAll:'أكمل أولاً جميع الأسئلة التي لم تُجب عنها.',perfect:'ممتاز — الإجابات الثماني كلها صحيحة.',some:'عمل جيد. استخدم الملاحظات تحت كل سؤال لتحسين إجاباتك.'}
-};
+    "Català":{
+      tagline:"Aprèn qualsevol llengua a la teva manera",
+      home:"Activitats / canvia les llengües",
+      eyebrow:"Gramàtica amb IA en context real",
+      title:"Classe magistral de gramàtica",
+      intro:"Tria el nivell i el punt gramatical. Completa una lliçó que t'ajuda a observar, entendre, practicar i utilitzar la gramàtica amb naturalitat.",
+      f1:"Gramàtica en context",
+      f2:"Feedback immediat",
+      f3:"A1–C2",
+      f4:"Comprensió i producció",
+      create:"Crea la lliçó de gramàtica",
+      uiLanguage:"Llengua de la web",
+      targetLanguage:"Llengua objectiu",
+      level:"Nivell",
+      grammarTopic:"Tema gramatical",
+      customGrammar:"Escriu el punt gramatical",
+      context:"Context o tema",
+      specialFocus:"Enfocament especial",
+      generate:"Genera la lliçó",
+      listen:"Escolta",
+      newLesson:"Nova lliçó",
+      showAnswer:"Mostra la resposta",
+      hideAnswer:"Amaga la resposta",
+      next:"Etapa següent",
+      finish:"Mostra l'informe",
+      complete:"Lliçó completada",
+      resultTitle:"El teu informe gramatical",
+      recognition:"Reconeixement",
+      accuracy:"Precisió",
+      production:"Producció",
+      again:"Crea una altra lliçó",
+      loading:"Estem creant la lliçó de gramàtica…",
+      error:"No s'ha pogut generar la lliçó.",
+      stage:"Etapa",
+      of:"de",
+      score:"Puntuació",
+      check:"Comprova",
+      correct:"Correcte!",
+      notQuite:"No ben bé.",
+      model:"Resposta model",
+      completed:"Completat",
+      writeAnswer:"Escriu la resposta aquí…",
+      buildInstruction:"Selecciona les paraules en l'ordre correcte. Prem una paraula seleccionada per eliminar-la.",
+      chooseInstruction:"Tria la millor resposta.",
+      gapInstruction:"Completa la frase.",
+      correctionInstruction:"Corregeix l'error.",
+      productionInstruction:"Escriu un exemple propi amb la gramàtica treballada."
+    },
 
-function ft(key){return (feedbackText[uiLanguage]||feedbackText.en)[key]||feedbackText.en[key]||key;}
+    "Español":{
+      tagline:"Aprende cualquier idioma a tu manera",
+      home:"Actividades / cambiar idiomas",
+      eyebrow:"Gramática con IA en contexto real",
+      title:"Clase magistral de gramática",
+      intro:"Elige el nivel y el punto gramatical. Completa una lección que te ayuda a observar, entender, practicar y usar la gramática de forma natural.",
+      f1:"Gramática en contexto",
+      f2:"Feedback inmediato",
+      f3:"A1–C2",
+      f4:"Comprensión y producción",
+      create:"Crea tu lección de gramática",
+      uiLanguage:"Idioma de la web",
+      targetLanguage:"Idioma objetivo",
+      level:"Nivel",
+      grammarTopic:"Tema gramatical",
+      customGrammar:"Escribe el punto gramatical",
+      context:"Contexto o tema",
+      specialFocus:"Enfoque especial",
+      generate:"Generar lección",
+      listen:"Escuchar",
+      newLesson:"Nueva lección",
+      showAnswer:"Mostrar respuesta",
+      hideAnswer:"Ocultar respuesta",
+      next:"Siguiente etapa",
+      finish:"Ver informe",
+      complete:"Lección completada",
+      resultTitle:"Tu informe gramatical",
+      recognition:"Reconocimiento",
+      accuracy:"Precisión",
+      production:"Producción",
+      again:"Crear otra lección",
+      loading:"Creando tu lección de gramática…",
+      error:"No se ha podido generar la lección.",
+      stage:"Etapa",
+      of:"de",
+      score:"Puntuación",
+      check:"Comprobar",
+      correct:"¡Correcto!",
+      notQuite:"No exactamente.",
+      model:"Respuesta modelo",
+      completed:"Completado",
+      writeAnswer:"Escribe tu respuesta aquí…",
+      buildInstruction:"Selecciona las palabras en el orden correcto. Pulsa una palabra seleccionada para eliminarla.",
+      chooseInstruction:"Elige la mejor respuesta.",
+      gapInstruction:"Completa la frase.",
+      correctionInstruction:"Corrige el error.",
+      productionInstruction:"Escribe un ejemplo propio usando la gramática trabajada."
+    },
 
-const targetNames={
- English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',
- Italian:'Italiano',Portuguese:'Português',Basque:'Euskara',Welsh:'Cymraeg',
- 'Scottish Gaelic':'Gàidhlig',Gaelic:'Gàidhlig',Japanese:'日本語',Arabic:'العربية'
-};
-const voices={
- English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',
- Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Welsh:'cy-GB',
- 'Scottish Gaelic':'gd-GB',Gaelic:'gd-GB',Japanese:'ja-JP',Arabic:'ar-SA'
-};
+    "Français":{
+      tagline:"Apprenez n'importe quelle langue à votre façon",
+      home:"Activités / changer les langues",
+      eyebrow:"Grammaire avec l'IA en contexte réel",
+      title:"Masterclass de grammaire",
+      intro:"Choisissez le niveau et le point grammatical. Suivez une leçon complète pour observer, comprendre, pratiquer et utiliser la grammaire naturellement.",
+      f1:"Grammaire en contexte",
+      f2:"Retour immédiat",
+      f3:"A1–C2",
+      f4:"Compréhension et production",
+      create:"Créez votre leçon de grammaire",
+      uiLanguage:"Langue du site",
+      targetLanguage:"Langue cible",
+      level:"Niveau",
+      grammarTopic:"Point grammatical",
+      customGrammar:"Écrivez votre point grammatical",
+      context:"Contexte ou thème",
+      specialFocus:"Objectif particulier",
+      generate:"Générer la leçon",
+      listen:"Écouter",
+      newLesson:"Nouvelle leçon",
+      showAnswer:"Afficher la réponse",
+      hideAnswer:"Masquer la réponse",
+      next:"Étape suivante",
+      finish:"Voir le rapport",
+      complete:"Leçon terminée",
+      resultTitle:"Votre rapport grammatical",
+      recognition:"Reconnaissance",
+      accuracy:"Précision",
+      production:"Production",
+      again:"Créer une autre leçon",
+      loading:"Création de votre leçon de grammaire…",
+      error:"Impossible de générer la leçon.",
+      stage:"Étape",
+      of:"sur",
+      score:"Score",
+      check:"Vérifier",
+      correct:"Correct !",
+      notQuite:"Pas tout à fait.",
+      model:"Réponse modèle",
+      completed:"Terminé",
+      writeAnswer:"Écrivez votre réponse ici…",
+      buildInstruction:"Sélectionnez les mots dans le bon ordre. Cliquez sur un mot choisi pour le retirer.",
+      chooseInstruction:"Choisissez la meilleure réponse.",
+      gapInstruction:"Complétez la phrase.",
+      correctionInstruction:"Corrigez l'erreur.",
+      productionInstruction:"Écrivez votre propre exemple avec la grammaire étudiée."
+    },
 
-const params=new URLSearchParams(location.search);
-let uiLanguage=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-let targetLanguage=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
+    "Deutsch":{
+      tagline:"Lerne jede Sprache auf deine Weise",
+      home:"Aktivitäten / Sprachen ändern",
+      eyebrow:"KI-Grammatik im echten Kontext",
+      title:"Grammatik-Masterclass",
+      intro:"Wähle Niveau und Grammatikthema. Bearbeite eine vollständige Lektion, in der du Grammatik erkennst, verstehst, übst und natürlich verwendest.",
+      f1:"Grammatik im Kontext",
+      f2:"Sofortiges Feedback",
+      f3:"A1–C2",
+      f4:"Verstehen und Anwenden",
+      create:"Erstelle deine Grammatiklektion",
+      uiLanguage:"Webseitensprache",
+      targetLanguage:"Zielsprache",
+      level:"Niveau",
+      grammarTopic:"Grammatikthema",
+      customGrammar:"Grammatikthema eingeben",
+      context:"Kontext oder Thema",
+      specialFocus:"Besonderer Schwerpunkt",
+      generate:"Lektion erstellen",
+      listen:"Anhören",
+      newLesson:"Neue Lektion",
+      showAnswer:"Antwort zeigen",
+      hideAnswer:"Antwort ausblenden",
+      next:"Nächste Etappe",
+      finish:"Bericht anzeigen",
+      complete:"Lektion abgeschlossen",
+      resultTitle:"Dein Grammatikbericht",
+      recognition:"Erkennen",
+      accuracy:"Genauigkeit",
+      production:"Produktion",
+      again:"Weitere Lektion erstellen",
+      loading:"Deine Grammatiklektion wird erstellt…",
+      error:"Die Lektion konnte nicht erstellt werden.",
+      stage:"Etappe",
+      of:"von",
+      score:"Punkte",
+      check:"Antwort prüfen",
+      correct:"Richtig!",
+      notQuite:"Nicht ganz.",
+      model:"Modellantwort",
+      completed:"Abgeschlossen",
+      writeAnswer:"Schreibe deine Antwort hier…",
+      buildInstruction:"Wähle die Wörter in der richtigen Reihenfolge. Klicke auf ein gewähltes Wort, um es zu entfernen.",
+      chooseInstruction:"Wähle die beste Antwort.",
+      gapInstruction:"Vervollständige den Satz.",
+      correctionInstruction:"Korrigiere den Fehler.",
+      productionInstruction:"Schreibe ein eigenes Beispiel mit der Zielgrammatik."
+    },
 
-if(!uiNames[uiLanguage])uiLanguage='en';
-if(!targetNames[targetLanguage])targetLanguage='English';
+    "Italiano":{
+      tagline:"Impara qualsiasi lingua a modo tuo",
+      home:"Attività / cambia lingue",
+      eyebrow:"Grammatica con IA in un contesto reale",
+      title:"Masterclass di grammatica",
+      intro:"Scegli il livello e il punto grammaticale. Segui una lezione completa per osservare, capire, praticare e usare la grammatica in modo naturale.",
+      f1:"Grammatica nel contesto",f2:"Feedback immediato",f3:"A1–C2",f4:"Comprensione e produzione",
+      create:"Crea la tua lezione di grammatica",uiLanguage:"Lingua del sito",targetLanguage:"Lingua obiettivo",
+      level:"Livello",grammarTopic:"Punto grammaticale",customGrammar:"Scrivi il punto grammaticale",
+      context:"Contesto o tema",specialFocus:"Obiettivo particolare",generate:"Genera lezione",
+      listen:"Ascolta",newLesson:"Nuova lezione",showAnswer:"Mostra risposta",hideAnswer:"Nascondi risposta",
+      next:"Fase successiva",finish:"Vedi rapporto",complete:"Lezione completata",
+      resultTitle:"Il tuo rapporto grammaticale",recognition:"Riconoscimento",accuracy:"Precisione",
+      production:"Produzione",again:"Crea un'altra lezione",loading:"Creazione della lezione di grammatica…",
+      error:"Non è stato possibile generare la lezione.",stage:"Fase",of:"di",score:"Punteggio",
+      check:"Controlla",correct:"Corretto!",notQuite:"Non proprio.",model:"Risposta modello",
+      completed:"Completato",writeAnswer:"Scrivi qui la tua risposta…",
+      buildInstruction:"Seleziona le parole nell'ordine corretto. Tocca una parola scelta per rimuoverla.",
+      chooseInstruction:"Scegli la risposta migliore.",gapInstruction:"Completa la frase.",
+      correctionInstruction:"Correggi l'errore.",productionInstruction:"Scrivi un tuo esempio usando la grammatica studiata."
+    },
 
-localStorage.setItem('lingototal_ui_language',uiLanguage);
-localStorage.setItem('lingototal_target_language',targetLanguage);
+    "Português":{
+      tagline:"Aprenda qualquer idioma à sua maneira",
+      home:"Atividades / mudar idiomas",
+      eyebrow:"Gramática com IA em contexto real",
+      title:"Masterclass de gramática",
+      intro:"Escolha o nível e o ponto gramatical. Faça uma lição completa para observar, compreender, praticar e usar a gramática naturalmente.",
+      f1:"Gramática em contexto",f2:"Feedback imediato",f3:"A1–C2",f4:"Compreensão e produção",
+      create:"Crie a sua lição de gramática",uiLanguage:"Idioma do site",targetLanguage:"Idioma-alvo",
+      level:"Nível",grammarTopic:"Ponto gramatical",customGrammar:"Escreva o ponto gramatical",
+      context:"Contexto ou tema",specialFocus:"Foco especial",generate:"Gerar lição",
+      listen:"Ouvir",newLesson:"Nova lição",showAnswer:"Mostrar resposta",hideAnswer:"Ocultar resposta",
+      next:"Etapa seguinte",finish:"Ver relatório",complete:"Lição concluída",
+      resultTitle:"O seu relatório gramatical",recognition:"Reconhecimento",accuracy:"Precisão",
+      production:"Produção",again:"Criar outra lição",loading:"A criar a sua lição de gramática…",
+      error:"Não foi possível gerar a lição.",stage:"Etapa",of:"de",score:"Pontuação",
+      check:"Verificar",correct:"Correto!",notQuite:"Ainda não.",model:"Resposta modelo",
+      completed:"Concluído",writeAnswer:"Escreva a sua resposta aqui…",
+      buildInstruction:"Selecione as palavras na ordem correta. Toque numa palavra escolhida para a retirar.",
+      chooseInstruction:"Escolha a melhor resposta.",gapInstruction:"Complete a frase.",
+      correctionInstruction:"Corrija o erro.",productionInstruction:"Escreva um exemplo seu usando a gramática estudada."
+    },
 
-const $=id=>document.getElementById(id);
-const tr=key=>(T[uiLanguage]||T.en)[key]||T.en[key]||key;
+    "Euskara":{
+      tagline:"Ikasi edozein hizkuntza zure erara",
+      home:"Jarduerak / hizkuntzak aldatu",
+      eyebrow:"IA bidezko gramatika benetako testuinguruan",
+      title:"Gramatika masterclassa",
+      intro:"Aukeratu maila eta gramatika-puntua. Osatu gramatika modu naturalean antzematen, ulertzen, praktikatzen eta erabiltzen lagunduko dizun ikasgaia.",
+      f1:"Gramatika testuinguruan",f2:"Berehalako feedbacka",f3:"A1–C2",f4:"Ulermena eta ekoizpena",
+      create:"Sortu zure gramatika-ikasgaia",uiLanguage:"Webgunearen hizkuntza",targetLanguage:"Helburu-hizkuntza",
+      level:"Maila",grammarTopic:"Gramatika-gaia",customGrammar:"Idatzi gramatika-puntua",
+      context:"Testuingurua edo gaia",specialFocus:"Foku berezia",generate:"Sortu ikasgaia",
+      listen:"Entzun",newLesson:"Ikasgai berria",showAnswer:"Erakutsi erantzuna",hideAnswer:"Ezkutatu erantzuna",
+      next:"Hurrengo etapa",finish:"Ikusi txostena",complete:"Ikasgaia amaituta",
+      resultTitle:"Zure gramatika-txostena",recognition:"Antzematea",accuracy:"Zehaztasuna",
+      production:"Ekoizpena",again:"Sortu beste ikasgai bat",loading:"Gramatika-ikasgaia sortzen…",
+      error:"Ezin izan da ikasgaia sortu.",stage:"Etapa",of:"/",score:"Puntuazioa",
+      check:"Egiaztatu",correct:"Zuzena!",notQuite:"Ez guztiz.",model:"Ereduzko erantzuna",
+      completed:"Amaituta",writeAnswer:"Idatzi erantzuna hemen…",
+      buildInstruction:"Aukeratu hitzak ordena egokian. Sakatu aukeratutako hitz bat kentzeko.",
+      chooseInstruction:"Aukeratu erantzunik onena.",gapInstruction:"Osatu esaldia.",
+      correctionInstruction:"Zuzendu akatsa.",productionInstruction:"Idatzi zure adibide bat landutako gramatika erabiliz."
+    },
 
-let level='';
-let lesson=null;
-let choiceAnswers={};
-let gapAttempts=[];
-let mcqChecked=false;
+    "日本語":{
+      tagline:"好きな方法でどんな言語でも学ぼう",
+      home:"アクティビティ / 言語を変更",
+      eyebrow:"実際の文脈で学ぶAI文法",
+      title:"文法マスタークラス",
+      intro:"レベルと文法項目を選び、文法に気づき、理解し、練習し、自然に使うためのレッスンを進めます。",
+      f1:"文脈の中の文法",f2:"すぐにフィードバック",f3:"A1–C2",f4:"理解と産出",
+      create:"文法レッスンを作成",uiLanguage:"ウェブサイトの言語",targetLanguage:"学習言語",
+      level:"レベル",grammarTopic:"文法項目",customGrammar:"文法項目を書く",
+      context:"文脈・テーマ",specialFocus:"特別な焦点",generate:"レッスンを作成",
+      listen:"聞く",newLesson:"新しいレッスン",showAnswer:"答えを表示",hideAnswer:"答えを隠す",
+      next:"次のステージ",finish:"レポートを見る",complete:"レッスン完了",
+      resultTitle:"文法レポート",recognition:"認識",accuracy:"正確さ",production:"産出",
+      again:"別のレッスンを作成",loading:"文法レッスンを作成中…",error:"レッスンを作成できませんでした。",
+      stage:"ステージ",of:"/",score:"スコア",check:"答えを確認",correct:"正解！",notQuite:"もう少しです。",
+      model:"模範解答",completed:"完了",writeAnswer:"ここに答えを書いてください…",
+      buildInstruction:"正しい順番で語句を選んでください。選択した語句を押すと取り消せます。",
+      chooseInstruction:"最も適切な答えを選んでください。",gapInstruction:"文を完成させてください。",
+      correctionInstruction:"間違いを直してください。",productionInstruction:"学習した文法を使って自分の例を書いてください。"
+    },
 
-function applyLanguage(){
-  document.documentElement.lang=uiLanguage;
-  document.documentElement.dir=uiLanguage==='ar'?'rtl':'ltr';
-  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=tr(el.dataset.i18n));
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=tr(el.dataset.i18nPlaceholder));
-  $('languagePair').textContent=`${uiNames[uiLanguage]} → ${targetNames[targetLanguage]}`;
-  document.querySelectorAll('#grammarTopic option[data-grammar-key]').forEach(opt=>{
-    const labels=grammarLabels[uiLanguage]||grammarLabels.en;
-    opt.textContent=labels[opt.dataset.grammarKey]||grammarLabels.en[opt.dataset.grammarKey]||opt.textContent;
-  });
-  document.title='LingoTotal · '+tr('title');
-}
+    "العربية":{
+      tagline:"تعلّم أي لغة بطريقتك",
+      home:"الأنشطة / تغيير اللغات",
+      eyebrow:"قواعد بالذكاء الاصطناعي في سياق حقيقي",
+      title:"دورة متقدمة في القواعد",
+      intro:"اختر المستوى والنقطة النحوية، ثم أكمل درسًا يساعدك على ملاحظة القواعد وفهمها والتدرب عليها واستخدامها بصورة طبيعية.",
+      f1:"القواعد في السياق",f2:"تغذية راجعة فورية",f3:"A1–C2",f4:"الفهم والإنتاج",
+      create:"أنشئ درس القواعد",uiLanguage:"لغة الموقع",targetLanguage:"اللغة المستهدفة",
+      level:"المستوى",grammarTopic:"موضوع القواعد",customGrammar:"اكتب النقطة النحوية",
+      context:"السياق أو الموضوع",specialFocus:"تركيز خاص",generate:"أنشئ الدرس",
+      listen:"استمع",newLesson:"درس جديد",showAnswer:"أظهر الإجابة",hideAnswer:"أخفِ الإجابة",
+      next:"المرحلة التالية",finish:"عرض التقرير",complete:"اكتمل الدرس",
+      resultTitle:"تقرير القواعد",recognition:"التعرّف",accuracy:"الدقة",production:"الإنتاج",
+      again:"أنشئ درسًا آخر",loading:"جارٍ إنشاء درس القواعد…",error:"تعذر إنشاء الدرس.",
+      stage:"المرحلة",of:"من",score:"النتيجة",check:"تحقق",correct:"صحيح!",notQuite:"ليس تمامًا.",
+      model:"إجابة نموذجية",completed:"مكتمل",writeAnswer:"اكتب إجابتك هنا…",
+      buildInstruction:"اختر الكلمات بالترتيب الصحيح. اضغط على كلمة مختارة لإزالتها.",
+      chooseInstruction:"اختر أفضل إجابة.",gapInstruction:"أكمل الجملة.",
+      correctionInstruction:"صحح الخطأ.",productionInstruction:"اكتب مثالًا من عندك باستخدام القاعدة المستهدفة."
+    }
+  };
 
-function notice(msg,type='info'){
-  const n=$('notice');
-  n.textContent=msg;
-  n.className='notice show '+type;
-  clearTimeout(notice.timer);
-  notice.timer=setTimeout(()=>n.classList.remove('show'),3000);
-}
+  const ids = [
+    "uiLanguage","targetLanguage","level","grammarTopic","customGrammarWrap",
+    "customGrammar","context","specialFocus","generateBtn","status","workspace",
+    "progressText","scoreText","progressBar","journey","stageLabel","stageTitle",
+    "instruction","listenBtn","stageContent","feedback","restartLessonBtn",
+    "showAnswerBtn","nextBtn","results","scoreRing","finalScore","resultMessage",
+    "recognitionResult","accuracyResult","productionResult","nextSuggestion","restartBtn"
+  ];
 
-function setLoading(on){
-  $('generateBtn').disabled=on;
-  $('loading').style.display=on?'block':'none';
-}
+  const els = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
 
-function levelInstruction(){
-  if(level==='beginner')return 'Use clear, high-frequency everyday language. Use very clear everyday language, short examples and common vocabulary.';
-  return 'Use natural everyday conversational language with some idiomatic phrasing. Use natural everyday language and moderately varied structures. Avoid literary or unnecessarily complex wording.';
-}
+  const starterParams = new URLSearchParams(window.location.search);
 
-function getGrammarPoint(){
-  return $('grammarTopic').value==='custom'
-    ? $('customGrammar').value.trim()
-    : $('grammarTopic').value;
-}
+  const uiCodeToName = {
+    en:"English",
+    ca:"Català",
+    es:"Español",
+    fr:"Français",
+    de:"Deutsch",
+    it:"Italiano",
+    pt:"Português",
+    eu:"Euskara",
+    ja:"日本語",
+    ar:"العربية"
+  };
 
-async function api(prompt){
-  const r=await fetch('/.netlify/functions/gemini',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.35})
-  });
+  const targetDisplayNames = {
+    English:"English",
+    Catalan:"Català",
+    Spanish:"Español",
+    French:"Français",
+    German:"Deutsch",
+    Italian:"Italiano",
+    Portuguese:"Português",
+    Basque:"Euskara",
+    Japanese:"日本語",
+    Arabic:"العربية"
+  };
 
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(d?.error||'Server error');
+  let inheritedUiCode =
+    starterParams.get("ui")
+    || localStorage.getItem("lingototal_ui_language")
+    || "en";
 
-  if(typeof d==='string')return d;
-  const text=d?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')
-    || d?.text || d?.result || d?.data?.text;
+  let inheritedTarget =
+    starterParams.get("target")
+    || localStorage.getItem("lingototal_target_language")
+    || "English";
 
-  if(!text)throw new Error('Empty AI response');
-  return text;
-}
+  if(!uiCodeToName[inheritedUiCode]) inheritedUiCode = "en";
+  if(!targetDisplayNames[inheritedTarget]) inheritedTarget = "English";
 
-function parseLesson(raw){
-  if(raw && typeof raw==='object' && raw.explanation)return validate(raw);
+  els.uiLanguage.value = uiCodeToName[inheritedUiCode];
+  els.targetLanguage.value = inheritedTarget;
 
-  let text=String(raw||'').trim();
-  text=text.replace(/```json/gi,'').replace(/```/g,'').trim();
+  localStorage.setItem("lingototal_ui_language", inheritedUiCode);
+  localStorage.setItem("lingototal_target_language", inheritedTarget);
 
-  const first=text.indexOf('{');
-  const last=text.lastIndexOf('}');
-  if(first<0||last<first)throw new Error('AI format error');
+  const languagePair = document.getElementById("languagePair");
+  if(languagePair){
+    languagePair.textContent =
+      `${uiCodeToName[inheritedUiCode]} → ${targetDisplayNames[inheritedTarget]}`;
+  }
 
-  const data=JSON.parse(text.slice(first,last+1));
-  return validate(data);
-}
+  let lesson = null;
+  let stages = [];
+  let current = 0;
+  let score = 0;
+  let scoredStages = 0;
+  let recognitionCorrect = 0;
+  let recognitionTotal = 0;
+  let accuracyCorrect = 0;
+  let accuracyTotal = 0;
+  let answered = false;
+  let answerVisible = false;
+  let currentBuiltWords = [];
 
-function validate(data){
-  if(typeof data.title!=='string')data.title='Grammar Practice';
-  if(typeof data.explanation!=='string'||!data.explanation.trim())throw new Error('Missing explanation');
+  const t = key => {
+    const language = translations[els.uiLanguage.value] || translations.English;
+    return language[key] || translations.English[key] || key;
+  };
 
-  if(!Array.isArray(data.examples))data.examples=[];
-  data.examples=data.examples.filter(x=>typeof x==='string'&&x.trim()).slice(0,3);
-  if(data.examples.length<2)throw new Error('Missing examples');
+  function applyLanguage(){
+    const languageCodes = {
+      English:"en",
+      "Català":"ca",
+      "Español":"es",
+      "Français":"fr",
+      "Deutsch":"de",
+      "Italiano":"it",
+      "Português":"pt",
+      "Euskara":"eu",
+      "日本語":"ja",
+      "العربية":"ar"
+    };
 
-  if(!Array.isArray(data.questions)||data.questions.length<4)throw new Error('Missing questions');
-  data.questions=data.questions.slice(0,4).map(q=>{
-    if(!q||typeof q.question!=='string'||!Array.isArray(q.options)||q.options.length<3)throw new Error('Bad question');
-    q.options=q.options.slice(0,4);
-    q.correct=Number(q.correct);
-    if(!Number.isInteger(q.correct)||q.correct<0||q.correct>=q.options.length)q.correct=0;
-    if(typeof q.explanation!=='string')q.explanation='';
-    return q;
-  });
+    document.documentElement.lang = languageCodes[els.uiLanguage.value] || "en";
+    document.documentElement.dir = els.uiLanguage.value === "العربية" ? "rtl" : "ltr";
 
-  if(!Array.isArray(data.gaps)||data.gaps.length<4)throw new Error('Missing gaps');
-  data.gaps=data.gaps.slice(0,4).map(g=>{
-    if(!g||typeof g.before!=='string'||typeof g.answer!=='string'||!g.answer.trim())throw new Error('Bad gap');
-    if(typeof g.after!=='string')g.after='';
-    if(typeof g.hint!=='string'||!g.hint.trim())throw new Error('Missing gap hint');
-    if(typeof g.explanation!=='string'||!g.explanation.trim())throw new Error('Missing gap explanation');
-    return g;
-  });
-
-  return data;
-}
-
-function buildPrompt(){
-  const grammarPoint=getGrammarPoint();
-  const context=$('context').value.trim()||'everyday situations';
-
-  return `
-Create a focused grammar tutoring activity for a learner of ${targetLanguage}.
-
-GRAMMAR POINT: ${grammarPoint}
-DIFFICULTY: ${levelInstruction()}
-CONTEXT: ${context}
-
-Interface language: ${uiNames[uiLanguage]}.
-Target language: ${targetLanguage}.
-
-The activity must genuinely practise the selected grammar point.
-
-Rules:
-- Write the grammar explanation in ${uiNames[uiLanguage]}.
-- Write all example and practice sentences in ${targetLanguage}.
-- Create exactly 4 multiple-choice questions and exactly 4 typed gap-fill sentences.
-- EVERY gap must test the selected grammar point itself. Do not remove a random vocabulary word, connector or neutral content word.
-- Each gap must have one clearly defensible answer in its sentence context. Avoid sentences where several different grammatical forms could reasonably fit.
-- The missing answer may be one word or a short grammatical phrase when necessary.
-- For every multiple-choice question, provide a short explanation in ${uiNames[uiLanguage]} of why the correct answer is right.
-- For every gap, provide a useful HINT in ${uiNames[uiLanguage]} that helps the learner think without revealing the answer.
-- For every gap, provide a concise EXPLANATION in ${uiNames[uiLanguage]} explaining the grammar of the correct answer.
-- Use natural, useful sentences rather than artificial textbook fragments.
-- Use correct spelling, punctuation, contractions and apostrophes.
-- For Japanese, do not add artificial spaces.
-- For Arabic, use Arabic script.
-- Avoid literary, pompous or obscure language.
-- Keep explanations concise enough for a mobile screen.
-- Do not add markdown or commentary.
-
-Return ONLY this JSON object:
-
-{
-  "title":"short lesson title in ${uiNames[uiLanguage]}",
-  "explanation":"concise grammar explanation in ${uiNames[uiLanguage]}, maximum 110 words",
-  "examples":[
-    "natural target-language example",
-    "natural target-language example",
-    "natural target-language example"
-  ],
-  "questions":[
-    {"question":"target-language question or sentence","options":["option","option","option"],"correct":0,"explanation":"brief explanation in ${uiNames[uiLanguage]}"},
-    {"question":"target-language question or sentence","options":["option","option","option"],"correct":1,"explanation":"brief explanation in ${uiNames[uiLanguage]}"},
-    {"question":"target-language question or sentence","options":["option","option","option"],"correct":2,"explanation":"brief explanation in ${uiNames[uiLanguage]}"},
-    {"question":"target-language question or sentence","options":["option","option","option"],"correct":0,"explanation":"brief explanation in ${uiNames[uiLanguage]}"}
-  ],
-  "gaps":[
-    {"before":"target-language text before gap","after":"target-language text after gap","answer":"exact answer","hint":"helpful hint in ${uiNames[uiLanguage]}","explanation":"why this answer is grammatically correct in ${uiNames[uiLanguage]}"},
-    {"before":"target-language text before gap","after":"target-language text after gap","answer":"exact answer","hint":"helpful hint in ${uiNames[uiLanguage]}","explanation":"why this answer is grammatically correct in ${uiNames[uiLanguage]}"},
-    {"before":"target-language text before gap","after":"target-language text after gap","answer":"exact answer","hint":"helpful hint in ${uiNames[uiLanguage]}","explanation":"why this answer is grammatically correct in ${uiNames[uiLanguage]}"},
-    {"before":"target-language text before gap","after":"target-language text after gap","answer":"exact answer","hint":"helpful hint in ${uiNames[uiLanguage]}","explanation":"why this answer is grammatically correct in ${uiNames[uiLanguage]}"}
-  ]
-}
-
-Return exactly 4 questions and 4 gaps. No extra text before or after the JSON.
-`.trim();
-}
-
-function render(){
-  choiceAnswers={};
-  gapAttempts=lesson.gaps.map(()=>0);
-  mcqChecked=false;
-  $('lessonTitle').textContent=lesson.title;
-  $('explanation').textContent=lesson.explanation;
-
-  const examples=$('examples');
-  examples.innerHTML='';
-  lesson.examples.forEach(x=>{
-    const div=document.createElement('div');
-    div.className='example'+(targetLanguage==='Arabic'?' target-rtl':'');
-    div.textContent=x;
-    examples.appendChild(div);
-  });
-
-  const mcq=$('mcq');
-  mcq.innerHTML='';
-  lesson.questions.forEach((q,qi)=>{
-    const card=document.createElement('div');
-    card.className='question-card';
-
-    const question=document.createElement('div');
-    question.className='question'+(targetLanguage==='Arabic'?' target-rtl':'');
-    question.textContent=`${qi+1}. ${q.question}`;
-
-    const opts=document.createElement('div');
-    opts.className='options';
-
-    q.options.forEach((opt,oi)=>{
-      const btn=document.createElement('button');
-      btn.className='option';
-      btn.type='button';
-      btn.textContent=opt;
-      btn.addEventListener('click',()=>{
-        if(mcqChecked)return;
-        opts.querySelectorAll('.option').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        choiceAnswers[qi]=oi;
-      });
-      opts.appendChild(btn);
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      el.textContent = t(el.dataset.i18n);
     });
 
-    const fb=document.createElement('div');
-    fb.className='item-feedback';
-    fb.dataset.mcFeedback=qi;
-    card.append(question,opts,fb);
-    mcq.appendChild(card);
+    if(stages.length) renderStage();
+  }
+
+  els.grammarTopic.addEventListener("change", () => {
+    els.customGrammarWrap.hidden = els.grammarTopic.value !== "custom";
+    if(!els.customGrammarWrap.hidden) els.customGrammar.focus();
   });
 
-  const gaps=$('gaps');
-  gaps.innerHTML='';
-  const intro=document.createElement('div');
-  intro.className='gap-instruction';
-  intro.textContent=ft('gapIntro');
-  gaps.appendChild(intro);
+  els.generateBtn.addEventListener("click", generateLesson);
+  els.nextBtn.addEventListener("click", nextStage);
+  els.showAnswerBtn.addEventListener("click", toggleAnswer);
+  els.restartLessonBtn.addEventListener("click", resetPage);
+  els.restartBtn.addEventListener("click", resetPage);
+  els.listenBtn.addEventListener("click", speakStage);
 
-  lesson.gaps.forEach((g,gi)=>{
-    const card=document.createElement('div');
-    card.className='question-card';
-    card.dataset.gapCard=gi;
+  async function generateLesson(){
+    const grammarPoint = els.grammarTopic.value === "custom"
+      ? els.customGrammar.value.trim()
+      : els.grammarTopic.value;
 
-    const question=document.createElement('div');
-    question.className='question';
-    question.textContent=`${lesson.questions.length+gi+1}.`;
-
-    const wrap=document.createElement('div');
-    wrap.className='gap-wrap'+(targetLanguage==='Arabic'?' target-rtl':'');
-
-    const before=document.createElement('span');
-    before.textContent=g.before;
-
-    const input=document.createElement('input');
-    input.type='text';
-    input.className='gap-input';
-    input.dataset.gap=gi;
-    input.autocomplete='off';
-
-    const after=document.createElement('span');
-    after.textContent=g.after;
-
-    const fb=document.createElement('div');
-    fb.className='item-feedback';
-    fb.dataset.gapFeedback=gi;
-
-    wrap.append(before,input,after);
-    card.append(question,wrap,fb);
-    gaps.appendChild(card);
-  });
-
-  $('feedbackOk').style.display='none';
-  $('feedbackBad').style.display='none';
-  $('score').style.display='none';
-  $('choiceScore').textContent='0/4';
-  $('gapScore').textContent='0/4';
-  $('totalScore').textContent='0/8';
-  $('exercise').style.display='block';
-  $('exercise').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function normalize(s){
-  return String(s||'')
-    .trim()
-    .toLocaleLowerCase()
-    .replace(/[.!?¿¡،؛。！？]+$/g,'')
-    .replace(/\s+/g,' ');
-}
-
-function showItemFeedback(el,type,text){
-  el.className=`item-feedback show ${type}`;
-  el.textContent=text;
-}
-
-function updateScore(){
-  let mc=0;
-  if(mcqChecked){
-    lesson.questions.forEach((q,qi)=>{if(choiceAnswers[qi]===q.correct)mc++;});
-  }
-  let gs=0;
-  document.querySelectorAll('.gap-input').forEach((input,gi)=>{
-    if(input.dataset.solved==='true')gs++;
-  });
-  $('choiceScore').textContent=`${mc}/4`;
-  $('gapScore').textContent=`${gs}/4`;
-  $('totalScore').textContent=`${mc+gs}/8`;
-  $('score').style.display='grid';
-  return mc+gs;
-}
-
-function checkAnswers(){
-  const gapInputs=[...document.querySelectorAll('.gap-input')];
-
-  if(!mcqChecked && Object.keys(choiceAnswers).length<4){
-    notice(ft('answerAll'),'error');
-    return;
-  }
-  if(gapInputs.some(x=>!x.disabled&&!x.value.trim())){
-    notice(ft('answerAll'),'error');
-    return;
-  }
-
-  if(!mcqChecked){
-    document.querySelectorAll('#mcq .question-card').forEach((card,qi)=>{
-      const q=lesson.questions[qi];
-      const correct=choiceAnswers[qi]===q.correct;
-      card.querySelectorAll('.option').forEach((btn,oi)=>{
-        btn.disabled=true;
-        if(oi===q.correct)btn.classList.add('correct');
-        else if(oi===choiceAnswers[qi])btn.classList.add('incorrect');
-      });
-      const fb=card.querySelector('[data-mc-feedback]');
-      showItemFeedback(fb,correct?'good':'bad',`${correct?ft('mcCorrect'):ft('mcWrong')} ${q.explanation}`.trim());
-    });
-    mcqChecked=true;
-  }
-
-  gapInputs.forEach((input,gi)=>{
-    if(input.disabled)return;
-    const g=lesson.gaps[gi];
-    const fb=document.querySelector(`[data-gap-feedback="${gi}"]`);
-    const correct=normalize(input.value)===normalize(g.answer);
-
-    if(correct){
-      input.dataset.solved='true';
-      input.disabled=true;
-      input.style.borderColor='#78bd96';
-      input.style.background='#eefaf3';
-      showItemFeedback(fb,'good',`✓ ${ft('correct')}. ${ft('why')}: ${g.explanation}`);
+    if(!grammarPoint){
+      setStatus("Please enter a grammar point.", true);
       return;
     }
 
-    gapAttempts[gi]++;
-    input.style.borderColor='#e1b95f';
-    input.style.background='#fffaf0';
+    setBusy(true);
+    setStatus(t("loading"));
 
-    if(gapAttempts[gi]===1){
-      showItemFeedback(fb,'hint',`${ft('tryAgain')}. ${ft('hint')}: ${g.hint}`);
-      input.focus();
-    }else{
-      input.disabled=true;
-      input.dataset.solved='false';
-      input.style.borderColor='#e09aa4';
-      input.style.background='#fff4f5';
-      showItemFeedback(fb,'bad',`${ft('answer')}: ${g.answer}. ${ft('why')}: ${g.explanation}`);
-    }
-  });
-
-  const total=updateScore();
-  const allGapsFinished=gapInputs.every(x=>x.disabled);
-
-  if(total===8){
-    $('feedbackOk').textContent=ft('perfect');
-    $('feedbackOk').style.display='block';
-    $('feedbackBad').style.display='none';
-    notice(ft('perfect'),'success');
-  }else if(allGapsFinished){
-    $('feedbackBad').textContent=ft('some');
-    $('feedbackBad').style.display='block';
-    $('feedbackOk').style.display='none';
-  }else{
-    $('feedbackBad').style.display='none';
-    $('feedbackOk').style.display='none';
-  }
-}
-
-function speakExamples(){
-  if(!lesson||!('speechSynthesis'in window))return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(lesson.examples.join('. '));
-  u.lang=voices[targetLanguage]||'en-GB';
-  u.rate=1;
-  speechSynthesis.speak(u);
-  notice(tr('playing'),'info');
-}
-
-async function generate(){
-  if(!level){
-    notice(tr('selectLevel'),'error');
-    return;
-  }
-
-  if($('grammarTopic').value==='custom'&&!$('customGrammar').value.trim()){
-    notice(tr('enterGrammar'),'error');
-    $('customGrammar').focus();
-    return;
-  }
-
-  setLoading(true);
-  $('exercise').style.display='none';
-  $('waiting').textContent=tr('generating');
-
-  try{
-    const raw=await api(buildPrompt());
-    lesson=parseLesson(raw);
-    $('waiting').textContent='';
-    render();
-  }catch(err){
-    console.error(err);
-    $('waiting').textContent=tr('serverError');
-    notice(tr('serverError'),'error');
-  }finally{
-    setLoading(false);
-  }
-}
-
-document.querySelectorAll('.level').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    level=btn.dataset.level;
-  });
-});
-
-$('grammarTopic').addEventListener('change',()=>{
-  $('customWrap').style.display=$('grammarTopic').value==='custom'?'block':'none';
-});
-
-$('generateBtn').addEventListener('click',generate);
-$('newBtn').addEventListener('click',generate);
-$('checkBtn').addEventListener('click',checkAnswers);
-$('listenBtn').addEventListener('click',speakExamples);
-
-$('clearBtn').addEventListener('click',()=>{
-  if('speechSynthesis'in window)speechSynthesis.cancel();
-  level='';
-  lesson=null;
-  choiceAnswers={};
-  gapAttempts=[];
-  mcqChecked=false;
-  document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));
-  $('grammarTopic').selectedIndex=0;
-  $('customWrap').style.display='none';
-  $('customGrammar').value='';
-  $('context').value='';
-  $('exercise').style.display='none';
-  $('waiting').textContent=tr('waiting');
-});
-
-applyLanguage();
-});
-</script>
-\n<script id="lt-level-refresh-script">
-(function(){
-  const L={
-    en:{prompt:'Choose your level',b:'Build Confidence',bd:'Clear, useful everyday language',i:'Go Further',id:'More natural, conversational language',a:'Challenge Yourself',ad:'Richer language and more demanding choices'},
-    ca:{prompt:'Tria el teu nivell',b:'Guanya confiança',bd:'Llengua quotidiana clara i útil',i:'Ves més enllà',id:'Llengua més natural i conversacional',a:'Posa’t a prova',ad:'Llengua més rica i opcions més exigents'},
-    es:{prompt:'Elige tu nivel',b:'Gana confianza',bd:'Lengua cotidiana clara y útil',i:'Ve más allá',id:'Lengua más natural y conversacional',a:'Ponte a prueba',ad:'Lengua más rica y opciones más exigentes'},
-    fr:{prompt:'Choisissez votre niveau',b:'Prenez confiance',bd:'Une langue quotidienne claire et utile',i:'Allez plus loin',id:'Une langue plus naturelle et conversationnelle',a:'Relevez le défi',ad:'Une langue plus riche et des choix plus exigeants'},
-    de:{prompt:'Wähle dein Niveau',b:'Sicherer werden',bd:'Klare, nützliche Alltagssprache',i:'Weiterkommen',id:'Natürlichere, gesprochene Sprache',a:'Fordere dich heraus',ad:'Reichere Sprache und anspruchsvollere Aufgaben'},
-    eu:{prompt:'Aukeratu zure maila',b:'Hartu konfiantza',bd:'Eguneroko hizkuntza argi eta erabilgarria',i:'Joan harago',id:'Hizkuntza naturalagoa eta elkarrizketazkoa',a:'Jarri zeure burua proban',ad:'Hizkuntza aberatsagoa eta aukera zorrotzagoak'},
-    cy:{prompt:'Dewiswch eich lefel',b:'Magu Hyder',bd:'Iaith bob dydd glir a defnyddiol',i:'Ewch Ymhellach',id:'Iaith fwy naturiol a sgyrsiol',a:'Heriwch Eich Hun',ad:'Iaith gyfoethocach a dewisiadau mwy heriol'},
-    gd:{prompt:'Tagh an ìre agad',b:'Tog Misneachd',bd:'Cànan làitheil soilleir agus feumail',i:'Rach Nas Fhaide',id:'Cànan nas nàdarra agus còmhraideach',a:'Thoir Dùbhlan Dhut Fhèin',ad:'Cànan nas beartaiche agus roghainnean nas dùbhlanaiche'},
-    ja:{prompt:'レベルを選んでください',b:'自信をつける',bd:'分かりやすく役立つ日常表現',i:'さらに伸ばす',id:'より自然で会話らしい表現',a:'チャレンジする',ad:'より豊かな表現と難しい選択'},
-    ar:{prompt:'اختر مستواك',b:'ابنِ ثقتك',bd:'لغة يومية واضحة ومفيدة',i:'تقدّم أكثر',id:'لغة أكثر طبيعية وحوارية',a:'تحدَّ نفسك',ad:'لغة أغنى وخيارات أكثر تحديًا'}
-  };
-  function ui(){
-    const p=new URLSearchParams(location.search);
-    const c=p.get('ui')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('lingototal_ui')||'en';
-    return L[c]?c:'en';
-  }
-  function infoFor(level,t){
-    level=(level||'').toLowerCase();
-    if(level.includes('adv')) return ['🧠',t.a,t.ad];
-    if(level.includes('inter')) return ['🚀',t.i,t.id];
-    return ['🌱',t.b,t.bd];
-  }
-  function refresh(){
-    const t=L[ui()];
-    const buttons=[...document.querySelectorAll('button.level,.level-grid button[data-level]')];
-    if(!buttons.length)return;
-    const grid=buttons[0].closest('.level-grid')||buttons[0].parentElement;
-    if(grid && !grid.previousElementSibling?.classList?.contains('lt-level-prompt')){
-      const p=document.createElement('div'); p.className='lt-level-prompt'; p.textContent=t.prompt; grid.before(p);
-    }else if(grid && grid.previousElementSibling?.classList?.contains('lt-level-prompt')){
-      grid.previousElementSibling.textContent=t.prompt;
-    }
-    buttons.forEach(btn=>{
-      const [icon,name,desc]=infoFor(btn.dataset.level,t);
-      btn.innerHTML=`<span class="lt-level-icon">${icon}</span><span class="lt-level-name">${name}</span><span class="lt-level-desc">${desc}</span>`;
-      btn.setAttribute('aria-label',`${name}. ${desc}`);
+    const prompt = buildPrompt({
+      interfaceLanguage: els.uiLanguage.value,
+      targetLanguage: els.targetLanguage.value,
+      level: els.level.value,
+      grammarPoint,
+      context: els.context.value.trim() || "natural everyday communication",
+      specialFocus: els.specialFocus.value.trim() || "clear explanations and natural contemporary usage"
     });
-    const r=document.getElementById('levelResult');
-    if(r){
-      const raw=(r.textContent||'').toLowerCase();
-      if(/begin|confidence/.test(raw)) r.textContent=t.b;
-      else if(/inter|further/.test(raw)) r.textContent=t.i;
-      else if(/adv|challenge/.test(raw)) r.textContent=t.a;
+
+    try{
+      const response = await fetch(API_ENDPOINT, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({prompt})
+      });
+
+      const raw = await response.json().catch(() => ({}));
+
+      if(!response.ok){
+        throw new Error(raw.error || `Server error ${response.status}`);
+      }
+
+      const parsed = extractLesson(raw);
+
+      if(!parsed || !Array.isArray(parsed.stages) || parsed.stages.length < 8){
+        throw new Error("The AI response did not contain a complete lesson.");
+      }
+
+      lesson = parsed;
+      stages = parsed.stages.slice(0,10);
+      current = 0;
+      score = 0;
+      scoredStages = 0;
+      recognitionCorrect = 0;
+      recognitionTotal = 0;
+      accuracyCorrect = 0;
+      accuracyTotal = 0;
+      answered = false;
+      answerVisible = false;
+
+      els.results.classList.remove("show");
+      els.workspace.classList.add("active");
+
+      renderStage();
+      setStatus("");
+
+      setTimeout(() => {
+        els.workspace.scrollIntoView({behavior:"smooth", block:"start"});
+      }, 100);
+
+    }catch(error){
+      console.error(error);
+      setStatus(`${t("error")} ${error.message || ""}`, true);
+    }finally{
+      setBusy(false);
     }
   }
-  document.addEventListener('DOMContentLoaded',()=>{
-    refresh();
-    const r=document.getElementById('levelResult');
-    if(r) new MutationObserver(refresh).observe(r,{childList:true,subtree:true,characterData:true});
-    setTimeout(refresh,100);
-  });
+
+  function buildPrompt(config){
+    return `
+You are creating a complete interactive grammar lesson for LingoTotal.
+
+Return ONLY valid JSON.
+Do not use markdown fences.
+Do not include introductory or closing text outside the JSON.
+
+LESSON SETTINGS
+Interface language: ${config.interfaceLanguage}
+Target language: ${config.targetLanguage}
+CEFR level: ${config.level}
+Grammar point: ${config.grammarPoint}
+Context/theme: ${config.context}
+Special focus: ${config.specialFocus}
+
+IMPORTANT LANGUAGE RULES
+1. All explanations, instructions, feedback and translations must be in ${config.interfaceLanguage}.
+2. All examples, dialogues, sentences and answers being practised must be in ${config.targetLanguage}.
+3. Match the language accurately to CEFR ${config.level}.
+4. For B2, C1 and C2, use natural contemporary spoken language where appropriate, not pompous or literary textbook language.
+5. Keep every activity tightly focused on the selected grammar point.
+6. Avoid testing unrelated vocabulary.
+7. Give useful feedback that explains meaning and grammar.
+8. The lesson must have exactly 10 stages in this order:
+
+1 discover
+2 notice
+3 rule
+4 multiple_choice
+5 gap_fill
+6 correction
+7 sentence_builder
+8 meaning_check
+9 production
+10 review
+
+Return this exact JSON structure:
+
+{
+  "lessonTitle": "short title in interface language",
+  "grammarPoint": "grammar point",
+  "summary": "one-sentence lesson summary in interface language",
+  "nextSuggestion": "a suitable next grammar point in interface language",
+  "stages": [
+    {
+      "type": "discover",
+      "title": "stage title in interface language",
+      "instruction": "instruction in interface language",
+      "content": "short natural dialogue or monologue in target language containing several clear examples",
+      "audioText": "the same target-language text suitable for speech synthesis",
+      "examples": ["target-language example 1","target-language example 2"],
+      "explanation": "brief observation in interface language"
+    },
+    {
+      "type": "notice",
+      "title": "stage title",
+      "instruction": "choose the sentence that contains the target grammar",
+      "content": "short context in interface language",
+      "options": ["target-language option","target-language option","target-language option","target-language option"],
+      "correctIndex": 0,
+      "correctFeedback": "clear explanation in interface language",
+      "incorrectFeedback": "helpful explanation in interface language",
+      "modelAnswer": "correct target-language sentence",
+      "audioText": "all four options"
+    },
+    {
+      "type": "rule",
+      "title": "stage title",
+      "instruction": "instruction in interface language",
+      "content": "concise learner-friendly grammar explanation in interface language",
+      "examples": ["target-language example 1","target-language example 2","target-language example 3"],
+      "audioText": "target-language examples only"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "stage title",
+      "instruction": "instruction",
+      "question": "question or sentence in target language",
+      "options": ["option 1","option 2","option 3","option 4"],
+      "correctIndex": 0,
+      "correctFeedback": "explanation",
+      "incorrectFeedback": "explanation",
+      "modelAnswer": "full correct answer",
+      "audioText": "question"
+    },
+    {
+      "type": "gap_fill",
+      "title": "stage title",
+      "instruction": "instruction",
+      "sentenceBefore": "target-language text before gap",
+      "sentenceAfter": "target-language text after gap",
+      "answer": "exact missing word or phrase",
+      "acceptableAnswers": ["exact answer","reasonable alternative if applicable"],
+      "correctFeedback": "explanation",
+      "incorrectFeedback": "explanation",
+      "modelAnswer": "complete target-language sentence",
+      "audioText": "complete sentence"
+    },
+    {
+      "type": "correction",
+      "title": "stage title",
+      "instruction": "instruction",
+      "question": "incorrect target-language sentence",
+      "answer": "correct target-language sentence",
+      "acceptableAnswers": ["correct target-language sentence"],
+      "correctFeedback": "explanation",
+      "incorrectFeedback": "explanation",
+      "modelAnswer": "correct sentence",
+      "audioText": "incorrect sentence followed by corrected sentence"
+    },
+    {
+      "type": "sentence_builder",
+      "title": "stage title",
+      "instruction": "instruction",
+      "words": ["individual","words","in","deliberately","mixed","order"],
+      "answer": "correct sentence with normal punctuation",
+      "correctFeedback": "explanation",
+      "incorrectFeedback": "explanation",
+      "modelAnswer": "correct sentence",
+      "audioText": "correct sentence"
+    },
+    {
+      "type": "meaning_check",
+      "title": "stage title",
+      "instruction": "instruction",
+      "question": "target-language example",
+      "options": ["meaning in interface language","meaning in interface language","meaning in interface language","meaning in interface language"],
+      "correctIndex": 0,
+      "correctFeedback": "explanation",
+      "incorrectFeedback": "explanation",
+      "modelAnswer": "correct meaning",
+      "audioText": "target-language example"
+    },
+    {
+      "type": "production",
+      "title": "stage title",
+      "instruction": "specific writing prompt in interface language",
+      "question": "short situation or writing task in interface language",
+      "modelAnswer": "natural target-language model answer",
+      "checkpoints": ["grammar checkpoint in interface language","meaning checkpoint","naturalness checkpoint"],
+      "audioText": "model answer"
+    },
+    {
+      "type": "review",
+      "title": "stage title",
+      "instruction": "final review instruction",
+      "content": "short recap in interface language",
+      "question": "final target-language question",
+      "options": ["option 1","option 2","option 3","option 4"],
+      "correctIndex": 0,
+      "correctFeedback": "final explanation",
+      "incorrectFeedback": "final explanation",
+      "modelAnswer": "correct answer",
+      "audioText": "question and correct answer"
+    }
+  ]
+}
+
+Make correctIndex zero-based.
+Shuffle the location of correct answers across multiple-choice activities.
+Ensure the sentence-builder words recreate the answer exactly when joined with spaces, ignoring final punctuation and capitalization.
+`.trim();
+  }
+
+  function extractLesson(raw){
+    if(raw && Array.isArray(raw.stages)) return raw;
+
+    let text = "";
+
+    if(typeof raw === "string"){
+      text = raw;
+    }else if(raw?.candidates?.[0]?.content?.parts){
+      text = raw.candidates[0].content.parts.map(part => part.text || "").join("");
+    }else if(typeof raw?.text === "string"){
+      text = raw.text;
+    }else if(typeof raw?.result === "string"){
+      text = raw.result;
+    }else if(raw?.data && Array.isArray(raw.data.stages)){
+      return raw.data;
+    }
+
+    if(!text) return null;
+
+    text = text
+      .replace(/^```json\s*/i,"")
+      .replace(/^```\s*/i,"")
+      .replace(/\s*```$/,"")
+      .trim();
+
+    const firstBrace = text.indexOf("{");
+    const lastBrace = text.lastIndexOf("}");
+
+    if(firstBrace !== -1 && lastBrace !== -1){
+      text = text.slice(firstBrace, lastBrace + 1);
+    }
+
+    return JSON.parse(text);
+  }
+
+  function renderStage(){
+    const stage = stages[current];
+    if(!stage) return;
+
+    answered = false;
+    answerVisible = false;
+    currentBuiltWords = [];
+
+    els.feedback.className = "feedback";
+    els.feedback.innerHTML = "";
+    els.nextBtn.disabled = true;
+    els.showAnswerBtn.textContent = t("showAnswer");
+
+    els.stageLabel.textContent = `${t("stage")} ${current + 1}`;
+    els.stageTitle.textContent = stage.title || stage.type || "";
+    els.instruction.textContent = stage.instruction || "";
+    els.progressText.textContent = `${t("stage")} ${current + 1} ${t("of")} ${stages.length}`;
+    els.scoreText.textContent = `${t("score")}: ${score}/${scoredStages}`;
+    els.progressBar.style.width = `${(current / stages.length) * 100}%`;
+    els.nextBtn.textContent = current === stages.length - 1 ? t("finish") : t("next");
+
+    renderJourney();
+    renderStageContent(stage);
+  }
+
+  function renderJourney(){
+    els.journey.innerHTML = "";
+
+    stages.forEach((_, index) => {
+      const dot = document.createElement("div");
+      dot.className = "step-dot" +
+        (index === current ? " active" : index < current ? " done" : "");
+      dot.textContent = index + 1;
+      els.journey.appendChild(dot);
+    });
+  }
+
+  function renderStageContent(stage){
+    els.stageContent.innerHTML = "";
+
+    switch(stage.type){
+      case "discover":
+      case "rule":
+        renderInformationStage(stage);
+        break;
+
+      case "notice":
+      case "multiple_choice":
+      case "meaning_check":
+      case "review":
+        renderChoiceStage(stage);
+        break;
+
+      case "gap_fill":
+        renderGapStage(stage);
+        break;
+
+      case "correction":
+        renderCorrectionStage(stage);
+        break;
+
+      case "sentence_builder":
+        renderSentenceBuilder(stage);
+        break;
+
+      case "production":
+        renderProductionStage(stage);
+        break;
+
+      default:
+        renderInformationStage(stage);
+    }
+  }
+
+  function renderInformationStage(stage){
+    if(stage.content){
+      const box = document.createElement("div");
+      box.className = "content-box";
+      box.textContent = stage.content;
+      els.stageContent.appendChild(box);
+    }
+
+    if(Array.isArray(stage.examples)){
+      stage.examples.forEach(example => {
+        const box = document.createElement("div");
+        box.className = "example-box";
+        box.textContent = example;
+        els.stageContent.appendChild(box);
+      });
+    }
+
+    if(stage.explanation){
+      const explanation = document.createElement("div");
+      explanation.className = "feedback show neutral";
+      explanation.textContent = stage.explanation;
+      els.stageContent.appendChild(explanation);
+    }
+
+    answered = true;
+    els.nextBtn.disabled = false;
+  }
+
+  function renderChoiceStage(stage){
+    if(stage.content){
+      const content = document.createElement("div");
+      content.className = "content-box";
+      content.textContent = stage.content;
+      els.stageContent.appendChild(content);
+    }
+
+    if(stage.question){
+      const question = document.createElement("div");
+      question.className = "example-box";
+      question.style.fontWeight = "850";
+      question.textContent = stage.question;
+      els.stageContent.appendChild(question);
+    }
+
+    const options = document.createElement("div");
+    options.className = "options";
+
+    (stage.options || []).forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "option";
+      button.textContent = option;
+      button.addEventListener("click", () => chooseOption(stage, index, button, options));
+      options.appendChild(button);
+    });
+
+    els.stageContent.appendChild(options);
+  }
+
+  function chooseOption(stage, index, button, optionsContainer){
+    if(answered) return;
+    answered = true;
+
+    const correctIndex = Number(stage.correctIndex);
+
+    [...optionsContainer.children].forEach((optionButton, optionIndex) => {
+      optionButton.disabled = true;
+      if(optionIndex === correctIndex) optionButton.classList.add("correct");
+    });
+
+    scoredStages++;
+    recognitionTotal++;
+
+    if(index === correctIndex){
+      score++;
+      recognitionCorrect++;
+      button.classList.add("correct");
+      showFeedback("good", `<strong>${escapeHtml(t("correct"))}</strong><br>${escapeHtml(stage.correctFeedback || "")}`);
+    }else{
+      button.classList.add("incorrect");
+      showFeedback("bad", `<strong>${escapeHtml(t("notQuite"))}</strong><br>${escapeHtml(stage.incorrectFeedback || "")}`);
+    }
+
+    finishStage();
+  }
+
+  function renderGapStage(stage){
+    const line = document.createElement("div");
+    line.className = "gap-line";
+
+    const before = document.createElement("span");
+    before.textContent = `${stage.sentenceBefore || ""} `;
+
+    const input = document.createElement("input");
+    input.className = "gap-input";
+    input.type = "text";
+    input.autocomplete = "off";
+    input.setAttribute("aria-label", t("writeAnswer"));
+
+    const after = document.createElement("span");
+    after.textContent = ` ${stage.sentenceAfter || ""}`;
+
+    line.append(before, input, after);
+
+    const checkButton = document.createElement("button");
+    checkButton.className = "primary";
+    checkButton.type = "button";
+    checkButton.textContent = t("check");
+    checkButton.addEventListener("click", () => {
+      if(answered || !input.value.trim()) return;
+
+      answered = true;
+      scoredStages++;
+      accuracyTotal++;
+
+      const accepted = [stage.answer, ...(stage.acceptableAnswers || [])]
+        .filter(Boolean)
+        .map(normalizeAnswer);
+
+      const correct = accepted.includes(normalizeAnswer(input.value));
+
+      if(correct){
+        score++;
+        accuracyCorrect++;
+        showFeedback("good", `<strong>${escapeHtml(t("correct"))}</strong><br>${escapeHtml(stage.correctFeedback || "")}`);
+      }else{
+        showFeedback("bad",
+          `<strong>${escapeHtml(t("notQuite"))}</strong><br>${escapeHtml(stage.incorrectFeedback || "")}
+           <div class="model-answer"><strong>${escapeHtml(t("model"))}:</strong><br>${escapeHtml(stage.modelAnswer || stage.answer || "")}</div>`
+        );
+      }
+
+      input.disabled = true;
+      checkButton.disabled = true;
+      finishStage();
+    });
+
+    els.stageContent.append(line, checkButton);
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function renderCorrectionStage(stage){
+    const incorrect = document.createElement("div");
+    incorrect.className = "content-box";
+    incorrect.textContent = stage.question || "";
+    els.stageContent.appendChild(incorrect);
+
+    const textarea = document.createElement("textarea");
+    textarea.placeholder = t("writeAnswer");
+
+    const checkButton = document.createElement("button");
+    checkButton.className = "primary";
+    checkButton.type = "button";
+    checkButton.textContent = t("check");
+
+    checkButton.addEventListener("click", () => {
+      if(answered || !textarea.value.trim()) return;
+
+      answered = true;
+      scoredStages++;
+      accuracyTotal++;
+
+      const accepted = [stage.answer, ...(stage.acceptableAnswers || [])]
+        .filter(Boolean)
+        .map(normalizeAnswer);
+
+      const correct = accepted.includes(normalizeAnswer(textarea.value));
+
+      if(correct){
+        score++;
+        accuracyCorrect++;
+        showFeedback("good", `<strong>${escapeHtml(t("correct"))}</strong><br>${escapeHtml(stage.correctFeedback || "")}`);
+      }else{
+        showFeedback("bad",
+          `<strong>${escapeHtml(t("notQuite"))}</strong><br>${escapeHtml(stage.incorrectFeedback || "")}
+           <div class="model-answer"><strong>${escapeHtml(t("model"))}:</strong><br>${escapeHtml(stage.modelAnswer || stage.answer || "")}</div>`
+        );
+      }
+
+      textarea.disabled = true;
+      checkButton.disabled = true;
+      finishStage();
+    });
+
+    els.stageContent.append(textarea, checkButton);
+  }
+
+  function renderSentenceBuilder(stage){
+    const help = document.createElement("p");
+    help.className = "instruction";
+    help.textContent = t("buildInstruction");
+
+    const builder = document.createElement("div");
+    builder.className = "sentence-builder";
+
+    const bank = document.createElement("div");
+    bank.className = "word-bank";
+
+    const wordObjects = (stage.words || []).map((word, index) => ({
+      id:`word-${index}`,
+      word:String(word)
+    }));
+
+    wordObjects.forEach(item => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "word-chip";
+      chip.textContent = item.word;
+      chip.dataset.wordId = item.id;
+
+      chip.addEventListener("click", () => {
+        currentBuiltWords.push(item);
+        chip.classList.add("used");
+        renderBuiltSentence(builder, bank);
+      });
+
+      bank.appendChild(chip);
+    });
+
+    const checkButton = document.createElement("button");
+    checkButton.className = "primary";
+    checkButton.type = "button";
+    checkButton.textContent = t("check");
+
+    checkButton.addEventListener("click", () => {
+      if(answered || currentBuiltWords.length === 0) return;
+
+      answered = true;
+      scoredStages++;
+      accuracyTotal++;
+
+      const learnerSentence = currentBuiltWords.map(item => item.word).join(" ");
+      const correct = normalizeSentence(learnerSentence) === normalizeSentence(stage.answer || "");
+
+      if(correct){
+        score++;
+        accuracyCorrect++;
+        showFeedback("good", `<strong>${escapeHtml(t("correct"))}</strong><br>${escapeHtml(stage.correctFeedback || "")}`);
+      }else{
+        showFeedback("bad",
+          `<strong>${escapeHtml(t("notQuite"))}</strong><br>${escapeHtml(stage.incorrectFeedback || "")}
+           <div class="model-answer"><strong>${escapeHtml(t("model"))}:</strong><br>${escapeHtml(stage.modelAnswer || stage.answer || "")}</div>`
+        );
+      }
+
+      [...bank.children].forEach(button => button.disabled = true);
+      [...builder.children].forEach(button => button.disabled = true);
+      checkButton.disabled = true;
+      finishStage();
+    });
+
+    els.stageContent.append(help, builder, bank, checkButton);
+  }
+
+  function renderBuiltSentence(builder, bank){
+    builder.innerHTML = "";
+
+    currentBuiltWords.forEach((item, index) => {
+      const wordButton = document.createElement("button");
+      wordButton.type = "button";
+      wordButton.className = "built-word";
+      wordButton.textContent = item.word;
+
+      wordButton.addEventListener("click", () => {
+        currentBuiltWords.splice(index, 1);
+        const originalChip = bank.querySelector(`[data-word-id="${CSS.escape(item.id)}"]`);
+        if(originalChip) originalChip.classList.remove("used");
+        renderBuiltSentence(builder, bank);
+      });
+
+      builder.appendChild(wordButton);
+    });
+  }
+
+  function renderProductionStage(stage){
+    if(stage.question){
+      const question = document.createElement("div");
+      question.className = "content-box";
+      question.textContent = stage.question;
+      els.stageContent.appendChild(question);
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.placeholder = t("writeAnswer");
+
+    const compareButton = document.createElement("button");
+    compareButton.className = "primary";
+    compareButton.type = "button";
+    compareButton.textContent = t("check");
+
+    compareButton.addEventListener("click", () => {
+      if(answered || !textarea.value.trim()) return;
+
+      answered = true;
+
+      const checkpoints = Array.isArray(stage.checkpoints)
+        ? `<ul>${stage.checkpoints.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+        : "";
+
+      showFeedback("neutral",
+        `${checkpoints}
+         <div class="model-answer"><strong>${escapeHtml(t("model"))}:</strong><br>${escapeHtml(stage.modelAnswer || "")}</div>`
+      );
+
+      textarea.disabled = true;
+      compareButton.disabled = true;
+      finishStage();
+    });
+
+    els.stageContent.append(textarea, compareButton);
+  }
+
+  function toggleAnswer(){
+    const stage = stages[current];
+    if(!stage) return;
+
+    if(!answerVisible){
+      const answer = stage.modelAnswer || stage.answer ||
+        (Number.isInteger(Number(stage.correctIndex)) && Array.isArray(stage.options)
+          ? stage.options[Number(stage.correctIndex)]
+          : "");
+
+      if(!answer){
+        showFeedback("neutral", stage.explanation || stage.content || "");
+      }else{
+        showFeedback("neutral",
+          `<div class="model-answer"><strong>${escapeHtml(t("model"))}:</strong><br>${escapeHtml(answer)}</div>`
+        );
+      }
+
+      answerVisible = true;
+      els.showAnswerBtn.textContent = t("hideAnswer");
+
+      if(!answered){
+        answered = true;
+        finishStage();
+      }
+    }else{
+      els.feedback.className = "feedback";
+      els.feedback.innerHTML = "";
+      answerVisible = false;
+      els.showAnswerBtn.textContent = t("showAnswer");
+    }
+  }
+
+  function finishStage(){
+    els.scoreText.textContent = `${t("score")}: ${score}/${scoredStages}`;
+    els.progressBar.style.width = `${((current + 1) / stages.length) * 100}%`;
+    els.nextBtn.disabled = false;
+  }
+
+  function nextStage(){
+    if(!answered) return;
+
+    if(current < stages.length - 1){
+      current++;
+      renderStage();
+    }else{
+      showResults();
+    }
+  }
+
+  function showResults(){
+    els.workspace.classList.remove("active");
+
+    const percent = scoredStages
+      ? Math.round((score / scoredStages) * 100)
+      : 100;
+
+    const recognitionPercent = recognitionTotal
+      ? Math.round((recognitionCorrect / recognitionTotal) * 100)
+      : 100;
+
+    const accuracyPercent = accuracyTotal
+      ? Math.round((accuracyCorrect / accuracyTotal) * 100)
+      : 100;
+
+    els.finalScore.textContent = `${percent}%`;
+    els.scoreRing.style.setProperty("--score", `${percent}%`);
+    els.recognitionResult.textContent = `${recognitionPercent}%`;
+    els.accuracyResult.textContent = `${accuracyPercent}%`;
+    els.productionResult.textContent = t("completed");
+
+    const resultMessages = {
+      English: percent >= 85
+        ? "Excellent. You recognised and used the grammar very effectively."
+        : percent >= 60
+          ? "Good work. Review the feedback and repeat the stages that caused difficulty."
+          : "Keep practising. Focus on the meaning of the grammar before repeating the exercises.",
+
+      "Català": percent >= 85
+        ? "Excel·lent. Has reconegut i utilitzat la gramàtica amb molta eficàcia."
+        : percent >= 60
+          ? "Bona feina. Revisa el feedback i repeteix les etapes més difícils."
+          : "Continua practicant. Fixa't primer en el significat de la gramàtica i després repeteix els exercicis.",
+
+      "Español": percent >= 85
+        ? "Excelente. Has reconocido y utilizado la gramática con mucha eficacia."
+        : percent >= 60
+          ? "Buen trabajo. Revisa el feedback y repite las etapas más difíciles."
+          : "Sigue practicando. Concéntrate primero en el significado de la gramática y después repite los ejercicios.",
+
+      "Français": percent >= 85
+        ? "Excellent. Vous avez très bien reconnu et utilisé la grammaire."
+        : percent >= 60
+          ? "Bon travail. Relisez les commentaires et recommencez les étapes difficiles."
+          : "Continuez à vous entraîner. Concentrez-vous d'abord sur le sens de la grammaire avant de refaire les exercices.",
+
+      "Deutsch": percent >= 85
+        ? "Ausgezeichnet. Du hast die Grammatik sehr sicher erkannt und verwendet."
+        : percent >= 60
+          ? "Gute Arbeit. Lies das Feedback und wiederhole die schwierigeren Etappen."
+          : "Übe weiter. Konzentriere dich zuerst auf die Bedeutung der Grammatik und wiederhole dann die Aufgaben.",
+
+      "Italiano": percent >= 85
+        ? "Ottimo. Hai riconosciuto e usato la grammatica con molta sicurezza."
+        : percent >= 60
+          ? "Buon lavoro. Rileggi il feedback e ripeti le fasi più difficili."
+          : "Continua a esercitarti. Concentrati prima sul significato della grammatica e poi ripeti gli esercizi.",
+
+      "Português": percent >= 85
+        ? "Excelente. Reconheceu e usou a gramática com muita segurança."
+        : percent >= 60
+          ? "Bom trabalho. Reveja o feedback e repita as etapas mais difíceis."
+          : "Continue a praticar. Concentre-se primeiro no significado da gramática e depois repita os exercícios.",
+
+      "Euskara": percent >= 85
+        ? "Bikain. Gramatika oso segurtasunez antzeman eta erabili duzu."
+        : percent >= 60
+          ? "Lan ona. Berrikusi feedbacka eta errepikatu etapa zailenak."
+          : "Jarraitu praktikatzen. Lehenik gramatikaren esanahian jarri arreta eta gero errepikatu ariketak.",
+
+      "日本語": percent >= 85
+        ? "素晴らしいです。文法をしっかり認識し、使うことができました。"
+        : percent >= 60
+          ? "よくできました。フィードバックを確認し、難しかったステージをもう一度練習しましょう。"
+          : "練習を続けましょう。まず文法の意味に集中してから、もう一度問題に取り組んでください。",
+
+      "العربية": percent >= 85
+        ? "ممتاز. تعرّفت على القاعدة واستخدمتها بثقة كبيرة."
+        : percent >= 60
+          ? "عمل جيد. راجع الملاحظات وأعد المراحل الأصعب."
+          : "واصل التدريب. ركّز أولًا على معنى القاعدة ثم أعد التمارين."
+    };
+
+    els.resultMessage.textContent =
+      resultMessages[els.uiLanguage.value] || resultMessages.English;
+
+    const suggestions = {
+      English:"Suggested next grammar point",
+      "Català":"Punt gramatical suggerit",
+      "Español":"Siguiente punto gramatical sugerido",
+      "Français":"Prochain point grammatical conseillé",
+      "Deutsch":"Empfohlenes nächstes Grammatikthema",
+      "Italiano":"Prossimo punto grammaticale consigliato",
+      "Português":"Próximo ponto gramatical sugerido",
+      "Euskara":"Hurrengo gramatika-puntu gomendatua",
+      "日本語":"次におすすめの文法項目",
+      "العربية":"النقطة النحوية المقترحة التالية"
+    };
+
+    els.nextSuggestion.textContent =
+      `${suggestions[els.uiLanguage.value] || suggestions.English}: ${lesson?.nextSuggestion || "—"}`;
+
+    els.results.classList.add("show");
+    els.results.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  function speakStage(){
+    const stage = stages[current];
+
+    if(!stage || !("speechSynthesis" in window)) return;
+
+    const text = stage.audioText || stage.question || stage.content || stage.modelAnswer || "";
+    if(!text) return;
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    const languageCodes = {
+      English:"en-GB",
+      Spanish:"es-ES",
+      Catalan:"ca-ES",
+      French:"fr-FR",
+      German:"de-DE",
+      Italian:"it-IT",
+      Portuguese:"pt-PT",
+      Basque:"eu-ES",
+      Japanese:"ja-JP",
+      Arabic:"ar-SA"
+    };
+
+    utterance.lang = languageCodes[els.targetLanguage.value] || "en-GB";
+    utterance.rate =
+      els.level.value === "A1" ? 0.82 :
+      els.level.value === "A2" ? 0.9 : 1;
+
+    speechSynthesis.speak(utterance);
+  }
+
+  function resetPage(){
+    lesson = null;
+    stages = [];
+    current = 0;
+    score = 0;
+    scoredStages = 0;
+    recognitionCorrect = 0;
+    recognitionTotal = 0;
+    accuracyCorrect = 0;
+    accuracyTotal = 0;
+    answered = false;
+    answerVisible = false;
+
+    speechSynthesis?.cancel?.();
+
+    els.workspace.classList.remove("active");
+    els.results.classList.remove("show");
+    els.feedback.className = "feedback";
+    els.feedback.innerHTML = "";
+
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function showFeedback(kind, html){
+    els.feedback.className = `feedback show ${kind}`;
+    els.feedback.innerHTML = html;
+  }
+
+  function normalizeAnswer(value){
+    return String(value ?? "")
+      .trim()
+      .toLocaleLowerCase()
+      .replace(/[.!?。！？]+$/g,"")
+      .replace(/\s+/g," ");
+  }
+
+  function normalizeSentence(value){
+    return normalizeAnswer(value)
+      .replace(/[“”"'’`]/g,"")
+      .replace(/[,:;()[\]{}]/g,"")
+      .replace(/\s+/g," ");
+  }
+
+  function setBusy(busy){
+    els.generateBtn.disabled = busy;
+    els.generateBtn.textContent = busy ? t("loading") : t("generate");
+  }
+
+  function setStatus(message, error = false){
+    els.status.textContent = message;
+    els.status.className = error ? "status error" : "status";
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    })[character]);
+  }
+
+  applyLanguage();
 })();
-</script>\n
-<script>
-document.addEventListener('DOMContentLoaded',()=>{const t=document.getElementById('themeInput');if(!t)return;document.querySelectorAll('.level').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{t.focus({preventScroll:true});t.closest('.topic-priority')?.scrollIntoView({behavior:'smooth',block:'nearest'});},160)));});
-</script></body>
+</script>
+<script id="lingototal-language-state-v2">
+(function(){
+  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
+  const VALID_TARGET=['English','Catalan','Spanish','French','German','Italian','Portuguese','Basque','Japanese','Arabic'];
+  const q=new URLSearchParams(window.location.search);
+  let ui=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
+  let target=q.get('target')||localStorage.getItem('lingototal_target_language')||'English';
+  if(!VALID_UI.includes(ui)) ui='en';
+  if(!VALID_TARGET.includes(target)) target='English';
+  localStorage.setItem('lingototal_ui_language',ui);
+  localStorage.setItem('lingototal_target_language',target);
+  const returnURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
+  document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
+})();
+</script>
+</body>
 </html>

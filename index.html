@@ -900,7 +900,7 @@ const uiSelect=document.getElementById('uiLanguage');
 const targetSelect=document.getElementById('targetLanguage');
 
 function tr(key){
-return T[uiSelect.value]?.[key]\|\|T.en[key]\|\|key;
+return T[uiSelect.value]?.[key]||T.en[key]||key;
 }
 
 function saveChoices(){
@@ -934,16 +934,17 @@ updateLinks();
 }
 
 function restoreChoices(){
-const ui=localStorage.getItem('lingototal_ui_language');
-const target=localStorage.getItem('lingototal_target_language');
+const params=new URLSearchParams(window.location.search);
+const storedUi=localStorage.getItem('lingototal_ui_language');
+const storedTarget=localStorage.getItem('lingototal_target_language');
+const ui=params.get('ui')||storedUi||'en';
+const target=params.get('target')||storedTarget||'English';
 
-if(ui&&[...uiSelect.options].some(o=>o.value===ui)){
-uiSelect.value=ui;
-}
+if([...uiSelect.options].some(o=>o.value===ui)) uiSelect.value=ui;
+if([...targetSelect.options].some(o=>o.value===target)) targetSelect.value=target;
 
-if(target&&[...targetSelect.options].some(o=>o.value===target)){
-targetSelect.value=target;
-}
+localStorage.setItem('lingototal_ui_language',uiSelect.value);
+localStorage.setItem('lingototal_target_language',targetSelect.value);
 }
 
 uiSelect.addEventListener('change',applyLanguage);
