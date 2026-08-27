@@ -603,7 +603,15 @@ document.querySelectorAll('.design-context').forEach(b=>b.onclick=()=>{
   selectedDesignContext=b.dataset.context;
 });
 
-document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{$('themeInput').value=b.dataset.theme});
+let exampleThemeChosen=false;
+document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{
+  exampleThemeChosen=true;
+  $('themeInput').value=b.dataset.theme||'';
+  $('themeInput').dispatchEvent(new Event('input',{bubbles:true}));
+});
+$('themeInput').addEventListener('input',e=>{
+  if(e.isTrusted) exampleThemeChosen=false;
+});
 
 // Keep the learner's own request as the authoritative Section 2 value.
 const themeInputEl=$('themeInput');
@@ -632,16 +640,25 @@ function saveSentence(sentence){const d=getCollection();if(d.some(x=>x.sentence=
 function renderCollection(){const list=$('collectionList'),d=getCollection();list.innerHTML='';if(!d.length){list.textContent=tr('emptyCollection');return}d.forEach((x,i)=>{const row=document.createElement('div');row.className='collection-item';row.innerHTML='<div class="collection-sentence">'+x.sentence+'</div><div class="collection-meta">'+(x.targetName||'')+(x.theme?' · '+tr('themeLabel')+': '+x.theme:'')+'</div>';const a=document.createElement('div');a.className='response-actions';const l=document.createElement('button');l.textContent=tr('listen');l.onclick=()=>speak(x.sentence);const r=document.createElement('button');r.textContent=tr('remove');r.onclick=()=>{d.splice(i,1);setCollection(d);renderCollection()};a.append(l,r);row.append(a);list.append(row)})}
 $('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
 $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
-$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();learnerTypedNeed=theme;if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday language with flexibility and common conversational chunks'}[selectedLevel];const designContext=selectedDesignContext||'general graphic-design communication';
+$('generateBtn').onclick=async()=>{const learnerNeed=$('themeInput').value.trim();const theme=learnerNeed;learnerTypedNeed=theme;if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday language with flexibility and common conversational chunks'}[selectedLevel];const designContext=selectedDesignContext||'general graphic-design communication';
 const prompt=`Create a LingoGo Design activity for a university graphic-design student learning ${targetLanguage}.
-Learner's need: "${theme}"
-IMPORTANT: The learner's exact need above is the PRIMARY task. Every generated situation must directly help with that need. Do not replace it with a generic activity from the selected category. The selected category is supporting context only. If the learner has typed a specific question, problem, sentence or scenario, stay closely focused on it.
+<LEARNER_REQUEST>${theme}</LEARNER_REQUEST>
+IMPORTANT — LEARNER CONTROL:
+The learner's exact typed request between <LEARNER_REQUEST> tags is the PRIMARY AND BINDING topic for this activity.
+Every one of the 3 situations MUST directly address that exact request.
+Do NOT substitute, broaden or replace it with a preset example, category, common theme, or a theme such as travel, work, food, friends, university, tourism, retail or accommodation unless that idea is explicitly present in the learner's request.
+The category/context on this page is supporting background only; it must never override the learner's words.
+If the request is specific, keep the activity specific.
+If the request is phrased as something the learner wants to learn to say, create situations that practise that communicative need.
 Design context: ${designContext}
 Level: ${level}.
 
 The pedagogical focus is COMMUNICATIVE INTENTION in GRAPHIC DESIGN: the learner decides what they want to communicate about design work and then discovers useful, natural professional language.
 
 Use authentic but accessible graphic-design discourse where relevant: typography, hierarchy, layout, grid, composition, colour, visual identity, editorial design, packaging, UX/UI, art direction, portfolio presentation, critique, iteration, client communication and design process.
+
+Before generating, silently check that the learner's exact request is still the topic.
+Do not generate a generic category lesson.
 
 Create exactly 3 realistic university or early-career design situations.
 For EACH situation:
