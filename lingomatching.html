@@ -1,6 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script id="lingototal-language-handoff-fix">
+(function(){
+  const uiAliases = {
+    "en":"en","english":"en",
+    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
+    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
+    "fr":"fr","french":"fr","français":"fr","francais":"fr",
+    "de":"de","german":"de","deutsch":"de",
+    "it":"it","italian":"it","italiano":"it",
+    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
+    "eu":"eu","basque":"eu","euskara":"eu",
+    "ja":"ja","japanese":"ja","日本語":"ja",
+    "ar":"ar","arabic":"ar","العربية":"ar"
+  };
+  const targetAliases = {
+    "en":"English","english":"English",
+    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
+    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
+    "fr":"French","french":"French","français":"French","francais":"French",
+    "de":"German","german":"German","deutsch":"German",
+    "it":"Italian","italian":"Italian","italiano":"Italian",
+    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
+    "eu":"Basque","basque":"Basque","euskara":"Basque",
+    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
+    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
+  };
+  const norm = value => String(value || "").trim().toLowerCase();
+  const params = new URLSearchParams(window.location.search);
+
+  const rawUi =
+    params.get("ui") ||
+    params.get("uiLanguage") ||
+    params.get("interfaceLanguage") ||
+    params.get("interface") ||
+    localStorage.getItem("lingototal_ui_language") ||
+    localStorage.getItem("lingototal_interface_language") ||
+    "en";
+
+  const rawTarget =
+    params.get("target") ||
+    params.get("targetLanguage") ||
+    localStorage.getItem("lingototal_target_language") ||
+    "English";
+
+  const ui = uiAliases[norm(rawUi)] || "en";
+  const target = targetAliases[norm(rawTarget)] || "English";
+
+  localStorage.setItem("lingototal_ui_language", ui);
+  localStorage.setItem("lingototal_interface_language", ui);
+  localStorage.setItem("lingototal_target_language", target);
+
+  let changed = false;
+  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
+  if(params.get("target") !== target){ params.set("target", target); changed = true; }
+
+  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
+    if(params.has(k)){ params.delete(k); changed = true; }
+  });
+
+  if(changed){
+    const qs=params.toString();
+    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
+  }
+
+  window.LINGOTOTAL_SETTINGS={ui,target};
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoTotal · Matching</title>
