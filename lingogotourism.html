@@ -551,12 +551,21 @@ $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)ret
 $('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday and workplace language with flexibility and common conversational chunks'}[selectedLevel];const tourismContext=selectedDesignContext||'general tourism and hospitality job application and workplace communication';
 const prompt=`Create a LingoGo Tourism activity for a young person seeking work in tourism or hospitality, either in their home country or abroad, and learning ${targetLanguage}.
 Learner's need: "${theme}"
+IMPORTANT — LEARNER SUBMISSION PRIORITY:
+The learner's submitted text is AUTHORITATIVE and is the PRIMARY TASK.
+- Every generated situation and every communicative intention must be recognisably and directly connected to the learner's exact submission.
+- Do not replace the learner's request with a generic page topic, suggested example, category, qualification, or other built-in theme.
+- Do not broaden away from a specific request. If the learner gives a particular experience, problem, question, sentence, or scenario, stay closely focused on it.
+- The selected category and specialist page context are SUPPORTING CONTEXT ONLY.
+- Do not introduce unrelated qualifications, travel, accommodation, customer service, interviews, work experience, or other topics.
+- The learner's own typed submission always outranks examples and preset options.
+
 Tourism context: ${tourismContext}
 Level: ${level}.
 
 The pedagogical focus is COMMUNICATIVE INTENTION IN TOURISM EMPLOYMENT. The learner decides what they need to communicate and then discovers short, natural, useful language for applications, interviews and real visitor-facing work.
 
-Where appropriate, help the learner translate academic qualifications and non-tourism experience into relevant strengths: communication, organisation, teamwork, digital skills, languages, intercultural awareness, problem-solving, reliability, learning quickly, handling information accurately and dealing professionally with people.
+ONLY when the learner's submitted need explicitly concerns qualifications or non-tourism experience, help them translate that experience into relevant strengths: communication, organisation, teamwork, digital skills, languages, intercultural awareness, problem-solving, reliability, learning quickly, handling information accurately and dealing professionally with people.
 
 Use realistic early-career tourism contexts where relevant: hotels and resorts, reception, guest services, attractions, museums, visitor centres, tour companies, excursions, travel agencies, events, airports, seasonal work, cafés or hospitality linked to tourism, bookings, recommendations, complaints, directions, local information, teamwork, busy periods and professional behaviour.
 

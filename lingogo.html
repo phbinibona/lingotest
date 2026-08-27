@@ -151,6 +151,15 @@ function renderCollection(){const list=$('collectionList'),d=getCollection();lis
 $('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
 $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
 $('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday language with flexibility and common conversational chunks'}[selectedLevel];const prompt=`Create a LingoGo activity about "${theme}" for a learner of ${targetLanguage}.
+IMPORTANT — LEARNER SUBMISSION PRIORITY:
+The learner's submitted text is AUTHORITATIVE and is the PRIMARY TASK.
+- Every generated situation and every communicative intention must be recognisably and directly connected to the learner's exact submission.
+- Do not replace the learner's request with a generic page topic, suggested example, category, qualification, or other built-in theme.
+- Do not broaden away from a specific request. If the learner gives a particular experience, problem, question, sentence, or scenario, stay closely focused on it.
+- The selected category and specialist page context are SUPPORTING CONTEXT ONLY.
+- Do not introduce unrelated qualifications, travel, accommodation, customer service, interviews, work experience, or other topics.
+- The learner's own typed submission always outranks examples and preset options.
+
 Level: ${level}.
 
 The pedagogical focus is COMMUNICATIVE INTENTION: the learner decides what they want to communicate and then discovers useful natural ways to say it.
