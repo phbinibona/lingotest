@@ -18,7 +18,7 @@ button,input{font:inherit}
 .page{width:min(860px,calc(100% - 22px));margin:20px auto 40px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(16px,3vw,28px);margin-bottom:18px}
 .hero{background:linear-gradient(135deg,#fff,#edf5ff)}h1{margin:0 0 7px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.16}.hero p{margin:0;color:var(--muted)}
 .section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.number{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:#fff;font-weight:800}.section-title{font-size:1.16rem;font-weight:800}.setup-lead{margin:-5px 0 14px;color:var(--muted);font-weight:600}
-.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.choice{padding:11px 8px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}.choice:hover,.choice.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}.level-card{min-height:110px;text-align:left;padding:15px 14px;display:flex;flex-direction:column;justify-content:center;gap:5px}.level-name{font-size:1.02rem;font-weight:800}.level-note{font-size:.79rem;line-height:1.35;color:var(--muted)}
+.level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.choice{padding:11px 8px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}.choice:hover,.choice.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}.level-card{min-height:110px;text-align:left;padding:15px 14px;display:flex;flex-direction:column;justify-content:center;gap:5px}.level-name{font-size:1.02rem;font-weight:800}.level-note{font-size:.79rem;line-height:1.35;color:var(--muted)}
 .topic-step{display:grid;grid-template-columns:40px 1fr;gap:12px;margin-top:24px;padding-top:22px;border-top:1px solid var(--border)}.substep-badge{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#dfeaf8;color:var(--primary-dark);font-weight:800}.topic-label{font-size:1.08rem;margin:0 0 4px;font-weight:800}.topic-guidance{margin:0 0 11px;color:var(--muted);font-size:.9rem}
 input[type=text]{width:100%;min-height:48px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--radius-sm)}input[type=text]:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(18,103,214,.13)}
 .examples-wrap{margin-top:15px;padding-top:12px;border-top:1px dashed #d6deea}.helper{font-size:.78rem;color:#7b8796}.example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.quiet-examples .choice{padding:8px 7px;border:1px solid #e0e6ee;background:#f8fafc;color:#657181;font-size:.78rem}
@@ -244,7 +244,7 @@ input[type=text]:focus{
   max-width:28ch;
 }
 .intentions{
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:0;
   border:1.5px solid var(--design-black);
 }
@@ -294,7 +294,7 @@ input[type=text]:focus{
 }
 .design-context-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:0;
   border:1.5px solid var(--design-black);
 }
@@ -405,7 +405,7 @@ body{background:#f7f8fa}
   .design-chip{font-size:.58rem!important;padding:4px 6px!important}
   .section-number{width:25px!important;height:25px!important;font-size:.72rem!important}
   .section-title{font-size:1rem!important}
-  .level-grid{grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
+  .level-grid{grid-template-columns:repeat(2,1fr)!important;gap:5px!important}
   .level-card{min-height:58px!important;padding:8px 6px!important;text-align:center!important;justify-content:center!important;border:1px solid var(--lg-line)!important}
   .level-name{font-size:.78rem!important;line-height:1.15}
   .level-note{display:none!important}
@@ -430,12 +430,106 @@ body{background:#f7f8fa}
   .home-link{max-width:96px}
 }
 
+
+/* LingoGo standard compact navigation */
+.home-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:9px;background:#fff;color:var(--primary-dark);text-decoration:none}
+.home-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(max-width:700px){
+  .banner{min-height:64px!important;padding:8px 10px!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;flex-wrap:nowrap!important}
+  .brand-wrap{min-width:0!important;gap:8px!important}
+  .brand-mark{width:38px!important;height:38px!important;border-radius:10px!important;flex:0 0 38px!important}
+  .brand{font-size:1rem!important;white-space:nowrap!important}
+  .tagline{display:none!important}
+  .header-tools{width:auto!important;min-width:0!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;flex-wrap:nowrap!important}
+  .language-pair{display:none!important}
+  .home-link{padding:8px 9px!important;font-size:.72rem!important;line-height:1.1!important;white-space:nowrap!important}
+  .home-icon{width:36px!important;height:36px!important;flex-basis:36px!important}
+  .level-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:390px){
+  .brand-mark{display:none!important}
+  .brand{font-size:.92rem!important}
+  .home-link{font-size:.68rem!important;padding:7px 8px!important}
+  .home-icon{width:34px!important;height:34px!important;flex-basis:34px!important}
+}
+
+</style>
+<style>
+/* ===== LingoGo mobile reset — 27 Aug 2026 ===== */
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .banner{
+    position:sticky!important;top:0!important;
+    min-height:48px!important;height:48px!important;
+    padding:5px 8px!important;gap:6px!important;
+    display:flex!important;flex-direction:row!important;
+    align-items:center!important;justify-content:space-between!important;
+    flex-wrap:nowrap!important;overflow:hidden!important
+  }
+  .brand-wrap{display:flex!important;align-items:center!important;gap:6px!important;min-width:0!important;flex:1 1 auto!important;overflow:hidden!important}
+  .brand-mark{width:30px!important;height:30px!important;flex:0 0 30px!important;border-radius:7px!important;font-size:.69rem!important}
+  .brand-wrap>div:last-child{min-width:0!important;overflow:hidden!important}
+  .brand{font-size:.88rem!important;letter-spacing:.035em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .tagline{display:none!important}
+  .header-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:4px!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;flex-wrap:nowrap!important}
+  .language-pair{display:none!important}
+  .home-link{font-size:0!important;width:34px!important;height:34px!important;padding:0!important;display:inline-grid!important;place-items:center!important;flex:0 0 34px!important;border-radius:8px!important}
+  .home-link:before{content:'↔';font-size:1rem!important;font-weight:800!important;line-height:1!important}
+  .home-icon{width:34px!important;height:34px!important;flex:0 0 34px!important;padding:0!important;border-radius:8px!important}
+  .home-icon svg{width:20px!important;height:20px!important}
+
+  .page{width:100%!important;max-width:100%!important;margin:6px auto 20px!important;padding:0 7px!important}
+  .collection-bar{margin:0 0 5px!important}
+  .collection-btn{padding:6px 8px!important;font-size:.68rem!important;border-radius:8px!important}
+  .panel{padding:9px!important;margin-bottom:6px!important;border-radius:9px!important;box-shadow:none!important}
+  .hero{padding:9px!important}
+  .hero h1{font-size:1.16rem!important;line-height:1.12!important;margin:0 0 3px!important}
+  .hero p{font-size:.74rem!important;line-height:1.25!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+  .design-kicker{font-size:.54rem!important;margin:0 0 3px!important;letter-spacing:.055em!important}
+  .design-fields,.design-chips,.design-disclaimer{display:none!important}
+
+  .section-head{gap:7px!important;margin-bottom:5px!important;align-items:center!important}
+  .number,.section-number{width:24px!important;height:24px!important;min-width:24px!important;flex:0 0 24px!important;font-size:.68rem!important}
+  .section-title{font-size:.9rem!important;line-height:1.15!important}
+  .setup-lead{display:none!important}
+
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;border:0!important}
+  .level-card{min-height:42px!important;padding:6px!important;text-align:center!important;justify-content:center!important;border:1px solid #d7dce3!important;border-radius:8px!important}
+  .level-name{font-size:.72rem!important;line-height:1.12!important}
+  .level-note{display:none!important}
+
+  .design-context-wrap{margin-top:6px!important;padding-top:6px!important}
+  .design-context-label{font-size:.69rem!important;margin:0 0 4px!important;line-height:1.15!important}
+  .design-context-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important;border:0!important}
+  .design-context{min-height:36px!important;padding:5px 3px!important;text-align:center!important;border:1px solid #d7dce3!important;border-radius:7px!important}
+  .design-context strong{font-size:.65rem!important;line-height:1.08!important;overflow-wrap:anywhere!important}
+  .design-context span{display:none!important}
+
+  .topic-step{grid-template-columns:24px minmax(0,1fr)!important;gap:7px!important;margin-top:7px!important;padding-top:7px!important}
+  .substep-badge{width:24px!important;height:24px!important;font-size:.67rem!important}
+  .topic-label{font-size:.8rem!important;margin:0 0 2px!important}
+  .topic-guidance{font-size:.68rem!important;line-height:1.2!important;margin:0 0 5px!important}
+  #themeInput,input[type=text]{min-height:39px!important;padding:7px 9px!important;font-size:16px!important;border-width:1px!important;border-radius:8px!important}
+  .examples-wrap{margin-top:6px!important;padding-top:5px!important}
+  .helper{font-size:.64rem!important}
+  .example-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:3px!important;margin-top:4px!important}
+  .quiet-examples .choice,.example{min-height:31px!important;padding:4px 2px!important;font-size:.61rem!important;line-height:1.05!important;border-radius:6px!important;overflow-wrap:anywhere!important}
+  .actions{margin-top:6px!important}
+  .primary-btn,.secondary-btn{min-height:36px!important;padding:7px 9px!important;font-size:.72rem!important;border-radius:8px!important}
+}
+@media(max-width:370px){
+  .brand-mark{display:none!important}
+  .brand{font-size:.82rem!important}
+  .design-context-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .example-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style>
 </head>
 <body>
 <header class="banner">
 <div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline"></div></div></div>
-<div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="https://lingototal.com/"><span data-i18n="changeLanguages"></span></a>
+<div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="index.html"><span data-i18n="changeLanguages"></span></a>
     <a class="home-icon" href="index.html" data-i18n-aria-label="homeLabel" data-i18n-title="homeLabel" aria-label="Home" title="Home">
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M3 11.5 12 4l9 7.5"></path>
@@ -474,7 +568,6 @@ body{background:#f7f8fa}
 <div class="level-grid">
 <button class="choice level level-card" data-level="beginner"><span class="level-name" data-i18n="beginner"></span><span class="level-note" data-i18n="beginnerNote"></span></button>
 <button class="choice level level-card" data-level="intermediate"><span class="level-name" data-i18n="intermediate"></span><span class="level-note" data-i18n="intermediateNote"></span></button>
-<button class="choice level level-card" data-level="advanced"><span class="level-name" data-i18n="advanced"></span><span class="level-note" data-i18n="advancedNote"></span></button>
 </div>
 
 <div class="design-context-wrap">
@@ -588,7 +681,7 @@ let selectedLevel='',selectedDesignContext='',situations=[],current=0;
 function applyLanguage(){document.documentElement.lang=uiLanguage;document.documentElement.dir=uiLanguage==='ar'?'rtl':'ltr';document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=tr(e.dataset.i18n));document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>e.placeholder=tr(e.dataset.i18nPlaceholder));document.querySelectorAll('[data-i18n-aria-label]').forEach(e=>e.setAttribute('aria-label',tr(e.dataset.i18nAriaLabel)));document.querySelectorAll('[data-i18n-title]').forEach(e=>e.setAttribute('title',tr(e.dataset.i18nTitle)));document.querySelectorAll('.example').forEach(b=>b.dataset.theme=tr(b.dataset.themeKey));$('languagePair').textContent=uiNames[uiLanguage]+' → '+targetNames[targetLanguage];document.title='LingoTotal · '+tr('title')}
 function notice(m,t='info'){const n=$('notice');n.textContent=m;n.className='notice show '+t;clearTimeout(notice.timer);notice.timer=setTimeout(()=>n.classList.remove('show'),3000)}
 function speak(text){LingoTTS.speak(text,voiceLocales[targetLanguage]||'en-GB',.9).catch(()=>{})}
-document.querySelectorAll('.level').forEach(b=>b.onclick=()=>{document.querySelectorAll('.level').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedLevel=b.dataset.level});
+document.querySelectorAll('.level').forEach(b=>b.onclick=()=>{document.querySelectorAll('.level').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedLevel=(b.dataset.level==='beginner'||b.dataset.level==='intermediate')?b.dataset.level:''});
 
 document.querySelectorAll('.design-context').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.design-context').forEach(x=>x.classList.remove('selected'));
@@ -625,7 +718,7 @@ function saveSentence(sentence){const d=getCollection();if(d.some(x=>x.sentence=
 function renderCollection(){const list=$('collectionList'),d=getCollection();list.innerHTML='';if(!d.length){list.textContent=tr('emptyCollection');return}d.forEach((x,i)=>{const row=document.createElement('div');row.className='collection-item';row.innerHTML='<div class="collection-sentence">'+x.sentence+'</div><div class="collection-meta">'+(x.targetName||'')+(x.theme?' · '+tr('themeLabel')+': '+x.theme:'')+'</div>';const a=document.createElement('div');a.className='response-actions';const l=document.createElement('button');l.textContent=tr('listen');l.onclick=()=>speak(x.sentence);const r=document.createElement('button');r.textContent=tr('remove');r.onclick=()=>{d.splice(i,1);setCollection(d);renderCollection()};a.append(l,r);row.append(a);list.append(row)})}
 $('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
 $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
-$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();learnerTypedNeed=theme;if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday and workplace language with flexibility and common conversational chunks',advanced:'C1-C2 authentic professional spoken language with nuance, register and persuasive explanation'}[selectedLevel];const moveContext=selectedDesignContext||'general international relocation and settling-in communication';
+$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();learnerTypedNeed=theme;if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday and workplace language with flexibility and common conversational chunks'}[selectedLevel];const moveContext=selectedDesignContext||'general international relocation and settling-in communication';
 const prompt=`Create a LingoGo Moving Country activity for a person learning ${targetLanguage} who is preparing to move, is moving, or has recently moved to another country.
 Learner's need: "${theme}"
 IMPORTANT: The learner's exact need above is the PRIMARY task. Every generated situation must directly help with that need. Do not replace it with a generic activity from the selected category. The selected category is supporting context only. If the learner has typed a specific question, problem, sentence or scenario, stay closely focused on it.
