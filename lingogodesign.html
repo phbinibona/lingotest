@@ -363,6 +363,73 @@ input[type=text]:focus{
   .response-card:nth-child(n){margin-left:0;margin-right:0}
 }
 
+
+/* LingoGo compact/mobile refinement — 27 Aug 2026 */
+:root{--lg-soft:#f7f8fa;--lg-line:#d7dce3;--lg-ink:#20242a}
+body{background:#f7f8fa}
+.banner{padding:10px 16px;gap:12px;flex-wrap:nowrap;align-items:center}
+.brand{min-width:0;flex:1 1 auto}
+.brand-title{font-size:clamp(1rem,3vw,1.3rem)}
+.brand-subtitle{font-size:.7rem;opacity:.88}
+.header-tools{flex:0 0 auto;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0}
+.language-pair{padding:6px 9px;font-size:.72rem;white-space:nowrap}
+.home-link{padding:7px 9px;font-size:.72rem;white-space:nowrap}
+.home-icon{width:36px!important;height:36px!important;flex:0 0 36px!important;border-radius:8px!important}
+.page{max-width:980px}
+.panel{box-shadow:0 2px 8px rgba(23,36,52,.05);border-color:var(--lg-line);border-radius:12px}
+.hero{background:#fff;min-height:0;padding-top:20px;padding-bottom:20px}
+.hero:after{opacity:.04}
+.design-kicker{letter-spacing:.08em;opacity:.72}
+.design-chip{background:#f4f6f8!important;border-color:#d8dde4!important;color:#343a40!important}
+.level-grid,.design-context-grid{gap:8px}
+.level-card,.design-context{background:#fff!important;border:1px solid var(--lg-line)!important;border-radius:9px!important;box-shadow:none!important}
+.level-card:hover,.level-card.selected,.design-context:hover,.design-context.selected{background:#f1f5f9!important;border-color:#8da2b5!important;color:var(--lg-ink)!important;transform:none!important}
+.level-card.selected .level-note,.level-card:hover .level-note,.design-context.selected span,.design-context:hover span{color:#5d6670!important}
+.primary-btn{box-shadow:none!important}
+
+@media(max-width:700px){
+  .banner{flex-direction:row!important;align-items:center!important;padding:8px 10px!important;gap:7px!important;min-height:54px}
+  .brand{max-width:34%;overflow:hidden}
+  .brand-subtitle{display:none}
+  .header-tools{width:auto!important;margin-left:auto;justify-content:flex-end!important;gap:5px!important}
+  .language-pair{padding:5px 6px!important;font-size:.62rem!important;max-width:105px;overflow:hidden;text-overflow:ellipsis}
+  .home-link{padding:6px 7px!important;font-size:.65rem!important;max-width:112px;overflow:hidden;text-overflow:ellipsis}
+  .home-icon{width:32px!important;height:32px!important;flex-basis:32px!important}
+  .page{margin-top:8px!important;padding:0 9px 24px}
+  .panel{padding:13px 12px!important;margin-bottom:9px!important;border-radius:10px!important}
+  .hero{padding:14px 12px!important}
+  .hero h1{font-size:1.38rem!important;margin-bottom:5px!important}
+  .hero p{font-size:.86rem!important;line-height:1.35}
+  .design-kicker{font-size:.62rem!important;margin-bottom:5px!important}
+  .design-chips{gap:4px!important;margin-top:8px!important}
+  .design-chip{font-size:.58rem!important;padding:4px 6px!important}
+  .section-number{width:25px!important;height:25px!important;font-size:.72rem!important}
+  .section-title{font-size:1rem!important}
+  .level-grid{grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
+  .level-card{min-height:58px!important;padding:8px 6px!important;text-align:center!important;justify-content:center!important;border:1px solid var(--lg-line)!important}
+  .level-name{font-size:.78rem!important;line-height:1.15}
+  .level-note{display:none!important}
+  .design-context-wrap{margin-top:9px!important}
+  .design-context-label{font-size:.78rem!important;margin-bottom:6px!important}
+  .design-context-grid{grid-template-columns:repeat(2,1fr)!important;gap:5px!important;border:0!important}
+  .design-context{min-height:46px!important;padding:7px 6px!important;text-align:center!important;border:1px solid var(--lg-line)!important}
+  .design-context strong{font-size:.76rem!important}
+  .design-context span{display:none!important}
+  .topic-label{font-size:.86rem!important}
+  .topic-guidance{font-size:.75rem!important;margin:3px 0 7px!important}
+  #themeInput{padding:10px!important;font-size:16px!important}
+  .example-grid{grid-template-columns:repeat(2,1fr)!important;gap:5px!important}
+  .example{padding:7px!important;font-size:.72rem!important;min-height:0!important}
+  .actions{margin-top:9px!important}
+  .primary-btn,.secondary-btn{padding:9px 11px!important;min-height:40px;font-size:.78rem!important}
+}
+@media(max-width:390px){
+  .brand{max-width:28%}
+  .brand-title{font-size:.91rem!important}
+  .language-pair{max-width:86px}
+  .home-link{max-width:96px}
+}
+
 </style>
 
 /* 2026-08-26: calmer LingoGo for Real Life presentation */
@@ -514,6 +581,22 @@ document.querySelectorAll('.design-context').forEach(b=>b.onclick=()=>{
 });
 
 document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{$('themeInput').value=b.dataset.theme});
+
+// Keep the learner's own request as the authoritative Section 2 value.
+const themeInputEl=$('themeInput');
+let learnerTypedNeed=themeInputEl ? themeInputEl.value.trim() : '';
+if(themeInputEl){
+  themeInputEl.addEventListener('input',()=>{ learnerTypedNeed=themeInputEl.value.trim(); });
+  themeInputEl.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      learnerTypedNeed=themeInputEl.value.trim();
+      $('generateBtn').click();
+    }
+  });
+}
+
+document.querySelectorAll('.example').forEach(b=>b.addEventListener('click',()=>{learnerTypedNeed=$('themeInput').value.trim();}));
 async function callGeminiAPI(prompt){const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.7})});let d;try{d=await r.json()}catch{throw new Error('Invalid server response')}if(!r.ok)throw new Error(d?.error||'Server error');const result=d?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';if(!result)throw new Error('Empty AI response');return result}
 function parseJSON(text){const clean=String(text||'').replace(/```json/gi,'').replace(/```/g,'').trim();const start=clean.indexOf('{'),end=clean.lastIndexOf('}');if(start<0||end<0)throw new Error('AI format error');const d=JSON.parse(clean.slice(start,end+1));if(!Array.isArray(d.situations)||d.situations.length<3)throw new Error('AI format error');return d.situations.slice(0,4).map(s=>{s.situation=String(s.situation||'').trim();if(!s.situation||!Array.isArray(s.intentions)||s.intentions.length<3)throw new Error('AI situation format error');s.intentions=s.intentions.slice(0,3).map(i=>{i.label=String(i.label||'').trim();if(!i.label||!Array.isArray(i.responses)||i.responses.length<2)throw new Error('AI intention format error');i.responses=i.responses.slice(0,2).map(r=>({text:String(r?.text||'').trim(),note:String(r?.note||'').trim()}));if(i.responses.some(r=>!r.text))throw new Error('AI response format error');return i});return s})}
 function renderSituation(){const s=situations[current];$('activity').style.display='block';$('waiting').style.display='none';$('progress').textContent=(current+1)+' / '+situations.length;$('situation').textContent=s.situation;$('intentions').innerHTML='';$('responses').style.display='none';$('responses').innerHTML='';$('nextWrap').style.display='none';s.intentions.forEach(intent=>{const b=document.createElement('button');b.className='intent';b.textContent=intent.label;b.onclick=()=>showResponses(intent,b);$('intentions').appendChild(b)})}
@@ -526,9 +609,10 @@ function saveSentence(sentence){const d=getCollection();if(d.some(x=>x.sentence=
 function renderCollection(){const list=$('collectionList'),d=getCollection();list.innerHTML='';if(!d.length){list.textContent=tr('emptyCollection');return}d.forEach((x,i)=>{const row=document.createElement('div');row.className='collection-item';row.innerHTML='<div class="collection-sentence">'+x.sentence+'</div><div class="collection-meta">'+(x.targetName||'')+(x.theme?' · '+tr('themeLabel')+': '+x.theme:'')+'</div>';const a=document.createElement('div');a.className='response-actions';const l=document.createElement('button');l.textContent=tr('listen');l.onclick=()=>speak(x.sentence);const r=document.createElement('button');r.textContent=tr('remove');r.onclick=()=>{d.splice(i,1);setCollection(d);renderCollection()};a.append(l,r);row.append(a);list.append(row)})}
 $('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
 $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
-$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday language with flexibility and common conversational chunks',advanced:'C1-C2 authentic colloquial language with nuance, register and implication'}[selectedLevel];const designContext=selectedDesignContext||'general graphic-design communication';
+$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();learnerTypedNeed=theme;if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday language with flexibility and common conversational chunks',advanced:'C1-C2 authentic colloquial language with nuance, register and implication'}[selectedLevel];const designContext=selectedDesignContext||'general graphic-design communication';
 const prompt=`Create a LingoGo Design activity for a university graphic-design student learning ${targetLanguage}.
 Learner's need: "${theme}"
+IMPORTANT: The learner's exact need above is the PRIMARY task. Every generated situation must directly help with that need. Do not replace it with a generic activity from the selected category. The selected category is supporting context only. If the learner has typed a specific question, problem, sentence or scenario, stay closely focused on it.
 Design context: ${designContext}
 Level: ${level}.
 
