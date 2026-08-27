@@ -190,6 +190,21 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--primary);box-
 }
 </style>
 
+
+<style id="lingoreal-theme-first-fix">
+.topic-step{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.topic-step:first-of-type{border-top:0;padding-top:0}
+.substep-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--primary-light);color:var(--primary);font-weight:700}
+.topic-label{display:block;font-weight:700;margin-bottom:4px}
+.topic-guidance{margin:0 0 8px;color:var(--muted);font-size:.88rem}
+#themeInput{width:100%;padding:11px 12px;border:2px solid var(--border);border-radius:10px;font:inherit}
+#themeInput.attention{border-color:var(--primary)}
+.examples-wrap{margin-top:9px}
+.example-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.quiet-examples .choice{padding:8px;min-height:38px;font-size:.8rem}
+@media(max-width:600px){.example-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+
 </head>
 <body>
 <header class="banner">
@@ -213,11 +228,42 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--primary);box-
 </section>
 <section class="panel hero"><h1 data-i18n="title">LingoReal · How people really speak</h1><p data-i18n="intro">Explore what sounds natural, what people really mean, and how real conversations work.</p></section>
 <section class="panel">
-<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Start by choosing your level</div></div>
-<p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
-<div class="level-grid">
-<button class="choice level level-card" data-level="beginner"><span class="level-name" data-i18n="beginner">Revising the basics</span><span class="level-note" data-i18n="beginnerNote">Notice useful, natural language in simple everyday situations.</span></button>
-<button class="choice level level-card" data-level="intermediate"><span class="level-name" data-i18n="intermediate">Building confidence</span><span class="level-note" data-i18n="intermediateNote">Understand more natural reactions, tone and everyday expressions.</span></button></div></div></div></div>
+<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Start with what you want to talk about</div></div>
+
+<div class="topic-step">
+  <div class="substep-badge">1</div>
+  <div>
+    <label for="themeInput" class="topic-label" data-i18n="ownTopic">What would you like to talk about?</label>
+    <p class="topic-guidance" data-i18n="topicGuidance">Write your own theme, situation or subject. This will drive the whole LingoReal challenge.</p>
+    <input id="themeInput" class="attention" type="text" data-i18n-placeholder="topicPlaceholder" placeholder="For example: meeting new people, talking about my work, making plans...">
+    <div class="examples-wrap">
+      <div class="helper" data-i18n="inspiration">If you are stuck, here are a few ideas:</div>
+      <div class="example-grid quiet-examples">
+        <button class="choice example" data-theme-key="friends" data-i18n="friends">Friends</button>
+        <button class="choice example" data-theme-key="travel" data-i18n="travel">Travel</button>
+        <button class="choice example" data-theme-key="work" data-i18n="work">Work</button>
+        <button class="choice example" data-theme-key="food" data-i18n="food">Eating out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="topic-step">
+  <div class="substep-badge">2</div>
+  <div>
+    <p class="setup-lead" data-i18n="levelPrompt">Now choose the level that feels right for you.</p>
+    <div class="level-grid">
+      <button class="choice level level-card" data-level="beginner">
+        <span class="level-name" data-i18n="beginner">Revising the basics</span>
+        <span class="level-note" data-i18n="beginnerNote">Notice useful, natural language in simple everyday situations.</span>
+      </button>
+      <button class="choice level level-card" data-level="intermediate">
+        <span class="level-name" data-i18n="intermediate">Building confidence</span>
+        <span class="level-note" data-i18n="intermediateNote">Understand more natural reactions, tone and everyday expressions.</span>
+      </button>
+    </div>
+  </div>
+</div>
 </section>
 <section class="panel">
 <div class="section-head"><div class="number">2</div><div class="section-title" data-i18n="generateTitle">See how people really speak</div></div>
@@ -248,6 +294,17 @@ eu:{mySavedSentences:'Gordetako esaldiak',collectionTitle:'Nire LingoTotal bildu
 ja:{mySavedSentences:'保存した文',collectionTitle:'マイ LingoTotal コレクション',collectionIntro:'役立つ表現をここに保存して、この端末で後から復習できます。',downloadCollection:'コレクションをダウンロード',closeCollection:'閉じる',saveSentence:'★ この文を保存',listen:'🔊 聞く',remove:'削除',emptyCollection:'保存した文はまだありません。',savedMessage:'マイ LingoTotal コレクションに保存しました。',alreadySaved:'この文はすでに保存されています。',noSaved:'保存した文はまだありません。',themeLabel:'テーマ',downloadSentences:'学習した文をダウンロード',tagline:'好きな方法でどんな言語でも学ぼう',changeLanguages:'アクティビティ / 言語を変更',title:'LingoReal · 実際の話し方',intro:'自然な表現、本当の意図、実際の会話の仕組みを学びます。',choose:'まずレベルを選びましょう',levelPrompt:'今日の自分に合うものを選んでください。',beginner:'基礎を復習する',beginnerNote:'簡単な日常場面で役立つ自然な表現に気づきます。',intermediate:'自信をつける',intermediateNote:'より自然な反応、口調、日常表現を理解します。',advanced:'さらに上へ',advancedNote:'含意、レジスター、慣用表現、微妙な意味に挑戦します。',ownTopic:'次に自分のテーマを選びましょう',topicGuidance:'実際に話してみたい場面やテーマを選んでください。',topicPlaceholder:'例：旅行、人との出会い、仕事、レストラン、サッカー...',inspiration:'迷ったら：',friends:'友達',travel:'旅行',work:'仕事',food:'外食',generateTitle:'実際の話し方を見てみよう',generate:'LingoRealチャレンジを作成',generating:'自然な会話を作成中…',waiting:'LingoRealチャレンジはここに表示されます。',selectLevel:'最初にレベルを選んでください。',enterTopic:'トピックを書くか、例を選んでください。',serverError:'チャレンジを作成できませんでした。',type1:'実際なら何と言う？',type2:'本当はどういう意味？',type3:'自然な表現にしよう',chooseAnswer:'最も自然な答えを選んでください。',meaningPrompt:'話し手は本当は何を意味していますか？',rewritePrompt:'日常会話で自然に聞こえるように書き換えてください。',rewritePlaceholder:'より自然な表現を書いてください…',checkRewrite:'自然さを確認',next:'次へ',correct:'いい選択です。',tryAgain:'最も自然な選択ではありません。',naturalVersion:'自然な言い方',explanation:'理由',yourAnswer:'あなたの表現',newChallenge:'別のチャレンジを作成',finished:'チャレンジ完了',score:'選択問題{total}問中{score}問で最適な答えを選びました。',rewriteFeedback:'あなたの表現と自然な表現を比べてみましょう。'},
 ar:{mySavedSentences:'جملي المحفوظة',collectionTitle:'مجموعتي في LingoTotal',collectionIntro:'احفظ هنا العبارات المفيدة وارجع إليها لاحقاً على هذا الجهاز.',downloadCollection:'تنزيل المجموعة',closeCollection:'إغلاق',saveSentence:'★ احفظ هذه الجملة',listen:'🔊 استمع',remove:'حذف',emptyCollection:'لا توجد جمل محفوظة بعد.',savedMessage:'تم حفظ الجملة في مجموعتي في LingoTotal.',alreadySaved:'هذه الجملة محفوظة بالفعل.',noSaved:'لا توجد جمل محفوظة بعد.',themeLabel:'الموضوع',downloadSentences:'تنزيل الجمل التي تعلمتها',tagline:'تعلّم أي لغة بطريقتك',changeLanguages:'الأنشطة / تغيير اللغات',title:'LingoReal · كيف يتحدث الناس فعلاً',intro:'اكتشف ما يبدو طبيعياً، وما يقصده الناس فعلاً، وكيف تعمل المحادثات الحقيقية.',choose:'ابدأ باختيار مستواك',levelPrompt:'اختر الخيار الأنسب لك اليوم.',beginner:'مراجعة الأساسيات',beginnerNote:'لاحظ اللغة المفيدة والطبيعية في مواقف يومية بسيطة.',intermediate:'بناء الثقة',intermediateNote:'افهم ردود الفعل والنبرة والتعبيرات اليومية الطبيعية.',advanced:'مستوى أكثر تقدماً',advancedNote:'استكشف المعاني الضمنية والسجل والتعابير الاصطلاحية والفروق الدقيقة.',ownTopic:'اختر الآن موضوعك',topicGuidance:'اختر موقفاً أو موضوعاً ترغب فعلاً في الحديث عنه.',topicPlaceholder:'جرّب: السفر، التعرف على الناس، العمل، المطاعم، كرة القدم...',inspiration:'إذا لم تكن لديك فكرة:',friends:'الأصدقاء',travel:'السفر',work:'العمل',food:'تناول الطعام خارج المنزل',generateTitle:'اكتشف كيف يتحدث الناس فعلاً',generate:'أنشئ تحدي LingoReal',generating:'جارٍ إنشاء محادثات طبيعية…',waiting:'سيظهر تحدي LingoReal هنا.',selectLevel:'اختر مستوى أولاً.',enterTopic:'اكتب موضوعاً أو اختر مثالاً.',serverError:'تعذر إنشاء التحدي.',type1:'ماذا ستقول فعلاً؟',type2:'ماذا يقصدون فعلاً؟',type3:'اجعله طبيعياً',chooseAnswer:'اختر الإجابة الأكثر طبيعية.',meaningPrompt:'ماذا يقصد المتحدث فعلاً؟',rewritePrompt:'أعد كتابة هذا ليبدو طبيعياً في محادثة يومية.',rewritePlaceholder:'اكتب نسخة أكثر طبيعية…',checkRewrite:'تحقق من مدى طبيعية العبارة',next:'التالي',correct:'اختيار جيد.',tryAgain:'ليس هذا الخيار الأكثر طبيعية.',naturalVersion:'صيغة طبيعية',explanation:'لماذا',yourAnswer:'صياغتك',newChallenge:'أنشئ تحدياً آخر',finished:'اكتمل التحدي',score:'اخترت أفضل إجابة في {score} من أصل {total} أسئلة.',rewriteFeedback:'قارن صياغتك بالصيغة الطبيعية أدناه.'}
 };
+
+Object.assign(T.en,{choose:'Start with what you want to talk about',ownTopic:'What would you like to talk about?',topicGuidance:'Write your own theme, situation or subject. This will drive the whole LingoReal challenge.',levelPrompt:'Now choose the level that feels right for you.'});
+Object.assign(T.ca,{choose:'Comença amb allò de què vols parlar',ownTopic:'De què t’agradaria parlar?',topicGuidance:'Escriu el teu propi tema, situació o assumpte. Això guiarà tot el repte LingoReal.',levelPrompt:'Ara tria el nivell que et sembli adequat.'});
+Object.assign(T.es,{choose:'Empieza por aquello de lo que quieres hablar',ownTopic:'¿De qué te gustaría hablar?',topicGuidance:'Escribe tu propio tema, situación o asunto. Esto guiará todo el reto LingoReal.',levelPrompt:'Ahora elige el nivel que te parezca adecuado.'});
+Object.assign(T.fr,{choose:'Commencez par ce dont vous voulez parler',ownTopic:'De quoi aimeriez-vous parler ?',topicGuidance:'Écrivez votre propre thème, situation ou sujet. Il guidera tout le défi LingoReal.',levelPrompt:'Choisissez maintenant le niveau qui vous convient.'});
+Object.assign(T.de,{choose:'Beginne mit dem Thema, über das du sprechen möchtest',ownTopic:'Worüber möchtest du sprechen?',topicGuidance:'Schreibe dein eigenes Thema, deine Situation oder deinen Gesprächsgegenstand. Das steuert die gesamte LingoReal-Aufgabe.',levelPrompt:'Wähle jetzt das passende Niveau.'});
+Object.assign(T.it,{choose:'Inizia da ciò di cui vuoi parlare',ownTopic:'Di cosa vorresti parlare?',topicGuidance:'Scrivi il tuo tema, situazione o argomento. Questo guiderà l’intera sfida LingoReal.',levelPrompt:'Ora scegli il livello che ti sembra giusto.'});
+Object.assign(T.pt,{choose:'Comece pelo que quer falar',ownTopic:'Sobre o que gostaria de falar?',topicGuidance:'Escreva o seu próprio tema, situação ou assunto. Isto orientará todo o desafio LingoReal.',levelPrompt:'Agora escolha o nível que lhe parece adequado.'});
+Object.assign(T.eu,{choose:'Hasi hitz egin nahi duzunarekin',ownTopic:'Zeri buruz hitz egin nahiko zenuke?',topicGuidance:'Idatzi zure gaia, egoera edo hizpidea. Horrek gidatuko du LingoReal erronka osoa.',levelPrompt:'Orain aukeratu egokiena iruditzen zaizun maila.'});
+Object.assign(T.ja,{choose:'まず話したいテーマを決めましょう',ownTopic:'何について話したいですか？',topicGuidance:'自分のテーマ・場面・話題を書いてください。これがLingoReal全体の内容を決めます。',levelPrompt:'次に、自分に合うレベルを選んでください。'});
+Object.assign(T.ar,{choose:'ابدأ بما تريد التحدث عنه',ownTopic:'عمّ تود أن تتحدث؟',topicGuidance:'اكتب موضوعك أو الموقف أو المجال الذي يهمك. وسيقود ذلك تحدي LingoReal بالكامل.',levelPrompt:'اختر الآن المستوى المناسب لك.'});
 const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',ja:'日本語',ar:'العربية'};
 const targetNames={English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',Italian:'Italiano',Portuguese:'Português',Basque:'Euskara',Japanese:'日本語',Arabic:'العربية'};
 const voiceLocales={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'};
