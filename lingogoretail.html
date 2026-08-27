@@ -549,16 +549,35 @@ function renderCollection(){const list=$('collectionList'),d=getCollection();lis
 $('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
 $('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
 $('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday and workplace language with flexibility and common conversational chunks'}[selectedLevel];const retailContext=selectedDesignContext||'general retail job application and workplace communication';
-const prompt=`Create a LingoGo Retail activity for a young person with academic qualifications who is applying for retail work and learning ${targetLanguage}.
-Learner's need: "${theme}"
-Retail context: ${retailContext}
+const prompt=`Create a LingoGo Retail activity for a young person applying for retail work and learning ${targetLanguage}.
+
+LEARNER'S EXACT REQUEST — THIS HAS ABSOLUTE PRIORITY:
+"${theme}"
+
+Selected retail context: ${retailContext}
 Level: ${level}.
 
 The pedagogical focus is COMMUNICATIVE INTENTION IN RETAIL EMPLOYMENT. The learner decides what they need to communicate and then discovers short, natural, useful language for job applications, interviews and customer-facing work.
 
-A central aim is to help an academically qualified young applicant translate education into relevant retail strengths without sounding overqualified or defensive. Where appropriate, connect academic experience to transferable skills such as communication, reliability, organisation, teamwork, problem-solving, digital confidence, learning quickly, handling information accurately and dealing professionally with people.
+CRITICAL RELEVANCE RULES:
+- Every situation, intention and response MUST directly help the learner with the exact request above.
+- Treat details supplied by the learner as the content of the activity, not merely as a general theme.
+- If the learner describes personal experience (for example teamwork in sport, volunteering, caring, clubs, projects or previous work), build the challenge around explaining THAT experience and connecting it naturally to retail.
+- Do NOT introduce academic qualifications, degrees, studies, being overqualified or academic experience unless the learner's request explicitly mentions education, qualifications, a degree, university, studies or an equivalent idea.
+- Do NOT substitute a generic interview topic for the learner's chosen topic.
+- The selected retail context is secondary supporting context only. If it conflicts with the learner's exact request, follow the learner's request.
+- A good test: if the learner asks to explain teamwork gained through sport, the situations should ask about teamwork, examples from sport, what the learner contributed to a team, what they learned, and how that transfers to working with retail colleagues. They should NOT ask about academic qualifications.
 
 Use realistic early-career retail contexts where relevant: applying for sales assistant roles, explaining motivation for retail, answering interview questions, availability and shifts, customer service, recommending products, handling complaints, teamwork, taking instructions, initiative, targets, tills, stock, busy periods and professional behaviour.
+
+
+MANDATORY THREE-SITUATION FOCUS RULE:
+Treat the learner's submission as ONE communication goal. Create THREE different but CLOSELY RELATED situations that explore useful aspects of THAT SAME GOAL.
+Situation 1, Situation 2 and Situation 3 must each be recognisably about the learner's submitted need.
+Do NOT use later situations to change topic or return to generic themes from this page.
+Do NOT introduce qualifications, teamwork, language ability, availability, customers, travel, accommodation, study, interviews, or any other built-in topic unless it is part of the learner's submission or directly necessary to practise that exact communication goal.
+Before returning the JSON, internally check all three situations and every intention against the learner's submission. If any situation or intention is not directly relevant, replace it with one that is.
+Variation must come from different angles, interlocutors, stages, or communicative purposes WITHIN the same learner goal — never from changing the goal.
 
 Create exactly 3 realistic job-application, interview or retail-work situations.
 For EACH situation:
