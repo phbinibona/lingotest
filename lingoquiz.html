@@ -456,16 +456,66 @@ const TARGET_TO_CODE={
 };
 
 const DISPLAY_NAMES={
-  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Arabic:'Arabic'},
-  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Arabic:'àrab'},
-  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Arabic:'árabe'},
-  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Arabic:'arabe'},
-  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Arabic:'Arabisch'},
-  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Arabic:'arabo'},
-  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Arabic:'árabe'},
-  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Arabic:'arabiera'},
-  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Arabic:'アラビア語'},
-  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Arabic:'العربية'}
+  en:{
+    levelPrompt:'Choose the option that feels right for you today.',
+    beginnerNote:'Build useful natural expressions for simple everyday situations.',
+    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
+    advancedNote:'Work with richer, more nuanced and idiomatic language.',
+    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Arabic:'Arabic'},
+  ca:{
+    levelPrompt:'Tria l’opció que et vagi millor avui.',
+    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
+    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
+    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
+    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Arabic:'àrab'},
+  es:{
+    levelPrompt:'Elige la opción que mejor te vaya hoy.',
+    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
+    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
+    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
+    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Arabic:'árabe'},
+  fr:{
+    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
+    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
+    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
+    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
+    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Arabic:'arabe'},
+  de:{
+    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
+    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
+    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
+    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
+    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Arabic:'Arabisch'},
+  it:{
+    levelPrompt:'Scegli l’opzione che ti sembra più adatta oggi.',
+    beginnerNote:'Costruisci espressioni naturali e utili per semplici situazioni quotidiane.',
+    intermediateNote:'Usa un linguaggio quotidiano più flessibile e naturale con maggiore sicurezza.',
+    advancedNote:'Lavora con un linguaggio più ricco, sfumato e idiomatico.',
+    topicGuidance:'Scrivi qualcosa che vorresti davvero saper gestire in una conversazione quotidiana.',English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Arabic:'arabo'},
+  pt:{
+    levelPrompt:'Escolha a opção que lhe parecer mais adequada hoje.',
+    beginnerNote:'Construa expressões naturais e úteis para situações simples do dia a dia.',
+    intermediateNote:'Use uma linguagem quotidiana mais flexível e natural com maior confiança.',
+    advancedNote:'Trabalhe com uma linguagem mais rica, matizada e idiomática.',
+    topicGuidance:'Escreva algo que gostaria realmente de saber gerir numa conversa do dia a dia.',English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Arabic:'árabe'},
+  eu:{
+    levelPrompt:'Aukeratu gaur egokien iruditzen zaizun aukera.',
+    beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde natural eta erabilgarriak.',
+    intermediateNote:'Erabili eguneroko hizkera malguago eta naturalagoa, konfiantza handiagoz.',
+    advancedNote:'Landu hizkera aberatsagoa, ñabarduratsuagoa eta idiomatikoagoa.',
+    topicGuidance:'Idatzi eguneroko elkarrizketa batean benetan landu nahiko zenukeen egoera bat.',English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Arabic:'arabiera'},
+  ja:{
+    levelPrompt:'今日の自分に合うレベルを選んでください。',
+    beginnerNote:'簡単な日常場面で役立つ自然な表現を身につけます。',
+    intermediateNote:'より柔軟で自然な日常表現を、自信を持って使えるようにします。',
+    advancedNote:'より豊かでニュアンスのある自然な表現に取り組みます。',
+    topicGuidance:'日常会話で実際に対応できるようになりたいことを書いてください。',English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Arabic:'アラビア語'},
+  ar:{
+    levelPrompt:'اختر المستوى الذي يناسبك اليوم.',
+    beginnerNote:'تعلّم تعبيرات طبيعية ومفيدة للمواقف اليومية البسيطة.',
+    intermediateNote:'استخدم لغة يومية أكثر مرونة وطبيعية بثقة أكبر.',
+    advancedNote:'تدرّب على لغة أكثر ثراءً ودقةً وطبيعية.',
+    topicGuidance:'اكتب موقفًا تود فعلًا أن تتمكن من التعامل معه في محادثة يومية.',English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Arabic:'العربية'}
 };
 
 const T={
