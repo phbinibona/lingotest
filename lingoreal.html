@@ -648,5 +648,110 @@ else audio.pause();
 window.LingoTTS={speak,stop,pauseToggle};
 })();
 </script>
+
+<script id="lingototal-all-interface-text-fix">
+(function(){
+  function getDictionary(){
+    try{
+      if(typeof T!=="undefined" && T && T.en) return T;
+    }catch(e){}
+    try{
+      if(typeof translations!=="undefined" && translations && translations.en) return translations;
+    }catch(e){}
+    return null;
+  }
+  function getTranslate(){
+    try{
+      if(typeof tr==="function") return tr;
+    }catch(e){}
+    return null;
+  }
+  const skipSelectors = [
+    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
+    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
+    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
+    "[data-target-content]","[data-generated-content]"
+  ].join(",");
+
+  function isSkipped(el){
+    return !!(el && el.closest && el.closest(skipSelectors));
+  }
+
+  function normalize(s){
+    return String(s||"").replace(/\s+/g," ").trim();
+  }
+
+  function applyAllInterfaceText(){
+    const dict=getDictionary();
+    const translate=getTranslate();
+    if(!dict || !dict.en || !translate) return;
+
+    const reverse=new Map();
+    Object.entries(dict.en).forEach(([key,val])=>{
+      if(typeof val==="string"){
+        const n=normalize(val);
+        if(n) reverse.set(n,key);
+      }
+    });
+
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(node=>{
+      const el=node.parentElement;
+      if(!el || isSkipped(el)) return;
+      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
+      const raw=node.nodeValue;
+      const n=normalize(raw);
+      if(!n) return;
+      const key=reverse.get(n);
+      if(key){
+        const translated=translate(key);
+        if(translated && translated!==key){
+          const leading=(raw.match(/^\s*/)||[""])[0];
+          const trailing=(raw.match(/\s*$/)||[""])[0];
+          node.nodeValue=leading+translated+trailing;
+        }
+      }
+    });
+
+    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
+      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
+      const key=reverse.get(normalize(el.getAttribute("placeholder")));
+      if(key){
+        const translated=translate(key);
+        if(translated && translated!==key) el.setAttribute("placeholder",translated);
+      }
+    });
+
+    document.querySelectorAll("[title]").forEach(el=>{
+      if(isSkipped(el)) return;
+      const key=reverse.get(normalize(el.getAttribute("title")));
+      if(key){
+        const translated=translate(key);
+        if(translated && translated!==key) el.setAttribute("title",translated);
+      }
+    });
+
+    document.querySelectorAll("[aria-label]").forEach(el=>{
+      if(isSkipped(el)) return;
+      const key=reverse.get(normalize(el.getAttribute("aria-label")));
+      if(key){
+        const translated=translate(key);
+        if(translated && translated!==key) el.setAttribute("aria-label",translated);
+      }
+    });
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
+  }else{
+    setTimeout(applyAllInterfaceText,0);
+  }
+  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
+})();
+</script>
+
 </body>
 </html>
