@@ -31,40 +31,68 @@ html[dir="rtl"] .option{text-align:right}
 html[dir="rtl"] .feedback{border-left:1px solid var(--line);border-right:5px solid var(--primary)}
 html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"] .feedback.notice{border-right-color:var(--warning)}html[dir="rtl"] .feedback.error{border-right-color:var(--danger)}
 @media(max-width:700px){.prompt-grid{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.card{padding:18px}}
-
-/* Separate Home shortcut: keep the existing Activities / change languages control,
-   with a compact home icon at the far right. */
-.home-icon{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  background:#fff;
-  color:#084ca8;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.45);
-  box-sizing:border-box;
-  transition:transform .15s ease, background .15s ease;
-}
-.home-icon svg{
-  width:24px;
-  height:24px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
-.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
-@media(max-width:520px){
-  .home-icon{width:42px;height:42px;flex-basis:42px}
-}
-
 </style>
+
+<style id="lingototal-standard-format-20260827">
+/* Shared LingoReal-style presentation */
+.level-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
+  gap:9px!important;
+}
+.level-card,.choice.level{
+  border-radius:12px!important;
+  padding:11px 12px!important;
+  min-height:62px;
+}
+.level-name{font-weight:700!important}
+.level-note{font-size:.8rem!important;line-height:1.3!important}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .banner{
+    min-height:50px!important;
+    padding:6px 8px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:6px!important;
+    flex-wrap:nowrap!important;
+    overflow:hidden!important;
+  }
+  .brand-wrap,.brand{
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
+  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .tagline{display:none!important}
+  .language-pair,.pair,.current-languages{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    max-width:42vw!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    font-size:.7rem!important;
+  }
+  .home-link,.home-btn,.home-button{
+    flex:0 0 38px!important;
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
+  .level-note{display:none!important}
+  .panel{padding:14px!important}
+}
+</style>
+
 </head>
 <body>
 <header>
@@ -76,13 +104,6 @@ html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"]
     <div class="nav">
       <div class="pair" id="pairDisplay"></div>
       <a class="home" id="homeLink" href="index.html" data-i18n="home">Activities / change languages</a>
-    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 11.5 12 4l9 7.5"></path>
-    <path d="M5.5 10.5V20h13v-9.5"></path>
-    <path d="M9.5 20v-6h5v6"></path>
-  </svg>
-</a>
     </div>
   </div>
 </header>

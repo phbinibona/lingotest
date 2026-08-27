@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -214,14 +214,12 @@ input[type=text]:focus{
 
 .level-grid,.situation-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
   gap:9px;
   margin-top:12px;
 }
 
-.situation-grid{
-  grid-template-columns:repeat(4,1fr);
-}
+.level-grid{grid-template-columns:repeat(2,1fr)}
+.situation-grid{grid-template-columns:repeat(4,1fr)}
 
 .choice{
   padding:11px 8px;
@@ -468,40 +466,97 @@ input[type=text]:focus{
   .actions{flex-direction:column}
   .actions .primary-btn,.actions .secondary-btn{width:100%}
 }
-
-/* Separate Home shortcut: keep the existing Activities / change languages control,
-   with a compact home icon at the far right. */
-.home-icon{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  background:#fff;
-  color:#084ca8;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.45);
-  box-sizing:border-box;
-  transition:transform .15s ease, background .15s ease;
-}
-.home-icon svg{
-  width:24px;
-  height:24px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
-.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
-@media(max-width:520px){
-  .home-icon{width:42px;height:42px;flex-basis:42px}
-}
-
 </style>
+
+<style>
+/* Everyday Language aligned with current LingoGo layout */
+.setup-lead{margin:0 0 12px;color:#607086;font-size:.93rem}
+.level-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left}
+.level-name{font-weight:700}
+.level-note{font-size:.78rem;color:#66768a;line-height:1.3}
+.topic-step{display:grid;grid-template-columns:30px 1fr;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border,#dfe6ef)}
+.substep-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eef4fb;color:#1267d6;font-weight:700;font-size:.78rem}
+.topic-label{display:block;font-weight:700;margin-bottom:3px}
+.topic-guidance{margin:0 0 8px;color:#66768a;font-size:.85rem}
+.examples-wrap{margin-top:9px}
+.example-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.quiet-examples .choice{padding:8px 7px;min-height:38px;font-size:.78rem}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .banner{min-height:48px!important;height:48px!important;padding:5px 8px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:6px!important;flex-wrap:nowrap!important;overflow:hidden!important}
+  .brand{min-width:0!important;flex:1 1 auto!important}
+  .language-pair{flex:0 1 auto!important;min-width:0!important;max-width:38vw!important;font-size:.7rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .home-link{flex:0 0 36px!important;width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;font-size:0!important}
+  .home-link::before{content:"⌂";font-size:1.25rem!important;line-height:1!important}
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .level-card{min-height:58px!important;padding:8px!important}
+  .level-note{display:none}
+  .topic-step{margin-top:10px;padding-top:10px}
+  .example-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+}
+</style>
+
+
+<style id="lingototal-standard-format-20260827">
+/* Shared LingoReal-style presentation */
+.level-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
+  gap:9px!important;
+}
+.level-card,.choice.level{
+  border-radius:12px!important;
+  padding:11px 12px!important;
+  min-height:62px;
+}
+.level-name{font-weight:700!important}
+.level-note{font-size:.8rem!important;line-height:1.3!important}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .banner{
+    min-height:50px!important;
+    padding:6px 8px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:6px!important;
+    flex-wrap:nowrap!important;
+    overflow:hidden!important;
+  }
+  .brand-wrap,.brand{
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
+  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .tagline{display:none!important}
+  .language-pair,.pair,.current-languages{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    max-width:42vw!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    font-size:.7rem!important;
+  }
+  .home-link,.home-btn,.home-button{
+    flex:0 0 38px!important;
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
+  .level-note{display:none!important}
+  .panel{padding:14px!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -517,15 +572,10 @@ input[type=text]:focus{
 
   <div class="header-tools">
     <div class="language-pair" id="languagePair">English → Català</div>
-    <a class="home-link" href="index.html"><span data-i18n="changeLanguages">Activities / change languages</span>
+    <a class="home-link" href="index.html">
+      <span>⌂</span>
+      <span data-i18n="changeLanguages">Activities / change languages</span>
     </a>
-    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 11.5 12 4l9 7.5"></path>
-    <path d="M5.5 10.5V20h13v-9.5"></path>
-    <path d="M9.5 20v-6h5v6"></path>
-  </svg>
-</a>
   </div>
 </header>
 
@@ -537,37 +587,45 @@ input[type=text]:focus{
   </section>
 
   <section class="panel">
-    <div class="section-head">
-      <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Choose the level and situation</div>
+  <div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose"></div></div>
+  <p class="setup-lead" data-i18n="levelPrompt"></p>
+  <div class="level-grid">
+    <button class="choice level level-card" data-level="beginner">
+      <span class="level-name" data-i18n="beginner"></span>
+      <span class="level-note" data-i18n="beginnerNote"></span>
+    </button>
+    <button class="choice level level-card" data-level="intermediate">
+      <span class="level-name" data-i18n="intermediate"></span>
+      <span class="level-note" data-i18n="intermediateNote"></span>
+    </button>
+  </div>
+
+  <div class="topic-step"><div class="substep-badge">2</div><div>
+    <label for="themeInput" class="topic-label" data-i18n="ownTopic"></label>
+    <p class="topic-guidance" data-i18n="topicGuidance"></p>
+    <input id="themeInput" class="attention" type="text" data-i18n-placeholder="topicPlaceholder">
+    <div class="examples-wrap">
+      <div class="helper" data-i18n="inspiration"></div>
+      <div class="example-grid quiet-examples">
+        <button class="choice situation example" data-key="friends" data-i18n="friends"></button>
+        <button class="choice situation example" data-key="work" data-i18n="work"></button>
+        <button class="choice situation example" data-key="plans" data-i18n="plans"></button>
+        <button class="choice situation example" data-key="problems" data-i18n="problems"></button>
+      </div>
     </div>
-
-    <label for="themeInput" data-i18n="ownTopic">Write your own situation or topic</label>
-    <input id="themeInput" class="attention" type="text" data-i18n-placeholder="topicPlaceholder" placeholder="For example: meeting friends, complaining politely, making plans...">
-
-    <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">Advanced (C1–C2)</button>
-    </div>
-
-    <div class="helper" data-i18n="inspiration">Need inspiration?</div>
-
-    <div class="situation-grid">
-      <button class="choice situation" data-key="friends" data-i18n="friends">With friends</button>
-      <button class="choice situation" data-key="work" data-i18n="work">At work</button>
-      <button class="choice situation" data-key="plans" data-i18n="plans">Making plans</button>
-      <button class="choice situation" data-key="problems" data-i18n="problems">Problems</button>
-    </div>
-  </section>
+  </div></div>
+</section>
 
   <section class="panel">
+
     <div class="section-head">
       <div class="number">2</div>
       <div class="section-title" data-i18n="generateTitle">Generate everyday language</div>
     </div>
 
-    <button id="generateBtn" class="primary-btn" data-i18n="generate">Generate expressions and quiz</button>
+    <button id="generateBtn" class="primary-btn" data-i18n="generate">
+      Generate expressions and quiz
+    </button>
 
     <div id="loading" class="status">
       <div class="spinner"></div>
@@ -598,7 +656,7 @@ input[type=text]:focus{
 
       <div id="score" class="score">
         <div data-i18n="score">Score</div>
-        <div id="scoreValue" class="score-value">0/4</div>
+        <div id="scoreValue" class="score-value">0/3</div>
       </div>
     </div>
   </section>
@@ -623,25 +681,518 @@ input[type=text]:focus{
 document.addEventListener('DOMContentLoaded',()=>{
 
 const T={
-en:{tagline:'Learn any language your way',changeLanguages:'Activities / change languages',title:'Everyday Language',intro:'Learn natural expressions people really use in everyday conversation.',choose:'Choose the level and situation',ownTopic:'Write your own situation or topic',topicPlaceholder:'For example: meeting friends, complaining politely, making plans...',beginner:'Beginner (A1–A2)',intermediate:'Intermediate (B1–B2)',advanced:'Advanced (C1–C2)',inspiration:'Need inspiration?',friends:'With friends',work:'At work',plans:'Making plans',problems:'Problems',generateTitle:'Generate everyday language',generate:'Generate expressions and quiz',generating:'Generating natural expressions…',waiting:'Your activity will appear here.',quizTitle:'Which expression fits?',check:'Check quiz',newExercise:'New activity',score:'Score',restart:'Restart',clear:'Clear everything',selectLevel:'Select a level first.',enterTopic:'Write a situation or choose an example.',serverError:'The activity could not be generated.',playing:'Playing expression…',answerAll:'Answer all the questions first.',perfect:'Excellent. You understood all four expressions.',some:'Good work. Review the meanings and try again.',expression:'Expression',meaning:'Meaning',example:'Example'},
-ca:{tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',title:'Llengua quotidiana',intro:'Aprèn expressions naturals que la gent utilitza realment en converses quotidianes.',choose:'Tria el nivell i la situació',ownTopic:'Escriu la teva situació o tema',topicPlaceholder:'Per exemple: quedar amb amics, queixar-se amb educació, fer plans...',beginner:'Inicial (A1–A2)',intermediate:'Intermedi (B1–B2)',advanced:'Avançat (C1–C2)',inspiration:'Necessites inspiració?',friends:'Amb amics',work:'A la feina',plans:'Fer plans',problems:'Problemes',generateTitle:'Genera llengua quotidiana',generate:'Genera expressions i qüestionari',generating:'Generant expressions naturals…',waiting:'L’activitat apareixerà aquí.',quizTitle:'Quina expressió encaixa?',check:'Comprova el qüestionari',newExercise:'Activitat nova',score:'Puntuació',restart:'Reinicia',clear:'Esborra-ho tot',selectLevel:'Primer has de seleccionar un nivell.',enterTopic:'Escriu una situació o tria un exemple.',serverError:'No s’ha pogut generar l’activitat.',playing:'Reproduint l’expressió…',answerAll:'Respon totes les preguntes.',perfect:'Excel·lent. Has entès les quatre expressions.',some:'Bona feina. Repassa els significats i torna-ho a provar.',expression:'Expressió',meaning:'Significat',example:'Exemple'},
-es:{tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',title:'Lenguaje cotidiano',intro:'Aprende expresiones naturales que la gente usa realmente en conversaciones cotidianas.',choose:'Elige el nivel y la situación',ownTopic:'Escribe tu situación o tema',topicPlaceholder:'Por ejemplo: quedar con amigos, quejarse con educación, hacer planes...',beginner:'Inicial (A1–A2)',intermediate:'Intermedio (B1–B2)',advanced:'Avanzado (C1–C2)',inspiration:'¿Necesitas inspiración?',friends:'Con amigos',work:'En el trabajo',plans:'Hacer planes',problems:'Problemas',generateTitle:'Genera lenguaje cotidiano',generate:'Generar expresiones y cuestionario',generating:'Generando expresiones naturales…',waiting:'La actividad aparecerá aquí.',quizTitle:'¿Qué expresión encaja?',check:'Comprobar cuestionario',newExercise:'Nueva actividad',score:'Puntuación',restart:'Reiniciar',clear:'Borrar todo',selectLevel:'Primero selecciona un nivel.',enterTopic:'Escribe una situación o elige un ejemplo.',serverError:'No se ha podido generar la actividad.',playing:'Reproduciendo la expresión…',answerAll:'Responde todas las preguntas primero.',perfect:'Excelente. Has entendido las cuatro expresiones.',some:'Buen trabajo. Revisa los significados e inténtalo de nuevo.',expression:'Expresión',meaning:'Significado',example:'Ejemplo'},
-fr:{tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',title:'Langue de tous les jours',intro:'Apprenez des expressions naturelles réellement utilisées dans la conversation quotidienne.',choose:'Choisissez le niveau et la situation',ownTopic:'Écrivez votre situation ou thème',topicPlaceholder:'Par exemple : retrouver des amis, se plaindre poliment, faire des projets...',beginner:'Débutant (A1–A2)',intermediate:'Intermédiaire (B1–B2)',advanced:'Avancé (C1–C2)',inspiration:'Besoin d’inspiration ?',friends:'Entre amis',work:'Au travail',plans:'Faire des projets',problems:'Problèmes',generateTitle:'Générez la langue quotidienne',generate:'Générer expressions et quiz',generating:'Génération d’expressions naturelles…',waiting:'L’activité apparaîtra ici.',quizTitle:'Quelle expression convient ?',check:'Vérifier le quiz',newExercise:'Nouvelle activité',score:'Score',restart:'Recommencer',clear:'Tout effacer',selectLevel:'Choisissez d’abord un niveau.',enterTopic:'Écrivez une situation ou choisissez un exemple.',serverError:'Impossible de générer l’activité.',playing:'Lecture de l’expression…',answerAll:'Répondez d’abord à toutes les questions.',perfect:'Excellent. Vous avez compris les quatre expressions.',some:'Bon travail. Relisez les significations et réessayez.',expression:'Expression',meaning:'Sens',example:'Exemple'},
-de:{tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',title:'Alltagssprache',intro:'Lerne natürliche Ausdrücke, die Menschen im Alltag wirklich benutzen.',choose:'Niveau und Situation wählen',ownTopic:'Eigene Situation oder eigenes Thema eingeben',topicPlaceholder:'Zum Beispiel: Freunde treffen, höflich reklamieren, Pläne machen ...',beginner:'Anfänger (A1–A2)',intermediate:'Mittelstufe (B1–B2)',advanced:'Fortgeschritten (C1–C2)',inspiration:'Brauchst du Inspiration?',friends:'Mit Freunden',work:'Bei der Arbeit',plans:'Pläne machen',problems:'Probleme',generateTitle:'Alltagssprache erstellen',generate:'Ausdrücke und Quiz erstellen',generating:'Natürliche Ausdrücke werden erstellt…',waiting:'Die Aktivität erscheint hier.',quizTitle:'Welcher Ausdruck passt?',check:'Quiz prüfen',newExercise:'Neue Aktivität',score:'Punkte',restart:'Neu starten',clear:'Alles löschen',selectLevel:'Wähle zuerst ein Niveau.',enterTopic:'Gib eine Situation ein oder wähle ein Beispiel.',serverError:'Die Aktivität konnte nicht erstellt werden.',playing:'Ausdruck wird vorgelesen…',answerAll:'Beantworte zuerst alle Fragen.',perfect:'Ausgezeichnet. Du hast alle vier Ausdrücke verstanden.',some:'Gute Arbeit. Lies die Bedeutungen noch einmal und versuche es erneut.',expression:'Ausdruck',meaning:'Bedeutung',example:'Beispiel'},
-it:{tagline:'Impara qualsiasi lingua a modo tuo',changeLanguages:'Attività / cambia lingue',title:'Lingua di tutti i giorni',intro:'Impara espressioni naturali che le persone usano davvero nella conversazione quotidiana.',choose:'Scegli il livello e la situazione',ownTopic:'Scrivi la tua situazione o argomento',topicPlaceholder:'Per esempio: incontrare amici, lamentarsi con gentilezza, fare programmi...',beginner:'Principiante (A1–A2)',intermediate:'Intermedio (B1–B2)',advanced:'Avanzato (C1–C2)',inspiration:'Hai bisogno di ispirazione?',friends:'Con gli amici',work:'Al lavoro',plans:'Fare programmi',problems:'Problemi',generateTitle:'Genera lingua quotidiana',generate:'Genera espressioni e quiz',generating:'Generazione di espressioni naturali…',waiting:'L’attività apparirà qui.',quizTitle:'Quale espressione va bene?',check:'Controlla il quiz',newExercise:'Nuova attività',score:'Punteggio',restart:'Ricomincia',clear:'Cancella tutto',selectLevel:'Seleziona prima un livello.',enterTopic:'Scrivi una situazione o scegli un esempio.',serverError:'Non è stato possibile generare l’attività.',playing:'Riproduzione dell’espressione…',answerAll:'Rispondi prima a tutte le domande.',perfect:'Ottimo. Hai capito tutte e quattro le espressioni.',some:'Buon lavoro. Rileggi i significati e riprova.',expression:'Espressione',meaning:'Significato',example:'Esempio'},
-pt:{tagline:'Aprenda qualquer idioma à sua maneira',changeLanguages:'Atividades / mudar idiomas',title:'Linguagem do dia a dia',intro:'Aprenda expressões naturais que as pessoas usam realmente em conversas do dia a dia.',choose:'Escolha o nível e a situação',ownTopic:'Escreva a sua situação ou tema',topicPlaceholder:'Por exemplo: encontrar amigos, reclamar com educação, fazer planos...',beginner:'Iniciante (A1–A2)',intermediate:'Intermédio (B1–B2)',advanced:'Avançado (C1–C2)',inspiration:'Precisa de inspiração?',friends:'Com amigos',work:'No trabalho',plans:'Fazer planos',problems:'Problemas',generateTitle:'Gerar linguagem quotidiana',generate:'Gerar expressões e questionário',generating:'A gerar expressões naturais…',waiting:'A atividade aparecerá aqui.',quizTitle:'Que expressão se adequa?',check:'Verificar questionário',newExercise:'Nova atividade',score:'Pontuação',restart:'Reiniciar',clear:'Apagar tudo',selectLevel:'Primeiro selecione um nível.',enterTopic:'Escreva uma situação ou escolha um exemplo.',serverError:'Não foi possível gerar a atividade.',playing:'A reproduzir a expressão…',answerAll:'Responda primeiro a todas as perguntas.',perfect:'Excelente. Compreendeu as quatro expressões.',some:'Bom trabalho. Reveja os significados e tente novamente.',expression:'Expressão',meaning:'Significado',example:'Exemplo'},
-eu:{tagline:'Ikasi edozein hizkuntza zure erara',changeLanguages:'Jarduerak / hizkuntzak aldatu',title:'Eguneroko hizkuntza',intro:'Ikasi jendeak eguneroko elkarrizketetan benetan erabiltzen dituen esamolde naturalak.',choose:'Aukeratu maila eta egoera',ownTopic:'Idatzi zure egoera edo gaia',topicPlaceholder:'Adibidez: lagunekin elkartzea, kexa adeitsu bat egitea, planak egitea...',beginner:'Hasiberria (A1–A2)',intermediate:'Tartekoa (B1–B2)',advanced:'Aurreratua (C1–C2)',inspiration:'Inspirazioa behar duzu?',friends:'Lagunekin',work:'Lanean',plans:'Planak egiten',problems:'Arazoak',generateTitle:'Sortu eguneroko hizkuntza',generate:'Sortu esamoldeak eta galdetegia',generating:'Esamolde naturalak sortzen…',waiting:'Jarduera hemen agertuko da.',quizTitle:'Zein esamolde da egokia?',check:'Egiaztatu galdetegia',newExercise:'Jarduera berria',score:'Puntuazioa',restart:'Berrabiarazi',clear:'Garbitu dena',selectLevel:'Aukeratu maila lehenik.',enterTopic:'Idatzi egoera bat edo aukeratu adibide bat.',serverError:'Ezin izan da jarduera sortu.',playing:'Esamoldea erreproduzitzen…',answerAll:'Erantzun galdera guztiei lehenik.',perfect:'Bikain. Lau esamoldeak ulertu dituzu.',some:'Lan ona. Berrikusi esanahiak eta saiatu berriro.',expression:'Esamoldea',meaning:'Esanahia',example:'Adibidea'},
-ja:{tagline:'好きな方法でどんな言語でも学ぼう',changeLanguages:'アクティビティ / 言語を変更',title:'日常表現',intro:'日常会話で実際によく使われる自然な表現を学びます。',choose:'レベルと場面を選ぶ',ownTopic:'自分の場面やトピックを書く',topicPlaceholder:'例：友達と会う、丁寧に不満を言う、予定を立てる...',beginner:'初級 (A1–A2)',intermediate:'中級 (B1–B2)',advanced:'上級 (C1–C2)',inspiration:'例から選ぶ:',friends:'友達と',work:'職場で',plans:'予定を立てる',problems:'困った場面',generateTitle:'日常表現を作成',generate:'表現とクイズを作成',generating:'自然な表現を作成中…',waiting:'アクティビティはここに表示されます。',quizTitle:'どの表現が合う？',check:'クイズを確認',newExercise:'新しいアクティビティ',score:'スコア',restart:'リセット',clear:'すべて消去',selectLevel:'最初にレベルを選んでください。',enterTopic:'場面を書くか、例を選んでください。',serverError:'アクティビティを作成できませんでした。',playing:'表現を再生中…',answerAll:'最初にすべての質問に答えてください。',perfect:'素晴らしいです。4つの表現をすべて理解しました。',some:'よくできました。意味を確認してもう一度試してください。',expression:'表現',meaning:'意味',example:'例'},
-ar:{tagline:'تعلّم أي لغة بطريقتك',changeLanguages:'الأنشطة / تغيير اللغات',title:'لغة الحياة اليومية',intro:'تعلّم تعبيرات طبيعية يستخدمها الناس فعلًا في المحادثات اليومية.',choose:'اختر المستوى والموقف',ownTopic:'اكتب موقفك أو موضوعك',topicPlaceholder:'مثلاً: مقابلة الأصدقاء، الشكوى بأدب، وضع خطط...',beginner:'مبتدئ (A1–A2)',intermediate:'متوسط (B1–B2)',advanced:'متقدم (C1–C2)',inspiration:'هل تحتاج إلى فكرة؟',friends:'مع الأصدقاء',work:'في العمل',plans:'وضع خطط',problems:'مشكلات',generateTitle:'أنشئ لغة يومية',generate:'أنشئ التعبيرات والأسئلة',generating:'جارٍ إنشاء تعبيرات طبيعية…',waiting:'سيظهر النشاط هنا.',quizTitle:'أي تعبير يناسب؟',check:'تحقق من الأسئلة',newExercise:'نشاط جديد',score:'النتيجة',restart:'إعادة البدء',clear:'مسح الكل',selectLevel:'اختر مستوى أولاً.',enterTopic:'اكتب موقفًا أو اختر مثالًا.',serverError:'تعذر إنشاء النشاط.',playing:'جارٍ تشغيل التعبير…',answerAll:'أجب عن جميع الأسئلة أولاً.',perfect:'ممتاز. فهمت التعبيرات الأربعة كلها.',some:'عمل جيد. راجع المعاني وحاول مرة أخرى.',expression:'تعبير',meaning:'المعنى',example:'مثال'}
+  en:{
+    tagline:'Learn any language your way',
+    changeLanguages:'Activities / change languages',
+    title:'Everyday Language',
+    intro:'Learn natural expressions people really use in everyday conversation.',
+    choose:'Choose the level and situation',
+    ownTopic:'Write your own situation or topic',
+    topicPlaceholder:'For example: meeting friends, complaining politely, making plans...',
+    beginner:'Revising the basics',
+    intermediate:'Building confidence',
+    inspiration:'Need inspiration?',
+    friends:'With friends',
+    work:'At work',
+    plans:'Making plans',
+    problems:'Problems',
+    generateTitle:'Generate everyday language',
+    generate:'Generate expressions and quiz',
+    generating:'Generating natural expressions…',
+    waiting:'Your activity will appear here.',
+    quizTitle:'Which expression fits?',
+    check:'Check quiz',
+    newExercise:'New activity',
+    score:'Score',
+    restart:'Restart',
+    clear:'Clear everything',
+    selectLevel:'Select a level first.',
+    enterTopic:'Write a situation or choose an example.',
+    serverError:'The activity could not be generated.',
+    playing:'Playing expression…',
+    answerAll:'Answer all the questions first.',
+    perfect:'Excellent. You understood all three expressions.',
+    some:'Good work. Review the meanings and the answers marked in red.',
+    expression:'Expression',
+    meaning:'Meaning',
+    example:'Example'
+  },
+
+  ca:{
+    tagline:'Aprèn qualsevol llengua a la teva manera',
+    changeLanguages:'Activitats / canvia les llengües',
+    title:'Llengua quotidiana',
+    intro:'Aprèn expressions naturals que la gent utilitza realment en converses quotidianes.',
+    choose:'Tria el nivell i la situació',
+    ownTopic:'Escriu la teva situació o tema',
+    topicPlaceholder:'Per exemple: quedar amb amics, queixar-se amb educació, fer plans...',
+    beginner:'Repassar les bases',
+    intermediate:'Guanyar confiança',
+    inspiration:'Necessites inspiració?',
+    friends:'Amb amics',
+    work:'A la feina',
+    plans:'Fer plans',
+    problems:'Problemes',
+    generateTitle:'Genera llengua quotidiana',
+    generate:'Genera expressions i qüestionari',
+    generating:'Generant expressions naturals…',
+    waiting:'L’activitat apareixerà aquí.',
+    quizTitle:'Quina expressió encaixa?',
+    check:'Comprova el qüestionari',
+    newExercise:'Activitat nova',
+    score:'Puntuació',
+    restart:'Reinicia',
+    clear:'Esborra-ho tot',
+    selectLevel:'Primer has de seleccionar un nivell.',
+    enterTopic:'Escriu una situació o tria un exemple.',
+    serverError:'No s’ha pogut generar l’activitat.',
+    playing:'Reproduint l’expressió…',
+    answerAll:'Respon totes les preguntes.',
+    perfect:'Excel·lent. Has entès les tres expressions.',
+    some:'Bona feina. Repassa els significats i les respostes marcades en vermell.',
+    expression:'Expressió',
+    meaning:'Significat',
+    example:'Exemple'
+  },
+
+  es:{
+    tagline:'Aprende cualquier idioma a tu manera',
+    changeLanguages:'Actividades / cambiar idiomas',
+    title:'Lenguaje cotidiano',
+    intro:'Aprende expresiones naturales que la gente usa realmente en conversaciones cotidianas.',
+    choose:'Elige el nivel y la situación',
+    ownTopic:'Escribe tu situación o tema',
+    topicPlaceholder:'Por ejemplo: quedar con amigos, quejarse con educación, hacer planes...',
+    beginner:'Repassar les bases',
+    intermediate:'Acquisire sicurezza',
+    inspiration:'¿Necesitas inspiración?',
+    friends:'Con amigos',
+    work:'En el trabajo',
+    plans:'Hacer planes',
+    problems:'Problemas',
+    generateTitle:'Genera lenguaje cotidiano',
+    generate:'Generar expresiones y cuestionario',
+    generating:'Generando expresiones naturales…',
+    waiting:'La actividad aparecerá aquí.',
+    quizTitle:'¿Qué expresión encaja?',
+    check:'Comprobar cuestionario',
+    newExercise:'Nueva actividad',
+    score:'Puntuación',
+    restart:'Reiniciar',
+    clear:'Borrar todo',
+    selectLevel:'Primero selecciona un nivel.',
+    enterTopic:'Escribe una situación o elige un ejemplo.',
+    serverError:'No se ha podido generar la actividad.',
+    playing:'Reproduciendo la expresión…',
+    answerAll:'Responde todas las preguntas primero.',
+    perfect:'Excelente. Has entendido las tres expresiones.',
+    some:'Buen trabajo. Revisa los significados y las respuestas marcadas en rojo.',
+    expression:'Expresión',
+    meaning:'Significado',
+    example:'Ejemplo'
+  },
+
+  fr:{
+    tagline:'Apprenez n’importe quelle langue à votre façon',
+    changeLanguages:'Activités / changer les langues',
+    title:'Langue de tous les jours',
+    intro:'Apprenez des expressions naturelles réellement utilisées dans la conversation quotidienne.',
+    choose:'Choisissez le niveau et la situation',
+    ownTopic:'Écrivez votre situation ou thème',
+    topicPlaceholder:'Par exemple : retrouver des amis, se plaindre poliment, faire des projets...',
+    beginner:'Revoir les bases',
+    intermediate:'Prendre confiance',
+    inspiration:'Besoin d’inspiration ?',
+    friends:'Entre amis',
+    work:'Au travail',
+    plans:'Faire des projets',
+    problems:'Problèmes',
+    generateTitle:'Générez la langue quotidienne',
+    generate:'Générer expressions et quiz',
+    generating:'Génération d’expressions naturelles…',
+    waiting:'L’activité apparaîtra ici.',
+    quizTitle:'Quelle expression convient ?',
+    check:'Vérifier le quiz',
+    newExercise:'Nouvelle activité',
+    score:'Score',
+    restart:'Recommencer',
+    clear:'Tout effacer',
+    selectLevel:'Choisissez d’abord un niveau.',
+    enterTopic:'Écrivez une situation ou choisissez un exemple.',
+    serverError:'Impossible de générer l’activité.',
+    playing:'Lecture de l’expression…',
+    answerAll:'Répondez d’abord à toutes les questions.',
+    perfect:'Excellent. Vous avez compris les trois expressions.',
+    some:'Bon travail. Relisez les significations et les réponses en rouge.',
+    expression:'Expression',
+    meaning:'Sens',
+    example:'Exemple'
+  },
+
+  de:{
+    tagline:'Lerne jede Sprache auf deine Art',
+    changeLanguages:'Aktivitäten / Sprachen ändern',
+    title:'Alltagssprache',
+    intro:'Lerne natürliche Ausdrücke, die Menschen im Alltag wirklich benutzen.',
+    choose:'Niveau und Situation wählen',
+    ownTopic:'Eigene Situation oder eigenes Thema eingeben',
+    topicPlaceholder:'Zum Beispiel: Freunde treffen, höflich reklamieren, Pläne machen ...',
+    beginner:'Grundlagen auffrischen',
+    intermediate:'Sicherheit gewinnen',
+    inspiration:'Brauchst du Inspiration?',
+    friends:'Mit Freunden',
+    work:'Bei der Arbeit',
+    plans:'Pläne machen',
+    problems:'Probleme',
+    generateTitle:'Alltagssprache erstellen',
+    generate:'Ausdrücke und Quiz erstellen',
+    generating:'Natürliche Ausdrücke werden erstellt…',
+    waiting:'Die Aktivität erscheint hier.',
+    quizTitle:'Welcher Ausdruck passt?',
+    check:'Quiz prüfen',
+    newExercise:'Neue Aktivität',
+    score:'Punkte',
+    restart:'Neu starten',
+    clear:'Alles löschen',
+    selectLevel:'Wähle zuerst ein Niveau.',
+    enterTopic:'Gib eine Situation ein oder wähle ein Beispiel.',
+    serverError:'Die Aktivität konnte nicht erstellt werden.',
+    playing:'Ausdruck wird vorgelesen…',
+    answerAll:'Beantworte zuerst alle Fragen.',
+    perfect:'Ausgezeichnet. Du hast alle drei Ausdrücke verstanden.',
+    some:'Gute Arbeit. Lies die Bedeutungen und die rot markierten Antworten noch einmal.',
+    expression:'Ausdruck',
+    meaning:'Bedeutung',
+    example:'Beispiel'
+  },
+
+  it:{
+    tagline:'Impara qualsiasi lingua a modo tuo',
+    changeLanguages:'Attività / cambia lingue',
+    title:'Lingua di tutti i giorni',
+    intro:'Impara espressioni naturali che le persone usano davvero nella conversazione quotidiana.',
+    choose:'Scegli il livello e la situazione',
+    ownTopic:'Scrivi la tua situazione o argomento',
+    topicPlaceholder:'Per esempio: incontrare amici, lamentarsi con gentilezza, fare programmi...',
+    beginner:'Ripassare le basi',
+    intermediate:'Acquisire sicurezza',
+    inspiration:'Hai bisogno di ispirazione?',
+    friends:'Con gli amici',
+    work:'Al lavoro',
+    plans:'Fare programmi',
+    problems:'Problemi',
+    generateTitle:'Genera lingua quotidiana',
+    generate:'Genera espressioni e quiz',
+    generating:'Generazione di espressioni naturali…',
+    waiting:'L’attività apparirà qui.',
+    quizTitle:'Quale espressione va bene?',
+    check:'Controlla il quiz',
+    newExercise:'Nuova attività',
+    score:'Punteggio',
+    restart:'Ricomincia',
+    clear:'Cancella tutto',
+    selectLevel:'Seleziona prima un livello.',
+    enterTopic:'Scrivi una situazione o scegli un esempio.',
+    serverError:'Non è stato possibile generare l’attività.',
+    playing:'Riproduzione dell’espressione…',
+    answerAll:'Rispondi prima a tutte le domande.',
+    perfect:'Ottimo. Hai capito tutte e tre le espressioni.',
+    some:'Buon lavoro. Rileggi i significati e le risposte segnate in rosso.',
+    expression:'Espressione',
+    meaning:'Significato',
+    example:'Esempio'
+  },
+
+  pt:{
+    tagline:'Aprenda qualquer idioma à sua maneira',
+    changeLanguages:'Atividades / mudar idiomas',
+    title:'Linguagem do dia a dia',
+    intro:'Aprenda expressões naturais que as pessoas usam realmente em conversas do dia a dia.',
+    choose:'Escolha o nível e a situação',
+    ownTopic:'Escreva a sua situação ou tema',
+    topicPlaceholder:'Por exemplo: encontrar amigos, reclamar com educação, fazer planos...',
+    beginner:'Rever as bases',
+    intermediate:'Ganhar confiança',
+    inspiration:'Precisa de inspiração?',
+    friends:'Com amigos',
+    work:'No trabalho',
+    plans:'Fazer planos',
+    problems:'Problemas',
+    generateTitle:'Gerar linguagem quotidiana',
+    generate:'Gerar expressões e questionário',
+    generating:'A gerar expressões naturais…',
+    waiting:'A atividade aparecerá aqui.',
+    quizTitle:'Que expressão se adequa?',
+    check:'Verificar questionário',
+    newExercise:'Nova atividade',
+    score:'Pontuação',
+    restart:'Reiniciar',
+    clear:'Apagar tudo',
+    selectLevel:'Primeiro selecione um nível.',
+    enterTopic:'Escreva uma situação ou escolha um exemplo.',
+    serverError:'Não foi possível gerar a atividade.',
+    playing:'A reproduzir a expressão…',
+    answerAll:'Responda primeiro a todas as perguntas.',
+    perfect:'Excelente. Compreendeu as três expressões.',
+    some:'Bom trabalho. Reveja os significados e as respostas marcadas a vermelho.',
+    expression:'Expressão',
+    meaning:'Significado',
+    example:'Exemplo'
+  },
+
+  eu:{
+    tagline:'Ikasi edozein hizkuntza zure erara',
+    changeLanguages:'Jarduerak / hizkuntzak aldatu',
+    title:'Eguneroko hizkuntza',
+    intro:'Ikasi eguneroko elkarrizketetan benetan erabiltzen diren esamolde naturalak.',
+    choose:'Aukeratu maila eta egoera',
+    ownTopic:'Idatzi zure egoera edo gaia',
+    topicPlaceholder:'Adibidez: lagunekin elkartzea, kexa adeitsuak, planak egitea...',
+    beginner:'Oinarriak berrikusi',
+    intermediate:'Tartekoa (B1–B2)',
+    inspiration:'Inspirazioa behar duzu?',
+    friends:'Lagunekin',
+    work:'Lanean',
+    plans:'Planak egitea',
+    problems:'Arazoak',
+    generateTitle:'Sortu eguneroko hizkuntza',
+    generate:'Sortu esamoldeak eta galdetegia',
+    generating:'Esamolde naturalak sortzen…',
+    waiting:'Jarduera hemen agertuko da.',
+    quizTitle:'Zein esamolde dator bat?',
+    check:'Egiaztatu galdetegia',
+    newExercise:'Jarduera berria',
+    score:'Puntuazioa',
+    restart:'Berrabiarazi',
+    clear:'Garbitu dena',
+    selectLevel:'Aukeratu maila lehenik.',
+    enterTopic:'Idatzi egoera bat edo aukeratu adibide bat.',
+    serverError:'Ezin izan da jarduera sortu.',
+    playing:'Esamoldea erreproduzitzen…',
+    answerAll:'Erantzun galdera guztiei lehenik.',
+    perfect:'Bikain. Hiru esamoldeak ulertu dituzu.',
+    some:'Lan ona. Berrikusi esanahiak eta gorriz markatutako erantzunak.',
+    expression:'Esamoldea',
+    meaning:'Esanahia',
+    example:'Adibidea'
+  },
+
+  cy:{
+    tagline:'Dysgwch unrhyw iaith yn eich ffordd eich hun',
+    changeLanguages:'Gweithgareddau / newid ieithoedd',
+    title:'Iaith bob dydd',
+    intro:'Dysgwch ymadroddion naturiol mae pobl yn eu defnyddio mewn sgwrs bob dydd.',
+    choose:'Dewiswch y lefel a’r sefyllfa',
+    ownTopic:'Ysgrifennwch eich sefyllfa neu bwnc',
+    topicPlaceholder:'Er enghraifft: cwrdd â ffrindiau, cwyno’n gwrtais, gwneud cynlluniau...',
+    beginner:'Dechreuwr (A1–A2)',
+    intermediate:'Canolradd (B1–B2)',
+    inspiration:'Angen syniad?',
+    friends:'Gyda ffrindiau',
+    work:'Yn y gwaith',
+    plans:'Gwneud cynlluniau',
+    problems:'Problemau',
+    generateTitle:'Creu iaith bob dydd',
+    generate:'Creu ymadroddion a chwis',
+    generating:'Yn creu ymadroddion naturiol…',
+    waiting:'Bydd y gweithgaredd yn ymddangos yma.',
+    quizTitle:'Pa ymadrodd sy’n ffitio?',
+    check:'Gwirio’r cwis',
+    newExercise:'Gweithgaredd newydd',
+    score:'Sgôr',
+    restart:'Ailgychwyn',
+    clear:'Clirio popeth',
+    selectLevel:'Dewiswch lefel yn gyntaf.',
+    enterTopic:'Ysgrifennwch sefyllfa neu dewiswch enghraifft.',
+    serverError:'Ni ellid creu’r gweithgaredd.',
+    playing:'Yn chwarae’r ymadrodd…',
+    answerAll:'Atebwch bob cwestiwn yn gyntaf.',
+    perfect:'Ardderchog. Rydych wedi deall y tri ymadrodd.',
+    some:'Da iawn. Adolygwch yr ystyron a’r atebion sydd wedi’u marcio’n goch.',
+    expression:'Ymadrodd',
+    meaning:'Ystyr',
+    example:'Enghraifft'
+  },
+
+  gd:{
+    tagline:'Ionnsaich cànan sam bith nad dhòigh fhèin',
+    changeLanguages:'Gnìomhan / atharraich cànanan',
+    title:'Cànan làitheil',
+    intro:'Ionnsaich abairtean nàdarra a bhios daoine a’ cleachdadh ann an còmhradh làitheil.',
+    choose:'Tagh an ìre agus an suidheachadh',
+    ownTopic:'Sgrìobh do shuidheachadh no cuspair',
+    topicPlaceholder:'Mar eisimpleir: coinneachadh ri caraidean, gearan gu modhail, planaichean a dhèanamh...',
+    beginner:'Neach-tòiseachaidh (A1–A2)',
+    intermediate:'Eadar-mheadhanach (B1–B2)',
+    inspiration:'Feum air beachd?',
+    friends:'Le caraidean',
+    work:'Aig an obair',
+    plans:'A’ dèanamh phlanaichean',
+    problems:'Duilgheadasan',
+    generateTitle:'Cruthaich cànan làitheil',
+    generate:'Cruthaich abairtean agus ceisteachan',
+    generating:'A’ cruthachadh abairtean nàdarra…',
+    waiting:'Nochdaidh an gnìomhachd an seo.',
+    quizTitle:'Dè an abairt a fhreagras?',
+    check:'Thoir sùil air a’ cheisteachan',
+    newExercise:'Gnìomhachd ùr',
+    score:'Sgòr',
+    restart:'Ath-thòisich',
+    clear:'Glan a h-uile càil',
+    selectLevel:'Tagh ìre an toiseach.',
+    enterTopic:'Sgrìobh suidheachadh no tagh eisimpleir.',
+    serverError:'Cha b’ urrainn dhuinn an gnìomhachd a chruthachadh.',
+    playing:'A’ cluich na h-abairt…',
+    answerAll:'Freagair na ceistean uile an toiseach.',
+    perfect:'Sgoinneil. Thuig thu na trì abairtean.',
+    some:'Deagh obair. Dèan lèirmheas air na brìgh agus na freagairtean dearga.',
+    expression:'Abairt',
+    meaning:'Brìgh',
+    example:'Eisimpleir'
+  },
+
+  ja:{
+    tagline:'好きな方法でどんな言語でも学ぼう',
+    changeLanguages:'アクティビティ / 言語を変更',
+    title:'日常表現',
+    intro:'日常会話で実際によく使われる自然な表現を学びます。',
+    choose:'レベルと場面を選ぶ',
+    ownTopic:'自分の場面やトピックを書く',
+    topicPlaceholder:'例：友達と会う、丁寧に不満を伝える、予定を立てる...',
+    beginner:'基礎を復習する',
+    intermediate:'自信をつける',
+    inspiration:'例から選ぶ:',
+    friends:'友達と',
+    work:'仕事で',
+    plans:'予定を立てる',
+    problems:'問題',
+    generateTitle:'日常表現を作成',
+    generate:'表現とクイズを作成',
+    generating:'自然な表現を作成中…',
+    waiting:'アクティビティはここに表示されます。',
+    quizTitle:'どの表現が合いますか？',
+    check:'クイズを確認',
+    newExercise:'新しいアクティビティ',
+    score:'スコア',
+    restart:'リセット',
+    clear:'すべて消去',
+    selectLevel:'最初にレベルを選んでください。',
+    enterTopic:'場面を書くか、例を選んでください。',
+    serverError:'アクティビティを作成できませんでした。',
+    playing:'表現を再生中…',
+    answerAll:'最初にすべての質問に答えてください。',
+    perfect:'素晴らしいです。3つの表現をすべて理解できました。',
+    some:'よくできました。意味と赤く表示された答えを確認してください。',
+    expression:'表現',
+    meaning:'意味',
+    example:'例'
+  },
+
+  ar:{
+    tagline:'تعلّم أي لغة بطريقتك',
+    changeLanguages:'الأنشطة / تغيير اللغات',
+    title:'لغة الحياة اليومية',
+    intro:'تعلّم تعبيرات طبيعية يستخدمها الناس فعلًا في المحادثات اليومية.',
+    choose:'اختر المستوى والموقف',
+    ownTopic:'اكتب موقفك أو موضوعك',
+    topicPlaceholder:'مثلاً: لقاء الأصدقاء، تقديم شكوى بأدب، وضع خطط...',
+    beginner:'مراجعة الأساسيات',
+    intermediate:'بناء الثقة',
+    inspiration:'هل تحتاج إلى فكرة؟',
+    friends:'مع الأصدقاء',
+    work:'في العمل',
+    plans:'وضع خطط',
+    problems:'مشكلات',
+    generateTitle:'أنشئ لغة يومية',
+    generate:'أنشئ تعبيرات واختبارًا',
+    generating:'جارٍ إنشاء تعبيرات طبيعية…',
+    waiting:'سيظهر النشاط هنا.',
+    quizTitle:'أي تعبير يناسب؟',
+    check:'تحقق من الاختبار',
+    newExercise:'نشاط جديد',
+    score:'النتيجة',
+    restart:'إعادة البدء',
+    clear:'مسح الكل',
+    selectLevel:'اختر مستوى أولاً.',
+    enterTopic:'اكتب موقفًا أو اختر مثالًا.',
+    serverError:'تعذر إنشاء النشاط.',
+    playing:'جارٍ تشغيل التعبير…',
+    answerAll:'أجب عن جميع الأسئلة أولاً.',
+    perfect:'ممتاز. لقد فهمت التعبيرات الثلاثة.',
+    some:'عمل جيد. راجع المعاني والإجابات المعلّمة باللون الأحمر.',
+    expression:'التعبير',
+    meaning:'المعنى',
+    example:'مثال'
+  }
 };
 
-const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',ja:'日本語',ar:'العربية'};
-const targetNames={English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',Italian:'Italiano',Portuguese:'Português',Basque:'Euskara',Japanese:'日本語',Arabic:'العربية'};
-const voices={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'};
+
+Object.assign(T.en,{choose:'Start by choosing your level',levelPrompt:'Choose the option that feels right for you today.',beginner:'Revising the basics',beginnerNote:'Build useful natural expressions for simple everyday situations.',intermediate:'Building confidence',intermediateNote:'Use more flexible, natural everyday language with greater confidence.',ownTopic:'Now choose your own situation or topic',topicGuidance:'Write something you would genuinely like to handle in everyday conversation.'});
+Object.assign(T.ca,{beginner:'Repassar les bases',intermediate:'Guanyar confiança'});
+Object.assign(T.es,{beginner:'Repasar lo básico',intermediate:'Ganar confianza'});
+Object.assign(T.fr,{beginner:'Revoir les bases',intermediate:'Prendre confiance'});
+Object.assign(T.de,{beginner:'Grundlagen auffrischen',intermediate:'Sicherheit gewinnen'});
+Object.assign(T.it,{beginner:'Ripassare le basi',intermediate:'Acquisire sicurezza'});
+Object.assign(T.pt,{beginner:'Rever as bases',intermediate:'Ganhar confiança'});
+Object.assign(T.eu,{beginner:'Oinarriak berrikusi',intermediate:'Konfiantza hartu'});
+Object.assign(T.ja,{beginner:'基礎を復習する',intermediate:'自信をつける'});
+Object.assign(T.ar,{beginner:'مراجعة الأساسيات',intermediate:'بناء الثقة'});
+const uiNames={
+  en:'English',
+  ca:'Català',
+  es:'Español',
+  fr:'Français',
+  de:'Deutsch',
+  it:'Italiano',
+  pt:'Português',
+  eu:'Euskara',
+  cy:'Cymraeg',
+  gd:'Gàidhlig',
+  ja:'日本語',
+  ar:'العربية'
+};
+
+const targetNames={
+  English:'English',
+  Catalan:'Català',
+  Spanish:'Español',
+  French:'Français',
+  German:'Deutsch',
+  Italian:'Italiano',
+  Portuguese:'Português',
+  Basque:'Euskara',
+  Welsh:'Cymraeg',
+  Gaelic:'Gàidhlig',
+  'Scottish Gaelic':'Gàidhlig',
+  Japanese:'日本語',
+  Arabic:'العربية'
+};
+
+const voices={
+  English:'en-GB',
+  Catalan:'ca-ES',
+  Spanish:'es-ES',
+  French:'fr-FR',
+  German:'de-DE',
+  Italian:'it-IT',
+  Portuguese:'pt-PT',
+  Basque:'eu-ES',
+  Welsh:'cy-GB',
+  Gaelic:'gd-GB',
+  'Scottish Gaelic':'gd-GB',
+  Japanese:'ja-JP',
+  Arabic:'ar-SA'
+};
 
 const params=new URLSearchParams(location.search);
-let uiLanguage=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-let targetLanguage=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
+
+let uiLanguage=params.get('ui')
+  ||localStorage.getItem('lingototal_ui_language')
+  ||'en';
+
+let targetLanguage=params.get('target')
+  ||localStorage.getItem('lingototal_target_language')
+  ||'English';
 
 if(!uiNames[uiLanguage])uiLanguage='en';
 if(!targetNames[targetLanguage])targetLanguage='English';
@@ -654,8 +1205,11 @@ const $=id=>document.getElementById(id);
 let level='';
 let activity=null;
 let answers={};
+let quizData=[];
 
-function tr(key){return T[uiLanguage]?.[key]||T.en[key]||key}
+function tr(key){
+  return T[uiLanguage]?.[key]||T.en[key]||key;
+}
 
 function applyLanguage(){
   document.documentElement.lang=uiLanguage;
@@ -673,7 +1227,9 @@ function applyLanguage(){
     btn.dataset.theme=tr(btn.dataset.key);
   });
 
-  $('languagePair').textContent=`${uiNames[uiLanguage]} → ${targetNames[targetLanguage]}`;
+  $('languagePair').textContent=
+    `${uiNames[uiLanguage]} → ${targetNames[targetLanguage]}`;
+
   document.title='LingoTotal · '+tr('title');
 }
 
@@ -691,59 +1247,176 @@ function setLoading(on){
 }
 
 function levelInstruction(){
-  if(level==='beginner')return 'CEFR A1-A2. Use common everyday expressions that are simple but genuinely natural.';
-  if(level==='intermediate')return 'CEFR B1-B2. Use natural informal spoken language and useful idiomatic expressions.';
-  return 'CEFR C1-C2. Use authentic colloquial language, idiomatic turns of phrase, pragmatic expressions and spoken shortcuts learners may rarely meet in textbooks. Avoid literary, pompous, formal or essay-like language.';
+  if(level==='beginner'){
+    return `
+CEFR A1-A2.
+Use very common expressions that native speakers could naturally use in this situation.
+Prefer standard, widely understood language.
+Keep expressions short.
+Avoid obscure slang, strongly regional expressions and unusual idioms.
+`.trim();
+  }
+
+  return `
+CEFR B1-B2.
+Use natural contemporary spoken language.
+Include useful conversational chunks and everyday expressions, but prefer widely understood forms.
+Avoid obscure slang, strongly regional language, literary wording and unusual idioms.
+`.trim();
 }
 
 async function api(prompt){
   const r=await fetch('/.netlify/functions/gemini',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.85})
+    body:JSON.stringify({
+      prompt,
+      model:'gemini-2.5-flash',
+      temperature:.35
+    })
   });
 
   const d=await r.json().catch(()=>({}));
 
-  if(!r.ok)throw new Error(d?.error||'Server error');
+  if(!r.ok){
+    throw new Error(d?.error||'Server error');
+  }
 
-  const text=d?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if(!text)throw new Error('Empty AI response');
+  if(typeof d==='string'){
+    return d;
+  }
+
+  const text=
+    d?.candidates?.[0]?.content?.parts
+      ?.map(part=>part?.text||'')
+      .join('')
+    ||d?.text
+    ||d?.result
+    ||d?.data?.text
+    ||'';
+
+  if(!text){
+    throw new Error('Empty AI response');
+  }
 
   return text;
 }
 
 function parse(raw){
-  const clean=String(raw).replace(/```json/gi,'').replace(/```/g,'').trim();
-  const a=clean.indexOf('{'),b=clean.lastIndexOf('}');
-  if(a<0||b<a)throw new Error('AI format error');
+  if(raw && typeof raw==='object' && Array.isArray(raw.expressions)){
+    return validate(raw);
+  }
+
+  let clean=String(raw||'')
+    .replace(/```json/gi,'')
+    .replace(/```/g,'')
+    .trim();
+
+  const a=clean.indexOf('{');
+  const b=clean.lastIndexOf('}');
+
+  if(a<0||b<a){
+    throw new Error('AI format error');
+  }
 
   const data=JSON.parse(clean.slice(a,b+1));
+  return validate(data);
+}
 
-  if(!Array.isArray(data.expressions)||data.expressions.length!==4)throw new Error('AI format error');
-  if(!Array.isArray(data.questions)||data.questions.length!==4)throw new Error('AI format error');
+function validate(data){
 
-  return data;
+  if(!Array.isArray(data.expressions)){
+    throw new Error('AI format error');
+  }
+
+  const expressions=data.expressions
+    .filter(x=>
+      x
+      &&typeof x.expression==='string'
+      &&x.expression.trim()
+      &&typeof x.meaning==='string'
+      &&x.meaning.trim()
+      &&typeof x.example==='string'
+      &&x.example.trim()
+    )
+    .slice(0,3);
+
+  if(expressions.length<3){
+    throw new Error('AI format error');
+  }
+
+  let questions=Array.isArray(data.questions)
+    ?data.questions
+      .filter(q=>
+        q
+        &&typeof q.question==='string'
+        &&q.question.trim()
+        &&Number.isInteger(Number(q.correct))
+      )
+      .slice(0,3)
+    :[];
+
+  if(questions.length<3){
+    throw new Error('AI format error');
+  }
+
+  questions=questions.map((q,index)=>{
+    let correct=Number(q.correct);
+
+    if(correct<0||correct>2){
+      correct=index%3;
+    }
+
+    return {
+      question:q.question.trim(),
+      correct
+    };
+  });
+
+  return {
+    expressions,
+    questions
+  };
 }
 
 function buildPrompt(topic){
   return `
-Create an "Everyday Language" activity for a learner of ${targetLanguage}.
+Create a SMALL "Everyday Language" activity for a learner of ${targetLanguage}.
 
 Situation/topic: ${topic}
-Level: ${levelInstruction()}
 
-The purpose is to teach NATURAL SPOKEN LANGUAGE that people genuinely use.
-For B1 and above, prioritise expressions, chunks, idiomatic phrasing, discourse markers, pragmatic language and informal conversational shortcuts that traditional textbooks often underteach.
-Do not make the language literary, formal, pompous or artificial.
-Keep everything socially appropriate and useful in ordinary life.
+Level:
+${levelInstruction()}
 
-All explanations and meanings must be in this interface language: ${uiNames[uiLanguage]}.
-All expressions and examples being learned must be in ${targetLanguage}.
+Interface language: ${uiNames[uiLanguage]}
+Target language: ${targetLanguage}
 
-For Basque, use natural standard Euskara.
-For Japanese, use natural Japanese without artificial spaces.
-For Arabic, use natural Arabic script and punctuation.
+The goal is to teach useful expressions that are natural in ordinary conversation.
+
+IMPORTANT:
+- Generate exactly 3 expressions.
+- Meanings must be short and written in ${uiNames[uiLanguage]}.
+- Examples must be short and written in ${targetLanguage}.
+- Use standard, widely understood language.
+- Do not use obscure slang or highly regional expressions.
+- Do not produce literary, formal or essay-like language.
+- Keep the whole response compact.
+- For Basque, use standard Euskara.
+- For Welsh, use standard contemporary Welsh.
+- For Scottish Gaelic, use standard contemporary Gaelic.
+- For Japanese, use natural Japanese without artificial spaces.
+- For Arabic, use widely understood Modern Standard Arabic with natural everyday phrasing; avoid strongly regional dialect unless the situation absolutely requires it.
+
+Then create exactly 3 short quiz situations/questions in ${uiNames[uiLanguage]}.
+
+For each quiz question:
+- "correct" is the zero-based number of the correct expression:
+  0 = first expression
+  1 = second expression
+  2 = third expression
+- Do NOT generate quiz options. The webpage will create and shuffle the options.
+
+Use each expression as the correct answer exactly once.
 
 Return ONLY valid JSON:
 
@@ -751,60 +1424,62 @@ Return ONLY valid JSON:
   "expressions":[
     {
       "expression":"target-language expression",
-      "meaning":"short explanation in interface language",
-      "example":"natural example sentence in target language"
+      "meaning":"short meaning in interface language",
+      "example":"short natural example in target language"
     },
     {
-      "expression":"...",
-      "meaning":"...",
-      "example":"..."
+      "expression":"target-language expression",
+      "meaning":"short meaning in interface language",
+      "example":"short natural example in target language"
     },
     {
-      "expression":"...",
-      "meaning":"...",
-      "example":"..."
-    },
-    {
-      "expression":"...",
-      "meaning":"...",
-      "example":"..."
+      "expression":"target-language expression",
+      "meaning":"short meaning in interface language",
+      "example":"short natural example in target language"
     }
   ],
   "questions":[
     {
-      "question":"short situation/question in interface language",
-      "options":["expression 1","expression 2","expression 3","expression 4"],
+      "question":"short situation or question in interface language",
       "correct":0
     },
     {
-      "question":"...",
-      "options":["...","...","...","..."],
+      "question":"short situation or question in interface language",
       "correct":1
     },
     {
-      "question":"...",
-      "options":["...","...","...","..."],
+      "question":"short situation or question in interface language",
       "correct":2
-    },
-    {
-      "question":"...",
-      "options":["...","...","...","..."],
-      "correct":3
     }
   ]
 }
 
-Use each of the four expressions as the correct answer exactly once.
-Do not add markdown or commentary.
+Do not add markdown.
+Do not add commentary.
+Do not add any text before or after the JSON.
 `.trim();
+}
+
+function shuffle(array){
+  const a=[...array];
+
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+
+  return a;
 }
 
 function speak(text){
   if(!('speechSynthesis'in window))return;
+
   speechSynthesis.cancel();
+
   const u=new SpeechSynthesisUtterance(text);
   u.lang=voices[targetLanguage]||'en-GB';
   u.rate=1;
+
   speechSynthesis.speak(u);
   notice(tr('playing'),'info');
 }
@@ -816,7 +1491,10 @@ function render(){
   activity.expressions.forEach((x,i)=>{
     const card=document.createElement('div');
     card.className='expression-card';
-    if(targetLanguage==='Arabic')card.classList.add('target-rtl');
+
+    if(targetLanguage==='Arabic'){
+      card.classList.add('target-rtl');
+    }
 
     const exp=document.createElement('div');
     exp.className='expression';
@@ -835,6 +1513,7 @@ function render(){
 
     const listen=document.createElement('button');
     listen.className='listen-btn';
+    listen.type='button';
     listen.textContent='🔊';
     listen.addEventListener('click',()=>speak(x.example));
 
@@ -844,70 +1523,108 @@ function render(){
   });
 
   answers={};
+  quizData=[];
+
   const quiz=$('quiz');
   quiz.innerHTML='';
 
   activity.questions.forEach((q,qi)=>{
+
+    const optionObjects=activity.expressions.map((x,index)=>({
+      text:x.expression,
+      expressionIndex:index
+    }));
+
+    const shuffled=shuffle(optionObjects);
+
+    const correctOptionIndex=
+      shuffled.findIndex(
+        item=>item.expressionIndex===q.correct
+      );
+
+    quizData.push({
+      correctOptionIndex
+    });
+
     const card=document.createElement('div');
     card.className='quiz-card';
 
     const question=document.createElement('div');
     question.className='quiz-question';
     question.textContent=`${qi+1}. ${q.question}`;
-    card.appendChild(question);
 
-    const opts=document.createElement('div');
-    opts.className='options';
+    const options=document.createElement('div');
+    options.className='options';
 
-    q.options.forEach((opt,oi)=>{
+    shuffled.forEach((item,oi)=>{
       const btn=document.createElement('button');
-      btn.className='option';
       btn.type='button';
-      btn.textContent=opt;
+      btn.className='option';
+      btn.textContent=item.text;
+
+      if(targetLanguage==='Arabic'){
+        btn.classList.add('target-rtl');
+      }
 
       btn.addEventListener('click',()=>{
-        opts.querySelectorAll('.option').forEach(b=>b.classList.remove('selected'));
+        options
+          .querySelectorAll('.option')
+          .forEach(b=>b.classList.remove('selected'));
+
         btn.classList.add('selected');
         answers[qi]=oi;
       });
 
-      opts.appendChild(btn);
+      options.appendChild(btn);
     });
 
-    card.appendChild(opts);
+    card.append(question,options);
     quiz.appendChild(card);
   });
 
   $('feedbackOk').style.display='none';
   $('feedbackBad').style.display='none';
   $('score').style.display='none';
+
   $('exercise').style.display='block';
 }
 
-function checkQuiz(){
-  if(Object.keys(answers).length<4){
+function checkAnswers(){
+
+  if(Object.keys(answers).length<3){
     notice(tr('answerAll'),'error');
     return;
   }
 
   let correct=0;
 
-  document.querySelectorAll('.quiz-card').forEach((card,qi)=>{
-    const q=activity.questions[qi];
+  document
+    .querySelectorAll('.quiz-card')
+    .forEach((card,index)=>{
 
-    card.querySelectorAll('.option').forEach((btn,oi)=>{
-      btn.disabled=true;
-      if(oi===q.correct)btn.classList.add('correct');
-      else if(oi===answers[qi])btn.classList.add('incorrect');
+      const correctIndex=quizData[index].correctOptionIndex;
+
+      card
+        .querySelectorAll('.option')
+        .forEach((btn,oi)=>{
+          btn.disabled=true;
+
+          if(oi===correctIndex){
+            btn.classList.add('correct');
+          }else if(oi===answers[index]){
+            btn.classList.add('incorrect');
+          }
+        });
+
+      if(answers[index]===correctIndex){
+        correct++;
+      }
     });
 
-    if(answers[qi]===q.correct)correct++;
-  });
-
-  $('scoreValue').textContent=`${correct}/4`;
+  $('scoreValue').textContent=`${correct}/3`;
   $('score').style.display='block';
 
-  if(correct===4){
+  if(correct===3){
     $('feedbackOk').textContent=tr('perfect');
     $('feedbackOk').style.display='block';
     $('feedbackBad').style.display='none';
@@ -920,6 +1637,7 @@ function checkQuiz(){
 }
 
 async function generate(){
+
   const topic=$('themeInput').value.trim();
 
   if(!level){
@@ -934,17 +1652,26 @@ async function generate(){
   }
 
   setLoading(true);
+
   $('exercise').style.display='none';
   $('exerciseIntro').textContent=tr('generating');
 
   try{
-    activity=parse(await api(buildPrompt(topic)));
+    activity=parse(
+      await api(
+        buildPrompt(topic)
+      )
+    );
+
     $('exerciseIntro').textContent='';
     render();
+
   }catch(err){
     console.error(err);
+
     $('exerciseIntro').textContent=tr('serverError');
     notice(tr('serverError'),'error');
+
   }finally{
     setLoading(false);
   }
@@ -954,35 +1681,62 @@ $('themeInput').addEventListener('focus',()=>{
   $('themeInput').classList.remove('attention');
 },{once:true});
 
-document.querySelectorAll('.level').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    level=btn.dataset.level;
-  });
-});
+document
+  .querySelectorAll('.level')
+  .forEach(btn=>{
 
-document.querySelectorAll('.situation').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.situation').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    $('themeInput').value=btn.dataset.theme;
-    $('themeInput').classList.remove('attention');
+    btn.addEventListener('click',()=>{
+
+      document
+        .querySelectorAll('.level')
+        .forEach(b=>b.classList.remove('selected'));
+
+      btn.classList.add('selected');
+      level=btn.dataset.level;
+    });
+
   });
-});
+
+document
+  .querySelectorAll('.situation')
+  .forEach(btn=>{
+
+    btn.addEventListener('click',()=>{
+
+      document
+        .querySelectorAll('.situation')
+        .forEach(b=>b.classList.remove('selected'));
+
+      btn.classList.add('selected');
+
+      $('themeInput').value=btn.dataset.theme;
+      $('themeInput').classList.remove('attention');
+    });
+
+  });
 
 $('generateBtn').addEventListener('click',generate);
-$('checkBtn').addEventListener('click',checkQuiz);
+$('checkBtn').addEventListener('click',checkAnswers);
 $('newBtn').addEventListener('click',generate);
 
 $('clearBtn').addEventListener('click',()=>{
-  speechSynthesis?.cancel();
+
+  if('speechSynthesis'in window){
+    speechSynthesis.cancel();
+  }
+
   $('themeInput').value='';
   $('themeInput').classList.add('attention');
+
   level='';
   activity=null;
   answers={};
-  document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+  quizData=[];
+
+  document
+    .querySelectorAll('.choice')
+    .forEach(x=>x.classList.remove('selected'));
+
   $('exercise').style.display='none';
   $('exerciseIntro').textContent=tr('waiting');
 });

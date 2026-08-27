@@ -500,40 +500,68 @@ input[type=text]:focus{
     width:min(130px,43vw);
   }
 }
-
-/* Separate Home shortcut: keep the existing Activities / change languages control,
-   with a compact home icon at the far right. */
-.home-icon{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  background:#fff;
-  color:#084ca8;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.45);
-  box-sizing:border-box;
-  transition:transform .15s ease, background .15s ease;
-}
-.home-icon svg{
-  width:24px;
-  height:24px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
-.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
-@media(max-width:520px){
-  .home-icon{width:42px;height:42px;flex-basis:42px}
-}
-
 </style>
+
+<style id="lingototal-standard-format-20260827">
+/* Shared LingoReal-style presentation */
+.level-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
+  gap:9px!important;
+}
+.level-card,.choice.level{
+  border-radius:12px!important;
+  padding:11px 12px!important;
+  min-height:62px;
+}
+.level-name{font-weight:700!important}
+.level-note{font-size:.8rem!important;line-height:1.3!important}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .banner{
+    min-height:50px!important;
+    padding:6px 8px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:6px!important;
+    flex-wrap:nowrap!important;
+    overflow:hidden!important;
+  }
+  .brand-wrap,.brand{
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
+  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .tagline{display:none!important}
+  .language-pair,.pair,.current-languages{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    max-width:42vw!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    font-size:.7rem!important;
+  }
+  .home-link,.home-btn,.home-button{
+    flex:0 0 38px!important;
+    width:38px!important;
+    height:38px!important;
+    min-width:38px!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
+  .level-note{display:none!important}
+  .panel{padding:14px!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -550,15 +578,10 @@ input[type=text]:focus{
   <div class="header-tools">
     <div class="language-pair" id="languagePair">English → Català</div>
 
-    <a class="home-link" href="lingostarter2.html"><span data-i18n="changeLanguages">Activities / change languages</span>
+    <a class="home-link" href="lingostarter2.html">
+      <span>⌂</span>
+      <span data-i18n="changeLanguages">Activities / change languages</span>
     </a>
-    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 11.5 12 4l9 7.5"></path>
-    <path d="M5.5 10.5V20h13v-9.5"></path>
-    <path d="M9.5 20v-6h5v6"></path>
-  </svg>
-</a>
   </div>
 </header>
 
@@ -589,9 +612,9 @@ input[type=text]:focus{
     >
 
     <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">Advanced (C1–C2)</button>
+      <button class="choice level" data-level="beginner" data-i18n="beginner">Revising the basics</button>
+      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Building confidence</button>
+      <button class="choice level" data-level="advanced" data-i18n="advanced">More advanced</button>
     </div>
 
     <div class="helper" data-i18n="inspiration">Need inspiration?</div>
@@ -681,9 +704,9 @@ intro:'Listen to three sentences and complete the two important missing words in
 choose:'Choose the level and topic',
 ownTopic:'Write your own topic',
 topicPlaceholder:'For example: travel, technology, nature, food...',
-beginner:'Beginner (A1–A2)',
-intermediate:'Intermediate (B1–B2)',
-advanced:'Advanced (C1–C2)',
+beginner:'Revising the basics',
+intermediate:'Building confidence',
+advanced:'More advanced',
 inspiration:'Need inspiration?',
 travel:'Travel',
 technology:'Technology',
@@ -723,9 +746,9 @@ intro:'Escolta tres frases i completa les dues paraules importants que falten a 
 choose:'Tria el nivell i el tema',
 ownTopic:'Escriu el teu propi tema',
 topicPlaceholder:'Per exemple: viatges, tecnologia, natura, menjar...',
-beginner:'Inicial (A1–A2)',
-intermediate:'Intermedi (B1–B2)',
-advanced:'Avançat (C1–C2)',
+beginner:'Repassar les bases',
+intermediate:'Guanyar confiança',
+advanced:'Més avançat',
 inspiration:'Necessites inspiració?',
 travel:'Viatges',
 technology:'Tecnologia',
@@ -765,9 +788,9 @@ intro:'Escucha tres frases y completa las dos palabras importantes que faltan en
 choose:'Elige el nivel y el tema',
 ownTopic:'Escribe tu propio tema',
 topicPlaceholder:'Por ejemplo: viajes, tecnología, naturaleza, comida...',
-beginner:'Inicial (A1–A2)',
-intermediate:'Intermedio (B1–B2)',
-advanced:'Avanzado (C1–C2)',
+beginner:'Repassar les bases',
+intermediate:'Acquisire sicurezza',
+advanced:'Más avanzado',
 inspiration:'¿Necesitas inspiración?',
 travel:'Viajes',
 technology:'Tecnología',
@@ -807,9 +830,9 @@ intro:'Écoutez trois phrases et complétez les deux mots importants manquants d
 choose:'Choisissez le niveau et le thème',
 ownTopic:'Écrivez votre propre thème',
 topicPlaceholder:'Par exemple : voyages, technologie, nature, alimentation...',
-beginner:'Débutant (A1–A2)',
-intermediate:'Intermédiaire (B1–B2)',
-advanced:'Avancé (C1–C2)',
+beginner:'Revoir les bases',
+intermediate:'Prendre confiance',
+advanced:'Plus avancé',
 inspiration:'Besoin d’inspiration ?',
 travel:'Voyages',
 technology:'Technologie',
@@ -849,9 +872,9 @@ intro:'Höre drei Sätze und ergänze in jedem Satz zwei wichtige fehlende Wört
 choose:'Niveau und Thema wählen',
 ownTopic:'Eigenes Thema eingeben',
 topicPlaceholder:'Zum Beispiel: Reisen, Technologie, Natur, Essen ...',
-beginner:'Anfänger (A1–A2)',
-intermediate:'Mittelstufe (B1–B2)',
-advanced:'Fortgeschritten (C1–C2)',
+beginner:'Grundlagen auffrischen',
+intermediate:'Sicherheit gewinnen',
+advanced:'Weiter fortgeschritten',
 inspiration:'Brauchst du Inspiration?',
 travel:'Reisen',
 technology:'Technologie',
@@ -891,9 +914,9 @@ intro:'Ascolta tre frasi e completa le due parole importanti mancanti in ciascun
 choose:'Scegli il livello e l’argomento',
 ownTopic:'Scrivi il tuo argomento',
 topicPlaceholder:'Per esempio: viaggi, tecnologia, natura, cibo...',
-beginner:'Principiante (A1–A2)',
-intermediate:'Intermedio (B1–B2)',
-advanced:'Avanzato (C1–C2)',
+beginner:'Ripassare le basi',
+intermediate:'Acquisire sicurezza',
+advanced:'Più avanzato',
 inspiration:'Hai bisogno di ispirazione?',
 travel:'Viaggi',
 technology:'Tecnologia',
@@ -933,9 +956,9 @@ intro:'Ouça três frases e complete as duas palavras importantes em falta em ca
 choose:'Escolha o nível e o tema',
 ownTopic:'Escreva o seu próprio tema',
 topicPlaceholder:'Por exemplo: viagens, tecnologia, natureza, comida...',
-beginner:'Iniciante (A1–A2)',
-intermediate:'Intermédio (B1–B2)',
-advanced:'Avançado (C1–C2)',
+beginner:'Rever as bases',
+intermediate:'Ganhar confiança',
+advanced:'Mais avançado',
 inspiration:'Precisa de inspiração?',
 travel:'Viagens',
 technology:'Tecnologia',
@@ -975,9 +998,9 @@ intro:'Entzun hiru esaldi eta osatu bakoitzean falta diren bi hitz garrantzitsua
 choose:'Aukeratu maila eta gaia',
 ownTopic:'Idatzi zure gaia',
 topicPlaceholder:'Adibidez: bidaiak, teknologia, natura, janaria...',
-beginner:'Hasiberria (A1–A2)',
+beginner:'Oinarriak berrikusi',
 intermediate:'Tartekoa (B1–B2)',
-advanced:'Aurreratua (C1–C2)',
+advanced:'Aurreratuagoa',
 inspiration:'Inspirazioa behar duzu?',
 travel:'Bidaiak',
 technology:'Teknologia',
@@ -1017,9 +1040,9 @@ intro:'3つの文を聞き、それぞれの重要な2語を完成させます�
 choose:'レベルとトピックを選ぶ',
 ownTopic:'自分のトピックを書く',
 topicPlaceholder:'例：旅行、テクノロジー、自然、食べ物...',
-beginner:'初級 (A1–A2)',
-intermediate:'中級 (B1–B2)',
-advanced:'上級 (C1–C2)',
+beginner:'基礎を復習する',
+intermediate:'自信をつける',
+advanced:'より上級',
 inspiration:'例から選ぶこともできます。',
 travel:'旅行',
 technology:'テクノロジー',
@@ -1059,9 +1082,9 @@ intro:'استمع إلى ثلاث جمل وأكمل الكلمتين المهم�
 choose:'اختر المستوى والموضوع',
 ownTopic:'اكتب موضوعك',
 topicPlaceholder:'مثلاً: السفر، التكنولوجيا، الطبيعة، الطعام...',
-beginner:'مبتدئ (A1–A2)',
-intermediate:'متوسط (B1–B2)',
-advanced:'متقدم (C1–C2)',
+beginner:'مراجعة الأساسيات',
+intermediate:'بناء الثقة',
+advanced:'مستوى أكثر تقدمًا',
 inspiration:'هل تحتاج إلى فكرة؟',
 travel:'السفر',
 technology:'التكنولوجيا',
