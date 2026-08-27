@@ -684,7 +684,12 @@ input[type=text]:focus{
 
     <div class="section-head">
       <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Choose the level and topic</div>
+      <div class="level-grid">
+      <button class="choice level" data-level="beginner" data-i18n="beginner">Revising the basics</button>
+      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Building confidence</button>
+      <button class="choice level" data-level="advanced" data-i18n="advanced">More advanced</button>
+    </div>
+<div class="section-title" data-i18n="choose">Choose the level and topic</div>
     </div>
 
     <label for="themeInput" data-i18n="ownTopic">Write your own topic</label>
@@ -696,12 +701,6 @@ input[type=text]:focus{
       data-i18n-placeholder="topicPlaceholder"
       placeholder="For example: travel, technology, nature, food..."
     >
-
-    <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Revising the basics</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Building confidence</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">More advanced</button>
-    </div>
 
     <div class="helper" data-i18n="inspiration">Need inspiration?</div>
 

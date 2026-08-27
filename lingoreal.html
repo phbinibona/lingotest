@@ -228,10 +228,21 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--primary);box-
 </section>
 <section class="panel hero"><h1 data-i18n="title">LingoReal · How people really speak</h1><p data-i18n="intro">Explore what sounds natural, what people really mean, and how real conversations work.</p></section>
 <section class="panel">
-<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Start with what you want to talk about</div></div>
+<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Start by choosing your level</div></div>
 
+<p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
+    <div class="level-grid">
+      <button class="choice level level-card" data-level="beginner">
+        <span class="level-name" data-i18n="beginner">Revising the basics</span>
+        <span class="level-note" data-i18n="beginnerNote">Notice useful, natural language in simple everyday situations.</span>
+      </button>
+      <button class="choice level level-card" data-level="intermediate">
+        <span class="level-name" data-i18n="intermediate">Building confidence</span>
+        <span class="level-note" data-i18n="intermediateNote">Understand more natural reactions, tone and everyday expressions.</span>
+      </button>
+    </div>
 <div class="topic-step">
-  <div class="substep-badge">1</div>
+  <div class="substep-badge">2</div>
   <div>
     <label for="themeInput" class="topic-label" data-i18n="ownTopic">What would you like to talk about?</label>
     <p class="topic-guidance" data-i18n="topicGuidance">Write your own theme, situation or subject. This will drive the whole LingoReal challenge.</p>
@@ -244,23 +255,6 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--primary);box-
         <button class="choice example" data-theme-key="work" data-i18n="work">Work</button>
         <button class="choice example" data-theme-key="food" data-i18n="food">Eating out</button>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="topic-step">
-  <div class="substep-badge">2</div>
-  <div>
-    <p class="setup-lead" data-i18n="levelPrompt">Now choose the level that feels right for you.</p>
-    <div class="level-grid">
-      <button class="choice level level-card" data-level="beginner">
-        <span class="level-name" data-i18n="beginner">Revising the basics</span>
-        <span class="level-note" data-i18n="beginnerNote">Notice useful, natural language in simple everyday situations.</span>
-      </button>
-      <button class="choice level level-card" data-level="intermediate">
-        <span class="level-name" data-i18n="intermediate">Building confidence</span>
-        <span class="level-note" data-i18n="intermediateNote">Understand more natural reactions, tone and everyday expressions.</span>
-      </button>
     </div>
   </div>
 </div>

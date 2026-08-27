@@ -683,11 +683,27 @@ input[type=text]:focus{
   <section class="panel">
     <div class="section-head">
       <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Choose how you want to work</div>
+      <div class="section-title" data-i18n="choose">Start by choosing your level</div>
     </div>
 
-    <div class="topic-step">
-      <div class="substep-badge">1</div>
+    <p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
+
+    <div class="level-grid">
+      <button class="choice level level-card" data-level="beginner">
+        <span class="level-name" data-i18n="beginner">Revising the basics</span>
+        <span class="level-note" data-i18n="beginnerNote">Clear, accessible language and shorter sentences.</span>
+      </button>
+      <button class="choice level level-card" data-level="intermediate">
+        <span class="level-name" data-i18n="intermediate">Building confidence</span>
+        <span class="level-note" data-i18n="intermediateNote">Natural language with more variety and useful detail.</span>
+      </button>
+      <button class="choice level level-card" data-level="advanced">
+        <span class="level-name" data-i18n="advanced">More advanced</span>
+        <span class="level-note" data-i18n="advancedNote">Richer, more nuanced and idiomatic language.</span>
+      </button>
+    </div>
+<div class="topic-step">
+      <div class="substep-badge">2</div>
       <div>
         <label for="themeInput" class="topic-label" data-i18n="ownTopic">Choose your topic</label>
         <p class="topic-guidance" data-i18n="topicGuidance">Write something you would genuinely like to read about.</p>
@@ -707,22 +723,6 @@ input[type=text]:focus{
             <button class="choice example" data-key="culture" data-i18n="culture">Culture</button>
           </div>
         </div>
-<div class="topic-step"><div class="substep-badge">2</div><div><p class="setup-lead" data-i18n="levelPrompt">Start by choosing the level that feels right for you.</p>
-
-    <div class="level-grid">
-      <button class="choice level level-card" data-level="beginner">
-        <span class="level-name" data-i18n="beginner">Revising the basics</span>
-        <span class="level-note" data-i18n="beginnerNote">Clear, accessible language and shorter sentences.</span>
-      </button>
-      <button class="choice level level-card" data-level="intermediate">
-        <span class="level-name" data-i18n="intermediate">Building confidence</span>
-        <span class="level-note" data-i18n="intermediateNote">Natural language with more variety and useful detail.</span>
-      </button>
-      <button class="choice level level-card" data-level="advanced">
-        <span class="level-name" data-i18n="advanced">More advanced</span>
-        <span class="level-note" data-i18n="advancedNote">Richer, more nuanced and idiomatic language.</span>
-      </button>
-    </div></div></div>
       </div>
     </div>
 
