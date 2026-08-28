@@ -1,73 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script id="lingototal-language-handoff-fix">
-(function(){
-  const uiAliases = {
-    "en":"en","english":"en",
-    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
-    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
-    "fr":"fr","french":"fr","français":"fr","francais":"fr",
-    "de":"de","german":"de","deutsch":"de",
-    "it":"it","italian":"it","italiano":"it",
-    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
-    "eu":"eu","basque":"eu","euskara":"eu",
-    "ja":"ja","japanese":"ja","日本語":"ja",
-    "ar":"ar","arabic":"ar","العربية":"ar"
-  };
-  const targetAliases = {
-    "en":"English","english":"English",
-    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
-    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
-    "fr":"French","french":"French","français":"French","francais":"French",
-    "de":"German","german":"German","deutsch":"German",
-    "it":"Italian","italian":"Italian","italiano":"Italian",
-    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
-    "eu":"Basque","basque":"Basque","euskara":"Basque",
-    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
-    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
-  };
-  const norm = value => String(value || "").trim().toLowerCase();
-  const params = new URLSearchParams(window.location.search);
-
-  const rawUi =
-    params.get("ui") ||
-    params.get("uiLanguage") ||
-    params.get("interfaceLanguage") ||
-    params.get("interface") ||
-    localStorage.getItem("lingototal_ui_language") ||
-    localStorage.getItem("lingototal_interface_language") ||
-    "en";
-
-  const rawTarget =
-    params.get("target") ||
-    params.get("targetLanguage") ||
-    localStorage.getItem("lingototal_target_language") ||
-    "English";
-
-  const ui = uiAliases[norm(rawUi)] || "en";
-  const target = targetAliases[norm(rawTarget)] || "English";
-
-  localStorage.setItem("lingototal_ui_language", ui);
-  localStorage.setItem("lingototal_interface_language", ui);
-  localStorage.setItem("lingototal_target_language", target);
-
-  let changed = false;
-  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
-  if(params.get("target") !== target){ params.set("target", target); changed = true; }
-
-  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
-    if(params.has(k)){ params.delete(k); changed = true; }
-  });
-
-  if(changed){
-    const qs=params.toString();
-    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
-  }
-
-  window.LINGOTOTAL_SETTINGS={ui,target};
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoTotal · Learn from Me</title>
@@ -99,67 +32,6 @@ html[dir="rtl"] .feedback{border-left:1px solid var(--line);border-right:5px sol
 html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"] .feedback.notice{border-right-color:var(--warning)}html[dir="rtl"] .feedback.error{border-right-color:var(--danger)}
 @media(max-width:700px){.prompt-grid{grid-template-columns:1fr}.hero h1{font-size:1.7rem}.card{padding:18px}}
 </style>
-
-<style id="lingototal-standard-format-20260827">
-/* Shared LingoReal-style presentation */
-.level-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
-  gap:9px!important;
-}
-.level-card,.choice.level{
-  border-radius:12px!important;
-  padding:11px 12px!important;
-  min-height:62px;
-}
-.level-name{font-weight:700!important}
-.level-note{font-size:.8rem!important;line-height:1.3!important}
-@media(max-width:700px){
-  html,body{max-width:100%;overflow-x:hidden}
-  .banner{
-    min-height:50px!important;
-    padding:6px 8px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:space-between!important;
-    gap:6px!important;
-    flex-wrap:nowrap!important;
-    overflow:hidden!important;
-  }
-  .brand-wrap,.brand{
-    min-width:0!important;
-    flex:1 1 auto!important;
-  }
-  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
-  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .language-pair,.pair,.current-languages{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:.7rem!important;
-  }
-  .home-link,.home-btn,.home-button{
-    flex:0 0 38px!important;
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-  }
-  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
-  .level-note{display:none!important}
-  .panel{padding:14px!important}
-}
-</style>
-
 </head>
 <body>
 <header>
@@ -246,66 +118,16 @@ html[dir="rtl"] .feedback.good{border-right-color:var(--success)}html[dir="rtl"]
 const GEMINI_ENDPOINT="/.netlify/functions/gemini";
 
 const T={
-en:{
-    levelPrompt:'Choose the option that feels right for you today.',
-    beginnerNote:'Build useful natural expressions for simple everyday situations.',
-    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
-    advancedNote:'Work with richer, more nuanced and idiomatic language.',
-    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',brand:"LINGOTOTAL · Learn from Me",tagline:"Use your own language to create your lesson.",home:"Activities / change languages",heroTitle:"Your words become the lesson.",heroText:"Write something real. LingoTotal reads what you can already do, chooses one useful improvement, and creates a short activity from your own language.",step1:"STEP 1 · TELL ME SOMETHING",talkTitle:"What would you like to talk about?",talkHelp:"Choose an idea, or write about anything you like in the language you are learning.",promptYesterday:"🕒 What did you do yesterday?",promptWeekend:"🌤️ What are you doing this weekend?",promptTown:"🏘️ Tell me about your town.",promptAnnoying:"😤 What is annoying you?",writePlaceholder:"Write 2–4 sentences here...",build:"Build my mini-lesson",restart:"Start again",loading:"LingoTotal is building your lesson…",step2:"STEP 2 · NOTICE",noticeTitle:"What do you notice?",step3:"STEP 3 · TRY AGAIN",useTitle:"Use the idea yourself.",answerPlaceholder:"Write your answer...",check:"Check my version",clue:"Give me a clue",showAnswer:"Show answer",step4:"STEP 4 · KEEP GOING",continueTitle:"The conversation continues.",followPlaceholder:"Answer in the language you are learning...",nextLesson:"Build the next mini-lesson",footer:"LingoTotal · Adaptive language learning from the learner's own language",errWrite:"Write 2–4 sentences first.",errGenerate:"The lesson could not be generated. Check that the Gemini Netlify function is deployed and that GEMINI_API_KEY is available.",errAnswer:"Write an answer first.",errFollow:"Write your follow-up answer first.",model:"Model",fallbackCorrect:"Exactly.",fallbackWrong:"Try again. Look carefully at the context.",fallbackTry:"Try once more before asking for a clue.",fallbackHint:"Look again at the model in the noticing activity.",defaultTitle:"Your mini-lesson",defaultFocus:"One useful improvement",prompts:{yesterday:"Tell me what you did yesterday.",weekend:"Tell me what you are doing this weekend.",town:"Tell me about your town or neighbourhood.",annoying:"Tell me about something that is annoying you at the moment."}},
-ca:{
-    levelPrompt:'Tria l’opció que et vagi millor avui.',
-    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
-    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
-    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
-    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',brand:"LINGOTOTAL · Aprèn de mi",tagline:"Fes servir la teva pròpia llengua per crear la lliçó.",home:"Activitats / canvia les llengües",heroTitle:"Les teves paraules es converteixen en la lliçó.",heroText:"Escriu alguna cosa real. LingoTotal observa què ja saps fer, tria una millora útil i crea una activitat breu a partir de la teva pròpia llengua.",step1:"PAS 1 · EXPLICA'M ALGUNA COSA",talkTitle:"De què t'agradaria parlar?",talkHelp:"Tria una idea o escriu sobre qualsevol tema que vulguis en la llengua que estàs aprenent.",promptYesterday:"🕒 Què vas fer ahir?",promptWeekend:"🌤️ Què faràs aquest cap de setmana?",promptTown:"🏘️ Parla'm del teu poble o ciutat.",promptAnnoying:"😤 Què et molesta ara mateix?",writePlaceholder:"Escriu aquí 2–4 frases...",build:"Crea la meva mini lliçó",restart:"Torna a començar",loading:"LingoTotal està creant la teva lliçó…",step2:"PAS 2 · OBSERVA",noticeTitle:"Què hi observes?",step3:"PAS 3 · TORNA-HO A PROVAR",useTitle:"Ara fes servir tu mateix aquesta idea.",answerPlaceholder:"Escriu la teva resposta...",check:"Comprova la meva versió",clue:"Dona'm una pista",showAnswer:"Mostra la resposta",step4:"PAS 4 · CONTINUA",continueTitle:"La conversa continua.",followPlaceholder:"Respon en la llengua que estàs aprenent...",nextLesson:"Crea la següent mini lliçó",footer:"LingoTotal · Aprenentatge adaptatiu a partir de la llengua de l'aprenent",errWrite:"Escriu primer 2–4 frases.",errGenerate:"No s'ha pogut generar la lliçó. Comprova que la funció Gemini de Netlify estigui desplegada i que GEMINI_API_KEY estigui disponible.",errAnswer:"Escriu primer una resposta.",errFollow:"Escriu primer la teva resposta de continuació.",model:"Model",fallbackCorrect:"Exacte.",fallbackWrong:"Torna-ho a provar. Mira bé el context.",fallbackTry:"Prova-ho una vegada més abans de demanar una pista.",fallbackHint:"Torna a mirar el model de l'activitat d'observació.",defaultTitle:"La teva mini lliçó",defaultFocus:"Una millora útil",prompts:{yesterday:"Explica'm què vas fer ahir.",weekend:"Explica'm què faràs aquest cap de setmana.",town:"Explica'm com és el teu poble, ciutat o barri.",annoying:"Explica'm alguna cosa que et molesta ara mateix."}},
-es:{
-    levelPrompt:'Elige la opción que mejor te vaya hoy.',
-    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
-    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
-    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
-    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',brand:"LINGOTOTAL · Aprende de mí",tagline:"Usa tu propio lenguaje para crear tu lección.",home:"Actividades / cambiar idiomas",heroTitle:"Tus palabras se convierten en la lección.",heroText:"Escribe algo real. LingoTotal observa lo que ya sabes hacer, elige una mejora útil y crea una actividad breve a partir de tu propio lenguaje.",step1:"PASO 1 · CUÉNTAME ALGO",talkTitle:"¿De qué te gustaría hablar?",talkHelp:"Elige una idea o escribe sobre cualquier tema que quieras en el idioma que estás aprendiendo.",promptYesterday:"🕒 ¿Qué hiciste ayer?",promptWeekend:"🌤️ ¿Qué vas a hacer este fin de semana?",promptTown:"🏘️ Háblame de tu pueblo o ciudad.",promptAnnoying:"😤 ¿Qué te molesta en este momento?",writePlaceholder:"Escribe aquí 2–4 frases...",build:"Crear mi mini lección",restart:"Empezar de nuevo",loading:"LingoTotal está creando tu lección…",step2:"PASO 2 · OBSERVA",noticeTitle:"¿Qué observas?",step3:"PASO 3 · INTÉNTALO DE NUEVO",useTitle:"Ahora usa tú mismo esta idea.",answerPlaceholder:"Escribe tu respuesta...",check:"Comprobar mi versión",clue:"Dame una pista",showAnswer:"Mostrar respuesta",step4:"PASO 4 · CONTINÚA",continueTitle:"La conversación continúa.",followPlaceholder:"Responde en el idioma que estás aprendiendo...",nextLesson:"Crear la siguiente mini lección",footer:"LingoTotal · Aprendizaje adaptativo a partir del lenguaje del alumno",errWrite:"Escribe primero 2–4 frases.",errGenerate:"No se ha podido generar la lección. Comprueba que la función Gemini de Netlify esté desplegada y que GEMINI_API_KEY esté disponible.",errAnswer:"Escribe primero una respuesta.",errFollow:"Escribe primero tu respuesta de continuación.",model:"Modelo",fallbackCorrect:"Exacto.",fallbackWrong:"Inténtalo de nuevo. Fíjate bien en el contexto.",fallbackTry:"Inténtalo una vez más antes de pedir una pista.",fallbackHint:"Vuelve a mirar el modelo de la actividad de observación.",defaultTitle:"Tu mini lección",defaultFocus:"Una mejora útil",prompts:{yesterday:"Cuéntame qué hiciste ayer.",weekend:"Cuéntame qué vas a hacer este fin de semana.",town:"Háblame de tu pueblo, ciudad o barrio.",annoying:"Cuéntame algo que te moleste en este momento."}},
-fr:{
-    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
-    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
-    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
-    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
-    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',brand:"LINGOTOTAL · Apprends de moi",tagline:"Utilisez votre propre langue pour créer votre leçon.",home:"Activités / changer les langues",heroTitle:"Vos mots deviennent la leçon.",heroText:"Écrivez quelque chose de réel. LingoTotal observe ce que vous savez déjà faire, choisit une amélioration utile et crée une courte activité à partir de votre propre langue.",step1:"ÉTAPE 1 · PARLEZ-MOI DE VOUS",talkTitle:"De quoi aimeriez-vous parler ?",talkHelp:"Choisissez une idée ou écrivez sur le sujet de votre choix dans la langue que vous apprenez.",promptYesterday:"🕒 Qu'avez-vous fait hier ?",promptWeekend:"🌤️ Que faites-vous ce week-end ?",promptTown:"🏘️ Parlez-moi de votre ville.",promptAnnoying:"😤 Qu'est-ce qui vous agace en ce moment ?",writePlaceholder:"Écrivez 2 à 4 phrases ici...",build:"Créer ma mini-leçon",restart:"Recommencer",loading:"LingoTotal crée votre leçon…",step2:"ÉTAPE 2 · OBSERVEZ",noticeTitle:"Que remarquez-vous ?",step3:"ÉTAPE 3 · RÉESSAYEZ",useTitle:"Utilisez maintenant cette idée vous-même.",answerPlaceholder:"Écrivez votre réponse...",check:"Vérifier ma version",clue:"Donnez-moi un indice",showAnswer:"Afficher la réponse",step4:"ÉTAPE 4 · CONTINUEZ",continueTitle:"La conversation continue.",followPlaceholder:"Répondez dans la langue que vous apprenez...",nextLesson:"Créer la mini-leçon suivante",footer:"LingoTotal · Apprentissage adaptatif à partir de la langue de l'apprenant",errWrite:"Écrivez d'abord 2 à 4 phrases.",errGenerate:"La leçon n'a pas pu être générée. Vérifiez que la fonction Gemini de Netlify est déployée et que GEMINI_API_KEY est disponible.",errAnswer:"Écrivez d'abord une réponse.",errFollow:"Écrivez d'abord votre réponse de suivi.",model:"Modèle",fallbackCorrect:"Exactement.",fallbackWrong:"Réessayez. Observez bien le contexte.",fallbackTry:"Essayez encore une fois avant de demander un indice.",fallbackHint:"Regardez à nouveau le modèle de l'activité d'observation.",defaultTitle:"Votre mini-leçon",defaultFocus:"Une amélioration utile",prompts:{yesterday:"Parlez-moi de ce que vous avez fait hier.",weekend:"Parlez-moi de ce que vous allez faire ce week-end.",town:"Parlez-moi de votre ville ou de votre quartier.",annoying:"Parlez-moi de quelque chose qui vous agace en ce moment."}},
-de:{
-    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
-    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
-    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
-    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
-    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',brand:"LINGOTOTAL · Lerne von mir",tagline:"Nutze deine eigene Sprache, um deine Lektion zu erstellen.",home:"Aktivitäten / Sprachen ändern",heroTitle:"Deine Worte werden zur Lektion.",heroText:"Schreibe etwas Echtes. LingoTotal erkennt, was du bereits kannst, wählt eine nützliche Verbesserung und erstellt daraus eine kurze Aktivität.",step1:"SCHRITT 1 · ERZÄHL MIR ETWAS",talkTitle:"Worüber möchtest du sprechen?",talkHelp:"Wähle eine Idee oder schreibe über ein beliebiges Thema in der Sprache, die du lernst.",promptYesterday:"🕒 Was hast du gestern gemacht?",promptWeekend:"🌤️ Was machst du dieses Wochenende?",promptTown:"🏘️ Erzähl mir von deinem Wohnort.",promptAnnoying:"😤 Was nervt dich gerade?",writePlaceholder:"Schreibe hier 2–4 Sätze...",build:"Meine Mini-Lektion erstellen",restart:"Neu anfangen",loading:"LingoTotal erstellt deine Lektion…",step2:"SCHRITT 2 · BEOBACHTE",noticeTitle:"Was fällt dir auf?",step3:"SCHRITT 3 · VERSUCH ES NOCH EINMAL",useTitle:"Wende die Idee jetzt selbst an.",answerPlaceholder:"Schreibe deine Antwort...",check:"Meine Version prüfen",clue:"Gib mir einen Hinweis",showAnswer:"Antwort zeigen",step4:"SCHRITT 4 · WEITERMACHEN",continueTitle:"Das Gespräch geht weiter.",followPlaceholder:"Antworte in der Sprache, die du lernst...",nextLesson:"Nächste Mini-Lektion erstellen",footer:"LingoTotal · Adaptives Lernen aus der Sprache des Lernenden",errWrite:"Schreibe zuerst 2–4 Sätze.",errGenerate:"Die Lektion konnte nicht erstellt werden. Prüfe, ob die Gemini-Netlify-Funktion bereitgestellt ist und GEMINI_API_KEY verfügbar ist.",errAnswer:"Schreibe zuerst eine Antwort.",errFollow:"Schreibe zuerst deine Folgeantwort.",model:"Modell",fallbackCorrect:"Genau.",fallbackWrong:"Versuch es noch einmal. Achte genau auf den Kontext.",fallbackTry:"Versuch es noch einmal, bevor du um einen Hinweis bittest.",fallbackHint:"Sieh dir das Modell in der Beobachtungsaufgabe noch einmal an.",defaultTitle:"Deine Mini-Lektion",defaultFocus:"Eine nützliche Verbesserung",prompts:{yesterday:"Erzähl mir, was du gestern gemacht hast.",weekend:"Erzähl mir, was du dieses Wochenende machst.",town:"Erzähl mir von deinem Wohnort oder Viertel.",annoying:"Erzähl mir von etwas, das dich gerade nervt."}},
-it:{
-    levelPrompt:'Scegli l’opzione che ti sembra più adatta oggi.',
-    beginnerNote:'Costruisci espressioni naturali e utili per semplici situazioni quotidiane.',
-    intermediateNote:'Usa un linguaggio quotidiano più flessibile e naturale con maggiore sicurezza.',
-    advancedNote:'Lavora con un linguaggio più ricco, sfumato e idiomatico.',
-    topicGuidance:'Scrivi qualcosa che vorresti davvero saper gestire in una conversazione quotidiana.',brand:"LINGOTOTAL · Impara da me",tagline:"Usa la tua lingua per creare la tua lezione.",home:"Attività / cambia lingue",heroTitle:"Le tue parole diventano la lezione.",heroText:"Scrivi qualcosa di reale. LingoTotal osserva ciò che sai già fare, sceglie un miglioramento utile e crea una breve attività a partire dalla tua lingua.",step1:"PASSO 1 · RACCONTAMI QUALCOSA",talkTitle:"Di cosa vorresti parlare?",talkHelp:"Scegli un'idea o scrivi di qualsiasi argomento nella lingua che stai imparando.",promptYesterday:"🕒 Cosa hai fatto ieri?",promptWeekend:"🌤️ Cosa fai questo fine settimana?",promptTown:"🏘️ Parlami della tua città.",promptAnnoying:"😤 Cosa ti dà fastidio in questo momento?",writePlaceholder:"Scrivi qui 2–4 frasi...",build:"Crea la mia mini-lezione",restart:"Ricomincia",loading:"LingoTotal sta creando la tua lezione…",step2:"PASSO 2 · OSSERVA",noticeTitle:"Cosa noti?",step3:"PASSO 3 · RIPROVA",useTitle:"Ora usa tu stesso questa idea.",answerPlaceholder:"Scrivi la tua risposta...",check:"Controlla la mia versione",clue:"Dammi un indizio",showAnswer:"Mostra la risposta",step4:"PASSO 4 · CONTINUA",continueTitle:"La conversazione continua.",followPlaceholder:"Rispondi nella lingua che stai imparando...",nextLesson:"Crea la prossima mini-lezione",footer:"LingoTotal · Apprendimento adattivo a partire dalla lingua dello studente",errWrite:"Scrivi prima 2–4 frasi.",errGenerate:"Non è stato possibile generare la lezione. Controlla che la funzione Gemini di Netlify sia distribuita e che GEMINI_API_KEY sia disponibile.",errAnswer:"Scrivi prima una risposta.",errFollow:"Scrivi prima la tua risposta successiva.",model:"Modello",fallbackCorrect:"Esatto.",fallbackWrong:"Riprova. Osserva bene il contesto.",fallbackTry:"Prova ancora una volta prima di chiedere un indizio.",fallbackHint:"Guarda di nuovo il modello nell'attività di osservazione.",defaultTitle:"La tua mini-lezione",defaultFocus:"Un miglioramento utile",prompts:{yesterday:"Raccontami cosa hai fatto ieri.",weekend:"Raccontami cosa farai questo fine settimana.",town:"Parlami della tua città o del tuo quartiere.",annoying:"Raccontami qualcosa che ti dà fastidio in questo momento."}},
-pt:{
-    levelPrompt:'Escolha a opção que lhe parecer mais adequada hoje.',
-    beginnerNote:'Construa expressões naturais e úteis para situações simples do dia a dia.',
-    intermediateNote:'Use uma linguagem quotidiana mais flexível e natural com maior confiança.',
-    advancedNote:'Trabalhe com uma linguagem mais rica, matizada e idiomática.',
-    topicGuidance:'Escreva algo que gostaria realmente de saber gerir numa conversa do dia a dia.',brand:"LINGOTOTAL · Aprende comigo",tagline:"Usa a tua própria língua para criar a tua lição.",home:"Atividades / mudar idiomas",heroTitle:"As tuas palavras tornam-se a lição.",heroText:"Escreve algo real. O LingoTotal observa o que já sabes fazer, escolhe uma melhoria útil e cria uma atividade curta a partir da tua própria língua.",step1:"PASSO 1 · CONTA-ME ALGO",talkTitle:"Sobre o que gostarias de falar?",talkHelp:"Escolhe uma ideia ou escreve sobre qualquer assunto na língua que estás a aprender.",promptYesterday:"🕒 O que fizeste ontem?",promptWeekend:"🌤️ O que vais fazer este fim de semana?",promptTown:"🏘️ Fala-me da tua cidade.",promptAnnoying:"😤 O que te incomoda neste momento?",writePlaceholder:"Escreve aqui 2–4 frases...",build:"Criar a minha mini-lição",restart:"Começar de novo",loading:"O LingoTotal está a criar a tua lição…",step2:"PASSO 2 · OBSERVA",noticeTitle:"O que notas?",step3:"PASSO 3 · TENTA OUTRA VEZ",useTitle:"Agora usa tu próprio esta ideia.",answerPlaceholder:"Escreve a tua resposta...",check:"Verificar a minha versão",clue:"Dá-me uma pista",showAnswer:"Mostrar resposta",step4:"PASSO 4 · CONTINUA",continueTitle:"A conversa continua.",followPlaceholder:"Responde na língua que estás a aprender...",nextLesson:"Criar a próxima mini-lição",footer:"LingoTotal · Aprendizagem adaptativa a partir da língua do aluno",errWrite:"Escreve primeiro 2–4 frases.",errGenerate:"Não foi possível gerar a lição. Verifica se a função Gemini do Netlify está implementada e se GEMINI_API_KEY está disponível.",errAnswer:"Escreve primeiro uma resposta.",errFollow:"Escreve primeiro a tua resposta de continuação.",model:"Modelo",fallbackCorrect:"Exatamente.",fallbackWrong:"Tenta novamente. Observa bem o contexto.",fallbackTry:"Tenta mais uma vez antes de pedir uma pista.",fallbackHint:"Volta a olhar para o modelo da atividade de observação.",defaultTitle:"A tua mini-lição",defaultFocus:"Uma melhoria útil",prompts:{yesterday:"Conta-me o que fizeste ontem.",weekend:"Conta-me o que vais fazer este fim de semana.",town:"Fala-me da tua cidade ou bairro.",annoying:"Conta-me algo que te incomoda neste momento."}},
-eu:{
-    levelPrompt:'Aukeratu gaur egokien iruditzen zaizun aukera.',
-    beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde natural eta erabilgarriak.',
-    intermediateNote:'Erabili eguneroko hizkera malguago eta naturalagoa, konfiantza handiagoz.',
-    advancedNote:'Landu hizkera aberatsagoa, ñabarduratsuagoa eta idiomatikoagoa.',
-    topicGuidance:'Idatzi eguneroko elkarrizketa batean benetan landu nahiko zenukeen egoera bat.',brand:"LINGOTOTAL · Ikasi nigandik",tagline:"Erabili zure hizkuntza zeure ikasgaia sortzeko.",home:"Jarduerak / aldatu hizkuntzak",heroTitle:"Zure hitzak ikasgai bihurtzen dira.",heroText:"Idatzi benetako zerbait. LingoTotalek dagoeneko zer dakizun aztertzen du, hobekuntza erabilgarri bat aukeratzen du eta zure hizkuntzatik jarduera labur bat sortzen du.",step1:"1. URRATSA · KONTATU ZERBAIT",talkTitle:"Zeri buruz hitz egin nahi duzu?",talkHelp:"Aukeratu ideia bat edo idatzi nahi duzun gaiari buruz ikasten ari zaren hizkuntzan.",promptYesterday:"🕒 Zer egin zenuen atzo?",promptWeekend:"🌤️ Zer egingo duzu asteburu honetan?",promptTown:"🏘️ Kontatu zure herriari edo hiriari buruz.",promptAnnoying:"😤 Zerk gogaitzen zaitu orain?",writePlaceholder:"Idatzi hemen 2–4 esaldi...",build:"Sortu nire mini-ikasgaia",restart:"Hasi berriro",loading:"LingoTotal zure ikasgaia sortzen ari da…",step2:"2. URRATSA · BEHATU",noticeTitle:"Zer nabaritzen duzu?",step3:"3. URRATSA · SAIATU BERRIRO",useTitle:"Orain erabili ideia hori zeuk.",answerPlaceholder:"Idatzi zure erantzuna...",check:"Egiaztatu nire bertsioa",clue:"Eman pista bat",showAnswer:"Erakutsi erantzuna",step4:"4. URRATSA · JARRAITU",continueTitle:"Elkarrizketak jarraitzen du.",followPlaceholder:"Erantzun ikasten ari zaren hizkuntzan...",nextLesson:"Sortu hurrengo mini-ikasgaia",footer:"LingoTotal · Ikaslearen hizkuntzatik abiatutako ikaskuntza moldagarria",errWrite:"Idatzi lehenik 2–4 esaldi.",errGenerate:"Ezin izan da ikasgaia sortu. Egiaztatu Netlify-ko Gemini funtzioa argitaratuta dagoela eta GEMINI_API_KEY erabilgarri dagoela.",errAnswer:"Idatzi lehenik erantzun bat.",errFollow:"Idatzi lehenik jarraipen-erantzuna.",model:"Eredua",fallbackCorrect:"Hori da.",fallbackWrong:"Saiatu berriro. Begiratu ondo testuinguruari.",fallbackTry:"Saiatu beste behin pista eskatu aurretik.",fallbackHint:"Begiratu berriro behaketa-jarduerako eredua.",defaultTitle:"Zure mini-ikasgaia",defaultFocus:"Hobekuntza erabilgarri bat",prompts:{yesterday:"Kontatu zer egin zenuen atzo.",weekend:"Kontatu zer egingo duzun asteburu honetan.",town:"Kontatu zure herriari, hiriari edo auzoari buruz.",annoying:"Kontatu une honetan gogaitzen zaituen zerbait."}},
-ja:{
-    levelPrompt:'今日の自分に合うレベルを選んでください。',
-    beginnerNote:'簡単な日常場面で役立つ自然な表現を身につけます。',
-    intermediateNote:'より柔軟で自然な日常表現を、自信を持って使えるようにします。',
-    advancedNote:'より豊かでニュアンスのある自然な表現に取り組みます。',
-    topicGuidance:'日常会話で実際に対応できるようになりたいことを書いてください。',brand:"LINGOTOTAL · 私から学ぶ",tagline:"自分の言葉から自分だけのレッスンを作ります。",home:"アクティビティ / 言語を変更",heroTitle:"あなたの言葉がレッスンになります。",heroText:"実際のことを書いてください。LingoTotalは、すでにできることを見つけ、役立つ改善点を1つ選び、あなたの表現から短いアクティビティを作ります。",step1:"ステップ1 · 何か話してください",talkTitle:"何について話したいですか？",talkHelp:"アイデアを選ぶか、学習中の言語で好きなことについて書いてください。",promptYesterday:"🕒 昨日は何をしましたか？",promptWeekend:"🌤️ 今週末は何をしますか？",promptTown:"🏘️ あなたの町について教えてください。",promptAnnoying:"😤 今、何が気になりますか？",writePlaceholder:"ここに2〜4文を書いてください...",build:"ミニレッスンを作る",restart:"最初からやり直す",loading:"LingoTotalがレッスンを作成しています…",step2:"ステップ2 · 気づく",noticeTitle:"何に気づきますか？",step3:"ステップ3 · もう一度挑戦",useTitle:"今度は自分で使ってみましょう。",answerPlaceholder:"答えを書いてください...",check:"自分の文を確認する",clue:"ヒントを見る",showAnswer:"答えを表示",step4:"ステップ4 · 続ける",continueTitle:"会話を続けましょう。",followPlaceholder:"学習中の言語で答えてください...",nextLesson:"次のミニレッスンを作る",footer:"LingoTotal · 学習者自身の言葉から作る適応型言語学習",errWrite:"まず2〜4文を書いてください。",errGenerate:"レッスンを生成できませんでした。NetlifyのGemini関数がデプロイされ、GEMINI_API_KEYが利用可能か確認してください。",errAnswer:"まず答えを書いてください。",errFollow:"まず続きの答えを書いてください。",model:"例",fallbackCorrect:"その通りです。",fallbackWrong:"もう一度試してください。文脈をよく見てください。",fallbackTry:"ヒントを見る前に、もう一度試してみてください。",fallbackHint:"気づきのアクティビティの例をもう一度見てください。",defaultTitle:"あなたのミニレッスン",defaultFocus:"役立つ改善点",prompts:{yesterday:"昨日したことを教えてください。",weekend:"今週末にすることを教えてください。",town:"あなたの町や地域について教えてください。",annoying:"今、気になっていることを教えてください。"}},
-ar:{
-    levelPrompt:'اختر المستوى الذي يناسبك اليوم.',
-    beginnerNote:'تعلّم تعبيرات طبيعية ومفيدة للمواقف اليومية البسيطة.',
-    intermediateNote:'استخدم لغة يومية أكثر مرونة وطبيعية بثقة أكبر.',
-    advancedNote:'تدرّب على لغة أكثر ثراءً ودقةً وطبيعية.',
-    topicGuidance:'اكتب موقفًا تود فعلًا أن تتمكن من التعامل معه في محادثة يومية.',brand:"LINGOTOTAL · تعلّم مني",tagline:"استخدم لغتك أنت لإنشاء درسك.",home:"الأنشطة / تغيير اللغات",heroTitle:"كلماتك تصبح هي الدرس.",heroText:"اكتب شيئًا حقيقيًا. يلاحظ LingoTotal ما تستطيع فعله بالفعل، ويختار تحسينًا واحدًا مفيدًا، ثم ينشئ نشاطًا قصيرًا انطلاقًا من لغتك.",step1:"الخطوة 1 · أخبرني بشيء",talkTitle:"عمّ تود أن تتحدث؟",talkHelp:"اختر فكرة أو اكتب عن أي موضوع تريده باللغة التي تتعلمها.",promptYesterday:"🕒 ماذا فعلت أمس؟",promptWeekend:"🌤️ ماذا ستفعل في عطلة نهاية الأسبوع؟",promptTown:"🏘️ أخبرني عن مدينتك.",promptAnnoying:"😤 ما الذي يزعجك الآن؟",writePlaceholder:"اكتب هنا جملتين إلى أربع جمل...",build:"أنشئ درسي القصير",restart:"ابدأ من جديد",loading:"يقوم LingoTotal بإنشاء درسك…",step2:"الخطوة 2 · لاحظ",noticeTitle:"ماذا تلاحظ؟",step3:"الخطوة 3 · حاول مرة أخرى",useTitle:"استخدم الفكرة بنفسك الآن.",answerPlaceholder:"اكتب إجابتك...",check:"تحقق من إجابتي",clue:"أعطني تلميحًا",showAnswer:"أظهر الإجابة",step4:"الخطوة 4 · واصل",continueTitle:"تستمر المحادثة.",followPlaceholder:"أجب باللغة التي تتعلمها...",nextLesson:"أنشئ الدرس القصير التالي",footer:"LingoTotal · تعلم تكيفي انطلاقًا من لغة المتعلم نفسه",errWrite:"اكتب أولًا جملتين إلى أربع جمل.",errGenerate:"تعذر إنشاء الدرس. تحقق من نشر وظيفة Gemini في Netlify ومن توفر GEMINI_API_KEY.",errAnswer:"اكتب إجابة أولًا.",errFollow:"اكتب إجابتك التالية أولًا.",model:"نموذج",fallbackCorrect:"بالضبط.",fallbackWrong:"حاول مرة أخرى. انتبه جيدًا إلى السياق.",fallbackTry:"حاول مرة أخرى قبل طلب تلميح.",fallbackHint:"انظر مرة أخرى إلى النموذج في نشاط الملاحظة.",defaultTitle:"درسك القصير",defaultFocus:"تحسين مفيد",prompts:{yesterday:"أخبرني بما فعلته أمس.",weekend:"أخبرني بما ستفعله في عطلة نهاية الأسبوع.",town:"أخبرني عن مدينتك أو حيّك.",annoying:"أخبرني بشيء يزعجك في الوقت الحالي."}}
+en:{brand:"LINGOTOTAL · Learn from Me",tagline:"Use your own language to create your lesson.",home:"Activities / change languages",heroTitle:"Your words become the lesson.",heroText:"Write something real. LingoTotal reads what you can already do, chooses one useful improvement, and creates a short activity from your own language.",step1:"STEP 1 · TELL ME SOMETHING",talkTitle:"What would you like to talk about?",talkHelp:"Choose an idea, or write about anything you like in the language you are learning.",promptYesterday:"🕒 What did you do yesterday?",promptWeekend:"🌤️ What are you doing this weekend?",promptTown:"🏘️ Tell me about your town.",promptAnnoying:"😤 What is annoying you?",writePlaceholder:"Write 2–4 sentences here...",build:"Build my mini-lesson",restart:"Start again",loading:"LingoTotal is building your lesson…",step2:"STEP 2 · NOTICE",noticeTitle:"What do you notice?",step3:"STEP 3 · TRY AGAIN",useTitle:"Use the idea yourself.",answerPlaceholder:"Write your answer...",check:"Check my version",clue:"Give me a clue",showAnswer:"Show answer",step4:"STEP 4 · KEEP GOING",continueTitle:"The conversation continues.",followPlaceholder:"Answer in the language you are learning...",nextLesson:"Build the next mini-lesson",footer:"LingoTotal · Adaptive language learning from the learner's own language",errWrite:"Write 2–4 sentences first.",errGenerate:"The lesson could not be generated. Check that the Gemini Netlify function is deployed and that GEMINI_API_KEY is available.",errAnswer:"Write an answer first.",errFollow:"Write your follow-up answer first.",model:"Model",fallbackCorrect:"Exactly.",fallbackWrong:"Try again. Look carefully at the context.",fallbackTry:"Try once more before asking for a clue.",fallbackHint:"Look again at the model in the noticing activity.",defaultTitle:"Your mini-lesson",defaultFocus:"One useful improvement",prompts:{yesterday:"Tell me what you did yesterday.",weekend:"Tell me what you are doing this weekend.",town:"Tell me about your town or neighbourhood.",annoying:"Tell me about something that is annoying you at the moment."}},
+ca:{brand:"LINGOTOTAL · Aprèn de mi",tagline:"Fes servir la teva pròpia llengua per crear la lliçó.",home:"Activitats / canvia les llengües",heroTitle:"Les teves paraules es converteixen en la lliçó.",heroText:"Escriu alguna cosa real. LingoTotal observa què ja saps fer, tria una millora útil i crea una activitat breu a partir de la teva pròpia llengua.",step1:"PAS 1 · EXPLICA'M ALGUNA COSA",talkTitle:"De què t'agradaria parlar?",talkHelp:"Tria una idea o escriu sobre qualsevol tema que vulguis en la llengua que estàs aprenent.",promptYesterday:"🕒 Què vas fer ahir?",promptWeekend:"🌤️ Què faràs aquest cap de setmana?",promptTown:"🏘️ Parla'm del teu poble o ciutat.",promptAnnoying:"😤 Què et molesta ara mateix?",writePlaceholder:"Escriu aquí 2–4 frases...",build:"Crea la meva mini lliçó",restart:"Torna a començar",loading:"LingoTotal està creant la teva lliçó…",step2:"PAS 2 · OBSERVA",noticeTitle:"Què hi observes?",step3:"PAS 3 · TORNA-HO A PROVAR",useTitle:"Ara fes servir tu mateix aquesta idea.",answerPlaceholder:"Escriu la teva resposta...",check:"Comprova la meva versió",clue:"Dona'm una pista",showAnswer:"Mostra la resposta",step4:"PAS 4 · CONTINUA",continueTitle:"La conversa continua.",followPlaceholder:"Respon en la llengua que estàs aprenent...",nextLesson:"Crea la següent mini lliçó",footer:"LingoTotal · Aprenentatge adaptatiu a partir de la llengua de l'aprenent",errWrite:"Escriu primer 2–4 frases.",errGenerate:"No s'ha pogut generar la lliçó. Comprova que la funció Gemini de Netlify estigui desplegada i que GEMINI_API_KEY estigui disponible.",errAnswer:"Escriu primer una resposta.",errFollow:"Escriu primer la teva resposta de continuació.",model:"Model",fallbackCorrect:"Exacte.",fallbackWrong:"Torna-ho a provar. Mira bé el context.",fallbackTry:"Prova-ho una vegada més abans de demanar una pista.",fallbackHint:"Torna a mirar el model de l'activitat d'observació.",defaultTitle:"La teva mini lliçó",defaultFocus:"Una millora útil",prompts:{yesterday:"Explica'm què vas fer ahir.",weekend:"Explica'm què faràs aquest cap de setmana.",town:"Explica'm com és el teu poble, ciutat o barri.",annoying:"Explica'm alguna cosa que et molesta ara mateix."}},
+es:{brand:"LINGOTOTAL · Aprende de mí",tagline:"Usa tu propio lenguaje para crear tu lección.",home:"Actividades / cambiar idiomas",heroTitle:"Tus palabras se convierten en la lección.",heroText:"Escribe algo real. LingoTotal observa lo que ya sabes hacer, elige una mejora útil y crea una actividad breve a partir de tu propio lenguaje.",step1:"PASO 1 · CUÉNTAME ALGO",talkTitle:"¿De qué te gustaría hablar?",talkHelp:"Elige una idea o escribe sobre cualquier tema que quieras en el idioma que estás aprendiendo.",promptYesterday:"🕒 ¿Qué hiciste ayer?",promptWeekend:"🌤️ ¿Qué vas a hacer este fin de semana?",promptTown:"🏘️ Háblame de tu pueblo o ciudad.",promptAnnoying:"😤 ¿Qué te molesta en este momento?",writePlaceholder:"Escribe aquí 2–4 frases...",build:"Crear mi mini lección",restart:"Empezar de nuevo",loading:"LingoTotal está creando tu lección…",step2:"PASO 2 · OBSERVA",noticeTitle:"¿Qué observas?",step3:"PASO 3 · INTÉNTALO DE NUEVO",useTitle:"Ahora usa tú mismo esta idea.",answerPlaceholder:"Escribe tu respuesta...",check:"Comprobar mi versión",clue:"Dame una pista",showAnswer:"Mostrar respuesta",step4:"PASO 4 · CONTINÚA",continueTitle:"La conversación continúa.",followPlaceholder:"Responde en el idioma que estás aprendiendo...",nextLesson:"Crear la siguiente mini lección",footer:"LingoTotal · Aprendizaje adaptativo a partir del lenguaje del alumno",errWrite:"Escribe primero 2–4 frases.",errGenerate:"No se ha podido generar la lección. Comprueba que la función Gemini de Netlify esté desplegada y que GEMINI_API_KEY esté disponible.",errAnswer:"Escribe primero una respuesta.",errFollow:"Escribe primero tu respuesta de continuación.",model:"Modelo",fallbackCorrect:"Exacto.",fallbackWrong:"Inténtalo de nuevo. Fíjate bien en el contexto.",fallbackTry:"Inténtalo una vez más antes de pedir una pista.",fallbackHint:"Vuelve a mirar el modelo de la actividad de observación.",defaultTitle:"Tu mini lección",defaultFocus:"Una mejora útil",prompts:{yesterday:"Cuéntame qué hiciste ayer.",weekend:"Cuéntame qué vas a hacer este fin de semana.",town:"Háblame de tu pueblo, ciudad o barrio.",annoying:"Cuéntame algo que te moleste en este momento."}},
+fr:{brand:"LINGOTOTAL · Apprends de moi",tagline:"Utilisez votre propre langue pour créer votre leçon.",home:"Activités / changer les langues",heroTitle:"Vos mots deviennent la leçon.",heroText:"Écrivez quelque chose de réel. LingoTotal observe ce que vous savez déjà faire, choisit une amélioration utile et crée une courte activité à partir de votre propre langue.",step1:"ÉTAPE 1 · PARLEZ-MOI DE VOUS",talkTitle:"De quoi aimeriez-vous parler ?",talkHelp:"Choisissez une idée ou écrivez sur le sujet de votre choix dans la langue que vous apprenez.",promptYesterday:"🕒 Qu'avez-vous fait hier ?",promptWeekend:"🌤️ Que faites-vous ce week-end ?",promptTown:"🏘️ Parlez-moi de votre ville.",promptAnnoying:"😤 Qu'est-ce qui vous agace en ce moment ?",writePlaceholder:"Écrivez 2 à 4 phrases ici...",build:"Créer ma mini-leçon",restart:"Recommencer",loading:"LingoTotal crée votre leçon…",step2:"ÉTAPE 2 · OBSERVEZ",noticeTitle:"Que remarquez-vous ?",step3:"ÉTAPE 3 · RÉESSAYEZ",useTitle:"Utilisez maintenant cette idée vous-même.",answerPlaceholder:"Écrivez votre réponse...",check:"Vérifier ma version",clue:"Donnez-moi un indice",showAnswer:"Afficher la réponse",step4:"ÉTAPE 4 · CONTINUEZ",continueTitle:"La conversation continue.",followPlaceholder:"Répondez dans la langue que vous apprenez...",nextLesson:"Créer la mini-leçon suivante",footer:"LingoTotal · Apprentissage adaptatif à partir de la langue de l'apprenant",errWrite:"Écrivez d'abord 2 à 4 phrases.",errGenerate:"La leçon n'a pas pu être générée. Vérifiez que la fonction Gemini de Netlify est déployée et que GEMINI_API_KEY est disponible.",errAnswer:"Écrivez d'abord une réponse.",errFollow:"Écrivez d'abord votre réponse de suivi.",model:"Modèle",fallbackCorrect:"Exactement.",fallbackWrong:"Réessayez. Observez bien le contexte.",fallbackTry:"Essayez encore une fois avant de demander un indice.",fallbackHint:"Regardez à nouveau le modèle de l'activité d'observation.",defaultTitle:"Votre mini-leçon",defaultFocus:"Une amélioration utile",prompts:{yesterday:"Parlez-moi de ce que vous avez fait hier.",weekend:"Parlez-moi de ce que vous allez faire ce week-end.",town:"Parlez-moi de votre ville ou de votre quartier.",annoying:"Parlez-moi de quelque chose qui vous agace en ce moment."}},
+de:{brand:"LINGOTOTAL · Lerne von mir",tagline:"Nutze deine eigene Sprache, um deine Lektion zu erstellen.",home:"Aktivitäten / Sprachen ändern",heroTitle:"Deine Worte werden zur Lektion.",heroText:"Schreibe etwas Echtes. LingoTotal erkennt, was du bereits kannst, wählt eine nützliche Verbesserung und erstellt daraus eine kurze Aktivität.",step1:"SCHRITT 1 · ERZÄHL MIR ETWAS",talkTitle:"Worüber möchtest du sprechen?",talkHelp:"Wähle eine Idee oder schreibe über ein beliebiges Thema in der Sprache, die du lernst.",promptYesterday:"🕒 Was hast du gestern gemacht?",promptWeekend:"🌤️ Was machst du dieses Wochenende?",promptTown:"🏘️ Erzähl mir von deinem Wohnort.",promptAnnoying:"😤 Was nervt dich gerade?",writePlaceholder:"Schreibe hier 2–4 Sätze...",build:"Meine Mini-Lektion erstellen",restart:"Neu anfangen",loading:"LingoTotal erstellt deine Lektion…",step2:"SCHRITT 2 · BEOBACHTE",noticeTitle:"Was fällt dir auf?",step3:"SCHRITT 3 · VERSUCH ES NOCH EINMAL",useTitle:"Wende die Idee jetzt selbst an.",answerPlaceholder:"Schreibe deine Antwort...",check:"Meine Version prüfen",clue:"Gib mir einen Hinweis",showAnswer:"Antwort zeigen",step4:"SCHRITT 4 · WEITERMACHEN",continueTitle:"Das Gespräch geht weiter.",followPlaceholder:"Antworte in der Sprache, die du lernst...",nextLesson:"Nächste Mini-Lektion erstellen",footer:"LingoTotal · Adaptives Lernen aus der Sprache des Lernenden",errWrite:"Schreibe zuerst 2–4 Sätze.",errGenerate:"Die Lektion konnte nicht erstellt werden. Prüfe, ob die Gemini-Netlify-Funktion bereitgestellt ist und GEMINI_API_KEY verfügbar ist.",errAnswer:"Schreibe zuerst eine Antwort.",errFollow:"Schreibe zuerst deine Folgeantwort.",model:"Modell",fallbackCorrect:"Genau.",fallbackWrong:"Versuch es noch einmal. Achte genau auf den Kontext.",fallbackTry:"Versuch es noch einmal, bevor du um einen Hinweis bittest.",fallbackHint:"Sieh dir das Modell in der Beobachtungsaufgabe noch einmal an.",defaultTitle:"Deine Mini-Lektion",defaultFocus:"Eine nützliche Verbesserung",prompts:{yesterday:"Erzähl mir, was du gestern gemacht hast.",weekend:"Erzähl mir, was du dieses Wochenende machst.",town:"Erzähl mir von deinem Wohnort oder Viertel.",annoying:"Erzähl mir von etwas, das dich gerade nervt."}},
+it:{brand:"LINGOTOTAL · Impara da me",tagline:"Usa la tua lingua per creare la tua lezione.",home:"Attività / cambia lingue",heroTitle:"Le tue parole diventano la lezione.",heroText:"Scrivi qualcosa di reale. LingoTotal osserva ciò che sai già fare, sceglie un miglioramento utile e crea una breve attività a partire dalla tua lingua.",step1:"PASSO 1 · RACCONTAMI QUALCOSA",talkTitle:"Di cosa vorresti parlare?",talkHelp:"Scegli un'idea o scrivi di qualsiasi argomento nella lingua che stai imparando.",promptYesterday:"🕒 Cosa hai fatto ieri?",promptWeekend:"🌤️ Cosa fai questo fine settimana?",promptTown:"🏘️ Parlami della tua città.",promptAnnoying:"😤 Cosa ti dà fastidio in questo momento?",writePlaceholder:"Scrivi qui 2–4 frasi...",build:"Crea la mia mini-lezione",restart:"Ricomincia",loading:"LingoTotal sta creando la tua lezione…",step2:"PASSO 2 · OSSERVA",noticeTitle:"Cosa noti?",step3:"PASSO 3 · RIPROVA",useTitle:"Ora usa tu stesso questa idea.",answerPlaceholder:"Scrivi la tua risposta...",check:"Controlla la mia versione",clue:"Dammi un indizio",showAnswer:"Mostra la risposta",step4:"PASSO 4 · CONTINUA",continueTitle:"La conversazione continua.",followPlaceholder:"Rispondi nella lingua che stai imparando...",nextLesson:"Crea la prossima mini-lezione",footer:"LingoTotal · Apprendimento adattivo a partire dalla lingua dello studente",errWrite:"Scrivi prima 2–4 frasi.",errGenerate:"Non è stato possibile generare la lezione. Controlla che la funzione Gemini di Netlify sia distribuita e che GEMINI_API_KEY sia disponibile.",errAnswer:"Scrivi prima una risposta.",errFollow:"Scrivi prima la tua risposta successiva.",model:"Modello",fallbackCorrect:"Esatto.",fallbackWrong:"Riprova. Osserva bene il contesto.",fallbackTry:"Prova ancora una volta prima di chiedere un indizio.",fallbackHint:"Guarda di nuovo il modello nell'attività di osservazione.",defaultTitle:"La tua mini-lezione",defaultFocus:"Un miglioramento utile",prompts:{yesterday:"Raccontami cosa hai fatto ieri.",weekend:"Raccontami cosa farai questo fine settimana.",town:"Parlami della tua città o del tuo quartiere.",annoying:"Raccontami qualcosa che ti dà fastidio in questo momento."}},
+pt:{brand:"LINGOTOTAL · Aprende comigo",tagline:"Usa a tua própria língua para criar a tua lição.",home:"Atividades / mudar idiomas",heroTitle:"As tuas palavras tornam-se a lição.",heroText:"Escreve algo real. O LingoTotal observa o que já sabes fazer, escolhe uma melhoria útil e cria uma atividade curta a partir da tua própria língua.",step1:"PASSO 1 · CONTA-ME ALGO",talkTitle:"Sobre o que gostarias de falar?",talkHelp:"Escolhe uma ideia ou escreve sobre qualquer assunto na língua que estás a aprender.",promptYesterday:"🕒 O que fizeste ontem?",promptWeekend:"🌤️ O que vais fazer este fim de semana?",promptTown:"🏘️ Fala-me da tua cidade.",promptAnnoying:"😤 O que te incomoda neste momento?",writePlaceholder:"Escreve aqui 2–4 frases...",build:"Criar a minha mini-lição",restart:"Começar de novo",loading:"O LingoTotal está a criar a tua lição…",step2:"PASSO 2 · OBSERVA",noticeTitle:"O que notas?",step3:"PASSO 3 · TENTA OUTRA VEZ",useTitle:"Agora usa tu próprio esta ideia.",answerPlaceholder:"Escreve a tua resposta...",check:"Verificar a minha versão",clue:"Dá-me uma pista",showAnswer:"Mostrar resposta",step4:"PASSO 4 · CONTINUA",continueTitle:"A conversa continua.",followPlaceholder:"Responde na língua que estás a aprender...",nextLesson:"Criar a próxima mini-lição",footer:"LingoTotal · Aprendizagem adaptativa a partir da língua do aluno",errWrite:"Escreve primeiro 2–4 frases.",errGenerate:"Não foi possível gerar a lição. Verifica se a função Gemini do Netlify está implementada e se GEMINI_API_KEY está disponível.",errAnswer:"Escreve primeiro uma resposta.",errFollow:"Escreve primeiro a tua resposta de continuação.",model:"Modelo",fallbackCorrect:"Exatamente.",fallbackWrong:"Tenta novamente. Observa bem o contexto.",fallbackTry:"Tenta mais uma vez antes de pedir uma pista.",fallbackHint:"Volta a olhar para o modelo da atividade de observação.",defaultTitle:"A tua mini-lição",defaultFocus:"Uma melhoria útil",prompts:{yesterday:"Conta-me o que fizeste ontem.",weekend:"Conta-me o que vais fazer este fim de semana.",town:"Fala-me da tua cidade ou bairro.",annoying:"Conta-me algo que te incomoda neste momento."}},
+eu:{brand:"LINGOTOTAL · Ikasi nigandik",tagline:"Erabili zure hizkuntza zeure ikasgaia sortzeko.",home:"Jarduerak / aldatu hizkuntzak",heroTitle:"Zure hitzak ikasgai bihurtzen dira.",heroText:"Idatzi benetako zerbait. LingoTotalek dagoeneko zer dakizun aztertzen du, hobekuntza erabilgarri bat aukeratzen du eta zure hizkuntzatik jarduera labur bat sortzen du.",step1:"1. URRATSA · KONTATU ZERBAIT",talkTitle:"Zeri buruz hitz egin nahi duzu?",talkHelp:"Aukeratu ideia bat edo idatzi nahi duzun gaiari buruz ikasten ari zaren hizkuntzan.",promptYesterday:"🕒 Zer egin zenuen atzo?",promptWeekend:"🌤️ Zer egingo duzu asteburu honetan?",promptTown:"🏘️ Kontatu zure herriari edo hiriari buruz.",promptAnnoying:"😤 Zerk gogaitzen zaitu orain?",writePlaceholder:"Idatzi hemen 2–4 esaldi...",build:"Sortu nire mini-ikasgaia",restart:"Hasi berriro",loading:"LingoTotal zure ikasgaia sortzen ari da…",step2:"2. URRATSA · BEHATU",noticeTitle:"Zer nabaritzen duzu?",step3:"3. URRATSA · SAIATU BERRIRO",useTitle:"Orain erabili ideia hori zeuk.",answerPlaceholder:"Idatzi zure erantzuna...",check:"Egiaztatu nire bertsioa",clue:"Eman pista bat",showAnswer:"Erakutsi erantzuna",step4:"4. URRATSA · JARRAITU",continueTitle:"Elkarrizketak jarraitzen du.",followPlaceholder:"Erantzun ikasten ari zaren hizkuntzan...",nextLesson:"Sortu hurrengo mini-ikasgaia",footer:"LingoTotal · Ikaslearen hizkuntzatik abiatutako ikaskuntza moldagarria",errWrite:"Idatzi lehenik 2–4 esaldi.",errGenerate:"Ezin izan da ikasgaia sortu. Egiaztatu Netlify-ko Gemini funtzioa argitaratuta dagoela eta GEMINI_API_KEY erabilgarri dagoela.",errAnswer:"Idatzi lehenik erantzun bat.",errFollow:"Idatzi lehenik jarraipen-erantzuna.",model:"Eredua",fallbackCorrect:"Hori da.",fallbackWrong:"Saiatu berriro. Begiratu ondo testuinguruari.",fallbackTry:"Saiatu beste behin pista eskatu aurretik.",fallbackHint:"Begiratu berriro behaketa-jarduerako eredua.",defaultTitle:"Zure mini-ikasgaia",defaultFocus:"Hobekuntza erabilgarri bat",prompts:{yesterday:"Kontatu zer egin zenuen atzo.",weekend:"Kontatu zer egingo duzun asteburu honetan.",town:"Kontatu zure herriari, hiriari edo auzoari buruz.",annoying:"Kontatu une honetan gogaitzen zaituen zerbait."}},
+ja:{brand:"LINGOTOTAL · 私から学ぶ",tagline:"自分の言葉から自分だけのレッスンを作ります。",home:"アクティビティ / 言語を変更",heroTitle:"あなたの言葉がレッスンになります。",heroText:"実際のことを書いてください。LingoTotalは、すでにできることを見つけ、役立つ改善点を1つ選び、あなたの表現から短いアクティビティを作ります。",step1:"ステップ1 · 何か話してください",talkTitle:"何について話したいですか？",talkHelp:"アイデアを選ぶか、学習中の言語で好きなことについて書いてください。",promptYesterday:"🕒 昨日は何をしましたか？",promptWeekend:"🌤️ 今週末は何をしますか？",promptTown:"🏘️ あなたの町について教えてください。",promptAnnoying:"😤 今、何が気になりますか？",writePlaceholder:"ここに2〜4文を書いてください...",build:"ミニレッスンを作る",restart:"最初からやり直す",loading:"LingoTotalがレッスンを作成しています…",step2:"ステップ2 · 気づく",noticeTitle:"何に気づきますか？",step3:"ステップ3 · もう一度挑戦",useTitle:"今度は自分で使ってみましょう。",answerPlaceholder:"答えを書いてください...",check:"自分の文を確認する",clue:"ヒントを見る",showAnswer:"答えを表示",step4:"ステップ4 · 続ける",continueTitle:"会話を続けましょう。",followPlaceholder:"学習中の言語で答えてください...",nextLesson:"次のミニレッスンを作る",footer:"LingoTotal · 学習者自身の言葉から作る適応型言語学習",errWrite:"まず2〜4文を書いてください。",errGenerate:"レッスンを生成できませんでした。NetlifyのGemini関数がデプロイされ、GEMINI_API_KEYが利用可能か確認してください。",errAnswer:"まず答えを書いてください。",errFollow:"まず続きの答えを書いてください。",model:"例",fallbackCorrect:"その通りです。",fallbackWrong:"もう一度試してください。文脈をよく見てください。",fallbackTry:"ヒントを見る前に、もう一度試してみてください。",fallbackHint:"気づきのアクティビティの例をもう一度見てください。",defaultTitle:"あなたのミニレッスン",defaultFocus:"役立つ改善点",prompts:{yesterday:"昨日したことを教えてください。",weekend:"今週末にすることを教えてください。",town:"あなたの町や地域について教えてください。",annoying:"今、気になっていることを教えてください。"}},
+ar:{brand:"LINGOTOTAL · تعلّم مني",tagline:"استخدم لغتك أنت لإنشاء درسك.",home:"الأنشطة / تغيير اللغات",heroTitle:"كلماتك تصبح هي الدرس.",heroText:"اكتب شيئًا حقيقيًا. يلاحظ LingoTotal ما تستطيع فعله بالفعل، ويختار تحسينًا واحدًا مفيدًا، ثم ينشئ نشاطًا قصيرًا انطلاقًا من لغتك.",step1:"الخطوة 1 · أخبرني بشيء",talkTitle:"عمّ تود أن تتحدث؟",talkHelp:"اختر فكرة أو اكتب عن أي موضوع تريده باللغة التي تتعلمها.",promptYesterday:"🕒 ماذا فعلت أمس؟",promptWeekend:"🌤️ ماذا ستفعل في عطلة نهاية الأسبوع؟",promptTown:"🏘️ أخبرني عن مدينتك.",promptAnnoying:"😤 ما الذي يزعجك الآن؟",writePlaceholder:"اكتب هنا جملتين إلى أربع جمل...",build:"أنشئ درسي القصير",restart:"ابدأ من جديد",loading:"يقوم LingoTotal بإنشاء درسك…",step2:"الخطوة 2 · لاحظ",noticeTitle:"ماذا تلاحظ؟",step3:"الخطوة 3 · حاول مرة أخرى",useTitle:"استخدم الفكرة بنفسك الآن.",answerPlaceholder:"اكتب إجابتك...",check:"تحقق من إجابتي",clue:"أعطني تلميحًا",showAnswer:"أظهر الإجابة",step4:"الخطوة 4 · واصل",continueTitle:"تستمر المحادثة.",followPlaceholder:"أجب باللغة التي تتعلمها...",nextLesson:"أنشئ الدرس القصير التالي",footer:"LingoTotal · تعلم تكيفي انطلاقًا من لغة المتعلم نفسه",errWrite:"اكتب أولًا جملتين إلى أربع جمل.",errGenerate:"تعذر إنشاء الدرس. تحقق من نشر وظيفة Gemini في Netlify ومن توفر GEMINI_API_KEY.",errAnswer:"اكتب إجابة أولًا.",errFollow:"اكتب إجابتك التالية أولًا.",model:"نموذج",fallbackCorrect:"بالضبط.",fallbackWrong:"حاول مرة أخرى. انتبه جيدًا إلى السياق.",fallbackTry:"حاول مرة أخرى قبل طلب تلميح.",fallbackHint:"انظر مرة أخرى إلى النموذج في نشاط الملاحظة.",defaultTitle:"درسك القصير",defaultFocus:"تحسين مفيد",prompts:{yesterday:"أخبرني بما فعلته أمس.",weekend:"أخبرني بما ستفعله في عطلة نهاية الأسبوع.",town:"أخبرني عن مدينتك أو حيّك.",annoying:"أخبرني بشيء يزعجك في الوقت الحالي."}}
 };
 
 const LANG_DISPLAY={
@@ -445,110 +267,6 @@ function hideError(){document.getElementById("errorBox").classList.add("hidden")
 function resetAll(){lesson=null;selectedPrompt="";["learnerText","repairText","followUpText"].forEach(id=>document.getElementById(id).value="");["topicSuggestion","lessonCard","repairCard","continueCard","loadingBox","errorBox","optionFeedback","repairFeedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));window.scrollTo({top:0,behavior:"smooth"})}
 function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 </script>
-
-<script id="lingototal-all-interface-text-fix">
-(function(){
-  function getDictionary(){
-    try{
-      if(typeof T!=="undefined" && T && T.en) return T;
-    }catch(e){}
-    try{
-      if(typeof translations!=="undefined" && translations && translations.en) return translations;
-    }catch(e){}
-    return null;
-  }
-  function getTranslate(){
-    try{
-      if(typeof tr==="function") return tr;
-    }catch(e){}
-    return null;
-  }
-  const skipSelectors = [
-    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
-    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
-    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
-    "[data-target-content]","[data-generated-content]"
-  ].join(",");
-
-  function isSkipped(el){
-    return !!(el && el.closest && el.closest(skipSelectors));
-  }
-
-  function normalize(s){
-    return String(s||"").replace(/\s+/g," ").trim();
-  }
-
-  function applyAllInterfaceText(){
-    const dict=getDictionary();
-    const translate=getTranslate();
-    if(!dict || !dict.en || !translate) return;
-
-    const reverse=new Map();
-    Object.entries(dict.en).forEach(([key,val])=>{
-      if(typeof val==="string"){
-        const n=normalize(val);
-        if(n) reverse.set(n,key);
-      }
-    });
-
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node=>{
-      const el=node.parentElement;
-      if(!el || isSkipped(el)) return;
-      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
-      const raw=node.nodeValue;
-      const n=normalize(raw);
-      if(!n) return;
-      const key=reverse.get(n);
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key){
-          const leading=(raw.match(/^\s*/)||[""])[0];
-          const trailing=(raw.match(/\s*$/)||[""])[0];
-          node.nodeValue=leading+translated+trailing;
-        }
-      }
-    });
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
-      const key=reverse.get(normalize(el.getAttribute("placeholder")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("placeholder",translated);
-      }
-    });
-
-    document.querySelectorAll("[title]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("title")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("title",translated);
-      }
-    });
-
-    document.querySelectorAll("[aria-label]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("aria-label")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("aria-label",translated);
-      }
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
-  }else{
-    setTimeout(applyAllInterfaceText,0);
-  }
-  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
-})();
-</script>
-
+<script src="lingototal-audio.js"></script>
 </body>
 </html>

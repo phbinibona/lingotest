@@ -1,73 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script id="lingototal-language-handoff-fix">
-(function(){
-  const uiAliases = {
-    "en":"en","english":"en",
-    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
-    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
-    "fr":"fr","french":"fr","français":"fr","francais":"fr",
-    "de":"de","german":"de","deutsch":"de",
-    "it":"it","italian":"it","italiano":"it",
-    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
-    "eu":"eu","basque":"eu","euskara":"eu",
-    "ja":"ja","japanese":"ja","日本語":"ja",
-    "ar":"ar","arabic":"ar","العربية":"ar"
-  };
-  const targetAliases = {
-    "en":"English","english":"English",
-    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
-    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
-    "fr":"French","french":"French","français":"French","francais":"French",
-    "de":"German","german":"German","deutsch":"German",
-    "it":"Italian","italian":"Italian","italiano":"Italian",
-    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
-    "eu":"Basque","basque":"Basque","euskara":"Basque",
-    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
-    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
-  };
-  const norm = value => String(value || "").trim().toLowerCase();
-  const params = new URLSearchParams(window.location.search);
-
-  const rawUi =
-    params.get("ui") ||
-    params.get("uiLanguage") ||
-    params.get("interfaceLanguage") ||
-    params.get("interface") ||
-    localStorage.getItem("lingototal_ui_language") ||
-    localStorage.getItem("lingototal_interface_language") ||
-    "en";
-
-  const rawTarget =
-    params.get("target") ||
-    params.get("targetLanguage") ||
-    localStorage.getItem("lingototal_target_language") ||
-    "English";
-
-  const ui = uiAliases[norm(rawUi)] || "en";
-  const target = targetAliases[norm(rawTarget)] || "English";
-
-  localStorage.setItem("lingototal_ui_language", ui);
-  localStorage.setItem("lingototal_interface_language", ui);
-  localStorage.setItem("lingototal_target_language", target);
-
-  let changed = false;
-  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
-  if(params.get("target") !== target){ params.set("target", target); changed = true; }
-
-  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
-    if(params.has(k)){ params.delete(k); changed = true; }
-  });
-
-  if(changed){
-    const qs=params.toString();
-    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
-  }
-
-  window.LINGOTOTAL_SETTINGS={ui,target};
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoQuiz · LingoTotal</title>
@@ -267,74 +200,13 @@ h2{font-size:1.2rem;margin:0;color:var(--blue-950)}
 @media(max-width:430px){
   .page{padding:0 12px;margin-top:14px}
   .card,.hero{border-radius:18px;padding:18px}
-  .levels{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .levels{grid-template-columns:1fr}
   .categories{grid-template-columns:1fr 1fr;gap:9px}
   .category{min-height:98px;padding:12px;font-size:.88rem}
   .home-link{padding:8px 10px}
   .pair-pill{width:100%;text-align:center}
 }
 </style>
-
-<style id="lingototal-standard-format-20260827">
-/* Shared LingoReal-style presentation */
-.level-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
-  gap:9px!important;
-}
-.level-card,.choice.level{
-  border-radius:12px!important;
-  padding:11px 12px!important;
-  min-height:62px;
-}
-.level-name{font-weight:700!important}
-.level-note{font-size:.8rem!important;line-height:1.3!important}
-@media(max-width:700px){
-  html,body{max-width:100%;overflow-x:hidden}
-  .banner{
-    min-height:50px!important;
-    padding:6px 8px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:space-between!important;
-    gap:6px!important;
-    flex-wrap:nowrap!important;
-    overflow:hidden!important;
-  }
-  .brand-wrap,.brand{
-    min-width:0!important;
-    flex:1 1 auto!important;
-  }
-  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
-  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .language-pair,.pair,.current-languages{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:.7rem!important;
-  }
-  .home-link,.home-btn,.home-button{
-    flex:0 0 38px!important;
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-  }
-  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
-  .level-note{display:none!important}
-  .panel{padding:14px!important}
-}
-</style>
-
 </head>
 <body>
 <header class="banner">
@@ -369,12 +241,12 @@ h2{font-size:1.2rem;margin:0;color:var(--blue-950)}
     <p class="helper" data-i18n="levelHelp">The level changes the language of the question, not the difficulty of the general knowledge.</p>
     <div class="levels">
       <button class="choice" data-level="basic">
-        <strong data-i18n="basic">Revising the basics</strong>
-        <span class="level-note">Clear, accessible language for revising the essentials.</span>
+        <strong data-i18n="basic">Basic</strong>
+        <span data-i18n="basicDesc">A1–A2 · short, clear, common language</span>
       </button>
       <button class="choice" data-level="intermediate">
-        <strong data-i18n="intermediate">Building confidence</strong>
-        <span class="level-note">More natural, flexible language for building confidence.</span>
+        <strong data-i18n="intermediate">Intermediate</strong>
+        <span data-i18n="intermediateDesc">B1–B2 · more natural and varied language</span>
       </button>
     </div>
   </section>
@@ -456,66 +328,16 @@ const TARGET_TO_CODE={
 };
 
 const DISPLAY_NAMES={
-  en:{
-    levelPrompt:'Choose the option that feels right for you today.',
-    beginnerNote:'Build useful natural expressions for simple everyday situations.',
-    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
-    advancedNote:'Work with richer, more nuanced and idiomatic language.',
-    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Arabic:'Arabic'},
-  ca:{
-    levelPrompt:'Tria l’opció que et vagi millor avui.',
-    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
-    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
-    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
-    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Arabic:'àrab'},
-  es:{
-    levelPrompt:'Elige la opción que mejor te vaya hoy.',
-    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
-    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
-    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
-    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Arabic:'árabe'},
-  fr:{
-    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
-    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
-    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
-    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
-    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Arabic:'arabe'},
-  de:{
-    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
-    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
-    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
-    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
-    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Arabic:'Arabisch'},
-  it:{
-    levelPrompt:'Scegli l’opzione che ti sembra più adatta oggi.',
-    beginnerNote:'Costruisci espressioni naturali e utili per semplici situazioni quotidiane.',
-    intermediateNote:'Usa un linguaggio quotidiano più flessibile e naturale con maggiore sicurezza.',
-    advancedNote:'Lavora con un linguaggio più ricco, sfumato e idiomatico.',
-    topicGuidance:'Scrivi qualcosa che vorresti davvero saper gestire in una conversazione quotidiana.',English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Arabic:'arabo'},
-  pt:{
-    levelPrompt:'Escolha a opção que lhe parecer mais adequada hoje.',
-    beginnerNote:'Construa expressões naturais e úteis para situações simples do dia a dia.',
-    intermediateNote:'Use uma linguagem quotidiana mais flexível e natural com maior confiança.',
-    advancedNote:'Trabalhe com uma linguagem mais rica, matizada e idiomática.',
-    topicGuidance:'Escreva algo que gostaria realmente de saber gerir numa conversa do dia a dia.',English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Arabic:'árabe'},
-  eu:{
-    levelPrompt:'Aukeratu gaur egokien iruditzen zaizun aukera.',
-    beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde natural eta erabilgarriak.',
-    intermediateNote:'Erabili eguneroko hizkera malguago eta naturalagoa, konfiantza handiagoz.',
-    advancedNote:'Landu hizkera aberatsagoa, ñabarduratsuagoa eta idiomatikoagoa.',
-    topicGuidance:'Idatzi eguneroko elkarrizketa batean benetan landu nahiko zenukeen egoera bat.',English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Arabic:'arabiera'},
-  ja:{
-    levelPrompt:'今日の自分に合うレベルを選んでください。',
-    beginnerNote:'簡単な日常場面で役立つ自然な表現を身につけます。',
-    intermediateNote:'より柔軟で自然な日常表現を、自信を持って使えるようにします。',
-    advancedNote:'より豊かでニュアンスのある自然な表現に取り組みます。',
-    topicGuidance:'日常会話で実際に対応できるようになりたいことを書いてください。',English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Arabic:'アラビア語'},
-  ar:{
-    levelPrompt:'اختر المستوى الذي يناسبك اليوم.',
-    beginnerNote:'تعلّم تعبيرات طبيعية ومفيدة للمواقف اليومية البسيطة.',
-    intermediateNote:'استخدم لغة يومية أكثر مرونة وطبيعية بثقة أكبر.',
-    advancedNote:'تدرّب على لغة أكثر ثراءً ودقةً وطبيعية.',
-    topicGuidance:'اكتب موقفًا تود فعلًا أن تتمكن من التعامل معه في محادثة يومية.',English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Arabic:'العربية'}
+  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Arabic:'Arabic'},
+  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Arabic:'àrab'},
+  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Arabic:'árabe'},
+  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Arabic:'arabe'},
+  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Arabic:'Arabisch'},
+  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Arabic:'arabo'},
+  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Arabic:'árabe'},
+  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Arabic:'arabiera'},
+  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Arabic:'アラビア語'},
+  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Arabic:'العربية'}
 };
 
 const T={
@@ -523,85 +345,85 @@ en:{
   tagline:'Learn any language your way',changeLanguages:'Change languages',eyebrow:'General knowledge · language practice',
   intro:'Test your general knowledge while working in the language you are learning. Choose a level and category, then type your answer.',
   chooseLevel:'Choose your level',levelHelp:'The level changes the language of the question, not the difficulty of the general knowledge.',
-  basic:'Revising the basics',basicDesc:'A1–A2 · short, clear, common language',intermediate:'Building confidence',intermediateDesc:'B1–B2 · more natural and varied language',
+  basic:'Basic',basicDesc:'A1–A2 · short, clear, common language',intermediate:'Intermediate',intermediateDesc:'B1–B2 · more natural and varied language',
   chooseCategory:'Choose a category',categoryHelp:'Choose the kind of general-knowledge question you would like.',
   geography:'Geography',history:'History',arts:'Arts & Literature',science:'Science & Nature',sports:'Sports & Leisure',entertainment:'Entertainment',
   generate:'Generate question',generating:'Creating your question…',questionTitle:'Question',yourAnswer:'Your answer',answerPlaceholder:'Type your answer here…',
   hint:'Hint 💡',check:'Check answer ✓',reveal:'Reveal answer',nextQuestion:'Next question →',changeCategory:'Change category',
-  selectLevel:'Choose Basic or Building confidence first.',selectCategory:'Choose a category first.',questionReady:'Your question is ready.',
+  selectLevel:'Choose Basic or Intermediate first.',selectCategory:'Choose a category first.',questionReady:'Your question is ready.',
   correct:'Correct!',incorrect:'Not quite.',correctAnswer:'Correct answer:',typeAnswer:'Type an answer first.',error:'Something went wrong. Please try again.',
-  basicBadge:'Basic · A1–A2',intermediateBadge:'Building confidence · B1–B2'
+  basicBadge:'Basic · A1–A2',intermediateBadge:'Intermediate · B1–B2'
 },
 ca:{
   tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Canvia les llengües',eyebrow:'Cultura general · pràctica de llengua',
   intro:'Posa a prova els teus coneixements generals mentre treballes en la llengua que aprens. Tria un nivell i una categoria i escriu la resposta.',
   chooseLevel:'Tria el nivell',levelHelp:'El nivell canvia la llengua de la pregunta, no la dificultat dels coneixements generals.',
-  basic:'Repassar les bases',basicDesc:'A1–A2 · llengua breu, clara i freqüent',intermediate:'Guanyar confiança',intermediateDesc:'B1–B2 · llengua més natural i variada',
+  basic:'Bàsic',basicDesc:'A1–A2 · llengua breu, clara i freqüent',intermediate:'Intermedi',intermediateDesc:'B1–B2 · llengua més natural i variada',
   chooseCategory:'Tria una categoria',categoryHelp:'Tria el tipus de pregunta de cultura general que vols.',
   geography:'Geografia',history:'Història',arts:'Arts i literatura',science:'Ciència i natura',sports:'Esports i lleure',entertainment:'Entreteniment',
   generate:'Genera una pregunta',generating:'Creant la pregunta…',questionTitle:'Pregunta',yourAnswer:'La teva resposta',answerPlaceholder:'Escriu la resposta aquí…',
   hint:'Pista 💡',check:'Comprova ✓',reveal:'Mostra la resposta',nextQuestion:'Pregunta següent →',changeCategory:'Canvia de categoria',
-  selectLevel:'Tria primer Bàsic o Guanyar confiança.',selectCategory:'Tria primer una categoria.',questionReady:'La pregunta ja està preparada.',
+  selectLevel:'Tria primer Bàsic o Intermedi.',selectCategory:'Tria primer una categoria.',questionReady:'La pregunta ja està preparada.',
   correct:'Correcte!',incorrect:'No ben bé.',correctAnswer:'Resposta correcta:',typeAnswer:'Escriu primer una resposta.',error:'Hi ha hagut un problema. Torna-ho a provar.',
-  basicBadge:'Bàsic · A1–A2',intermediateBadge:'Guanyar confiança · B1–B2'
+  basicBadge:'Bàsic · A1–A2',intermediateBadge:'Intermedi · B1–B2'
 },
 es:{
   tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Cambiar idiomas',eyebrow:'Cultura general · práctica de idiomas',
   intro:'Pon a prueba tus conocimientos generales mientras trabajas en el idioma que estás aprendiendo. Elige nivel y categoría y escribe tu respuesta.',
   chooseLevel:'Elige tu nivel',levelHelp:'El nivel cambia el lenguaje de la pregunta, no la dificultad de los conocimientos generales.',
-  basic:'Repasar lo básico',basicDesc:'A1–A2 · lenguaje breve, claro y frecuente',intermediate:'Ganar confianza',intermediateDesc:'B1–B2 · lenguaje más natural y variado',
+  basic:'Básico',basicDesc:'A1–A2 · lenguaje breve, claro y frecuente',intermediate:'Intermedio',intermediateDesc:'B1–B2 · lenguaje más natural y variado',
   chooseCategory:'Elige una categoría',categoryHelp:'Elige el tipo de pregunta de cultura general que quieras.',
   geography:'Geografía',history:'Historia',arts:'Arte y literatura',science:'Ciencia y naturaleza',sports:'Deporte y ocio',entertainment:'Entretenimiento',
   generate:'Generar pregunta',generating:'Creando la pregunta…',questionTitle:'Pregunta',yourAnswer:'Tu respuesta',answerPlaceholder:'Escribe tu respuesta aquí…',
   hint:'Pista 💡',check:'Comprobar ✓',reveal:'Mostrar respuesta',nextQuestion:'Siguiente pregunta →',changeCategory:'Cambiar categoría',
-  selectLevel:'Primero elige Básico o Ganar confianza.',selectCategory:'Primero elige una categoría.',questionReady:'La pregunta está lista.',
+  selectLevel:'Primero elige Básico o Intermedio.',selectCategory:'Primero elige una categoría.',questionReady:'La pregunta está lista.',
   correct:'¡Correcto!',incorrect:'No del todo.',correctAnswer:'Respuesta correcta:',typeAnswer:'Escribe primero una respuesta.',error:'Ha ocurrido un problema. Inténtalo de nuevo.',
-  basicBadge:'Básico · A1–A2',intermediateBadge:'Ganar confianza · B1–B2'
+  basicBadge:'Básico · A1–A2',intermediateBadge:'Intermedio · B1–B2'
 },
 fr:{
   tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Changer les langues',eyebrow:'Culture générale · pratique de la langue',
   intro:'Testez votre culture générale tout en travaillant dans la langue que vous apprenez. Choisissez un niveau et une catégorie, puis écrivez votre réponse.',
   chooseLevel:'Choisissez votre niveau',levelHelp:'Le niveau change la langue de la question, pas la difficulté des connaissances générales.',
-  basic:'Revoir les bases',basicDesc:'A1–A2 · langue courte, claire et courante',intermediate:'Prendre confiance',intermediateDesc:'B1–B2 · langue plus naturelle et variée',
+  basic:'Débutant',basicDesc:'A1–A2 · langue courte, claire et courante',intermediate:'Intermédiaire',intermediateDesc:'B1–B2 · langue plus naturelle et variée',
   chooseCategory:'Choisissez une catégorie',categoryHelp:'Choisissez le type de question de culture générale souhaité.',
   geography:'Géographie',history:'Histoire',arts:'Arts et littérature',science:'Sciences et nature',sports:'Sports et loisirs',entertainment:'Divertissement',
   generate:'Générer une question',generating:'Création de votre question…',questionTitle:'Question',yourAnswer:'Votre réponse',answerPlaceholder:'Écrivez votre réponse ici…',
   hint:'Indice 💡',check:'Vérifier ✓',reveal:'Afficher la réponse',nextQuestion:'Question suivante →',changeCategory:'Changer de catégorie',
-  selectLevel:'Choisissez d’abord Revoir les bases ou Prendre confiance.',selectCategory:'Choisissez d’abord une catégorie.',questionReady:'Votre question est prête.',
+  selectLevel:'Choisissez d’abord Débutant ou Intermédiaire.',selectCategory:'Choisissez d’abord une catégorie.',questionReady:'Votre question est prête.',
   correct:'Correct !',incorrect:'Pas tout à fait.',correctAnswer:'Bonne réponse :',typeAnswer:'Écrivez d’abord une réponse.',error:'Un problème est survenu. Réessayez.',
-  basicBadge:'Revoir les bases · A1–A2',intermediateBadge:'Prendre confiance · B1–B2'
+  basicBadge:'Débutant · A1–A2',intermediateBadge:'Intermédiaire · B1–B2'
 },
 de:{
   tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Sprachen ändern',eyebrow:'Allgemeinwissen · Sprachpraxis',
   intro:'Teste dein Allgemeinwissen und übe gleichzeitig die Sprache, die du lernst. Wähle Niveau und Kategorie und tippe deine Antwort.',
   chooseLevel:'Wähle dein Niveau',levelHelp:'Das Niveau verändert die Sprache der Frage, nicht die Schwierigkeit des Allgemeinwissens.',
-  basic:'Basis',basicDesc:'A1–A2 · kurze, klare, häufige Sprache',intermediate:'Sicherheit gewinnen',intermediateDesc:'B1–B2 · natürlichere und vielfältigere Sprache',
+  basic:'Basis',basicDesc:'A1–A2 · kurze, klare, häufige Sprache',intermediate:'Mittelstufe',intermediateDesc:'B1–B2 · natürlichere und vielfältigere Sprache',
   chooseCategory:'Wähle eine Kategorie',categoryHelp:'Wähle die Art der Allgemeinwissensfrage.',
   geography:'Geografie',history:'Geschichte',arts:'Kunst & Literatur',science:'Wissenschaft & Natur',sports:'Sport & Freizeit',entertainment:'Unterhaltung',
   generate:'Frage erstellen',generating:'Deine Frage wird erstellt…',questionTitle:'Frage',yourAnswer:'Deine Antwort',answerPlaceholder:'Tippe deine Antwort hier…',
   hint:'Hinweis 💡',check:'Antwort prüfen ✓',reveal:'Antwort zeigen',nextQuestion:'Nächste Frage →',changeCategory:'Kategorie ändern',
-  selectLevel:'Wähle zuerst Basis oder Sicherheit gewinnen.',selectCategory:'Wähle zuerst eine Kategorie.',questionReady:'Deine Frage ist bereit.',
+  selectLevel:'Wähle zuerst Basis oder Mittelstufe.',selectCategory:'Wähle zuerst eine Kategorie.',questionReady:'Deine Frage ist bereit.',
   correct:'Richtig!',incorrect:'Nicht ganz.',correctAnswer:'Richtige Antwort:',typeAnswer:'Tippe zuerst eine Antwort.',error:'Etwas ist schiefgegangen. Versuche es erneut.',
-  basicBadge:'Basis · A1–A2',intermediateBadge:'Sicherheit gewinnen · B1–B2'
+  basicBadge:'Basis · A1–A2',intermediateBadge:'Mittelstufe · B1–B2'
 },
 it:{
   tagline:'Impara qualsiasi lingua a modo tuo',changeLanguages:'Cambia lingue',eyebrow:'Cultura generale · pratica linguistica',
   intro:'Metti alla prova la tua cultura generale mentre lavori nella lingua che stai imparando. Scegli livello e categoria, poi scrivi la risposta.',
   chooseLevel:'Scegli il livello',levelHelp:'Il livello cambia la lingua della domanda, non la difficoltà delle conoscenze generali.',
-  basic:'Base',basicDesc:'A1–A2 · lingua breve, chiara e comune',intermediate:'Ganar confianza',intermediateDesc:'B1–B2 · lingua più naturale e varia',
+  basic:'Base',basicDesc:'A1–A2 · lingua breve, chiara e comune',intermediate:'Intermedio',intermediateDesc:'B1–B2 · lingua più naturale e varia',
   chooseCategory:'Scegli una categoria',categoryHelp:'Scegli il tipo di domanda di cultura generale.',
   geography:'Geografia',history:'Storia',arts:'Arte e letteratura',science:'Scienza e natura',sports:'Sport e tempo libero',entertainment:'Intrattenimento',
   generate:'Genera domanda',generating:'Creazione della domanda…',questionTitle:'Domanda',yourAnswer:'La tua risposta',answerPlaceholder:'Scrivi qui la tua risposta…',
   hint:'Indizio 💡',check:'Controlla ✓',reveal:'Mostra risposta',nextQuestion:'Domanda successiva →',changeCategory:'Cambia categoria',
-  selectLevel:'Scegli prima Base o Ganar confianza.',selectCategory:'Scegli prima una categoria.',questionReady:'La domanda è pronta.',
+  selectLevel:'Scegli prima Base o Intermedio.',selectCategory:'Scegli prima una categoria.',questionReady:'La domanda è pronta.',
   correct:'Corretto!',incorrect:'Non proprio.',correctAnswer:'Risposta corretta:',typeAnswer:'Scrivi prima una risposta.',error:'Si è verificato un problema. Riprova.',
-  basicBadge:'Base · A1–A2',intermediateBadge:'Ganar confianza · B1–B2'
+  basicBadge:'Base · A1–A2',intermediateBadge:'Intermedio · B1–B2'
 },
 pt:{
   tagline:'Aprenda qualquer idioma à sua maneira',changeLanguages:'Alterar idiomas',eyebrow:'Cultura geral · prática de língua',
   intro:'Teste os seus conhecimentos gerais enquanto trabalha na língua que está a aprender. Escolha um nível e uma categoria e escreva a resposta.',
   chooseLevel:'Escolha o nível',levelHelp:'O nível altera a linguagem da pergunta, não a dificuldade dos conhecimentos gerais.',
-  basic:'Repasar lo básico',basicDesc:'A1–A2 · linguagem curta, clara e frequente',intermediate:'Intermédio',intermediateDesc:'B1–B2 · linguagem mais natural e variada',
+  basic:'Básico',basicDesc:'A1–A2 · linguagem curta, clara e frequente',intermediate:'Intermédio',intermediateDesc:'B1–B2 · linguagem mais natural e variada',
   chooseCategory:'Escolha uma categoria',categoryHelp:'Escolha o tipo de pergunta de cultura geral.',
   geography:'Geografia',history:'História',arts:'Artes e literatura',science:'Ciência e natureza',sports:'Desporto e lazer',entertainment:'Entretenimento',
   generate:'Gerar pergunta',generating:'A criar a pergunta…',questionTitle:'Pergunta',yourAnswer:'A sua resposta',answerPlaceholder:'Escreva a sua resposta aqui…',
@@ -948,110 +770,6 @@ $('answerInput').addEventListener('keydown',e=>{
 readSettings();
 applyTranslations();
 </script>
-
-<script id="lingototal-all-interface-text-fix">
-(function(){
-  function getDictionary(){
-    try{
-      if(typeof T!=="undefined" && T && T.en) return T;
-    }catch(e){}
-    try{
-      if(typeof translations!=="undefined" && translations && translations.en) return translations;
-    }catch(e){}
-    return null;
-  }
-  function getTranslate(){
-    try{
-      if(typeof tr==="function") return tr;
-    }catch(e){}
-    return null;
-  }
-  const skipSelectors = [
-    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
-    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
-    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
-    "[data-target-content]","[data-generated-content]"
-  ].join(",");
-
-  function isSkipped(el){
-    return !!(el && el.closest && el.closest(skipSelectors));
-  }
-
-  function normalize(s){
-    return String(s||"").replace(/\s+/g," ").trim();
-  }
-
-  function applyAllInterfaceText(){
-    const dict=getDictionary();
-    const translate=getTranslate();
-    if(!dict || !dict.en || !translate) return;
-
-    const reverse=new Map();
-    Object.entries(dict.en).forEach(([key,val])=>{
-      if(typeof val==="string"){
-        const n=normalize(val);
-        if(n) reverse.set(n,key);
-      }
-    });
-
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node=>{
-      const el=node.parentElement;
-      if(!el || isSkipped(el)) return;
-      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
-      const raw=node.nodeValue;
-      const n=normalize(raw);
-      if(!n) return;
-      const key=reverse.get(n);
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key){
-          const leading=(raw.match(/^\s*/)||[""])[0];
-          const trailing=(raw.match(/\s*$/)||[""])[0];
-          node.nodeValue=leading+translated+trailing;
-        }
-      }
-    });
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
-      const key=reverse.get(normalize(el.getAttribute("placeholder")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("placeholder",translated);
-      }
-    });
-
-    document.querySelectorAll("[title]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("title")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("title",translated);
-      }
-    });
-
-    document.querySelectorAll("[aria-label]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("aria-label")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("aria-label",translated);
-      }
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
-  }else{
-    setTimeout(applyAllInterfaceText,0);
-  }
-  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
-})();
-</script>
-
+<script src="lingototal-audio.js"></script>
 </body>
 </html>
