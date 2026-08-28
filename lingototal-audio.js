@@ -9,7 +9,6 @@
   let currentAudio = null;
   let runId = 0;
   let paused = false;
-  let activeFallback = false;
 
   const LANGUAGE_LOCALES = {
     english:'en-GB', en:'en-GB', 'en-gb':'en-GB',
@@ -120,11 +119,6 @@
       }catch(e){}
       currentAudio = null;
     }
-
-    if('speechSynthesis' in window){
-      try{ window.speechSynthesis.cancel(); }catch(e){}
-    }
-    activeFallback = false;
   }
 
   function dataUrlToBlob(dataUrl){
@@ -218,45 +212,6 @@
     });
   }
 
-  function findDeviceVoice(language){
-    if(!('speechSynthesis' in window)) return null;
-    const wanted = String(language||'').toLowerCase();
-    const base = wanted.split('-')[0];
-    const voices = window.speechSynthesis.getVoices();
-    return voices.find(v=>String(v.lang||'').toLowerCase()===wanted)
-      || voices.find(v=>String(v.lang||'').toLowerCase().startsWith(base+'-'))
-      || null;
-  }
-
-  async function fallbackQueue(chunks, language, speakingRate, token){
-    if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
-      throw new Error('No browser speech fallback available');
-    }
-
-    activeFallback = true;
-    const voice = findDeviceVoice(language);
-    if(!voice){
-      activeFallback = false;
-      throw new Error('No matching browser voice for '+language);
-    }
-
-    for(const chunk of chunks){
-      if(token !== runId) return;
-
-      await new Promise((resolve,reject)=>{
-        const u = new SpeechSynthesisUtterance(chunk);
-        u.lang = language;
-        u.rate = speakingRate;
-        if(voice) u.voice = voice;
-        u.onend = ()=>resolve();
-        u.onerror = ()=>reject(new Error('Browser speech error'));
-        window.speechSynthesis.speak(u);
-      });
-    }
-
-    activeFallback = false;
-  }
-
   async function play(text, language='en-GB', speakingRate=.92, options={}){
     language = normaliseLanguage(language);
     const clean = normaliseText(text);
@@ -290,45 +245,22 @@
       }
     }catch(error){
       if(token !== runId) return;
-      console.warn('Cloud TTS unavailable; using browser fallback.',error);
-
-      try{
-        await fallbackQueue(chunks,language,speakingRate,token);
-        if(token === runId && typeof options.onEnded === 'function'){
-          try{ options.onEnded(); }catch(e){}
-        }
-      }catch(fallbackError){
-        console.error('Audio playback failed.',fallbackError);
-        if(typeof options.onError === 'function'){
-          try{ options.onError(fallbackError); }catch(e){}
-        }
-        throw fallbackError;
+      console.error('Google Cloud TTS playback failed.', error);
+      if(typeof options.onError === 'function'){
+        try{ options.onError(error); }catch(e){}
       }
+      throw error;
     }
   }
 
   function pauseToggle(){
-    if(currentAudio){
-      if(currentAudio.paused){
-        currentAudio.play().catch(()=>{});
-        paused = false;
-      }else{
-        currentAudio.pause();
-        paused = true;
-      }
-      return;
-    }
-
-    if(activeFallback && 'speechSynthesis' in window){
-      try{
-        if(window.speechSynthesis.paused){
-          window.speechSynthesis.resume();
-          paused = false;
-        }else{
-          window.speechSynthesis.pause();
-          paused = true;
-        }
-      }catch(e){}
+    if(!currentAudio) return;
+    if(currentAudio.paused){
+      currentAudio.play().catch(()=>{});
+      paused = false;
+    }else{
+      currentAudio.pause();
+      paused = true;
     }
   }
 
