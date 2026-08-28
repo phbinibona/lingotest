@@ -1,318 +1,280 @@
-/* LingoTotal collection upgrade
-   Add before </body> on pages that already use lingototal_saved_sentences_v2:
+/* ============================================================
+   LingoTotal Collection Upgrade
+   collection-upgrade.js
+
+   Central helper for the learner's saved language collection.
+
+   Main storage key:
+   lingototal_saved_sentences_v2
+
+   Include before </body>:
+
    <script src="collection-upgrade.js"></script>
-*/
+   ============================================================ */
 
 (function () {
+  'use strict';
 
   const KEY = 'lingototal_saved_sentences_v2';
 
-  function get() {
+  /*
+    Older keys that may have been used by previous
+    versions of LingoTotal.
+  */
+  const OLD_KEYS = [
+    'lingototal_saved_sentences',
+    'lingototal_saved_phrases',
+    'lingototal_collection',
+    'saved_sentences',
+    'saved_phrases'
+  ];
+
+
+  /* ============================================================
+     SAFE JSON
+     ============================================================ */
+
+  function safeParse(value, fallback) {
     try {
-      return JSON.parse(localStorage.getItem(KEY) || '[]');
-    } catch {
-      return [];
+      return JSON.parse(value);
+    } catch (error) {
+      return fallback;
     }
   }
 
-  function set(items) {
-    localStorage.setItem(KEY, JSON.stringify(items));
+
+  /* ============================================================
+     NORMALISE LANGUAGE CODES
+     ============================================================ */
+
+  function normaliseLanguage(language) {
+    if (!language) return '';
+
+    const value = String(language).trim();
+
+    const aliases = {
+      english: 'en',
+      en: 'en',
+
+      català: 'ca',
+      catalan: 'ca',
+      ca: 'ca',
+
+      español: 'es',
+      spanish: 'es',
+      castellano: 'es',
+      es: 'es',
+
+      français: 'fr',
+      french: 'fr',
+      fr: 'fr',
+
+      deutsch: 'de',
+      german: 'de',
+      de: 'de',
+
+      euskara: 'eu',
+      basque: 'eu',
+      eu: 'eu',
+
+      cymraeg: 'cy',
+      welsh: 'cy',
+      cy: 'cy',
+
+      gaelic: 'gd',
+      'scottish gaelic': 'gd',
+      gàidhlig: 'gd',
+      gd: 'gd',
+
+      svenska: 'sv',
+      swedish: 'sv',
+      sv: 'sv',
+
+      japanese: 'ja',
+      日本語: 'ja',
+      ja: 'ja',
+
+      arabic: 'ar',
+      العربية: 'ar',
+      ar: 'ar'
+    };
+
+    const lower = value.toLowerCase();
+
+    return aliases[lower] || value;
   }
+
+
+  /* ============================================================
+     LANGUAGE DISPLAY NAME
+     ============================================================ */
+
+  function languageName(code) {
+    const names = {
+      en: 'English',
+      ca: 'Català',
+      es: 'Español',
+      fr: 'Français',
+      de: 'Deutsch',
+      eu: 'Euskara',
+      cy: 'Cymraeg',
+      gd: 'Gàidhlig',
+      sv: 'Svenska',
+      ja: '日本語',
+      ar: 'العربية'
+    };
+
+    return names[code] || code || '';
+  }
+
+
+  /* ============================================================
+     NORMALISE ONE SAVED ITEM
+     ============================================================ */
 
   function normalise(item) {
 
-    // Allows old collections containing only plain text sentences
+    /*
+      Very old collections may contain only strings.
+    */
     if (typeof item === 'string') {
+      const sentence = item.trim();
+
       return {
-        sentence: item
-      };
-    }
-
-    return {
-      sentence: String(
-        item.sentence ||
-        item.text ||
-        ''
-      ).trim(),
-
-      targetLanguage:
-        item.targetLanguage ||
-        item.language ||
-        '',
-
-      targetName:
-        item.targetName ||
-        item.targetLanguage ||
-        item.language ||
-        '',
-
-      theme:
-        item.theme ||
-        item.category ||
-        '',
-
-      source:
-        item.source ||
-        'LingoTotal',
-
-      savedDate:
-        item.savedDate ||
-        new Date().toISOString().slice(0, 10),
-
-      review:
-        item.review || {
+        sentence: sentence,
+        text: sentence,
+        targetLanguage: '',
+        language: '',
+        targetName: '',
+        theme: '',
+        source: 'LingoTotal',
+        savedDate: new Date().toISOString().slice(0, 10),
+        review: {
           times: 0,
           correct: 0,
           wrong: 0,
           lastPractised: null
         }
+      };
+    }
+
+
+    if (!item || typeof item !== 'object') {
+      return null;
+    }
+
+
+    const sentence = String(
+      item.sentence ||
+      item.text ||
+      item.phrase ||
+      item.content ||
+      item.answer ||
+      ''
+    ).trim();
+
+
+    if (!sentence) {
+      return null;
+    }
+
+
+    const rawLanguage =
+      item.targetLanguage ||
+      item.targetLang ||
+      item.language ||
+      item.lang ||
+      item.languageCode ||
+      '';
+
+
+    const targetLanguage =
+      normaliseLanguage(rawLanguage);
+
+
+    const targetName =
+      item.targetName ||
+      item.languageName ||
+      languageName(targetLanguage);
+
+
+    return {
+      /*
+        We deliberately keep BOTH sentence and text.
+
+        Some older LingoTotal pages look for:
+          item.sentence
+
+        while some newer pages look for:
+          item.text
+
+        Keeping both makes the collection compatible
+        with all pages.
+      */
+      sentence: sentence,
+      text: sentence,
+
+      targetLanguage: targetLanguage,
+      language: targetLanguage,
+
+      targetName: targetName,
+
+      theme:
+        item.theme ||
+        item.topic ||
+        item.category ||
+        '',
+
+      source:
+        item.source ||
+        item.activity ||
+        'LingoTotal',
+
+      savedDate:
+        item.savedDate ||
+        item.date ||
+        new Date().toISOString().slice(0, 10),
+
+      review: {
+        times:
+          Number(
+            item.review &&
+            item.review.times
+          ) || 0,
+
+        correct:
+          Number(
+            item.review &&
+            item.review.correct
+          ) || 0,
+
+        wrong:
+          Number(
+            item.review &&
+            item.review.wrong
+          ) || 0,
+
+        lastPractised:
+          item.review &&
+          item.review.lastPractised
+            ? item.review.lastPractised
+            : null
+      }
     };
   }
 
 
+  /* ============================================================
+     REMOVE DUPLICATES
+     ============================================================ */
+
   function unique(items) {
+
+    if (!Array.isArray(items)) {
+      return [];
+    }
 
     const seen = new Set();
 
     return items
       .map(normalise)
-      .filter(item => item.sentence)
-      .filter(item => {
-
-        const key = (
-          item.targetLanguage +
-          '|' +
-          item.sentence
-        ).toLowerCase();
-
-        if (seen.has(key)) {
-          return false;
-        }
-
-        seen.add(key);
-        return true;
-      });
-  }
-
-
-  function downloadFile(filename, type, data) {
-
-    const blob = new Blob(
-      [data],
-      { type: type }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = filename;
-
-    link.click();
-
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 500);
-  }
-
-
-  window.LingoTotalCollection = {
-
-    /*
-      Get the learner's current collection
-    */
-    get: function () {
-      return unique(get());
-    },
-
-
-    /*
-      Download a complete structured backup.
-
-      This JSON file can later be uploaded back
-      into LingoTotal.
-    */
-    backup: function () {
-
-      const collection = unique(get());
-
-      const date =
-        new Date()
-          .toISOString()
-          .slice(0, 10);
-
-      const backup = {
-        lingototalCollection: true,
-        version: 2,
-        exported: new Date().toISOString(),
-        phrases: collection
-      };
-
-      downloadFile(
-        'LingoTotal-My-Language-' +
-        date +
-        '.json',
-
-        'application/json;charset=utf-8',
-
-        JSON.stringify(
-          backup,
-          null,
-          2
-        )
-      );
-    },
-
-
-    /*
-      Download a simple readable TXT version.
-
-      This is useful if the learner simply
-      wants to read or print the collection.
-    */
-    readable: function () {
-
-      const collection = unique(get());
-
-      const date =
-        new Date()
-          .toISOString()
-          .slice(0, 10);
-
-      const text = collection
-        .map((item, index) => {
-
-          let line =
-            (index + 1) +
-            '. ';
-
-          if (item.targetLanguage) {
-            line +=
-              '[' +
-              item.targetLanguage +
-              '] ';
-          }
-
-          if (item.theme) {
-            line +=
-              '[' +
-              item.theme +
-              '] ';
-          }
-
-          line += item.sentence;
-
-          return line;
-
-        })
-        .join('\n');
-
-
-      downloadFile(
-        'LingoTotal-My-Language-' +
-        date +
-        '.txt',
-
-        'text/plain;charset=utf-8',
-
-        '\uFEFF' + text
-      );
-    },
-
-
-    /*
-      Read an uploaded collection.
-
-      Accepts:
-      - LingoTotal JSON backups
-      - older JSON collections
-      - simple TXT lists
-    */
-    readFile: async function (file) {
-
-      const text =
-        await file.text();
-
-      let phrases;
-
-
-      if (
-        file.name
-          .toLowerCase()
-          .endsWith('.json')
-      ) {
-
-        const data =
-          JSON.parse(text);
-
-        if (Array.isArray(data)) {
-
-          phrases = data;
-
-        } else {
-
-          phrases =
-            data.phrases ||
-            data.sentences ||
-            [];
-
-        }
-
-      } else {
-
-        /*
-          Plain text collection.
-
-          Removes numbering such as:
-
-          1. sentence
-          2. sentence
-        */
-
-        phrases = text
-          .split(/\r?\n/)
-          .map(line =>
-
-            line
-              .replace(
-                /^\s*\d+[.)]\s*/,
-                ''
-              )
-              .trim()
-
-          )
-          .filter(Boolean);
-      }
-
-
-      return unique(phrases);
-    },
-
-
-    /*
-      Add uploaded phrases to the collection.
-
-      Existing phrases are retained.
-
-      Duplicate sentences are removed.
-    */
-    merge: function (items) {
-
-      const current =
-        get();
-
-      const merged =
-        unique([
-          ...items,
-          ...current
-        ]);
-
-      set(merged);
-
-      return merged;
-    }
-
-  };
-
-})();
