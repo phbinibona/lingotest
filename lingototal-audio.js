@@ -25,11 +25,9 @@
   };
 
   function normaliseLanguage(value){
-    const raw = String(value || '').trim();
+    const raw=String(value||'').trim();
     if(!raw) return 'en-GB';
-    const key = raw.toLocaleLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g,'');
+    const key=raw.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     return LANGUAGE_LOCALES[key] || LANGUAGE_LOCALES[raw.toLocaleLowerCase()] || raw;
   }
 
@@ -237,6 +235,10 @@
 
     activeFallback = true;
     const voice = findDeviceVoice(language);
+    if(!voice){
+      activeFallback = false;
+      throw new Error('No matching browser voice for '+language);
+    }
 
     for(const chunk of chunks){
       if(token !== runId) return;

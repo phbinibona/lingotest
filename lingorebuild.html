@@ -2163,49 +2163,11 @@ function sentenceMatches(){
 
 
 function playCurrentSentence(){
-
-  if(
-    !('speechSynthesis' in window)
-  ){
-
-    notice(
-      tr('noSpeech'),
-      'error'
-    );
-
-    return;
-
-  }
-
-
-  window.speechSynthesis.cancel();
-
-
-  currentUtterance=
-    new SpeechSynthesisUtterance(
-      items[roundIndex].sentence
-    );
-
-
-  currentUtterance.lang=
-    voiceLocales[targetLanguage]
-    ||'en-GB';
-
-
-  currentUtterance.rate=
-    1;
-
-
-  window.speechSynthesis.speak(
-    currentUtterance
-  );
-
-
-  notice(
-    tr('playing'),
-    'info'
-  );
-
+  const text=items[roundIndex]?.sentence||'';
+  if(!text)return;
+  LingoAudio.play(text,voiceLocales[targetLanguage]||targetLanguage,.95)
+    .catch(err=>{console.error('TTS error',err);notice(tr('noSpeech'),'error')});
+  notice(tr('playing'),'info');
 }
 
 
@@ -2328,7 +2290,7 @@ function nextRound(){
 
 function finishExercise(){
 
-  window.speechSynthesis?.cancel();
+  window.LingoAudio?.stop?.();
 
   $('exercise').style.display=
     'none';
@@ -2399,38 +2361,10 @@ function buildReferenceList(){
       '🔊';
 
 
-    audio.addEventListener(
-      'click',
-      ()=>{
-
-        if(
-          !('speechSynthesis' in window)
-        ){
-          notice(
-            tr('noSpeech'),
-            'error'
-          );
-          return;
-        }
-
-
-        speechSynthesis.cancel();
-
-        const u=
-          new SpeechSynthesisUtterance(
-            item.sentence
-          );
-
-        u.lang=
-          voiceLocales[targetLanguage]
-          ||'en-GB';
-
-        u.rate=1;
-
-        speechSynthesis.speak(u);
-
-      }
-    );
+    audio.addEventListener('click',()=>{
+        LingoAudio.play(item.sentence,voiceLocales[targetLanguage]||targetLanguage,.95)
+          .catch(err=>console.error('TTS error',err));
+      });
 
 
     row.append(
@@ -2485,7 +2419,7 @@ async function generateExercise(){
   }
 
 
-  window.speechSynthesis?.cancel();
+  window.LingoAudio?.stop?.();
 
   setLoading(true);
 
@@ -2724,7 +2658,7 @@ $('clearBtn')
     'click',
     ()=>{
 
-      window.speechSynthesis?.cancel();
+      window.LingoAudio?.stop?.();
 
       themeInput.value='';
 
@@ -2770,7 +2704,6 @@ applyLanguage();
 
 });
 </script>
-
 <script src="lingototal-audio.js"></script>
 </body>
 </html>

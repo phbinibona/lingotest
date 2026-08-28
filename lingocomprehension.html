@@ -146,13 +146,16 @@ if(questions.length!==expectedCount)throw Error(`Expected ${expectedCount} quest
 return{monologue,questions}
 }
 function speakText(text,el=null){
-speechSynthesis.cancel();
-document.querySelectorAll('.sentence').forEach(s=>s.classList.remove('playing'));
-const u=new SpeechSynthesisUtterance(text);
-u.lang=voices[inheritedTarget]||'en-GB';
-u.rate=.9;
-if(el){el.classList.add('playing');u.onend=()=>el.classList.remove('playing');u.onerror=()=>el.classList.remove('playing')}
-speechSynthesis.speak(u)
+  document.querySelectorAll('.sentence').forEach(s=>s.classList.remove('playing'));
+  const language=voices[inheritedTarget]||inheritedTarget;
+  if(el)el.classList.add('playing');
+  LingoAudio.play(text,language,.9,{
+    onEnded:()=>{if(el)el.classList.remove('playing')},
+    onError:()=>{if(el)el.classList.remove('playing')}
+  }).catch(err=>{
+    console.error('TTS error',err);
+    if(el)el.classList.remove('playing');
+  });
 }
 function speak(){if(exercise)speakText(exercise.monologue)}
 function buildTranscript(monologue){
@@ -257,9 +260,9 @@ $('loading').style.display='none';
 $('generateBtn').disabled=false;
 }
 };
-$('playBtn').onclick=speak;$('replayBtn').onclick=speak;$('pauseBtn').onclick=()=>{if(speechSynthesis.speaking){if(speechSynthesis.paused)speechSynthesis.resume();else speechSynthesis.pause()}};$('stopBtn').onclick=()=>speechSynthesis.cancel();
+$('playBtn').onclick=speak;$('replayBtn').onclick=speak;$('pauseBtn').onclick=()=>LingoAudio.pauseToggle();$('stopBtn').onclick=()=>LingoAudio.stop();
 $('checkBtn').onclick=()=>{if(!exercise)return;if(Object.keys(answers).length<exercise.questions.length)return notice(tr('answerAll'),'error');let c=0;document.querySelectorAll('.question').forEach((card,i)=>{const q=exercise.questions[i];card.querySelectorAll('.option').forEach((b,j)=>{const l=['A','B','C','D'][j];if(l===q.correct)b.classList.add('correct');else if(l===answers[i])b.classList.add('incorrect');b.disabled=true});if(answers[i]===q.correct)c++});const t=exercise.questions.length,p=Math.round(c/t*100);$('scoreVal').textContent=`${c}/${t}`;$('percentVal').textContent=`${p}%`;$('score').style.display='grid';const msg=tr('scoreText').replace('{c}',c).replace('{t}',t);const box=c===t?$('success'):$('error');box.textContent=msg;box.style.display='block';$('transcript').style.display='block';notice(tr('finished'),'success')};
-$('newBtn').onclick=()=>$('generateBtn').click();$('clearBtn').onclick=()=>{speechSynthesis.cancel();theme.value='';level='';duration=0;style='';exercise=null;answers={};document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));$('exercise').style.display='none'};apply();
+$('newBtn').onclick=()=>$('generateBtn').click();$('clearBtn').onclick=()=>{LingoAudio.stop();theme.value='';level='';duration=0;style='';exercise=null;answers={};document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));$('exercise').style.display='none'};apply();
 });
 </script>
 <script src="lingototal-audio.js"></script>

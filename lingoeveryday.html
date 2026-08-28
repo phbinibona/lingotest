@@ -762,12 +762,8 @@ Do not add markdown or commentary.
 }
 
 function speak(text){
-  if(!('speechSynthesis'in window))return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=voices[targetLanguage]||'en-GB';
-  u.rate=1;
-  speechSynthesis.speak(u);
+  const language=voices[targetLanguage]||targetLanguage;
+  LingoAudio.play(text,language,.95).catch(err=>console.error('TTS error',err));
   notice(tr('playing'),'info');
 }
 
@@ -938,7 +934,7 @@ $('checkBtn').addEventListener('click',checkQuiz);
 $('newBtn').addEventListener('click',generate);
 
 $('clearBtn').addEventListener('click',()=>{
-  speechSynthesis?.cancel();
+  LingoAudio?.stop?.();
   $('themeInput').value='';
   $('themeInput').classList.add('attention');
   level='';
@@ -953,7 +949,6 @@ applyLanguage();
 
 });
 </script>
-
 <script src="lingototal-audio.js"></script>
 </body>
 </html>

@@ -2070,35 +2070,16 @@ Ensure the sentence-builder words recreate the answer exactly when joined with s
 
   function speakStage(){
     const stage = stages[current];
-
-    if(!stage || !("speechSynthesis" in window)) return;
-
-    const text = stage.audioText || stage.question || stage.content || stage.modelAnswer || "";
+    if(!stage) return;
+    const text = stage.audioText || stage.question || stage.content || stage.modelAnswer || '';
     if(!text) return;
-
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
     const languageCodes = {
-      English:"en-GB",
-      Spanish:"es-ES",
-      Catalan:"ca-ES",
-      French:"fr-FR",
-      German:"de-DE",
-      Italian:"it-IT",
-      Portuguese:"pt-PT",
-      Basque:"eu-ES",
-      Japanese:"ja-JP",
-      Arabic:"ar-SA"
+      English:'en-GB', Spanish:'es-ES', Catalan:'ca-ES', French:'fr-FR', German:'de-DE',
+      Italian:'it-IT', Portuguese:'pt-PT', Basque:'eu-ES', Japanese:'ja-JP', Arabic:'ar-SA'
     };
-
-    utterance.lang = languageCodes[els.targetLanguage.value] || "en-GB";
-    utterance.rate =
-      els.level.value === "A1" ? 0.82 :
-      els.level.value === "A2" ? 0.9 : 1;
-
-    speechSynthesis.speak(utterance);
+    const rate = els.level.value === 'A1' ? .82 : els.level.value === 'A2' ? .9 : .95;
+    LingoAudio.play(text,languageCodes[els.targetLanguage.value]||els.targetLanguage.value,rate)
+      .catch(err=>console.error('TTS error',err));
   }
 
   function resetPage(){
@@ -2114,7 +2095,7 @@ Ensure the sentence-builder words recreate the answer exactly when joined with s
     answered = false;
     answerVisible = false;
 
-    speechSynthesis?.cancel?.();
+    LingoAudio?.stop?.();
 
     els.workspace.classList.remove("active");
     els.results.classList.remove("show");
