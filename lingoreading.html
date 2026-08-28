@@ -1,73 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script id="lingototal-language-handoff-fix">
-(function(){
-  const uiAliases = {
-    "en":"en","english":"en",
-    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
-    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
-    "fr":"fr","french":"fr","français":"fr","francais":"fr",
-    "de":"de","german":"de","deutsch":"de",
-    "it":"it","italian":"it","italiano":"it",
-    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
-    "eu":"eu","basque":"eu","euskara":"eu",
-    "ja":"ja","japanese":"ja","日本語":"ja",
-    "ar":"ar","arabic":"ar","العربية":"ar"
-  };
-  const targetAliases = {
-    "en":"English","english":"English",
-    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
-    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
-    "fr":"French","french":"French","français":"French","francais":"French",
-    "de":"German","german":"German","deutsch":"German",
-    "it":"Italian","italian":"Italian","italiano":"Italian",
-    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
-    "eu":"Basque","basque":"Basque","euskara":"Basque",
-    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
-    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
-  };
-  const norm = value => String(value || "").trim().toLowerCase();
-  const params = new URLSearchParams(window.location.search);
-
-  const rawUi =
-    params.get("ui") ||
-    params.get("uiLanguage") ||
-    params.get("interfaceLanguage") ||
-    params.get("interface") ||
-    localStorage.getItem("lingototal_ui_language") ||
-    localStorage.getItem("lingototal_interface_language") ||
-    "en";
-
-  const rawTarget =
-    params.get("target") ||
-    params.get("targetLanguage") ||
-    localStorage.getItem("lingototal_target_language") ||
-    "English";
-
-  const ui = uiAliases[norm(rawUi)] || "en";
-  const target = targetAliases[norm(rawTarget)] || "English";
-
-  localStorage.setItem("lingototal_ui_language", ui);
-  localStorage.setItem("lingototal_interface_language", ui);
-  localStorage.setItem("lingototal_target_language", target);
-
-  let changed = false;
-  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
-  if(params.get("target") !== target){ params.set("target", target); changed = true; }
-
-  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
-    if(params.has(k)){ params.delete(k); changed = true; }
-  });
-
-  if(changed){
-    const qs=params.toString();
-    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
-  }
-
-  window.LINGOTOTAL_SETTINGS={ui,target};
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoTotal · Reading Challenge</title>
@@ -178,7 +111,7 @@ button,input{font:inherit}
 }
 
 .page{
-  width:min(860px,calc(100% - 22px));
+  width:min(760px,calc(100% - 22px));
   margin:20px auto 40px;
 }
 
@@ -279,12 +212,6 @@ input[type=text]:focus{
   0%,100%{box-shadow:0 0 0 0 rgba(37,183,211,.35)}
 }
 
-.setup-lead{
-  margin:-5px 0 14px;
-  color:var(--muted);
-  font-weight:600;
-}
-
 .level-grid,.length-grid,.example-grid{
   display:grid;
   gap:9px;
@@ -306,78 +233,6 @@ input[type=text]:focus{
 }
 
 .choice:hover,.choice.selected{
-  border-color:var(--primary);
-  background:var(--primary-light);
-  color:var(--primary-dark);
-}
-
-.level-card{
-  min-height:110px;
-  text-align:left;
-  padding:15px 14px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:5px;
-}
-
-.level-name{
-  font-size:1.02rem;
-  font-weight:800;
-}
-
-.level-note{
-  font-size:.79rem;
-  line-height:1.35;
-  color:var(--muted);
-}
-
-.topic-step,.length-step{
-  display:grid;
-  grid-template-columns:40px 1fr;
-  gap:12px;
-  margin-top:24px;
-  padding-top:22px;
-  border-top:1px solid var(--border);
-}
-
-.substep-badge{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#dfeaf8;
-  color:var(--primary-dark);
-  font-weight:800;
-}
-
-.topic-label{
-  font-size:1.08rem;
-  margin:0 0 4px;
-  font-weight:800;
-}
-
-.topic-guidance{
-  margin:0 0 11px;
-  color:var(--muted);
-  font-size:.9rem;
-}
-
-.examples-wrap{
-  margin-top:14px;
-}
-
-.quiet-examples .choice{
-  border-width:1px;
-  background:var(--soft);
-  color:var(--muted);
-  font-size:.86rem;
-  font-weight:700;
-}
-
-.quiet-examples .choice:hover,
-.quiet-examples .choice.selected{
   border-color:var(--primary);
   background:var(--primary-light);
   color:var(--primary-dark);
@@ -605,114 +460,12 @@ input[type=text]:focus{
   .language-pair{flex:1}
   .page{margin-top:12px}
   .level-grid,.length-grid{grid-template-columns:1fr}
-  .topic-step,.length-step{grid-template-columns:34px 1fr}
-  .level-card{min-height:0}
   .example-grid{grid-template-columns:1fr 1fr}
   .actions{flex-direction:column}
   .actions .primary-btn,.actions .secondary-btn{width:100%}
   .score{grid-template-columns:1fr}
 }
-
-/* Separate Home shortcut: keep the existing Activities / change languages control,
-   with a compact home icon at the far right. */
-.home-icon{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:10px;
-  background:#fff;
-  color:#084ca8;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.45);
-  box-sizing:border-box;
-  transition:transform .15s ease, background .15s ease;
-}
-.home-icon svg{
-  width:24px;
-  height:24px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
-.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
-@media(max-width:520px){
-  .home-icon{width:42px;height:42px;flex-basis:42px}
-}
-
 </style>
-<style>
-.question-language-grid{max-width:620px}
-.read-controls{display:flex;gap:8px;flex-wrap:wrap}
-.read-controls .listen-btn{min-width:150px}
-@media(max-width:520px){.read-controls .listen-btn{flex:1 1 140px;min-width:0}}
-</style>
-
-<style id="lingototal-standard-format-20260827">
-/* Shared LingoReal-style presentation */
-.level-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
-  gap:9px!important;
-}
-.level-card,.choice.level{
-  border-radius:12px!important;
-  padding:11px 12px!important;
-  min-height:62px;
-}
-.level-name{font-weight:700!important}
-.level-note{font-size:.8rem!important;line-height:1.3!important}
-@media(max-width:700px){
-  html,body{max-width:100%;overflow-x:hidden}
-  .banner{
-    min-height:50px!important;
-    padding:6px 8px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:space-between!important;
-    gap:6px!important;
-    flex-wrap:nowrap!important;
-    overflow:hidden!important;
-  }
-  .brand-wrap,.brand{
-    min-width:0!important;
-    flex:1 1 auto!important;
-  }
-  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
-  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .language-pair,.pair,.current-languages{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:.7rem!important;
-  }
-  .home-link,.home-btn,.home-button{
-    flex:0 0 38px!important;
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-  }
-  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
-  .level-note{display:none!important}
-  .panel{padding:14px!important}
-}
-</style>
-
 </head>
 
 <body>
@@ -728,15 +481,10 @@ input[type=text]:focus{
 
   <div class="header-tools">
     <div class="language-pair" id="languagePair">English → Català</div>
-    <a class="home-link" href="index.html"><span data-i18n="changeLanguages">Activities / change languages</span>
+    <a class="home-link" href="index.html">
+      <span>⌂</span>
+      <span data-i18n="changeLanguages">Activities / change languages</span>
     </a>
-    <a class="home-icon" href="index.html" aria-label="Home" title="Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 11.5 12 4l9 7.5"></path>
-    <path d="M5.5 10.5V20h13v-9.5"></path>
-    <path d="M9.5 20v-6h5v6"></path>
-  </svg>
-</a>
   </div>
 </header>
 
@@ -750,83 +498,47 @@ input[type=text]:focus{
   <section class="panel">
     <div class="section-head">
       <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Start by choosing your level</div>
+      <div class="section-title" data-i18n="choose">Choose the level, topic and length</div>
     </div>
 
-    <p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
+    <label for="themeInput" data-i18n="ownTopic">Write your own topic</label>
+
+    <input
+      id="themeInput"
+      class="attention"
+      type="text"
+      data-i18n-placeholder="topicPlaceholder"
+      placeholder="For example: city life, travel, sport, technology..."
+    >
 
     <div class="level-grid">
-      <button class="choice level level-card" data-level="beginner">
-        <span class="level-name" data-i18n="beginner">Revising the basics</span>
-        <span class="level-note" data-i18n="beginnerNote">Clear, accessible language and shorter sentences.</span>
-      </button>
-      <button class="choice level level-card" data-level="intermediate">
-        <span class="level-name" data-i18n="intermediate">Building confidence</span>
-        <span class="level-note" data-i18n="intermediateNote">Natural language with more variety and useful detail.</span>
-      </button>
-      <button class="choice level level-card" data-level="advanced">
-        <span class="level-name" data-i18n="advanced">More advanced</span>
-        <span class="level-note" data-i18n="advancedNote">Richer, more nuanced and idiomatic language.</span>
-      </button>
-    </div>
-<div class="topic-step">
-      <div class="substep-badge">2</div>
-      <div>
-        <label for="themeInput" class="topic-label" data-i18n="ownTopic">Choose your topic</label>
-        <p class="topic-guidance" data-i18n="topicGuidance">Write something you would genuinely like to read about.</p>
-        <input
-          id="themeInput"
-          type="text"
-          data-i18n-placeholder="topicPlaceholder"
-          placeholder="For example: city life, travel, sport, technology..."
-        >
-
-        <div class="examples-wrap">
-          <div class="helper" data-i18n="inspiration">Or choose a quick idea:</div>
-          <div class="example-grid quiet-examples">
-            <button class="choice example" data-key="travel" data-i18n="travel">Travel</button>
-            <button class="choice example" data-key="city" data-i18n="city">City life</button>
-            <button class="choice example" data-key="technology" data-i18n="technology">Technology</button>
-            <button class="choice example" data-key="culture" data-i18n="culture">Culture</button>
-          </div>
-        </div>
-      </div>
+      <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
+      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
+      <button class="choice level" data-level="advanced" data-i18n="advanced">Advanced (C1–C2)</button>
     </div>
 
-    <div class="length-step">
-      <div class="substep-badge">3</div>
-      <div>
-        <div class="topic-label" data-i18n="lengthLabel">Choose the text length</div>
-        <p class="topic-guidance" data-i18n="lengthGuidance">Choose how much you want to read this time.</p>
-        <div class="length-grid">
-          <button class="choice length" data-words="90" data-i18n="short">Short</button>
-          <button class="choice length" data-words="150" data-i18n="medium">Medium</button>
-          <button class="choice length" data-words="220" data-i18n="long">Long</button>
-        </div>
-      </div>
-    </div>
-  </section>
+    <div class="helper" data-i18n="lengthLabel">Choose the length:</div>
 
-  <section class="panel">
-    <div class="section-head">
-      <div class="number">4</div>
-      <div class="section-title" data-i18n="questionLanguageTitle">Choose the comprehension language</div>
+    <div class="length-grid">
+      <button class="choice length" data-words="90" data-i18n="short">Short</button>
+      <button class="choice length" data-words="150" data-i18n="medium">Medium</button>
+      <button class="choice length" data-words="220" data-i18n="long">Long</button>
     </div>
-    <p class="setup-lead" data-i18n="questionLanguageHelp">Choose the language used for the comprehension questions and multiple-choice options.</p>
-    <div class="level-grid question-language-grid">
-      <button class="choice question-language selected" data-question-language="target">
-        <span class="level-name" data-i18n="questionLanguageTarget">Target language</span>
-      </button>
-      <button class="choice question-language" data-question-language="interface">
-        <span class="level-name" data-i18n="questionLanguageInterface">Website language</span>
-      </button>
+
+    <div class="helper" data-i18n="inspiration">Need inspiration?</div>
+
+    <div class="example-grid">
+      <button class="choice example" data-key="travel" data-i18n="travel">Travel</button>
+      <button class="choice example" data-key="city" data-i18n="city">City life</button>
+      <button class="choice example" data-key="technology" data-i18n="technology">Technology</button>
+      <button class="choice example" data-key="culture" data-i18n="culture">Culture</button>
     </div>
   </section>
 
   <section class="panel">
 
     <div class="section-head">
-      <div class="number">5</div>
+      <div class="number">2</div>
       <div class="section-title" data-i18n="generateTitle">Generate reading activity</div>
     </div>
 
@@ -846,7 +558,7 @@ input[type=text]:focus{
     <div id="exercise" class="exercise">
 
       <div class="section-head">
-        <div class="number">6</div>
+        <div class="number">3</div>
         <div class="section-title" data-i18n="readTitle">Read the text</div>
       </div>
 
@@ -854,18 +566,17 @@ input[type=text]:focus{
 
       <div class="read-controls">
         <button id="listenBtn" class="listen-btn" data-i18n="listen">🔊 Listen to the text</button>
-        <button id="pauseBtn" class="listen-btn" data-i18n="pause" disabled>⏸ Pause</button>
       </div>
 
       <div class="section-head" style="margin-top:24px">
-        <div class="number">7</div>
+        <div class="number">4</div>
         <div class="section-title" data-i18n="quizTitle">Comprehension</div>
       </div>
 
       <div id="quiz"></div>
 
       <div class="section-head" style="margin-top:24px">
-        <div class="number">8</div>
+        <div class="number">5</div>
         <div class="section-title" data-i18n="vocabTitle">Vocabulary in context</div>
       </div>
 
@@ -899,7 +610,7 @@ input[type=text]:focus{
 
   <section class="panel">
     <div class="section-head">
-      <div class="number">8</div>
+      <div class="number">6</div>
       <div class="section-title" data-i18n="restart">Restart</div>
     </div>
     <button id="clearBtn" class="secondary-btn" data-i18n="clear">Clear everything</button>
@@ -917,79 +628,18 @@ input[type=text]:focus{
 document.addEventListener('DOMContentLoaded',()=>{
 
 const T={
-en:{
-    levelPrompt:'Choose the option that feels right for you today.',
-    beginnerNote:'Build useful natural expressions for simple everyday situations.',
-    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
-    advancedNote:'Work with richer, more nuanced and idiomatic language.',
-    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',tagline:'Learn any language your way',changeLanguages:'Activities / change languages',title:'Reading Challenge',intro:'Read a short text, answer the questions and work out vocabulary from context.',choose:'Choose how you want to work',levelPrompt:'Start by choosing the level that feels right for you.',beginnerNote:'Clear, accessible language and shorter sentences.',intermediateNote:'Natural language with more variety and useful detail.',advancedNote:'Richer, more nuanced and idiomatic language.',topicGuidance:'Write something you would genuinely like to read about.',lengthGuidance:'Choose how much you want to read this time.',ownTopic:'Choose your topic',topicPlaceholder:'For example: city life, travel, sport, technology...',beginner:'Revising the basics',intermediate:'Building confidence',advanced:'More advanced',lengthLabel:'Choose the text length',short:'Short',medium:'Medium',long:'Long',inspiration:'Or choose a quick idea:',travel:'Travel',city:'City life',technology:'Technology',culture:'Culture',generateTitle:'Generate reading activity',generate:'Generate reading challenge',generating:'Generating the reading activity…',waiting:'Your activity will appear here.',readTitle:'Read the text',listen:'🔊 Listen to the text',quizTitle:'Comprehension',vocabTitle:'Vocabulary in context',check:'Check answers',newExercise:'New activity',readingScore:'Comprehension',vocabScore:'Vocabulary',totalScore:'Total',restart:'Restart',clear:'Clear everything',selectLevel:'Select a level first.',selectLength:'Choose a text length.',enterTopic:'Write a topic or choose an example.',serverError:'The activity could not be generated.',playing:'Playing text…',answerAll:'Answer all the questions first.',perfect:'Excellent. You understood the text and vocabulary very well.',some:'Good work. Review the text and try the difficult questions again.'},
-ca:{
-    levelPrompt:'Tria l’opció que et vagi millor avui.',
-    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
-    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
-    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
-    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',title:'Repte de lectura',intro:'Llegeix un text breu, respon les preguntes i dedueix vocabulari pel context.',choose:'Tria com vols treballar',levelPrompt:'Comença triant el nivell que et sembli més adequat.',beginnerNote:'Llengua clara i accessible, amb frases més curtes.',intermediateNote:'Llengua natural amb més varietat i detalls útils.',advancedNote:'Llengua més rica, matisada i idiomàtica.',topicGuidance:'Escriu alguna cosa que realment t\'agradaria llegir.',lengthGuidance:'Decideix quant vols llegir aquesta vegada.',ownTopic:'Tria el teu tema',topicPlaceholder:'Per exemple: vida urbana, viatges, esport, tecnologia...',beginner:'Repassar les bases',intermediate:'Guanyar confiança',advanced:'Més avançat',lengthLabel:'Tria la llargada del text',short:'Curt',medium:'Mitjà',long:'Llarg',inspiration:'O tria una idea ràpida:',travel:'Viatges',city:'Vida urbana',technology:'Tecnologia',culture:'Cultura',generateTitle:'Genera l’activitat de lectura',generate:'Genera el repte de lectura',generating:'Generant l’activitat de lectura…',waiting:'L’activitat apareixerà aquí.',readTitle:'Llegeix el text',listen:'🔊 Escolta el text',quizTitle:'Comprensió',vocabTitle:'Vocabulari en context',check:'Comprova les respostes',newExercise:'Activitat nova',readingScore:'Comprensió',vocabScore:'Vocabulari',totalScore:'Total',restart:'Reinicia',clear:'Esborra-ho tot',selectLevel:'Primer has de seleccionar un nivell.',selectLength:'Tria una llargada.',enterTopic:'Escriu un tema o tria un exemple.',serverError:'No s’ha pogut generar l’activitat.',playing:'Reproduint el text…',answerAll:'Respon totes les preguntes.',perfect:'Excel·lent. Has entès molt bé el text i el vocabulari.',some:'Bona feina. Repassa el text i torna a provar les preguntes més difícils.'},
-es:{
-    levelPrompt:'Elige la opción que mejor te vaya hoy.',
-    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
-    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
-    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
-    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',title:'Reto de lectura',intro:'Lee un texto breve, responde las preguntas y deduce vocabulario por el contexto.',choose:'Elige cómo quieres trabajar',levelPrompt:'Empieza eligiendo el nivel que te parezca adecuado.',beginnerNote:'Lenguaje claro y accesible, con frases más cortas.',intermediateNote:'Lenguaje natural con más variedad y detalles útiles.',advancedNote:'Lenguaje más rico, matizado e idiomático.',topicGuidance:'Escribe algo sobre lo que realmente te gustaría leer.',lengthGuidance:'Decide cuánto quieres leer esta vez.',ownTopic:'Elige tu tema',topicPlaceholder:'Por ejemplo: vida urbana, viajes, deporte, tecnología...',beginner:'Repasar lo básico',intermediate:'Ganar confianza',advanced:'Más avanzado',lengthLabel:'Elige la longitud del texto',short:'Corto',medium:'Medio',long:'Largo',inspiration:'O elige una idea rápida:',travel:'Viajes',city:'Vida urbana',technology:'Tecnología',culture:'Cultura',generateTitle:'Genera la actividad de lectura',generate:'Generar reto de lectura',generating:'Generando la actividad de lectura…',waiting:'La actividad aparecerá aquí.',readTitle:'Lee el texto',listen:'🔊 Escuchar el texto',quizTitle:'Comprensión',vocabTitle:'Vocabulario en contexto',check:'Comprobar respuestas',newExercise:'Nueva actividad',readingScore:'Comprensión',vocabScore:'Vocabulario',totalScore:'Total',restart:'Reiniciar',clear:'Borrar todo',selectLevel:'Primero selecciona un nivel.',selectLength:'Elige una longitud.',enterTopic:'Escribe un tema o elige un ejemplo.',serverError:'No se ha podido generar la actividad.',playing:'Reproduciendo el texto…',answerAll:'Responde todas las preguntas primero.',perfect:'Excelente. Has entendido muy bien el texto y el vocabulario.',some:'Buen trabajo. Revisa el texto y vuelve a intentar las preguntas difíciles.'},
-fr:{
-    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
-    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
-    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
-    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
-    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',title:'Défi de lecture',intro:'Lisez un court texte, répondez aux questions et déduisez le vocabulaire grâce au contexte.',choose:'Choisissez votre façon de travailler',levelPrompt:'Commencez par choisir le niveau qui vous convient.',beginnerNote:'Une langue claire et accessible, avec des phrases plus courtes.',intermediateNote:'Une langue naturelle, plus variée et plus détaillée.',advancedNote:'Une langue plus riche, nuancée et idiomatique.',topicGuidance:'Écrivez un sujet que vous aimeriez vraiment lire.',lengthGuidance:'Décidez combien vous souhaitez lire cette fois.',ownTopic:'Choisissez votre thème',topicPlaceholder:'Par exemple : vie urbaine, voyages, sport, technologie...',beginner:'Revoir les bases',intermediate:'Prendre confiance',advanced:'Plus avancé',lengthLabel:'Choisissez la longueur du texte',short:'Court',medium:'Moyen',long:'Long',inspiration:'Ou choisissez une idée rapide :',travel:'Voyages',city:'Vie urbaine',technology:'Technologie',culture:'Culture',generateTitle:'Générez l’activité de lecture',generate:'Générer le défi de lecture',generating:'Génération de l’activité de lecture…',waiting:'L’activité apparaîtra ici.',readTitle:'Lisez le texte',listen:'🔊 Écouter le texte',quizTitle:'Compréhension',vocabTitle:'Vocabulaire en contexte',check:'Vérifier les réponses',newExercise:'Nouvelle activité',readingScore:'Compréhension',vocabScore:'Vocabulaire',totalScore:'Total',restart:'Recommencer',clear:'Tout effacer',selectLevel:'Choisissez d’abord un niveau.',selectLength:'Choisissez une longueur.',enterTopic:'Écrivez un thème ou choisissez un exemple.',serverError:'Impossible de générer l’activité.',playing:'Lecture du texte…',answerAll:'Répondez d’abord à toutes les questions.',perfect:'Excellent. Vous avez très bien compris le texte et le vocabulaire.',some:'Bon travail. Relisez le texte et réessayez les questions difficiles.'},
-de:{
-    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
-    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
-    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
-    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
-    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',title:'Lese-Challenge',intro:'Lies einen kurzen Text, beantworte die Fragen und erschließe Wortschatz aus dem Kontext.',choose:'Wähle, wie du arbeiten möchtest',levelPrompt:'Wähle zuerst das Niveau, das sich für dich richtig anfühlt.',beginnerNote:'Klare, zugängliche Sprache mit kürzeren Sätzen.',intermediateNote:'Natürliche Sprache mit mehr Abwechslung und nützlichen Details.',advancedNote:'Reichere, nuanciertere und idiomatischere Sprache.',topicGuidance:'Schreibe über etwas, das du wirklich gern lesen möchtest.',lengthGuidance:'Entscheide, wie viel du diesmal lesen möchtest.',ownTopic:'Wähle dein Thema',topicPlaceholder:'Zum Beispiel: Stadtleben, Reisen, Sport, Technologie ...',beginner:'Grundlagen auffrischen',intermediate:'Sicherheit gewinnen',advanced:'Weiter fortgeschrittener',lengthLabel:'Wähle die Textlänge',short:'Kurz',medium:'Mittel',long:'Lang',inspiration:'Oder wähle eine schnelle Idee:',travel:'Reisen',city:'Stadtleben',technology:'Technologie',culture:'Kultur',generateTitle:'Leseaktivität erstellen',generate:'Lese-Challenge erstellen',generating:'Leseaktivität wird erstellt…',waiting:'Die Aktivität erscheint hier.',readTitle:'Text lesen',listen:'🔊 Text anhören',quizTitle:'Leseverstehen',vocabTitle:'Wortschatz im Kontext',check:'Antworten prüfen',newExercise:'Neue Aktivität',readingScore:'Verstehen',vocabScore:'Wortschatz',totalScore:'Gesamt',restart:'Neu starten',clear:'Alles löschen',selectLevel:'Wähle zuerst ein Niveau.',selectLength:'Wähle eine Textlänge.',enterTopic:'Gib ein Thema ein oder wähle ein Beispiel.',serverError:'Die Aktivität konnte nicht erstellt werden.',playing:'Text wird vorgelesen…',answerAll:'Beantworte zuerst alle Fragen.',perfect:'Ausgezeichnet. Du hast Text und Wortschatz sehr gut verstanden.',some:'Gute Arbeit. Lies den Text noch einmal und versuche die schwierigen Fragen erneut.'},
-it:{
-    levelPrompt:'Scegli l’opzione che ti sembra più adatta oggi.',
-    beginnerNote:'Costruisci espressioni naturali e utili per semplici situazioni quotidiane.',
-    intermediateNote:'Usa un linguaggio quotidiano più flessibile e naturale con maggiore sicurezza.',
-    advancedNote:'Lavora con un linguaggio più ricco, sfumato e idiomatico.',
-    topicGuidance:'Scrivi qualcosa che vorresti davvero saper gestire in una conversazione quotidiana.',tagline:'Impara qualsiasi lingua a modo tuo',changeLanguages:'Attività / cambia lingue',title:'Sfida di lettura',intro:'Leggi un breve testo, rispondi alle domande e deduci il vocabolario dal contesto.',choose:'Scegli come vuoi lavorare',levelPrompt:'Inizia scegliendo il livello che ti sembra più adatto.',beginnerNote:'Lingua chiara e accessibile, con frasi più brevi.',intermediateNote:'Lingua naturale con più varietà e dettagli utili.',advancedNote:'Lingua più ricca, sfumata e idiomatica.',topicGuidance:'Scrivi qualcosa che ti piacerebbe davvero leggere.',lengthGuidance:'Decidi quanto vuoi leggere questa volta.',ownTopic:'Scegli il tuo argomento',topicPlaceholder:'Per esempio: vita in città, viaggi, sport, tecnologia...',beginner:'Ripassare le basi',intermediate:'Acquistare sicurezza',advanced:'Più avanzato',lengthLabel:'Scegli la lunghezza del testo',short:'Breve',medium:'Media',long:'Lunga',inspiration:'Oppure scegli un\'idea rapida:',travel:'Viaggi',city:'Vita in città',technology:'Tecnologia',culture:'Cultura',generateTitle:'Genera attività di lettura',generate:'Genera sfida di lettura',generating:'Generazione dell’attività di lettura…',waiting:'L’attività apparirà qui.',readTitle:'Leggi il testo',listen:'🔊 Ascolta il testo',quizTitle:'Comprensione',vocabTitle:'Vocabolario nel contesto',check:'Controlla le risposte',newExercise:'Nuova attività',readingScore:'Comprensione',vocabScore:'Vocabolario',totalScore:'Totale',restart:'Ricomincia',clear:'Cancella tutto',selectLevel:'Seleziona prima un livello.',selectLength:'Scegli una lunghezza.',enterTopic:'Scrivi un argomento o scegli un esempio.',serverError:'Non è stato possibile generare l’attività.',playing:'Riproduzione del testo…',answerAll:'Rispondi prima a tutte le domande.',perfect:'Ottimo. Hai capito molto bene il testo e il vocabolario.',some:'Buon lavoro. Rileggi il testo e riprova le domande difficili.'},
-pt:{
-    levelPrompt:'Escolha a opção que lhe parecer mais adequada hoje.',
-    beginnerNote:'Construa expressões naturais e úteis para situações simples do dia a dia.',
-    intermediateNote:'Use uma linguagem quotidiana mais flexível e natural com maior confiança.',
-    advancedNote:'Trabalhe com uma linguagem mais rica, matizada e idiomática.',
-    topicGuidance:'Escreva algo que gostaria realmente de saber gerir numa conversa do dia a dia.',tagline:'Aprenda qualquer idioma à sua maneira',changeLanguages:'Atividades / mudar idiomas',title:'Desafio de leitura',intro:'Leia um texto curto, responda às perguntas e deduza vocabulário pelo contexto.',choose:'Escolha como quer trabalhar',levelPrompt:'Comece por escolher o nível que lhe parece mais adequado.',beginnerNote:'Linguagem clara e acessível, com frases mais curtas.',intermediateNote:'Linguagem natural com mais variedade e detalhes úteis.',advancedNote:'Linguagem mais rica, matizada e idiomática.',topicGuidance:'Escreva algo sobre o qual gostaria realmente de ler.',lengthGuidance:'Decida quanto quer ler desta vez.',ownTopic:'Escolha o seu tema',topicPlaceholder:'Por exemplo: vida urbana, viagens, desporto, tecnologia...',beginner:'Rever as bases',intermediate:'Ganhar confiança',advanced:'Mais avançado',lengthLabel:'Escolha o comprimento do texto',short:'Curto',medium:'Médio',long:'Longo',inspiration:'Ou escolha uma ideia rápida:',travel:'Viagens',city:'Vida urbana',technology:'Tecnologia',culture:'Cultura',generateTitle:'Gerar atividade de leitura',generate:'Gerar desafio de leitura',generating:'A gerar a atividade de leitura…',waiting:'A atividade aparecerá aqui.',readTitle:'Leia o texto',listen:'🔊 Ouvir o texto',quizTitle:'Compreensão',vocabTitle:'Vocabulário em contexto',check:'Verificar respostas',newExercise:'Nova atividade',readingScore:'Compreensão',vocabScore:'Vocabulário',totalScore:'Total',restart:'Reiniciar',clear:'Apagar tudo',selectLevel:'Primeiro selecione um nível.',selectLength:'Escolha um comprimento.',enterTopic:'Escreva um tema ou escolha um exemplo.',serverError:'Não foi possível gerar a atividade.',playing:'A reproduzir o texto…',answerAll:'Responda primeiro a todas as perguntas.',perfect:'Excelente. Compreendeu muito bem o texto e o vocabulário.',some:'Bom trabalho. Leia o texto novamente e tente as perguntas difíceis outra vez.'},
-eu:{
-    levelPrompt:'Aukeratu gaur egokien iruditzen zaizun aukera.',
-    beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde natural eta erabilgarriak.',
-    intermediateNote:'Erabili eguneroko hizkera malguago eta naturalagoa, konfiantza handiagoz.',
-    advancedNote:'Landu hizkera aberatsagoa, ñabarduratsuagoa eta idiomatikoagoa.',
-    topicGuidance:'Idatzi eguneroko elkarrizketa batean benetan landu nahiko zenukeen egoera bat.',tagline:'Ikasi edozein hizkuntza zure erara',changeLanguages:'Jarduerak / hizkuntzak aldatu',title:'Irakurketa-erronka',intro:'Irakurri testu labur bat, erantzun galderei eta ondorioztatu hiztegia testuingurutik.',choose:'Aukeratu nola lan egin nahi duzun',levelPrompt:'Hasi zuretzat egokia den maila aukeratuz.',beginnerNote:'Hizkuntza argia eta eskuragarria, esaldi laburragoekin.',intermediateNote:'Hizkuntza naturala, barietate eta xehetasun erabilgarri gehiagorekin.',advancedNote:'Hizkuntza aberatsagoa, ñabartuagoa eta idiomatikoagoa.',topicGuidance:'Idatzi benetan irakurri nahiko zenukeen gai bati buruz.',lengthGuidance:'Erabaki zenbat irakurri nahi duzun oraingoan.',ownTopic:'Aukeratu zure gaia',topicPlaceholder:'Adibidez: hiriko bizitza, bidaiak, kirola, teknologia...',beginner:'Oinarriak berrikusi',intermediate:'Konfiantza sendotu',advanced:'Aurreratuagoa',lengthLabel:'Aukeratu testuaren luzera',short:'Laburra',medium:'Ertaina',long:'Luzea',inspiration:'Edo aukeratu ideia azkar bat:',travel:'Bidaiak',city:'Hiriko bizitza',technology:'Teknologia',culture:'Kultura',generateTitle:'Sortu irakurketa-jarduera',generate:'Sortu irakurketa-erronka',generating:'Irakurketa-jarduera sortzen…',waiting:'Jarduera hemen agertuko da.',readTitle:'Irakurri testua',listen:'🔊 Entzun testua',quizTitle:'Ulermena',vocabTitle:'Hiztegia testuinguruan',check:'Egiaztatu erantzunak',newExercise:'Jarduera berria',readingScore:'Ulermena',vocabScore:'Hiztegia',totalScore:'Guztira',restart:'Berrabiarazi',clear:'Garbitu dena',selectLevel:'Aukeratu maila lehenik.',selectLength:'Aukeratu testuaren luzera.',enterTopic:'Idatzi gai bat edo aukeratu adibide bat.',serverError:'Ezin izan da jarduera sortu.',playing:'Testua erreproduzitzen…',answerAll:'Erantzun galdera guztiei lehenik.',perfect:'Bikain. Testua eta hiztegia oso ondo ulertu dituzu.',some:'Lan ona. Irakurri berriro testua eta saiatu galdera zailenekin berriro.'},
-ja:{
-    levelPrompt:'今日の自分に合うレベルを選んでください。',
-    beginnerNote:'簡単な日常場面で役立つ自然な表現を身につけます。',
-    intermediateNote:'より柔軟で自然な日常表現を、自信を持って使えるようにします。',
-    advancedNote:'より豊かでニュアンスのある自然な表現に取り組みます。',
-    topicGuidance:'日常会話で実際に対応できるようになりたいことを書いてください。',tagline:'好きな方法でどんな言語でも学ぼう',changeLanguages:'アクティビティ / 言語を変更',title:'読解チャレンジ',intro:'短い文章を読み、質問に答え、文脈から語彙の意味を考えます。',choose:'学び方を選びましょう',levelPrompt:'まず、自分に合っていると感じるレベルを選んでください。',beginnerNote:'短めの文を使った、分かりやすく取り組みやすい言葉。',intermediateNote:'より多様で役立つ内容を含む自然な言葉。',advancedNote:'より豊かでニュアンスのある自然な表現。',topicGuidance:'本当に読んでみたい内容を書いてください。',lengthGuidance:'今回はどのくらい読むか選んでください。',ownTopic:'トピックを選ぶ',topicPlaceholder:'例：都会の生活、旅行、スポーツ、テクノロジー...',beginner:'基礎を復習',intermediate:'自信をつける',advanced:'さらに上級',lengthLabel:'文章の長さを選ぶ',short:'短い',medium:'普通',long:'長い',inspiration:'または簡単な例から選ぶ：',travel:'旅行',city:'都会の生活',technology:'テクノロジー',culture:'文化',generateTitle:'読解問題を作成',generate:'読解チャレンジを作成',generating:'読解問題を作成中…',waiting:'アクティビティはここに表示されます。',readTitle:'文章を読む',listen:'🔊 文章を聞く',quizTitle:'読解',vocabTitle:'文脈の中の語彙',check:'答えを確認',newExercise:'新しいアクティビティ',readingScore:'読解',vocabScore:'語彙',totalScore:'合計',restart:'リセット',clear:'すべて消去',selectLevel:'最初にレベルを選んでください。',selectLength:'文章の長さを選んでください。',enterTopic:'トピックを書くか、例を選んでください。',serverError:'アクティビティを作成できませんでした。',playing:'文章を再生中…',answerAll:'最初にすべての質問に答えてください。',perfect:'素晴らしいです。文章と語彙をよく理解できました。',some:'よくできました。文章を読み直し、難しい問題にもう一度挑戦してください。'},
-ar:{
-    levelPrompt:'اختر المستوى الذي يناسبك اليوم.',
-    beginnerNote:'تعلّم تعبيرات طبيعية ومفيدة للمواقف اليومية البسيطة.',
-    intermediateNote:'استخدم لغة يومية أكثر مرونة وطبيعية بثقة أكبر.',
-    advancedNote:'تدرّب على لغة أكثر ثراءً ودقةً وطبيعية.',
-    topicGuidance:'اكتب موقفًا تود فعلًا أن تتمكن من التعامل معه في محادثة يومية.',tagline:'تعلّم أي لغة بطريقتك',changeLanguages:'الأنشطة / تغيير اللغات',title:'تحدي القراءة',intro:'اقرأ نصًا قصيرًا وأجب عن الأسئلة واستنتج معاني الكلمات من السياق.',choose:'اختر الطريقة التي تريد أن تعمل بها',levelPrompt:'ابدأ باختيار المستوى الذي تشعر أنه مناسب لك.',beginnerNote:'لغة واضحة وسهلة مع جمل أقصر.',intermediateNote:'لغة طبيعية أكثر تنوعًا مع تفاصيل مفيدة.',advancedNote:'لغة أغنى وأكثر دقة وطبيعية.',topicGuidance:'اكتب عن شيء ترغب فعلًا في القراءة عنه.',lengthGuidance:'حدد مقدار ما تريد قراءته هذه المرة.',ownTopic:'اختر موضوعك',topicPlaceholder:'مثلاً: الحياة في المدينة، السفر، الرياضة، التكنولوجيا...',beginner:'مراجعة الأساسيات',intermediate:'بناء الثقة',advanced:'مستوى أكثر تقدمًا',lengthLabel:'اختر طول النص',short:'قصير',medium:'متوسط',long:'طويل',inspiration:'أو اختر فكرة سريعة:',travel:'السفر',city:'الحياة في المدينة',technology:'التكنولوجيا',culture:'الثقافة',generateTitle:'أنشئ نشاط القراءة',generate:'أنشئ تحدي القراءة',generating:'جارٍ إنشاء نشاط القراءة…',waiting:'سيظهر النشاط هنا.',readTitle:'اقرأ النص',listen:'🔊 استمع إلى النص',quizTitle:'الفهم',vocabTitle:'المفردات في السياق',check:'تحقق من الإجابات',newExercise:'نشاط جديد',readingScore:'الفهم',vocabScore:'المفردات',totalScore:'المجموع',restart:'إعادة البدء',clear:'مسح الكل',selectLevel:'اختر مستوى أولاً.',selectLength:'اختر طول النص.',enterTopic:'اكتب موضوعًا أو اختر مثالًا.',serverError:'تعذر إنشاء النشاط.',playing:'جارٍ تشغيل النص…',answerAll:'أجب عن جميع الأسئلة أولاً.',perfect:'ممتاز. فهمت النص والمفردات جيدًا جدًا.',some:'عمل جيد. أعد قراءة النص وحاول مرة أخرى مع الأسئلة الصعبة.'}
+en:{tagline:'Learn any language your way',changeLanguages:'Activities / change languages',title:'Reading Challenge',intro:'Read a short text, answer the questions and work out vocabulary from context.',choose:'Choose the level, topic and length',ownTopic:'Write your own topic',topicPlaceholder:'For example: city life, travel, sport, technology...',beginner:'Beginner (A1–A2)',intermediate:'Intermediate (B1–B2)',advanced:'Advanced (C1–C2)',lengthLabel:'Choose the length:',short:'Short',medium:'Medium',long:'Long',inspiration:'Need inspiration?',travel:'Travel',city:'City life',technology:'Technology',culture:'Culture',generateTitle:'Generate reading activity',generate:'Generate reading challenge',generating:'Generating the reading activity…',waiting:'Your activity will appear here.',readTitle:'Read the text',listen:'🔊 Listen to the text',quizTitle:'Comprehension',vocabTitle:'Vocabulary in context',check:'Check answers',newExercise:'New activity',readingScore:'Comprehension',vocabScore:'Vocabulary',totalScore:'Total',restart:'Restart',clear:'Clear everything',selectLevel:'Select a level first.',selectLength:'Choose a text length.',enterTopic:'Write a topic or choose an example.',serverError:'The activity could not be generated.',playing:'Playing text…',answerAll:'Answer all the questions first.',perfect:'Excellent. You understood the text and vocabulary very well.',some:'Good work. Review the text and try the difficult questions again.'},
+ca:{tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',title:'Repte de lectura',intro:'Llegeix un text breu, respon les preguntes i dedueix vocabulari pel context.',choose:'Tria el nivell, el tema i la llargada',ownTopic:'Escriu el teu propi tema',topicPlaceholder:'Per exemple: vida urbana, viatges, esport, tecnologia...',beginner:'Inicial (A1–A2)',intermediate:'Intermedi (B1–B2)',advanced:'Avançat (C1–C2)',lengthLabel:'Tria la llargada:',short:'Curt',medium:'Mitjà',long:'Llarg',inspiration:'Necessites inspiració?',travel:'Viatges',city:'Vida urbana',technology:'Tecnologia',culture:'Cultura',generateTitle:'Genera l’activitat de lectura',generate:'Genera el repte de lectura',generating:'Generant l’activitat de lectura…',waiting:'L’activitat apareixerà aquí.',readTitle:'Llegeix el text',listen:'🔊 Escolta el text',quizTitle:'Comprensió',vocabTitle:'Vocabulari en context',check:'Comprova les respostes',newExercise:'Activitat nova',readingScore:'Comprensió',vocabScore:'Vocabulari',totalScore:'Total',restart:'Reinicia',clear:'Esborra-ho tot',selectLevel:'Primer has de seleccionar un nivell.',selectLength:'Tria una llargada.',enterTopic:'Escriu un tema o tria un exemple.',serverError:'No s’ha pogut generar l’activitat.',playing:'Reproduint el text…',answerAll:'Respon totes les preguntes.',perfect:'Excel·lent. Has entès molt bé el text i el vocabulari.',some:'Bona feina. Repassa el text i torna a provar les preguntes més difícils.'},
+es:{tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',title:'Reto de lectura',intro:'Lee un texto breve, responde las preguntas y deduce vocabulario por el contexto.',choose:'Elige el nivel, el tema y la longitud',ownTopic:'Escribe tu propio tema',topicPlaceholder:'Por ejemplo: vida urbana, viajes, deporte, tecnología...',beginner:'Inicial (A1–A2)',intermediate:'Intermedio (B1–B2)',advanced:'Avanzado (C1–C2)',lengthLabel:'Elige la longitud:',short:'Corto',medium:'Medio',long:'Largo',inspiration:'¿Necesitas inspiración?',travel:'Viajes',city:'Vida urbana',technology:'Tecnología',culture:'Cultura',generateTitle:'Genera la actividad de lectura',generate:'Generar reto de lectura',generating:'Generando la actividad de lectura…',waiting:'La actividad aparecerá aquí.',readTitle:'Lee el texto',listen:'🔊 Escuchar el texto',quizTitle:'Comprensión',vocabTitle:'Vocabulario en contexto',check:'Comprobar respuestas',newExercise:'Nueva actividad',readingScore:'Comprensión',vocabScore:'Vocabulario',totalScore:'Total',restart:'Reiniciar',clear:'Borrar todo',selectLevel:'Primero selecciona un nivel.',selectLength:'Elige una longitud.',enterTopic:'Escribe un tema o elige un ejemplo.',serverError:'No se ha podido generar la actividad.',playing:'Reproduciendo el texto…',answerAll:'Responde todas las preguntas primero.',perfect:'Excelente. Has entendido muy bien el texto y el vocabulario.',some:'Buen trabajo. Revisa el texto y vuelve a intentar las preguntas difíciles.'},
+fr:{tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',title:'Défi de lecture',intro:'Lisez un court texte, répondez aux questions et déduisez le vocabulaire grâce au contexte.',choose:'Choisissez le niveau, le thème et la longueur',ownTopic:'Écrivez votre propre thème',topicPlaceholder:'Par exemple : vie urbaine, voyages, sport, technologie...',beginner:'Débutant (A1–A2)',intermediate:'Intermédiaire (B1–B2)',advanced:'Avancé (C1–C2)',lengthLabel:'Choisissez la longueur :',short:'Court',medium:'Moyen',long:'Long',inspiration:'Besoin d’inspiration ?',travel:'Voyages',city:'Vie urbaine',technology:'Technologie',culture:'Culture',generateTitle:'Générez l’activité de lecture',generate:'Générer le défi de lecture',generating:'Génération de l’activité de lecture…',waiting:'L’activité apparaîtra ici.',readTitle:'Lisez le texte',listen:'🔊 Écouter le texte',quizTitle:'Compréhension',vocabTitle:'Vocabulaire en contexte',check:'Vérifier les réponses',newExercise:'Nouvelle activité',readingScore:'Compréhension',vocabScore:'Vocabulaire',totalScore:'Total',restart:'Recommencer',clear:'Tout effacer',selectLevel:'Choisissez d’abord un niveau.',selectLength:'Choisissez une longueur.',enterTopic:'Écrivez un thème ou choisissez un exemple.',serverError:'Impossible de générer l’activité.',playing:'Lecture du texte…',answerAll:'Répondez d’abord à toutes les questions.',perfect:'Excellent. Vous avez très bien compris le texte et le vocabulaire.',some:'Bon travail. Relisez le texte et réessayez les questions difficiles.'},
+de:{tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',title:'Lese-Challenge',intro:'Lies einen kurzen Text, beantworte die Fragen und erschließe Wortschatz aus dem Kontext.',choose:'Niveau, Thema und Länge wählen',ownTopic:'Eigenes Thema eingeben',topicPlaceholder:'Zum Beispiel: Stadtleben, Reisen, Sport, Technologie ...',beginner:'Anfänger (A1–A2)',intermediate:'Mittelstufe (B1–B2)',advanced:'Fortgeschritten (C1–C2)',lengthLabel:'Textlänge wählen:',short:'Kurz',medium:'Mittel',long:'Lang',inspiration:'Brauchst du Inspiration?',travel:'Reisen',city:'Stadtleben',technology:'Technologie',culture:'Kultur',generateTitle:'Leseaktivität erstellen',generate:'Lese-Challenge erstellen',generating:'Leseaktivität wird erstellt…',waiting:'Die Aktivität erscheint hier.',readTitle:'Text lesen',listen:'🔊 Text anhören',quizTitle:'Leseverstehen',vocabTitle:'Wortschatz im Kontext',check:'Antworten prüfen',newExercise:'Neue Aktivität',readingScore:'Verstehen',vocabScore:'Wortschatz',totalScore:'Gesamt',restart:'Neu starten',clear:'Alles löschen',selectLevel:'Wähle zuerst ein Niveau.',selectLength:'Wähle eine Textlänge.',enterTopic:'Gib ein Thema ein oder wähle ein Beispiel.',serverError:'Die Aktivität konnte nicht erstellt werden.',playing:'Text wird vorgelesen…',answerAll:'Beantworte zuerst alle Fragen.',perfect:'Ausgezeichnet. Du hast Text und Wortschatz sehr gut verstanden.',some:'Gute Arbeit. Lies den Text noch einmal und versuche die schwierigen Fragen erneut.'},
+it:{tagline:'Impara qualsiasi lingua a modo tuo',changeLanguages:'Attività / cambia lingue',title:'Sfida di lettura',intro:'Leggi un breve testo, rispondi alle domande e deduci il vocabolario dal contesto.',choose:'Scegli livello, argomento e lunghezza',ownTopic:'Scrivi il tuo argomento',topicPlaceholder:'Per esempio: vita in città, viaggi, sport, tecnologia...',beginner:'Principiante (A1–A2)',intermediate:'Intermedio (B1–B2)',advanced:'Avanzato (C1–C2)',lengthLabel:'Scegli la lunghezza:',short:'Breve',medium:'Media',long:'Lunga',inspiration:'Hai bisogno di ispirazione?',travel:'Viaggi',city:'Vita in città',technology:'Tecnologia',culture:'Cultura',generateTitle:'Genera attività di lettura',generate:'Genera sfida di lettura',generating:'Generazione dell’attività di lettura…',waiting:'L’attività apparirà qui.',readTitle:'Leggi il testo',listen:'🔊 Ascolta il testo',quizTitle:'Comprensione',vocabTitle:'Vocabolario nel contesto',check:'Controlla le risposte',newExercise:'Nuova attività',readingScore:'Comprensione',vocabScore:'Vocabolario',totalScore:'Totale',restart:'Ricomincia',clear:'Cancella tutto',selectLevel:'Seleziona prima un livello.',selectLength:'Scegli una lunghezza.',enterTopic:'Scrivi un argomento o scegli un esempio.',serverError:'Non è stato possibile generare l’attività.',playing:'Riproduzione del testo…',answerAll:'Rispondi prima a tutte le domande.',perfect:'Ottimo. Hai capito molto bene il testo e il vocabolario.',some:'Buon lavoro. Rileggi il testo e riprova le domande difficili.'},
+pt:{tagline:'Aprenda qualquer idioma à sua maneira',changeLanguages:'Atividades / mudar idiomas',title:'Desafio de leitura',intro:'Leia um texto curto, responda às perguntas e deduza vocabulário pelo contexto.',choose:'Escolha o nível, tema e comprimento',ownTopic:'Escreva o seu próprio tema',topicPlaceholder:'Por exemplo: vida urbana, viagens, desporto, tecnologia...',beginner:'Iniciante (A1–A2)',intermediate:'Intermédio (B1–B2)',advanced:'Avançado (C1–C2)',lengthLabel:'Escolha o comprimento:',short:'Curto',medium:'Médio',long:'Longo',inspiration:'Precisa de inspiração?',travel:'Viagens',city:'Vida urbana',technology:'Tecnologia',culture:'Cultura',generateTitle:'Gerar atividade de leitura',generate:'Gerar desafio de leitura',generating:'A gerar a atividade de leitura…',waiting:'A atividade aparecerá aqui.',readTitle:'Leia o texto',listen:'🔊 Ouvir o texto',quizTitle:'Compreensão',vocabTitle:'Vocabulário em contexto',check:'Verificar respostas',newExercise:'Nova atividade',readingScore:'Compreensão',vocabScore:'Vocabulário',totalScore:'Total',restart:'Reiniciar',clear:'Apagar tudo',selectLevel:'Primeiro selecione um nível.',selectLength:'Escolha um comprimento.',enterTopic:'Escreva um tema ou escolha um exemplo.',serverError:'Não foi possível gerar a atividade.',playing:'A reproduzir o texto…',answerAll:'Responda primeiro a todas as perguntas.',perfect:'Excelente. Compreendeu muito bem o texto e o vocabulário.',some:'Bom trabalho. Leia o texto novamente e tente as perguntas difíceis outra vez.'},
+eu:{tagline:'Ikasi edozein hizkuntza zure erara',changeLanguages:'Jarduerak / hizkuntzak aldatu',title:'Irakurketa-erronka',intro:'Irakurri testu labur bat, erantzun galderei eta ondorioztatu hiztegia testuingurutik.',choose:'Aukeratu maila, gaia eta luzera',ownTopic:'Idatzi zure gaia',topicPlaceholder:'Adibidez: hiriko bizitza, bidaiak, kirola, teknologia...',beginner:'Hasiberria (A1–A2)',intermediate:'Tartekoa (B1–B2)',advanced:'Aurreratua (C1–C2)',lengthLabel:'Aukeratu luzera:',short:'Laburra',medium:'Ertaina',long:'Luzea',inspiration:'Inspirazioa behar duzu?',travel:'Bidaiak',city:'Hiriko bizitza',technology:'Teknologia',culture:'Kultura',generateTitle:'Sortu irakurketa-jarduera',generate:'Sortu irakurketa-erronka',generating:'Irakurketa-jarduera sortzen…',waiting:'Jarduera hemen agertuko da.',readTitle:'Irakurri testua',listen:'🔊 Entzun testua',quizTitle:'Ulermena',vocabTitle:'Hiztegia testuinguruan',check:'Egiaztatu erantzunak',newExercise:'Jarduera berria',readingScore:'Ulermena',vocabScore:'Hiztegia',totalScore:'Guztira',restart:'Berrabiarazi',clear:'Garbitu dena',selectLevel:'Aukeratu maila lehenik.',selectLength:'Aukeratu testuaren luzera.',enterTopic:'Idatzi gai bat edo aukeratu adibide bat.',serverError:'Ezin izan da jarduera sortu.',playing:'Testua erreproduzitzen…',answerAll:'Erantzun galdera guztiei lehenik.',perfect:'Bikain. Testua eta hiztegia oso ondo ulertu dituzu.',some:'Lan ona. Irakurri berriro testua eta saiatu galdera zailenekin berriro.'},
+ja:{tagline:'好きな方法でどんな言語でも学ぼう',changeLanguages:'アクティビティ / 言語を変更',title:'読解チャレンジ',intro:'短い文章を読み、質問に答え、文脈から語彙の意味を考えます。',choose:'レベル、トピック、長さを選ぶ',ownTopic:'自分のトピックを書く',topicPlaceholder:'例：都会の生活、旅行、スポーツ、テクノロジー...',beginner:'初級 (A1–A2)',intermediate:'中級 (B1–B2)',advanced:'上級 (C1–C2)',lengthLabel:'長さを選ぶ:',short:'短い',medium:'普通',long:'長い',inspiration:'例から選ぶ:',travel:'旅行',city:'都会の生活',technology:'テクノロジー',culture:'文化',generateTitle:'読解問題を作成',generate:'読解チャレンジを作成',generating:'読解問題を作成中…',waiting:'アクティビティはここに表示されます。',readTitle:'文章を読む',listen:'🔊 文章を聞く',quizTitle:'読解',vocabTitle:'文脈の中の語彙',check:'答えを確認',newExercise:'新しいアクティビティ',readingScore:'読解',vocabScore:'語彙',totalScore:'合計',restart:'リセット',clear:'すべて消去',selectLevel:'最初にレベルを選んでください。',selectLength:'文章の長さを選んでください。',enterTopic:'トピックを書くか、例を選んでください。',serverError:'アクティビティを作成できませんでした。',playing:'文章を再生中…',answerAll:'最初にすべての質問に答えてください。',perfect:'素晴らしいです。文章と語彙をよく理解できました。',some:'よくできました。文章を読み直し、難しい問題にもう一度挑戦してください。'},
+ar:{tagline:'تعلّم أي لغة بطريقتك',changeLanguages:'الأنشطة / تغيير اللغات',title:'تحدي القراءة',intro:'اقرأ نصًا قصيرًا وأجب عن الأسئلة واستنتج معاني الكلمات من السياق.',choose:'اختر المستوى والموضوع والطول',ownTopic:'اكتب موضوعك',topicPlaceholder:'مثلاً: الحياة في المدينة، السفر، الرياضة، التكنولوجيا...',beginner:'مبتدئ (A1–A2)',intermediate:'متوسط (B1–B2)',advanced:'متقدم (C1–C2)',lengthLabel:'اختر الطول:',short:'قصير',medium:'متوسط',long:'طويل',inspiration:'هل تحتاج إلى فكرة؟',travel:'السفر',city:'الحياة في المدينة',technology:'التكنولوجيا',culture:'الثقافة',generateTitle:'أنشئ نشاط القراءة',generate:'أنشئ تحدي القراءة',generating:'جارٍ إنشاء نشاط القراءة…',waiting:'سيظهر النشاط هنا.',readTitle:'اقرأ النص',listen:'🔊 استمع إلى النص',quizTitle:'الفهم',vocabTitle:'المفردات في السياق',check:'تحقق من الإجابات',newExercise:'نشاط جديد',readingScore:'الفهم',vocabScore:'المفردات',totalScore:'المجموع',restart:'إعادة البدء',clear:'مسح الكل',selectLevel:'اختر مستوى أولاً.',selectLength:'اختر طول النص.',enterTopic:'اكتب موضوعًا أو اختر مثالًا.',serverError:'تعذر إنشاء النشاط.',playing:'جارٍ تشغيل النص…',answerAll:'أجب عن جميع الأسئلة أولاً.',perfect:'ممتاز. فهمت النص والمفردات جيدًا جدًا.',some:'عمل جيد. أعد قراءة النص وحاول مرة أخرى مع الأسئلة الصعبة.'}
 };
 
-
-Object.assign(T.en,{questionLanguageTitle:'Choose the comprehension language',questionLanguageHelp:'Choose the language used for the comprehension questions and multiple-choice options.',questionLanguageTarget:'Target language',questionLanguageInterface:'Website language',pause:'⏸ Pause',resume:'▶ Resume',advancedFallback:'This setting may be too demanding for the generator. Try a lower level and/or a shorter text.'});
-Object.assign(T.ca,{questionLanguageTitle:'Tria la llengua de comprensió',questionLanguageHelp:'Tria la llengua de les preguntes de comprensió i de les opcions.',questionLanguageTarget:'Llengua que aprens',questionLanguageInterface:'Llengua del web',pause:'⏸ Pausa',resume:'▶ Continua',advancedFallback:'Aquesta configuració pot ser massa exigent. Prova un nivell més baix i/o un text més curt.'});
-Object.assign(T.es,{questionLanguageTitle:'Elige el idioma de comprensión',questionLanguageHelp:'Elige el idioma de las preguntas de comprensión y de las opciones.',questionLanguageTarget:'Idioma que aprendes',questionLanguageInterface:'Idioma de la web',pause:'⏸ Pausa',resume:'▶ Continuar',advancedFallback:'Esta configuración puede ser demasiado exigente. Prueba un nivel más bajo y/o un texto más corto.'});
-Object.assign(T.fr,{questionLanguageTitle:'Choisissez la langue de compréhension',questionLanguageHelp:'Choisissez la langue des questions de compréhension et des choix de réponse.',questionLanguageTarget:'Langue cible',questionLanguageInterface:'Langue du site',pause:'⏸ Pause',resume:'▶ Reprendre',advancedFallback:'Ce réglage peut être trop exigeant. Essayez un niveau plus bas et/ou un texte plus court.'});
-Object.assign(T.de,{questionLanguageTitle:'Sprache der Verständnisfragen wählen',questionLanguageHelp:'Wähle die Sprache für die Verständnisfragen und Antwortoptionen.',questionLanguageTarget:'Zielsprache',questionLanguageInterface:'Webseitensprache',pause:'⏸ Pause',resume:'▶ Fortsetzen',advancedFallback:'Diese Einstellung kann zu anspruchsvoll sein. Versuche ein niedrigeres Niveau und/oder einen kürzeren Text.'});
-Object.assign(T.it,{questionLanguageTitle:'Scegli la lingua della comprensione',questionLanguageHelp:'Scegli la lingua delle domande di comprensione e delle opzioni.',questionLanguageTarget:'Lingua da imparare',questionLanguageInterface:'Lingua del sito',pause:'⏸ Pausa',resume:'▶ Riprendi',advancedFallback:'Questa impostazione può essere troppo impegnativa. Prova un livello più basso e/o un testo più breve.'});
-Object.assign(T.pt,{questionLanguageTitle:'Escolha a língua da compreensão',questionLanguageHelp:'Escolha a língua das perguntas de compreensão e das opções.',questionLanguageTarget:'Língua-alvo',questionLanguageInterface:'Língua do site',pause:'⏸ Pausa',resume:'▶ Continuar',advancedFallback:'Esta configuração pode ser demasiado exigente. Tente um nível mais baixo e/ou um texto mais curto.'});
-Object.assign(T.eu,{questionLanguageTitle:'Aukeratu ulermen-galderen hizkuntza',questionLanguageHelp:'Aukeratu ulermen-galderen eta aukeren hizkuntza.',questionLanguageTarget:'Ikasten ari zaren hizkuntza',questionLanguageInterface:'Webguneko hizkuntza',pause:'⏸ Pausa',resume:'▶ Jarraitu',advancedFallback:'Ezarpen hau zailegia izan daiteke. Saiatu maila baxuago batekin eta/edo testu laburrago batekin.'});
-Object.assign(T.ja,{questionLanguageTitle:'読解問題の言語を選ぶ',questionLanguageHelp:'読解問題と選択肢に使う言語を選んでください。',questionLanguageTarget:'学習する言語',questionLanguageInterface:'ウェブサイトの言語',pause:'⏸ 一時停止',resume:'▶ 再開',advancedFallback:'この設定は生成が難しい場合があります。レベルを下げるか、文章を短くしてみてください。'});
-Object.assign(T.ar,{questionLanguageTitle:'اختر لغة أسئلة الفهم',questionLanguageHelp:'اختر اللغة المستخدمة في أسئلة الفهم وخيارات الإجابة.',questionLanguageTarget:'اللغة المستهدفة',questionLanguageInterface:'لغة الموقع',pause:'⏸ إيقاف مؤقت',resume:'▶ متابعة',advancedFallback:'قد يكون هذا الإعداد صعبًا على المولد. جرّب مستوى أقل و/أو نصًا أقصر.'});
 const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',ja:'日本語',ar:'العربية'};
 const targetNames={English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',Italian:'Italiano',Portuguese:'Português',Basque:'Euskara',Japanese:'日本語',Arabic:'العربية'};
 const voices={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'};
@@ -1006,7 +656,7 @@ localStorage.setItem('lingototal_target_language',targetLanguage);
 
 const $=id=>document.getElementById(id);
 
-let level='',questionLanguage='target';
+let level='';
 let wordCount=0;
 let activity=null;
 let quizAnswers={};
@@ -1101,8 +751,7 @@ For Japanese, use natural Japanese without artificial spaces.
 For Arabic, use natural Arabic script and punctuation.
 
 Then create exactly FOUR multiple-choice comprehension questions.
-Questions and options must be in ${questionLanguage==='target' ? targetLanguage : uiNames[uiLanguage]}.
-The learner explicitly chose this question language; use it consistently for BOTH the question text and all four options.
+Questions and options must be in this interface language: ${uiNames[uiLanguage]}.
 Each question must have 4 options and exactly one correct answer.
 
 Then select exactly THREE useful content words or short expressions that actually appear in the text.
@@ -1161,46 +810,81 @@ Do not add markdown or commentary.
 `.trim();
 }
 
-let readingUtterance=null;
-let readingPaused=false;
+let readingAudio=null;
+const readingAudioCache=new Map();
 
-function updatePauseButton(){
-  const b=$('pauseBtn');
-  if(!b)return;
-  b.disabled=!readingUtterance;
-  b.textContent=readingPaused?tr('resume'):tr('pause');
-}
+async function speakText(){
+  if(!activity||!activity.text)return;
 
-function stopReading(){
-  if('speechSynthesis'in window)speechSynthesis.cancel();
-  readingUtterance=null;
-  readingPaused=false;
-  updatePauseButton();
-}
+  const language=voices[targetLanguage]||'en-GB';
+  const speakingRate=.95;
+  const cacheKey=`${language}|${speakingRate}|${activity.text}`;
 
-function speakText(){
-  if(!activity||!('speechSynthesis'in window))return;
-  stopReading();
-  readingUtterance=new SpeechSynthesisUtterance(activity.text);
-  readingUtterance.lang=voices[targetLanguage]||'en-GB';
-  readingUtterance.rate=1;
-  readingUtterance.onend=()=>{readingUtterance=null;readingPaused=false;updatePauseButton()};
-  readingUtterance.onerror=()=>{readingUtterance=null;readingPaused=false;updatePauseButton()};
-  speechSynthesis.speak(readingUtterance);
-  updatePauseButton();
-  notice(tr('playing'),'info');
-}
+  try{
+    notice(tr('playing'),'info');
 
-function togglePauseReading(){
-  if(!readingUtterance||!('speechSynthesis'in window))return;
-  if(readingPaused){
-    speechSynthesis.resume();
-    readingPaused=false;
-  }else{
-    speechSynthesis.pause();
-    readingPaused=true;
+    if(readingAudio){
+      try{
+        readingAudio.pause();
+        readingAudio.currentTime=0;
+      }catch(e){}
+      readingAudio=null;
+    }
+
+    let src=readingAudioCache.get(cacheKey);
+
+    if(!src){
+      const response=await fetch('/.netlify/functions/google-tts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          text:activity.text,
+          language,
+          speakingRate
+        })
+      });
+
+      if(!response.ok){
+        let message='Audio could not be generated.';
+        try{
+          const data=await response.json();
+          if(data?.error)message=data.error;
+        }catch(e){}
+        throw new Error(message);
+      }
+
+      const blob=await response.blob();
+      src=URL.createObjectURL(blob);
+      readingAudioCache.set(cacheKey,src);
+    }
+
+    readingAudio=new Audio(src);
+    readingAudio.onended=()=>{readingAudio=null};
+    readingAudio.onerror=()=>{readingAudio=null};
+    await readingAudio.play();
+
+  }catch(err){
+    console.error('Google TTS error:',err);
+
+    // Device fallback only if cloud TTS fails.
+    if('speechSynthesis' in window){
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(activity.text);
+      u.lang=language;
+      u.rate=speakingRate;
+
+      // Prefer a genuinely matching device voice rather than the browser default.
+      const wanted=language.toLowerCase();
+      const base=wanted.split('-')[0];
+      const available=speechSynthesis.getVoices();
+      const match=
+        available.find(v=>String(v.lang||'').toLowerCase()===wanted) ||
+        available.find(v=>String(v.lang||'').toLowerCase().startsWith(base+'-'));
+
+      if(match)u.voice=match;
+      speechSynthesis.speak(u);
+    }
   }
-  updatePauseButton();
 }
 
 function renderText(){
@@ -1381,14 +1065,16 @@ async function generate(){
     render();
   }catch(err){
     console.error(err);
-    const demanding=(level==='advanced'||wordCount>=300);
-    const message=demanding ? tr('serverError')+' '+tr('advancedFallback') : tr('serverError');
-    $('exerciseIntro').textContent=message;
-    notice(message,'error');
+    $('exerciseIntro').textContent=tr('serverError');
+    notice(tr('serverError'),'error');
   }finally{
     setLoading(false);
   }
 }
+
+$('themeInput').addEventListener('focus',()=>{
+  $('themeInput').classList.remove('attention');
+},{once:true});
 
 document.querySelectorAll('.level').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -1411,35 +1097,29 @@ document.querySelectorAll('.example').forEach(btn=>{
     document.querySelectorAll('.example').forEach(b=>b.classList.remove('selected'));
     btn.classList.add('selected');
     $('themeInput').value=btn.dataset.theme;
-  });
-});
-
-document.querySelectorAll('.question-language').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.question-language').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    questionLanguage=btn.dataset.questionLanguage;
+    $('themeInput').classList.remove('attention');
   });
 });
 
 $('generateBtn').addEventListener('click',generate);
 $('listenBtn').addEventListener('click',speakText);
-$('pauseBtn').addEventListener('click',togglePauseReading);
 $('checkBtn').addEventListener('click',checkAnswers);
 $('newBtn').addEventListener('click',generate);
 
 $('clearBtn').addEventListener('click',()=>{
-  stopReading();
+  if(readingAudio){
+      try{readingAudio.pause();readingAudio.currentTime=0}catch(e){}
+      readingAudio=null;
+    }
+    speechSynthesis?.cancel();
   $('themeInput').value='';
   $('themeInput').classList.add('attention');
   level='';
   wordCount=0;
-  questionLanguage='target';
   activity=null;
   quizAnswers={};
   vocabAnswers={};
   document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
-  const ql=document.querySelector('[data-question-language="target"]');if(ql)ql.classList.add('selected');
   $('exercise').style.display='none';
   $('exerciseIntro').textContent=tr('waiting');
 });
@@ -1447,111 +1127,6 @@ $('clearBtn').addEventListener('click',()=>{
 applyLanguage();
 
 });
-</script>
-
-
-<script id="lingototal-all-interface-text-fix">
-(function(){
-  function getDictionary(){
-    try{
-      if(typeof T!=="undefined" && T && T.en) return T;
-    }catch(e){}
-    try{
-      if(typeof translations!=="undefined" && translations && translations.en) return translations;
-    }catch(e){}
-    return null;
-  }
-  function getTranslate(){
-    try{
-      if(typeof tr==="function") return tr;
-    }catch(e){}
-    return null;
-  }
-  const skipSelectors = [
-    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
-    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
-    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
-    "[data-target-content]","[data-generated-content]"
-  ].join(",");
-
-  function isSkipped(el){
-    return !!(el && el.closest && el.closest(skipSelectors));
-  }
-
-  function normalize(s){
-    return String(s||"").replace(/\s+/g," ").trim();
-  }
-
-  function applyAllInterfaceText(){
-    const dict=getDictionary();
-    const translate=getTranslate();
-    if(!dict || !dict.en || !translate) return;
-
-    const reverse=new Map();
-    Object.entries(dict.en).forEach(([key,val])=>{
-      if(typeof val==="string"){
-        const n=normalize(val);
-        if(n) reverse.set(n,key);
-      }
-    });
-
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node=>{
-      const el=node.parentElement;
-      if(!el || isSkipped(el)) return;
-      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
-      const raw=node.nodeValue;
-      const n=normalize(raw);
-      if(!n) return;
-      const key=reverse.get(n);
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key){
-          const leading=(raw.match(/^\s*/)||[""])[0];
-          const trailing=(raw.match(/\s*$/)||[""])[0];
-          node.nodeValue=leading+translated+trailing;
-        }
-      }
-    });
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
-      const key=reverse.get(normalize(el.getAttribute("placeholder")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("placeholder",translated);
-      }
-    });
-
-    document.querySelectorAll("[title]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("title")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("title",translated);
-      }
-    });
-
-    document.querySelectorAll("[aria-label]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("aria-label")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("aria-label",translated);
-      }
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
-  }else{
-    setTimeout(applyAllInterfaceText,0);
-  }
-  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
-})();
 </script>
 
 </body>

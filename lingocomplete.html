@@ -1,73 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script id="lingototal-language-handoff-fix">
-(function(){
-  const uiAliases = {
-    "en":"en","english":"en",
-    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
-    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
-    "fr":"fr","french":"fr","français":"fr","francais":"fr",
-    "de":"de","german":"de","deutsch":"de",
-    "it":"it","italian":"it","italiano":"it",
-    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
-    "eu":"eu","basque":"eu","euskara":"eu",
-    "ja":"ja","japanese":"ja","日本語":"ja",
-    "ar":"ar","arabic":"ar","العربية":"ar"
-  };
-  const targetAliases = {
-    "en":"English","english":"English",
-    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
-    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
-    "fr":"French","french":"French","français":"French","francais":"French",
-    "de":"German","german":"German","deutsch":"German",
-    "it":"Italian","italian":"Italian","italiano":"Italian",
-    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
-    "eu":"Basque","basque":"Basque","euskara":"Basque",
-    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
-    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
-  };
-  const norm = value => String(value || "").trim().toLowerCase();
-  const params = new URLSearchParams(window.location.search);
-
-  const rawUi =
-    params.get("ui") ||
-    params.get("uiLanguage") ||
-    params.get("interfaceLanguage") ||
-    params.get("interface") ||
-    localStorage.getItem("lingototal_ui_language") ||
-    localStorage.getItem("lingototal_interface_language") ||
-    "en";
-
-  const rawTarget =
-    params.get("target") ||
-    params.get("targetLanguage") ||
-    localStorage.getItem("lingototal_target_language") ||
-    "English";
-
-  const ui = uiAliases[norm(rawUi)] || "en";
-  const target = targetAliases[norm(rawTarget)] || "English";
-
-  localStorage.setItem("lingototal_ui_language", ui);
-  localStorage.setItem("lingototal_interface_language", ui);
-  localStorage.setItem("lingototal_target_language", target);
-
-  let changed = false;
-  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
-  if(params.get("target") !== target){ params.set("target", target); changed = true; }
-
-  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
-    if(params.has(k)){ params.delete(k); changed = true; }
-  });
-
-  if(changed){
-    const qs=params.toString();
-    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
-  }
-
-  window.LINGOTOTAL_SETTINGS={ui,target};
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoTotal · Listen & Complete</title>
@@ -568,67 +501,6 @@ input[type=text]:focus{
   }
 }
 </style>
-
-<style id="lingototal-standard-format-20260827">
-/* Shared LingoReal-style presentation */
-.level-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
-  gap:9px!important;
-}
-.level-card,.choice.level{
-  border-radius:12px!important;
-  padding:11px 12px!important;
-  min-height:62px;
-}
-.level-name{font-weight:700!important}
-.level-note{font-size:.8rem!important;line-height:1.3!important}
-@media(max-width:700px){
-  html,body{max-width:100%;overflow-x:hidden}
-  .banner{
-    min-height:50px!important;
-    padding:6px 8px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:space-between!important;
-    gap:6px!important;
-    flex-wrap:nowrap!important;
-    overflow:hidden!important;
-  }
-  .brand-wrap,.brand{
-    min-width:0!important;
-    flex:1 1 auto!important;
-  }
-  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
-  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .language-pair,.pair,.current-languages{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:.7rem!important;
-  }
-  .home-link,.home-btn,.home-button{
-    flex:0 0 38px!important;
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-  }
-  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
-  .level-note{display:none!important}
-  .panel{padding:14px!important}
-}
-</style>
-
 </head>
 
 <body>
@@ -645,7 +517,7 @@ input[type=text]:focus{
   <div class="header-tools">
     <div class="language-pair" id="languagePair">English → Català</div>
 
-    <a class="home-link" href="lingostarter2.html">
+    <a class="home-link" id="homeLink" href="./index.html">
       <span>⌂</span>
       <span data-i18n="changeLanguages">Activities / change languages</span>
     </a>
@@ -665,12 +537,7 @@ input[type=text]:focus{
 
     <div class="section-head">
       <div class="number">1</div>
-      <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Revising the basics</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Building confidence</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">More advanced</button>
-    </div>
-<div class="section-title" data-i18n="choose">Choose the level and topic</div>
+      <div class="section-title" data-i18n="choose">Choose the level and topic</div>
     </div>
 
     <label for="themeInput" data-i18n="ownTopic">Write your own topic</label>
@@ -682,6 +549,12 @@ input[type=text]:focus{
       data-i18n-placeholder="topicPlaceholder"
       placeholder="For example: travel, technology, nature, food..."
     >
+
+    <div class="level-grid">
+      <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
+      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
+      <button class="choice level" data-level="advanced" data-i18n="advanced">Advanced (C1–C2)</button>
+    </div>
 
     <div class="helper" data-i18n="inspiration">Need inspiration?</div>
 
@@ -763,11 +636,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 const T={
 
 en:{
-    levelPrompt:'Choose the option that feels right for you today.',
-    beginnerNote:'Build useful natural expressions for simple everyday situations.',
-    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
-    advancedNote:'Work with richer, more nuanced and idiomatic language.',
-    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',
 tagline:'Learn any language your way',
 changeLanguages:'Activities / change languages',
 title:'Listen & Complete',
@@ -775,9 +643,9 @@ intro:'Listen to three sentences and complete the two important missing words in
 choose:'Choose the level and topic',
 ownTopic:'Write your own topic',
 topicPlaceholder:'For example: travel, technology, nature, food...',
-beginner:'Revising the basics',
-intermediate:'Building confidence',
-advanced:'More advanced',
+beginner:'Beginner (A1–A2)',
+intermediate:'Intermediate (B1–B2)',
+advanced:'Advanced (C1–C2)',
 inspiration:'Need inspiration?',
 travel:'Travel',
 technology:'Technology',
@@ -810,11 +678,6 @@ levelSelected:'Level selected'
 },
 
 ca:{
-    levelPrompt:'Tria l’opció que et vagi millor avui.',
-    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
-    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
-    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
-    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',
 tagline:'Aprèn qualsevol llengua a la teva manera',
 changeLanguages:'Activitats / canvia les llengües',
 title:'Escolta i completa',
@@ -822,9 +685,9 @@ intro:'Escolta tres frases i completa les dues paraules importants que falten a 
 choose:'Tria el nivell i el tema',
 ownTopic:'Escriu el teu propi tema',
 topicPlaceholder:'Per exemple: viatges, tecnologia, natura, menjar...',
-beginner:'Repassar les bases',
-intermediate:'Guanyar confiança',
-advanced:'Més avançat',
+beginner:'Inicial (A1–A2)',
+intermediate:'Intermedi (B1–B2)',
+advanced:'Avançat (C1–C2)',
 inspiration:'Necessites inspiració?',
 travel:'Viatges',
 technology:'Tecnologia',
@@ -857,11 +720,6 @@ levelSelected:'Nivell seleccionat'
 },
 
 es:{
-    levelPrompt:'Elige la opción que mejor te vaya hoy.',
-    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
-    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
-    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
-    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',
 tagline:'Aprende cualquier idioma a tu manera',
 changeLanguages:'Actividades / cambiar idiomas',
 title:'Escucha y completa',
@@ -869,9 +727,9 @@ intro:'Escucha tres frases y completa las dos palabras importantes que faltan en
 choose:'Elige el nivel y el tema',
 ownTopic:'Escribe tu propio tema',
 topicPlaceholder:'Por ejemplo: viajes, tecnología, naturaleza, comida...',
-beginner:'Repassar les bases',
-intermediate:'Acquisire sicurezza',
-advanced:'Más avanzado',
+beginner:'Inicial (A1–A2)',
+intermediate:'Intermedio (B1–B2)',
+advanced:'Avanzado (C1–C2)',
 inspiration:'¿Necesitas inspiración?',
 travel:'Viajes',
 technology:'Tecnología',
@@ -904,11 +762,6 @@ levelSelected:'Nivel seleccionado'
 },
 
 fr:{
-    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
-    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
-    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
-    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
-    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',
 tagline:'Apprenez n’importe quelle langue à votre façon',
 changeLanguages:'Activités / changer les langues',
 title:'Écoutez et complétez',
@@ -916,9 +769,9 @@ intro:'Écoutez trois phrases et complétez les deux mots importants manquants d
 choose:'Choisissez le niveau et le thème',
 ownTopic:'Écrivez votre propre thème',
 topicPlaceholder:'Par exemple : voyages, technologie, nature, alimentation...',
-beginner:'Revoir les bases',
-intermediate:'Prendre confiance',
-advanced:'Plus avancé',
+beginner:'Débutant (A1–A2)',
+intermediate:'Intermédiaire (B1–B2)',
+advanced:'Avancé (C1–C2)',
 inspiration:'Besoin d’inspiration ?',
 travel:'Voyages',
 technology:'Technologie',
@@ -951,11 +804,6 @@ levelSelected:'Niveau sélectionné'
 },
 
 de:{
-    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
-    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
-    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
-    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
-    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',
 tagline:'Lerne jede Sprache auf deine Art',
 changeLanguages:'Aktivitäten / Sprachen ändern',
 title:'Hören und ergänzen',
@@ -963,9 +811,9 @@ intro:'Höre drei Sätze und ergänze in jedem Satz zwei wichtige fehlende Wört
 choose:'Niveau und Thema wählen',
 ownTopic:'Eigenes Thema eingeben',
 topicPlaceholder:'Zum Beispiel: Reisen, Technologie, Natur, Essen ...',
-beginner:'Grundlagen auffrischen',
-intermediate:'Sicherheit gewinnen',
-advanced:'Weiter fortgeschritten',
+beginner:'Anfänger (A1–A2)',
+intermediate:'Mittelstufe (B1–B2)',
+advanced:'Fortgeschritten (C1–C2)',
 inspiration:'Brauchst du Inspiration?',
 travel:'Reisen',
 technology:'Technologie',
@@ -998,11 +846,6 @@ levelSelected:'Niveau gewählt'
 },
 
 it:{
-    levelPrompt:'Scegli l’opzione che ti sembra più adatta oggi.',
-    beginnerNote:'Costruisci espressioni naturali e utili per semplici situazioni quotidiane.',
-    intermediateNote:'Usa un linguaggio quotidiano più flessibile e naturale con maggiore sicurezza.',
-    advancedNote:'Lavora con un linguaggio più ricco, sfumato e idiomatico.',
-    topicGuidance:'Scrivi qualcosa che vorresti davvero saper gestire in una conversazione quotidiana.',
 tagline:'Impara qualsiasi lingua a modo tuo',
 changeLanguages:'Attività / cambia lingue',
 title:'Ascolta e completa',
@@ -1010,9 +853,9 @@ intro:'Ascolta tre frasi e completa le due parole importanti mancanti in ciascun
 choose:'Scegli il livello e l’argomento',
 ownTopic:'Scrivi il tuo argomento',
 topicPlaceholder:'Per esempio: viaggi, tecnologia, natura, cibo...',
-beginner:'Ripassare le basi',
-intermediate:'Acquisire sicurezza',
-advanced:'Più avanzato',
+beginner:'Principiante (A1–A2)',
+intermediate:'Intermedio (B1–B2)',
+advanced:'Avanzato (C1–C2)',
 inspiration:'Hai bisogno di ispirazione?',
 travel:'Viaggi',
 technology:'Tecnologia',
@@ -1045,11 +888,6 @@ levelSelected:'Livello selezionato'
 },
 
 pt:{
-    levelPrompt:'Escolha a opção que lhe parecer mais adequada hoje.',
-    beginnerNote:'Construa expressões naturais e úteis para situações simples do dia a dia.',
-    intermediateNote:'Use uma linguagem quotidiana mais flexível e natural com maior confiança.',
-    advancedNote:'Trabalhe com uma linguagem mais rica, matizada e idiomática.',
-    topicGuidance:'Escreva algo que gostaria realmente de saber gerir numa conversa do dia a dia.',
 tagline:'Aprenda qualquer idioma à sua maneira',
 changeLanguages:'Atividades / mudar idiomas',
 title:'Ouça e complete',
@@ -1057,9 +895,9 @@ intro:'Ouça três frases e complete as duas palavras importantes em falta em ca
 choose:'Escolha o nível e o tema',
 ownTopic:'Escreva o seu próprio tema',
 topicPlaceholder:'Por exemplo: viagens, tecnologia, natureza, comida...',
-beginner:'Rever as bases',
-intermediate:'Ganhar confiança',
-advanced:'Mais avançado',
+beginner:'Iniciante (A1–A2)',
+intermediate:'Intermédio (B1–B2)',
+advanced:'Avançado (C1–C2)',
 inspiration:'Precisa de inspiração?',
 travel:'Viagens',
 technology:'Tecnologia',
@@ -1092,11 +930,6 @@ levelSelected:'Nível selecionado'
 },
 
 eu:{
-    levelPrompt:'Aukeratu gaur egokien iruditzen zaizun aukera.',
-    beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde natural eta erabilgarriak.',
-    intermediateNote:'Erabili eguneroko hizkera malguago eta naturalagoa, konfiantza handiagoz.',
-    advancedNote:'Landu hizkera aberatsagoa, ñabarduratsuagoa eta idiomatikoagoa.',
-    topicGuidance:'Idatzi eguneroko elkarrizketa batean benetan landu nahiko zenukeen egoera bat.',
 tagline:'Ikasi edozein hizkuntza zure erara',
 changeLanguages:'Jarduerak / hizkuntzak aldatu',
 title:'Entzun eta osatu',
@@ -1104,9 +937,9 @@ intro:'Entzun hiru esaldi eta osatu bakoitzean falta diren bi hitz garrantzitsua
 choose:'Aukeratu maila eta gaia',
 ownTopic:'Idatzi zure gaia',
 topicPlaceholder:'Adibidez: bidaiak, teknologia, natura, janaria...',
-beginner:'Oinarriak berrikusi',
+beginner:'Hasiberria (A1–A2)',
 intermediate:'Tartekoa (B1–B2)',
-advanced:'Aurreratuagoa',
+advanced:'Aurreratua (C1–C2)',
 inspiration:'Inspirazioa behar duzu?',
 travel:'Bidaiak',
 technology:'Teknologia',
@@ -1139,11 +972,6 @@ levelSelected:'Maila aukeratuta'
 },
 
 ja:{
-    levelPrompt:'今日の自分に合うレベルを選んでください。',
-    beginnerNote:'簡単な日常場面で役立つ自然な表現を身につけます。',
-    intermediateNote:'より柔軟で自然な日常表現を、自信を持って使えるようにします。',
-    advancedNote:'より豊かでニュアンスのある自然な表現に取り組みます。',
-    topicGuidance:'日常会話で実際に対応できるようになりたいことを書いてください。',
 tagline:'好きな方法でどんな言語でも学ぼう',
 changeLanguages:'アクティビティ / 言語を変更',
 title:'聞いて空欄を完成させる',
@@ -1151,9 +979,9 @@ intro:'3つの文を聞き、それぞれの重要な2語を完成させます�
 choose:'レベルとトピックを選ぶ',
 ownTopic:'自分のトピックを書く',
 topicPlaceholder:'例：旅行、テクノロジー、自然、食べ物...',
-beginner:'基礎を復習する',
-intermediate:'自信をつける',
-advanced:'より上級',
+beginner:'初級 (A1–A2)',
+intermediate:'中級 (B1–B2)',
+advanced:'上級 (C1–C2)',
 inspiration:'例から選ぶこともできます。',
 travel:'旅行',
 technology:'テクノロジー',
@@ -1186,11 +1014,6 @@ levelSelected:'レベルを選択しました'
 },
 
 ar:{
-    levelPrompt:'اختر المستوى الذي يناسبك اليوم.',
-    beginnerNote:'تعلّم تعبيرات طبيعية ومفيدة للمواقف اليومية البسيطة.',
-    intermediateNote:'استخدم لغة يومية أكثر مرونة وطبيعية بثقة أكبر.',
-    advancedNote:'تدرّب على لغة أكثر ثراءً ودقةً وطبيعية.',
-    topicGuidance:'اكتب موقفًا تود فعلًا أن تتمكن من التعامل معه في محادثة يومية.',
 tagline:'تعلّم أي لغة بطريقتك',
 changeLanguages:'الأنشطة / تغيير اللغات',
 title:'استمع وأكمل',
@@ -1198,9 +1021,9 @@ intro:'استمع إلى ثلاث جمل وأكمل الكلمتين المهم�
 choose:'اختر المستوى والموضوع',
 ownTopic:'اكتب موضوعك',
 topicPlaceholder:'مثلاً: السفر، التكنولوجيا، الطبيعة، الطعام...',
-beginner:'مراجعة الأساسيات',
-intermediate:'بناء الثقة',
-advanced:'مستوى أكثر تقدمًا',
+beginner:'مبتدئ (A1–A2)',
+intermediate:'متوسط (B1–B2)',
+advanced:'متقدم (C1–C2)',
 inspiration:'هل تحتاج إلى فكرة؟',
 travel:'السفر',
 technology:'التكنولوجيا',
@@ -1273,6 +1096,25 @@ Japanese:'ja-JP',
 Arabic:'ar-SA'
 };
 
+const targetAliases={
+  en:'English',english:'English',
+  ca:'Catalan',catalan:'Catalan',català:'Catalan',
+  es:'Spanish',spanish:'Spanish',español:'Spanish',
+  fr:'French',french:'French',français:'French',
+  de:'German',german:'German',deutsch:'German',
+  it:'Italian',italian:'Italian',italiano:'Italian',
+  pt:'Portuguese',portuguese:'Portuguese',português:'Portuguese',
+  eu:'Basque',basque:'Basque',euskara:'Basque',
+  ja:'Japanese',japanese:'Japanese','日本語':'Japanese',
+  ar:'Arabic',arabic:'Arabic','العربية':'Arabic'
+};
+
+function normalizeTarget(value){
+  const raw=String(value||'').trim();
+  if(targetNames[raw])return raw;
+  return targetAliases[raw.toLowerCase()]||'English';
+}
+
 const params=new URLSearchParams(window.location.search);
 
 let uiLanguage=
@@ -1281,17 +1123,33 @@ let uiLanguage=
   ||'en';
 
 let targetLanguage=
-  params.get('target')
-  ||localStorage.getItem('lingototal_target_language')
-  ||'English';
+  normalizeTarget(
+    params.get('target')
+    ||localStorage.getItem('lingototal_target_language')
+    ||'English'
+  );
 
 if(!uiNames[uiLanguage])uiLanguage='en';
-if(!targetNames[targetLanguage])targetLanguage='English';
 
 localStorage.setItem('lingototal_ui_language',uiLanguage);
 localStorage.setItem('lingototal_target_language',targetLanguage);
 
 const $=id=>document.getElementById(id);
+
+function goToIndex(event){
+  if(event)event.preventDefault();
+
+  stopAudio();
+
+  localStorage.setItem('lingototal_ui_language',uiLanguage);
+  localStorage.setItem('lingototal_target_language',targetLanguage);
+
+  const indexUrl=new URL('./index.html',window.location.href);
+  indexUrl.searchParams.set('ui',uiLanguage);
+  indexUrl.searchParams.set('target',targetLanguage);
+
+  window.location.assign(indexUrl.href);
+}
 
 let selectedLevel='';
 let sentences=[];
@@ -1455,20 +1313,106 @@ Do not add explanations or markdown.
 `.trim();
 }
 
-function speak(text){
-  if(!('speechSynthesis'in window)){
+let currentAudio=null;
+const audioCache=new Map();
+let audioRequestId=0;
+
+function stopAudio(){
+  audioRequestId++;
+
+  if(currentAudio){
+    try{
+      currentAudio.pause();
+      currentAudio.currentTime=0;
+    }catch(e){}
+    currentAudio=null;
+  }
+
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+  }
+}
+
+function fallbackSpeak(text,language,speakingRate){
+  if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
     notice(tr('noSpeech'),'error');
     return;
   }
 
-  speechSynthesis.cancel();
-
   const u=new SpeechSynthesisUtterance(text);
-  u.lang=voices[targetLanguage]||'en-GB';
-  u.rate=1;
+  u.lang=language;
+  u.rate=speakingRate;
 
-  speechSynthesis.speak(u);
+  const wanted=language.toLowerCase();
+  const base=wanted.split('-')[0];
+  const available=window.speechSynthesis.getVoices();
+  const matchingVoice=
+    available.find(v=>String(v.lang||'').toLowerCase()===wanted) ||
+    available.find(v=>String(v.lang||'').toLowerCase().startsWith(base+'-'));
+
+  if(matchingVoice)u.voice=matchingVoice;
+  window.speechSynthesis.speak(u);
+}
+
+async function speak(text){
+  text=String(text||'').trim();
+  if(!text)return;
+
+  stopAudio();
+
+  const requestId=audioRequestId;
+  const canonicalTarget=normalizeTarget(targetLanguage);
+  const language=voices[canonicalTarget];
+  const speakingRate=.92;
+
+  if(!language){
+    notice(tr('noSpeech'),'error');
+    return;
+  }
+
+  const cacheKey=`${language}|${speakingRate}|${text}`;
   notice(tr('playing'),'info');
+
+  try{
+    let src=audioCache.get(cacheKey);
+
+    if(!src){
+      const response=await fetch('/.netlify/functions/google-tts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          text,
+          language,
+          speakingRate
+        })
+      });
+
+      if(!response.ok){
+        let message='Audio could not be generated.';
+        try{
+          const data=await response.json();
+          if(data?.error)message=data.error;
+        }catch(e){}
+        throw new Error(message);
+      }
+
+      const blob=await response.blob();
+      src=URL.createObjectURL(blob);
+      audioCache.set(cacheKey,src);
+    }
+
+    if(requestId!==audioRequestId)return;
+
+    currentAudio=new Audio(src);
+    currentAudio.onended=()=>{currentAudio=null};
+    currentAudio.onerror=()=>{currentAudio=null};
+    await currentAudio.play();
+
+  }catch(err){
+    console.error('Google TTS error:',err);
+    if(requestId!==audioRequestId)return;
+    fallbackSpeak(text,language,speakingRate);
+  }
 }
 
 function splitForGap(sentence,gaps){
@@ -1717,9 +1661,10 @@ $('generateBtn').addEventListener('click',generate);
 $('checkBtn').addEventListener('click',checkAnswers);
 $('retryBtn').addEventListener('click',retry);
 $('newBtn').addEventListener('click',generate);
+$('homeLink').addEventListener('click',goToIndex);
 
 $('clearBtn').addEventListener('click',()=>{
-  speechSynthesis?.cancel();
+  stopAudio();
   $('themeInput').value='';
   $('themeInput').classList.add('attention');
   selectedLevel='';
@@ -1732,111 +1677,6 @@ $('clearBtn').addEventListener('click',()=>{
 applyLanguage();
 
 });
-</script>
-
-
-<script id="lingototal-all-interface-text-fix">
-(function(){
-  function getDictionary(){
-    try{
-      if(typeof T!=="undefined" && T && T.en) return T;
-    }catch(e){}
-    try{
-      if(typeof translations!=="undefined" && translations && translations.en) return translations;
-    }catch(e){}
-    return null;
-  }
-  function getTranslate(){
-    try{
-      if(typeof tr==="function") return tr;
-    }catch(e){}
-    return null;
-  }
-  const skipSelectors = [
-    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
-    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
-    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
-    "[data-target-content]","[data-generated-content]"
-  ].join(",");
-
-  function isSkipped(el){
-    return !!(el && el.closest && el.closest(skipSelectors));
-  }
-
-  function normalize(s){
-    return String(s||"").replace(/\s+/g," ").trim();
-  }
-
-  function applyAllInterfaceText(){
-    const dict=getDictionary();
-    const translate=getTranslate();
-    if(!dict || !dict.en || !translate) return;
-
-    const reverse=new Map();
-    Object.entries(dict.en).forEach(([key,val])=>{
-      if(typeof val==="string"){
-        const n=normalize(val);
-        if(n) reverse.set(n,key);
-      }
-    });
-
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node=>{
-      const el=node.parentElement;
-      if(!el || isSkipped(el)) return;
-      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
-      const raw=node.nodeValue;
-      const n=normalize(raw);
-      if(!n) return;
-      const key=reverse.get(n);
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key){
-          const leading=(raw.match(/^\s*/)||[""])[0];
-          const trailing=(raw.match(/\s*$/)||[""])[0];
-          node.nodeValue=leading+translated+trailing;
-        }
-      }
-    });
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
-      const key=reverse.get(normalize(el.getAttribute("placeholder")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("placeholder",translated);
-      }
-    });
-
-    document.querySelectorAll("[title]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("title")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("title",translated);
-      }
-    });
-
-    document.querySelectorAll("[aria-label]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("aria-label")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("aria-label",translated);
-      }
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
-  }else{
-    setTimeout(applyAllInterfaceText,0);
-  }
-  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
-})();
 </script>
 
 </body>

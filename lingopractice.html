@@ -1,73 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script id="lingototal-language-handoff-fix">
-(function(){
-  const uiAliases = {
-    "en":"en","english":"en",
-    "ca":"ca","catalan":"ca","català":"ca","catala":"ca",
-    "es":"es","spanish":"es","español":"es","espanol":"es","castellano":"es",
-    "fr":"fr","french":"fr","français":"fr","francais":"fr",
-    "de":"de","german":"de","deutsch":"de",
-    "it":"it","italian":"it","italiano":"it",
-    "pt":"pt","portuguese":"pt","português":"pt","portugues":"pt",
-    "eu":"eu","basque":"eu","euskara":"eu",
-    "ja":"ja","japanese":"ja","日本語":"ja",
-    "ar":"ar","arabic":"ar","العربية":"ar"
-  };
-  const targetAliases = {
-    "en":"English","english":"English",
-    "ca":"Catalan","catalan":"Catalan","català":"Catalan","catala":"Catalan",
-    "es":"Spanish","spanish":"Spanish","español":"Spanish","espanol":"Spanish","castellano":"Spanish",
-    "fr":"French","french":"French","français":"French","francais":"French",
-    "de":"German","german":"German","deutsch":"German",
-    "it":"Italian","italian":"Italian","italiano":"Italian",
-    "pt":"Portuguese","portuguese":"Portuguese","português":"Portuguese","portugues":"Portuguese",
-    "eu":"Basque","basque":"Basque","euskara":"Basque",
-    "ja":"Japanese","japanese":"Japanese","日本語":"Japanese",
-    "ar":"Arabic","arabic":"Arabic","العربية":"Arabic"
-  };
-  const norm = value => String(value || "").trim().toLowerCase();
-  const params = new URLSearchParams(window.location.search);
-
-  const rawUi =
-    params.get("ui") ||
-    params.get("uiLanguage") ||
-    params.get("interfaceLanguage") ||
-    params.get("interface") ||
-    localStorage.getItem("lingototal_ui_language") ||
-    localStorage.getItem("lingototal_interface_language") ||
-    "en";
-
-  const rawTarget =
-    params.get("target") ||
-    params.get("targetLanguage") ||
-    localStorage.getItem("lingototal_target_language") ||
-    "English";
-
-  const ui = uiAliases[norm(rawUi)] || "en";
-  const target = targetAliases[norm(rawTarget)] || "English";
-
-  localStorage.setItem("lingototal_ui_language", ui);
-  localStorage.setItem("lingototal_interface_language", ui);
-  localStorage.setItem("lingototal_target_language", target);
-
-  let changed = false;
-  if(params.get("ui") !== ui){ params.set("ui", ui); changed = true; }
-  if(params.get("target") !== target){ params.set("target", target); changed = true; }
-
-  ["uiLanguage","interfaceLanguage","interface","targetLanguage"].forEach(k=>{
-    if(params.has(k)){ params.delete(k); changed = true; }
-  });
-
-  if(changed){
-    const qs=params.toString();
-    history.replaceState(null,"",window.location.pathname+(qs?"?"+qs:"")+window.location.hash);
-  }
-
-  window.LINGOTOTAL_SETTINGS={ui,target};
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LingoTotal · My Language Practice</title>
@@ -107,67 +40,6 @@
  .phrase-list{max-height:320px!important}.filter-grid{gap:6px!important}.actions{margin-top:8px!important}.btn{padding:8px 10px!important;font-size:.72rem!important}
 }
 </style>
-
-<style id="lingototal-standard-format-20260827">
-/* Shared LingoReal-style presentation */
-.level-grid{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
-  gap:9px!important;
-}
-.level-card,.choice.level{
-  border-radius:12px!important;
-  padding:11px 12px!important;
-  min-height:62px;
-}
-.level-name{font-weight:700!important}
-.level-note{font-size:.8rem!important;line-height:1.3!important}
-@media(max-width:700px){
-  html,body{max-width:100%;overflow-x:hidden}
-  .banner{
-    min-height:50px!important;
-    padding:6px 8px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:space-between!important;
-    gap:6px!important;
-    flex-wrap:nowrap!important;
-    overflow:hidden!important;
-  }
-  .brand-wrap,.brand{
-    min-width:0!important;
-    flex:1 1 auto!important;
-  }
-  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:9px!important;font-size:.78rem!important}
-  .brand{font-size:.92rem!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .language-pair,.pair,.current-languages{
-    flex:0 1 auto!important;
-    min-width:0!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:.7rem!important;
-  }
-  .home-link,.home-btn,.home-button{
-    flex:0 0 38px!important;
-    width:38px!important;
-    height:38px!important;
-    min-width:38px!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-  }
-  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
-  .level-card,.choice.level{min-height:54px!important;padding:8px!important}
-  .level-note{display:none!important}
-  .panel{padding:14px!important}
-}
-</style>
-
 </head>
 <body>
 <header class="banner">
@@ -238,36 +110,11 @@ migrateLegacyCollections();
 const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',ja:'日本語',ar:'العربية'};
 const voiceLocales={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'};
 const T={
-en:{
-    levelPrompt:'Choose the option that feels right for you today.',
-    beginnerNote:'Build useful natural expressions for simple everyday situations.',
-    intermediateNote:'Use more flexible, natural everyday language with greater confidence.',
-    advancedNote:'Work with richer, more nuanced and idiomatic language.',
-    topicGuidance:'Write something you would genuinely like to handle in everyday conversation.',tagline:'Learn any language your way',home:'Activities / change languages',title:'My Language Practice',intro:'Bring back the language you chose to save. Select the phrases you want to remember and practise them in different ways.',collectionTitle:'Choose your phrases',collectionIntro:'Use phrases saved on this device, or upload an older LingoTotal collection.',selectAll:'Select all',clearSelection:'Clear selection',backup:'Download backup',readable:'Download readable list',upload:'Upload saved collection',language:'Language',theme:'Theme',all:'All',restoreSelected:'Restore selected to this device',cancelImport:'Cancel upload',storageTitle:'Keep your collections safe.',storageAdvice:'Create a folder called “LingoTotal Language Collection” in Documents, Google Drive, OneDrive or iCloud. You can add subfolders by language or theme, for example German / Travel or Spanish / Conversation.',practiceTitle:'Practise what matters to you',practiceIntro:'Choose a practice type. LingoTotal uses the exact phrases you selected rather than replacing them with new AI text.',gap:'Gap fill',jumble:'Jumbled sentence',listen:'Listen & rebuild',recall:'Recall',start:'Start practice',noPhrases:'No saved phrases are available yet.',selected:'selected',phrases:'phrases',imported:'uploaded',restoreDone:'Selected phrases restored.',invalidFile:'This does not look like a LingoTotal collection or readable phrase list.',check:'Check',next:'Next',show:'Show answer',correct:'Correct',tryAgain:'Try again',yourAnswer:'Your answer',listenNow:'Listen',typeSentence:'Type the sentence you heard.',recallPrompt:'Try to recall the complete phrase before revealing it.',themeNone:'No theme'},
-es:{
-    levelPrompt:'Elige la opción que mejor te vaya hoy.',
-    beginnerNote:'Construye expresiones naturales y útiles para situaciones cotidianas sencillas.',
-    intermediateNote:'Utiliza un lenguaje cotidiano más flexible y natural con mayor confianza.',
-    advancedNote:'Trabaja con un lenguaje más rico, matizado e idiomático.',
-    topicGuidance:'Escribe algo que realmente te gustaría saber manejar en una conversación cotidiana.',tagline:'Aprende cualquier idioma a tu manera',home:'Actividades / cambiar idiomas',title:'Practica mi lenguaje',intro:'Recupera el lenguaje que decidiste guardar. Elige las frases que quieres recordar y practícalas de distintas maneras.',collectionTitle:'Elige tus frases',collectionIntro:'Usa las frases guardadas en este dispositivo o sube una colección anterior de LingoTotal.',selectAll:'Seleccionar todo',clearSelection:'Borrar selección',backup:'Descargar copia',readable:'Descargar lista legible',upload:'Subir colección guardada',language:'Idioma',theme:'Tema',all:'Todos',restoreSelected:'Restaurar seleccionadas en este dispositivo',cancelImport:'Cancelar subida',storageTitle:'Guarda bien tus colecciones.',storageAdvice:'Crea una carpeta llamada “LingoTotal Language Collection” en Documentos, Google Drive, OneDrive o iCloud. Puedes usar subcarpetas por idioma o tema.',practiceTitle:'Practica lo que te importa',practiceIntro:'Elige un tipo de práctica. LingoTotal utiliza exactamente las frases seleccionadas.',gap:'Completar huecos',jumble:'Frase desordenada',listen:'Escuchar y reconstruir',recall:'Recordar',start:'Empezar práctica',noPhrases:'Todavía no hay frases guardadas.',selected:'seleccionadas',phrases:'frases',imported:'subidas',restoreDone:'Frases seleccionadas restauradas.',invalidFile:'Este archivo no parece una colección de LingoTotal ni una lista de frases.',check:'Comprobar',next:'Siguiente',show:'Mostrar respuesta',correct:'Correcto',tryAgain:'Inténtalo de nuevo',yourAnswer:'Tu respuesta',listenNow:'Escuchar',typeSentence:'Escribe la frase que has oído.',recallPrompt:'Intenta recordar la frase completa antes de mostrarla.',themeNone:'Sin tema'},
-ca:{
-    levelPrompt:'Tria l’opció que et vagi millor avui.',
-    beginnerNote:'Construeix expressions naturals i útils per a situacions quotidianes senzilles.',
-    intermediateNote:'Utilitza un llenguatge quotidià més flexible i natural amb més confiança.',
-    advancedNote:'Treballa amb un llenguatge més ric, matisat i idiomàtic.',
-    topicGuidance:'Escriu alguna cosa que realment t’agradaria saber gestionar en una conversa quotidiana.',tagline:'Aprèn qualsevol llengua a la teva manera',home:'Activitats / canvia les llengües',title:'Practica el meu llenguatge',intro:'Recupera el llenguatge que vas decidir desar. Tria les frases que vols recordar i practica-les de diferents maneres.',collectionTitle:'Tria les teves frases',collectionIntro:'Utilitza les frases desades en aquest dispositiu o puja una col·lecció anterior de LingoTotal.',selectAll:'Selecciona-ho tot',clearSelection:'Esborra la selecció',backup:'Descarrega còpia',readable:'Descarrega llista llegible',upload:'Puja una col·lecció',language:'Llengua',theme:'Tema',all:'Totes',restoreSelected:'Restaura les seleccionades',cancelImport:'Cancel·la la pujada',storageTitle:'Guarda bé les col·leccions.',storageAdvice:'Crea una carpeta “LingoTotal Language Collection” a Documents, Google Drive, OneDrive o iCloud, amb subcarpetes per llengua o tema.',practiceTitle:'Practica allò que t’importa',practiceIntro:'Tria un tipus de pràctica. LingoTotal utilitza exactament les frases seleccionades.',gap:'Omple buits',jumble:'Frase desordenada',listen:'Escolta i reconstrueix',recall:'Recorda',start:'Comença',noPhrases:'Encara no hi ha frases desades.',selected:'seleccionades',phrases:'frases',imported:'pujades',restoreDone:'Frases restaurades.',invalidFile:'Aquest fitxer no sembla una col·lecció de LingoTotal.',check:'Comprova',next:'Següent',show:'Mostra resposta',correct:'Correcte',tryAgain:'Torna-ho a provar',yourAnswer:'La teva resposta',listenNow:'Escolta',typeSentence:'Escriu la frase que has sentit.',recallPrompt:'Intenta recordar la frase completa abans de mostrar-la.',themeNone:'Sense tema'},
-fr:{
-    levelPrompt:'Choisissez l’option qui vous convient le mieux aujourd’hui.',
-    beginnerNote:'Construisez des expressions naturelles et utiles pour des situations quotidiennes simples.',
-    intermediateNote:'Utilisez une langue quotidienne plus souple et naturelle avec davantage d’assurance.',
-    advancedNote:'Travaillez avec une langue plus riche, nuancée et idiomatique.',
-    topicGuidance:'Écrivez une situation que vous aimeriez réellement savoir gérer dans une conversation quotidienne.',tagline:'Apprenez n’importe quelle langue à votre façon',home:'Activités / changer les langues',title:'Pratiquer mon langage',intro:'Retrouvez les expressions que vous avez choisi de conserver et entraînez-vous à les mémoriser.',collectionTitle:'Choisissez vos phrases',collectionIntro:'Utilisez les phrases de cet appareil ou importez une ancienne collection LingoTotal.',selectAll:'Tout sélectionner',clearSelection:'Effacer la sélection',backup:'Télécharger la sauvegarde',readable:'Télécharger la liste',upload:'Importer une collection',language:'Langue',theme:'Thème',all:'Toutes',restoreSelected:'Restaurer la sélection',cancelImport:'Annuler import',storageTitle:'Conservez vos collections.',storageAdvice:'Créez un dossier “LingoTotal Language Collection” dans Documents, Google Drive, OneDrive ou iCloud, avec des sous-dossiers par langue ou thème.',practiceTitle:'Pratiquez ce qui compte pour vous',practiceIntro:'Choisissez une activité. LingoTotal utilise exactement les phrases sélectionnées.',gap:'Texte à trous',jumble:'Phrase mélangée',listen:'Écouter et reconstruire',recall:'Rappel',start:'Commencer',noPhrases:'Aucune phrase enregistrée.',selected:'sélectionnées',phrases:'phrases',imported:'importées',restoreDone:'Phrases restaurées.',invalidFile:'Ce fichier ne semble pas être une collection LingoTotal.',check:'Vérifier',next:'Suivant',show:'Afficher la réponse',correct:'Correct',tryAgain:'Réessayez',yourAnswer:'Votre réponse',listenNow:'Écouter',typeSentence:'Écrivez la phrase entendue.',recallPrompt:'Essayez de rappeler la phrase complète avant de la révéler.',themeNone:'Sans thème'},
-de:{
-    levelPrompt:'Wähle die Option, die heute am besten zu dir passt.',
-    beginnerNote:'Baue nützliche, natürliche Ausdrücke für einfache Alltagssituationen auf.',
-    intermediateNote:'Verwende flexiblere, natürliche Alltagssprache mit mehr Sicherheit.',
-    advancedNote:'Arbeite mit reichhaltigerer, nuancierter und idiomatischer Sprache.',
-    topicGuidance:'Schreibe etwas, das du in einem Alltagsgespräch wirklich gern bewältigen möchtest.',tagline:'Lerne jede Sprache auf deine Art',home:'Aktivitäten / Sprachen ändern',title:'Meine Sprache üben',intro:'Hole die Ausdrücke zurück, die du gespeichert hast, und festige sie mit verschiedenen Übungen.',collectionTitle:'Wähle deine Sätze',collectionIntro:'Nutze Sätze auf diesem Gerät oder lade eine ältere LingoTotal-Sammlung hoch.',selectAll:'Alle auswählen',clearSelection:'Auswahl löschen',backup:'Sicherung herunterladen',readable:'Lesbare Liste herunterladen',upload:'Gespeicherte Sammlung hochladen',language:'Sprache',theme:'Thema',all:'Alle',restoreSelected:'Auswahl auf diesem Gerät wiederherstellen',cancelImport:'Upload abbrechen',storageTitle:'Bewahre deine Sammlungen sicher auf.',storageAdvice:'Erstelle einen Ordner „LingoTotal Language Collection“ in Dokumente, Google Drive, OneDrive oder iCloud und Unterordner nach Sprache oder Thema.',practiceTitle:'Übe, was dir wichtig ist',practiceIntro:'Wähle eine Übungsart. LingoTotal verwendet genau die ausgewählten Sätze.',gap:'Lückentext',jumble:'Satz ordnen',listen:'Hören & rekonstruieren',recall:'Abrufen',start:'Übung starten',noPhrases:'Noch keine Sätze gespeichert.',selected:'ausgewählt',phrases:'Sätze',imported:'hochgeladen',restoreDone:'Sätze wiederhergestellt.',invalidFile:'Diese Datei scheint keine LingoTotal-Sammlung zu sein.',check:'Prüfen',next:'Weiter',show:'Antwort zeigen',correct:'Richtig',tryAgain:'Noch einmal',yourAnswer:'Deine Antwort',listenNow:'Anhören',typeSentence:'Schreibe den gehörten Satz.',recallPrompt:'Versuche, den ganzen Satz abzurufen, bevor du ihn anzeigst.',themeNone:'Kein Thema'}
+en:{tagline:'Learn any language your way',home:'Activities / change languages',title:'My Language Practice',intro:'Bring back the language you chose to save. Select the phrases you want to remember and practise them in different ways.',collectionTitle:'Choose your phrases',collectionIntro:'Use phrases saved on this device, or upload an older LingoTotal collection.',selectAll:'Select all',clearSelection:'Clear selection',backup:'Download backup',readable:'Download readable list',upload:'Upload saved collection',language:'Language',theme:'Theme',all:'All',restoreSelected:'Restore selected to this device',cancelImport:'Cancel upload',storageTitle:'Keep your collections safe.',storageAdvice:'Create a folder called “LingoTotal Language Collection” in Documents, Google Drive, OneDrive or iCloud. You can add subfolders by language or theme, for example German / Travel or Spanish / Conversation.',practiceTitle:'Practise what matters to you',practiceIntro:'Choose a practice type. LingoTotal uses the exact phrases you selected rather than replacing them with new AI text.',gap:'Gap fill',jumble:'Jumbled sentence',listen:'Listen & rebuild',recall:'Recall',start:'Start practice',noPhrases:'No saved phrases are available yet.',selected:'selected',phrases:'phrases',imported:'uploaded',restoreDone:'Selected phrases restored.',invalidFile:'This does not look like a LingoTotal collection or readable phrase list.',check:'Check',next:'Next',show:'Show answer',correct:'Correct',tryAgain:'Try again',yourAnswer:'Your answer',listenNow:'Listen',typeSentence:'Type the sentence you heard.',recallPrompt:'Try to recall the complete phrase before revealing it.',themeNone:'No theme'},
+es:{tagline:'Aprende cualquier idioma a tu manera',home:'Actividades / cambiar idiomas',title:'Practica mi lenguaje',intro:'Recupera el lenguaje que decidiste guardar. Elige las frases que quieres recordar y practícalas de distintas maneras.',collectionTitle:'Elige tus frases',collectionIntro:'Usa las frases guardadas en este dispositivo o sube una colección anterior de LingoTotal.',selectAll:'Seleccionar todo',clearSelection:'Borrar selección',backup:'Descargar copia',readable:'Descargar lista legible',upload:'Subir colección guardada',language:'Idioma',theme:'Tema',all:'Todos',restoreSelected:'Restaurar seleccionadas en este dispositivo',cancelImport:'Cancelar subida',storageTitle:'Guarda bien tus colecciones.',storageAdvice:'Crea una carpeta llamada “LingoTotal Language Collection” en Documentos, Google Drive, OneDrive o iCloud. Puedes usar subcarpetas por idioma o tema.',practiceTitle:'Practica lo que te importa',practiceIntro:'Elige un tipo de práctica. LingoTotal utiliza exactamente las frases seleccionadas.',gap:'Completar huecos',jumble:'Frase desordenada',listen:'Escuchar y reconstruir',recall:'Recordar',start:'Empezar práctica',noPhrases:'Todavía no hay frases guardadas.',selected:'seleccionadas',phrases:'frases',imported:'subidas',restoreDone:'Frases seleccionadas restauradas.',invalidFile:'Este archivo no parece una colección de LingoTotal ni una lista de frases.',check:'Comprobar',next:'Siguiente',show:'Mostrar respuesta',correct:'Correcto',tryAgain:'Inténtalo de nuevo',yourAnswer:'Tu respuesta',listenNow:'Escuchar',typeSentence:'Escribe la frase que has oído.',recallPrompt:'Intenta recordar la frase completa antes de mostrarla.',themeNone:'Sin tema'},
+ca:{tagline:'Aprèn qualsevol llengua a la teva manera',home:'Activitats / canvia les llengües',title:'Practica el meu llenguatge',intro:'Recupera el llenguatge que vas decidir desar. Tria les frases que vols recordar i practica-les de diferents maneres.',collectionTitle:'Tria les teves frases',collectionIntro:'Utilitza les frases desades en aquest dispositiu o puja una col·lecció anterior de LingoTotal.',selectAll:'Selecciona-ho tot',clearSelection:'Esborra la selecció',backup:'Descarrega còpia',readable:'Descarrega llista llegible',upload:'Puja una col·lecció',language:'Llengua',theme:'Tema',all:'Totes',restoreSelected:'Restaura les seleccionades',cancelImport:'Cancel·la la pujada',storageTitle:'Guarda bé les col·leccions.',storageAdvice:'Crea una carpeta “LingoTotal Language Collection” a Documents, Google Drive, OneDrive o iCloud, amb subcarpetes per llengua o tema.',practiceTitle:'Practica allò que t’importa',practiceIntro:'Tria un tipus de pràctica. LingoTotal utilitza exactament les frases seleccionades.',gap:'Omple buits',jumble:'Frase desordenada',listen:'Escolta i reconstrueix',recall:'Recorda',start:'Comença',noPhrases:'Encara no hi ha frases desades.',selected:'seleccionades',phrases:'frases',imported:'pujades',restoreDone:'Frases restaurades.',invalidFile:'Aquest fitxer no sembla una col·lecció de LingoTotal.',check:'Comprova',next:'Següent',show:'Mostra resposta',correct:'Correcte',tryAgain:'Torna-ho a provar',yourAnswer:'La teva resposta',listenNow:'Escolta',typeSentence:'Escriu la frase que has sentit.',recallPrompt:'Intenta recordar la frase completa abans de mostrar-la.',themeNone:'Sense tema'},
+fr:{tagline:'Apprenez n’importe quelle langue à votre façon',home:'Activités / changer les langues',title:'Pratiquer mon langage',intro:'Retrouvez les expressions que vous avez choisi de conserver et entraînez-vous à les mémoriser.',collectionTitle:'Choisissez vos phrases',collectionIntro:'Utilisez les phrases de cet appareil ou importez une ancienne collection LingoTotal.',selectAll:'Tout sélectionner',clearSelection:'Effacer la sélection',backup:'Télécharger la sauvegarde',readable:'Télécharger la liste',upload:'Importer une collection',language:'Langue',theme:'Thème',all:'Toutes',restoreSelected:'Restaurer la sélection',cancelImport:'Annuler import',storageTitle:'Conservez vos collections.',storageAdvice:'Créez un dossier “LingoTotal Language Collection” dans Documents, Google Drive, OneDrive ou iCloud, avec des sous-dossiers par langue ou thème.',practiceTitle:'Pratiquez ce qui compte pour vous',practiceIntro:'Choisissez une activité. LingoTotal utilise exactement les phrases sélectionnées.',gap:'Texte à trous',jumble:'Phrase mélangée',listen:'Écouter et reconstruire',recall:'Rappel',start:'Commencer',noPhrases:'Aucune phrase enregistrée.',selected:'sélectionnées',phrases:'phrases',imported:'importées',restoreDone:'Phrases restaurées.',invalidFile:'Ce fichier ne semble pas être une collection LingoTotal.',check:'Vérifier',next:'Suivant',show:'Afficher la réponse',correct:'Correct',tryAgain:'Réessayez',yourAnswer:'Votre réponse',listenNow:'Écouter',typeSentence:'Écrivez la phrase entendue.',recallPrompt:'Essayez de rappeler la phrase complète avant de la révéler.',themeNone:'Sans thème'},
+de:{tagline:'Lerne jede Sprache auf deine Art',home:'Aktivitäten / Sprachen ändern',title:'Meine Sprache üben',intro:'Hole die Ausdrücke zurück, die du gespeichert hast, und festige sie mit verschiedenen Übungen.',collectionTitle:'Wähle deine Sätze',collectionIntro:'Nutze Sätze auf diesem Gerät oder lade eine ältere LingoTotal-Sammlung hoch.',selectAll:'Alle auswählen',clearSelection:'Auswahl löschen',backup:'Sicherung herunterladen',readable:'Lesbare Liste herunterladen',upload:'Gespeicherte Sammlung hochladen',language:'Sprache',theme:'Thema',all:'Alle',restoreSelected:'Auswahl auf diesem Gerät wiederherstellen',cancelImport:'Upload abbrechen',storageTitle:'Bewahre deine Sammlungen sicher auf.',storageAdvice:'Erstelle einen Ordner „LingoTotal Language Collection“ in Dokumente, Google Drive, OneDrive oder iCloud und Unterordner nach Sprache oder Thema.',practiceTitle:'Übe, was dir wichtig ist',practiceIntro:'Wähle eine Übungsart. LingoTotal verwendet genau die ausgewählten Sätze.',gap:'Lückentext',jumble:'Satz ordnen',listen:'Hören & rekonstruieren',recall:'Abrufen',start:'Übung starten',noPhrases:'Noch keine Sätze gespeichert.',selected:'ausgewählt',phrases:'Sätze',imported:'hochgeladen',restoreDone:'Sätze wiederhergestellt.',invalidFile:'Diese Datei scheint keine LingoTotal-Sammlung zu sein.',check:'Prüfen',next:'Weiter',show:'Antwort zeigen',correct:'Richtig',tryAgain:'Noch einmal',yourAnswer:'Deine Antwort',listenNow:'Anhören',typeSentence:'Schreibe den gehörten Satz.',recallPrompt:'Versuche, den ganzen Satz abzurufen, bevor du ihn anzeigst.',themeNone:'Kein Thema'}
 };
 T.it={tagline:'Impara qualsiasi lingua a modo tuo',home:'Attività / cambia lingue',title:'Pratica la mia lingua',intro:'Riprendi le espressioni che hai scelto di salvare. Seleziona le frasi che vuoi ricordare e allenale in modi diversi.',collectionTitle:'Scegli le tue frasi',collectionIntro:'Usa le frasi salvate su questo dispositivo oppure carica una vecchia raccolta LingoTotal.',selectAll:'Seleziona tutto',clearSelection:'Cancella selezione',backup:'Scarica copia di sicurezza',readable:'Scarica elenco leggibile',upload:'Carica raccolta salvata',language:'Lingua',theme:'Tema',all:'Tutte',restoreSelected:'Ripristina le selezionate su questo dispositivo',cancelImport:'Annulla caricamento',storageTitle:'Conserva le tue raccolte al sicuro.',storageAdvice:'Crea una cartella “LingoTotal Language Collection” in Documenti, Google Drive, OneDrive o iCloud, con sottocartelle per lingua o tema.',practiceTitle:'Esercita ciò che conta per te',practiceIntro:'Scegli un tipo di esercizio. LingoTotal usa esattamente le frasi selezionate.',gap:'Completa gli spazi',jumble:'Frase in disordine',listen:'Ascolta e ricostruisci',recall:'Richiamo',start:'Inizia esercizio',noPhrases:'Non ci sono ancora frasi salvate.',selected:'selezionate',phrases:'frasi',imported:'caricate',restoreDone:'Frasi selezionate ripristinate.',invalidFile:'Questo file non sembra una raccolta LingoTotal.',check:'Controlla',next:'Avanti',show:'Mostra risposta',correct:'Corretto',tryAgain:'Riprova',yourAnswer:'La tua risposta',listenNow:'Ascolta',typeSentence:'Scrivi la frase che hai ascoltato.',recallPrompt:'Prova a ricordare la frase completa prima di mostrarla.',themeNone:'Nessun tema'};
 T.pt={tagline:'Aprenda qualquer língua à sua maneira',home:'Atividades / mudar línguas',title:'Praticar a minha língua',intro:'Recupere as expressões que decidiu guardar. Selecione as frases que quer recordar e pratique-as de formas diferentes.',collectionTitle:'Escolha as suas frases',collectionIntro:'Use frases guardadas neste dispositivo ou carregue uma coleção LingoTotal anterior.',selectAll:'Selecionar tudo',clearSelection:'Limpar seleção',backup:'Descarregar cópia de segurança',readable:'Descarregar lista legível',upload:'Carregar coleção guardada',language:'Língua',theme:'Tema',all:'Todas',restoreSelected:'Restaurar selecionadas neste dispositivo',cancelImport:'Cancelar carregamento',storageTitle:'Guarde as suas coleções em segurança.',storageAdvice:'Crie uma pasta “LingoTotal Language Collection” em Documentos, Google Drive, OneDrive ou iCloud, com subpastas por língua ou tema.',practiceTitle:'Pratique o que é importante para si',practiceIntro:'Escolha um tipo de prática. O LingoTotal usa exatamente as frases selecionadas.',gap:'Preencher lacunas',jumble:'Frase desordenada',listen:'Ouvir e reconstruir',recall:'Recordar',start:'Começar prática',noPhrases:'Ainda não há frases guardadas.',selected:'selecionadas',phrases:'frases',imported:'carregadas',restoreDone:'Frases selecionadas restauradas.',invalidFile:'Este ficheiro não parece ser uma coleção LingoTotal.',check:'Verificar',next:'Seguinte',show:'Mostrar resposta',correct:'Correto',tryAgain:'Tente novamente',yourAnswer:'A sua resposta',listenNow:'Ouvir',typeSentence:'Escreva a frase que ouviu.',recallPrompt:'Tente recordar a frase completa antes de a revelar.',themeNone:'Sem tema'};
@@ -345,109 +192,4 @@ window.addEventListener('focus',()=>{try{migrateLegacyCollections();render()}cat
   document.querySelectorAll('a[href="index.html"],a[href^="index.html?"]').forEach(a=>a.href=returnURL);
 })();
 </script>
-
-<script id="lingototal-all-interface-text-fix">
-(function(){
-  function getDictionary(){
-    try{
-      if(typeof T!=="undefined" && T && T.en) return T;
-    }catch(e){}
-    try{
-      if(typeof translations!=="undefined" && translations && translations.en) return translations;
-    }catch(e){}
-    return null;
-  }
-  function getTranslate(){
-    try{
-      if(typeof tr==="function") return tr;
-    }catch(e){}
-    return null;
-  }
-  const skipSelectors = [
-    "#realArea","#exercise","#workspace","#lessonCard","#repairCard","#continueCard",
-    "#quizCard","#quiz","#stageContent","#transcriptText","#collectionList",
-    ".real-area",".exercise",".workspace",".lesson-card",".generated",".output",
-    "[data-target-content]","[data-generated-content]"
-  ].join(",");
-
-  function isSkipped(el){
-    return !!(el && el.closest && el.closest(skipSelectors));
-  }
-
-  function normalize(s){
-    return String(s||"").replace(/\s+/g," ").trim();
-  }
-
-  function applyAllInterfaceText(){
-    const dict=getDictionary();
-    const translate=getTranslate();
-    if(!dict || !dict.en || !translate) return;
-
-    const reverse=new Map();
-    Object.entries(dict.en).forEach(([key,val])=>{
-      if(typeof val==="string"){
-        const n=normalize(val);
-        if(n) reverse.set(n,key);
-      }
-    });
-
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node=>{
-      const el=node.parentElement;
-      if(!el || isSkipped(el)) return;
-      if(["SCRIPT","STYLE","NOSCRIPT","TEXTAREA","OPTION"].includes(el.tagName)) return;
-      const raw=node.nodeValue;
-      const n=normalize(raw);
-      if(!n) return;
-      const key=reverse.get(n);
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key){
-          const leading=(raw.match(/^\s*/)||[""])[0];
-          const trailing=(raw.match(/\s*$/)||[""])[0];
-          node.nodeValue=leading+translated+trailing;
-        }
-      }
-    });
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(isSkipped(el) || el.hasAttribute("data-i18n-placeholder")) return;
-      const key=reverse.get(normalize(el.getAttribute("placeholder")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("placeholder",translated);
-      }
-    });
-
-    document.querySelectorAll("[title]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("title")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("title",translated);
-      }
-    });
-
-    document.querySelectorAll("[aria-label]").forEach(el=>{
-      if(isSkipped(el)) return;
-      const key=reverse.get(normalize(el.getAttribute("aria-label")));
-      if(key){
-        const translated=translate(key);
-        if(translated && translated!==key) el.setAttribute("aria-label",translated);
-      }
-    });
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",()=>setTimeout(applyAllInterfaceText,0));
-  }else{
-    setTimeout(applyAllInterfaceText,0);
-  }
-  window.addEventListener("pageshow",()=>setTimeout(applyAllInterfaceText,0));
-})();
-</script>
-
 </body></html>
