@@ -188,19 +188,17 @@ transform:translateX(130%);transition:.25s
 <p data-i18n="intro">Choose your level and topic.</p>
 </section>
 <section class="panel setup-panel">
-<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose">Start by choosing your level</div></div>
-<p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
-<p class="level-first-note">1. Choose your level first.  2. Then write your own theme in any language.</p><div class="level-grid level-first">
+<div class="section-head"><div class="number">1</div><div class="section-title">Choose your level first</div></div><p class="level-first-note">Choose the level that feels right for you today.</p><div class="level-grid level-first">
 <button class="choice level level-card" data-level="beginner"><span class="level-name" data-i18n="beginner">Revise Basics</span><span class="level-note" data-i18n="beginnerNote">Refresh useful words and everyday sentence patterns.</span></button>
 <button class="choice level level-card" data-level="intermediate"><span class="level-name" data-i18n="intermediate">Building Confidence</span><span class="level-note" data-i18n="intermediateNote">Use a wider range of language with more independence.</span></button>
+</div><label class="topic-label" for="themeInput">2. Write your own theme in any language</label><p class="theme-any-language-note">Write what you want to practise. You can use any language.</p><input class="attention" id="themeInput" placeholder="Write your theme in any language…" type="text"/>
+<p class="setup-lead" data-i18n="levelPrompt">Choose the option that feels right for you today.</p>
 
-</div>
 <div class="topic-step" id="topicStep">
 <div class="substep-badge">2</div>
 <div class="topic-content">
-<label class="topic-label" data-i18n="ownTopic" for="themeInput">Now choose your own theme</label>
+
 <p class="topic-guidance" data-i18n="topicGuidance">Type something you are interested in. Your exercise will be built around it.</p>
-<p class="theme-any-language-note">Write the theme you want to practise. You can write it in any language.</p><input class="attention" data-i18n-placeholder="topicPlaceholder" id="themeInput" placeholder="Write your theme in any language…" type="text"/>
 
 </div>
 </div>
