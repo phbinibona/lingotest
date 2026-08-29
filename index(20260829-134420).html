@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingoTotal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1267d6;
+  --primary-dark:#084ca8;
+  --primary-light:#e8f2ff;
+  --accent:#25b7d3;
+  --ink:#172033;
+  --muted:#5f6b7a;
+  --surface:#fff;
+  --soft:#f5f8fc;
+  --border:#d9e2ef;
+  --shadow:0 10px 28px rgba(26,69,120,.12);
+  --radius:18px;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:'Quicksand',sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);
+  line-height:1.55;
+  min-height:100vh;
+}
+
+button,select{font:inherit}
+
+
+/* =========================================================
+   ACTIVITY FINDER
+   ========================================================= */
+.activity-finder{
+  margin:0 0 24px;
+  padding:18px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.activity-finder h2{margin:0 0 4px;font-size:1.15rem}
+.activity-finder p{margin:0 0 12px;color:var(--muted);font-size:.92rem}
+.finder-row{display:flex;gap:10px;align-items:stretch}
+.finder-row textarea{
+  flex:1;min-height:52px;resize:vertical;padding:12px 13px;border:1px solid #bfcde0;border-radius:12px;
+  font:inherit;color:var(--ink);background:#fff;outline:none;
+}
+.finder-row textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(18,103,214,.1)}
+.finder-btn{
+  border:0;border-radius:12px;padding:0 18px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;min-width:145px;
+}
+.finder-btn:hover{background:var(--primary-dark)}
+.finder-btn:disabled{opacity:.65;cursor:wait}
+.finder-result{margin-top:14px;padding:14px;border-radius:13px;background:var(--primary-light);border:1px solid #c7dcf8}
+.finder-result.hidden{display:none}
+.finder-result strong{display:block;margin-bottom:4px}
+.finder-result p{margin:0 0 10px;color:var(--ink)}
+.finder-start{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:10px;background:var(--primary);color:#fff;text-decoration:none;font-weight:700}
+.finder-error{margin-top:10px;color:#a12b2b;font-weight:600;font-size:.9rem}
+@media(max-width:620px){.finder-row{flex-direction:column}.finder-btn{min-height:46px;width:100%}}
+
+/* =========================================================
+   STANDARD LINGOTOTAL HEADER
+   ========================================================= */
+
+.banner{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  min-height:82px;
+  padding:12px clamp(14px,3vw,34px);
+  background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);
+  color:#fff;
+  box-shadow:0 3px 14px rgba(8,76,168,.25);
+}
+
+.brand-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:210px;
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  color:var(--primary);
+  font-weight:800;
+  font-size:1.05rem;
+  box-shadow:0 6px 14px rgba(0,0,0,.18);
+}
+
+.brand{
+  font-size:1.35rem;
+  font-weight:800;
+  letter-spacing:.055em;
+}
+
+.tagline{
+  font-size:.78rem;
+  opacity:.9;
+}
+
+.language-controls{
+  display:flex;
+  align-items:end;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.language-field{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+
+.language-field label{
+  font-size:.7rem;
+  font-weight:700;
+  opacity:.92;
+}
+
+.language-field select{
+  min-width:150px;
+  padding:8px 34px 8px 10px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:9px;
+  background:#fff;
+  color:#172033;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page{
+  width:min(900px,calc(100% - 22px));
+  margin:20px auto 42px;
+}
+
+.intro{
+  position:relative;
+  overflow:hidden;
+  margin-bottom:18px;
+  padding:22px clamp(18px,3vw,28px);
+  background:linear-gradient(135deg,#fff,#edf5ff);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.intro:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  right:-75px;
+  top:-80px;
+  background:rgba(37,183,211,.14);
+}
+
+.intro h1{
+  position:relative;
+  z-index:1;
+  margin:0 0 5px;
+  font-size:clamp(1.55rem,4vw,2.05rem);
+  line-height:1.16;
+}
+
+.intro p{
+  position:relative;
+  z-index:1;
+  margin:0;
+  color:var(--muted);
+  font-size:.94rem;
+}
+
+.activity-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.activity-card{
+  display:flex;
+  flex-direction:column;
+  min-height:205px;
+  padding:20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  text-decoration:none;
+  color:var(--ink);
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+
+.activity-card:hover{
+  transform:translateY(-2px);
+  border-color:#aac9ef;
+  box-shadow:0 13px 30px rgba(26,69,120,.16);
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.activity-icon{
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:var(--primary-light);
+  color:var(--primary);
+  font-size:1.38rem;
+  font-weight:800;
+}
+
+.order{
+  font-size:.72rem;
+  font-weight:800;
+  color:var(--muted);
+  background:var(--soft);
+  border:1px solid var(--border);
+  padding:5px 8px;
+  border-radius:999px;
+}
+
+.activity-card h2{
+  margin:0 0 6px;
+  color:var(--primary-dark);
+  font-size:1.12rem;
+  line-height:1.25;
+}
+
+.activity-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:.85rem;
+  flex:1;
+}
+
+.open{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+  padding-top:11px;
+  border-top:1px solid var(--border);
+  color:var(--primary);
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.arrow{
+  font-size:1.15rem;
+  transition:transform .18s ease;
+}
+
+.activity-card:hover .arrow{
+  transform:translateX(3px);
+}
+
+.try-more{
+  margin-top:17px;
+  padding:13px 16px;
+  border-radius:12px;
+  background:var(--primary-light);
+  color:var(--primary-dark);
+  text-align:center;
+  font-size:.85rem;
+  font-weight:700;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:.72rem;
+  padding:0 10px 24px;
+}
+
+html[dir="rtl"] .activity-card{
+  text-align:right;
+}
+
+html[dir="rtl"] .open{
+  flex-direction:row-reverse;
+}
+
+
+.category-section{margin:0 0 30px}
+.category-heading{display:flex;align-items:flex-start;gap:12px;margin:0 0 14px;padding:0 2px}
+.category-icon{width:42px;height:42px;flex:0 0 42px;border-radius:12px;display:grid;place-items:center;background:var(--primary-light);color:var(--primary-dark);font-size:1.15rem;font-weight:800}
+.category-copy h2{margin:0 0 3px;font-size:1.18rem;color:var(--ink)}
+.category-copy p{margin:0;color:var(--muted);font-size:.9rem}
+.category-section .activity-grid{margin-top:0}
+.category-section.personal .category-heading{padding:14px 16px;border:1px solid #cfe1f7;border-radius:14px;background:linear-gradient(135deg,#fff,#edf5ff)}
+.activity-card.featured{border-color:#bfd8f6;background:linear-gradient(145deg,#fff,#f4f9ff)}
+.activity-card .order{display:none}
+
+
+.real-life-group{margin-top:22px}
+.real-life-subheading{margin:0 2px 10px;padding:10px 12px;border-left:4px solid var(--primary);background:var(--soft);border-radius:0 10px 10px 0}
+.real-life-subheading h3{margin:0;color:var(--primary-dark);font-size:1rem}
+.real-life-subheading p{margin:4px 0 0;color:var(--muted);font-size:.86rem}
+.specialist-group .activity-grid{grid-template-columns:minmax(0,1fr)}
+
+@media(max-width:700px){
+  .banner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .brand-wrap{min-width:0}
+
+  .language-controls{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .language-field select{
+    width:100%;
+    min-width:0;
+  }
+
+  .page{margin-top:12px}
+
+  .activity-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .activity-card{
+    min-height:0;
+    padding:18px;
+  }
+
+  .intro{padding:18px}
+}
+
+@media(max-width:390px){
+  .brand{font-size:1.2rem}
+  .tagline{font-size:.7rem}
+
+  .language-controls{gap:7px}
+
+  .language-field label{font-size:.64rem}
+
+  .language-field select{
+    padding:7px 25px 7px 8px;
+    font-size:.83rem;
+  }
+}
+
+.saved-practice-callout{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  margin:2px 0 0;
+  border:1px solid #bcd7f7;
+  border-radius:14px;
+  background:linear-gradient(135deg,#eaf4ff,#f8fcff);
+  color:var(--primary-dark);
+}
+.saved-practice-icon{
+  width:42px;height:42px;flex:0 0 42px;
+  display:grid;place-items:center;
+  border-radius:12px;background:#fff;
+  font-size:1.2rem;box-shadow:0 5px 14px rgba(26,69,120,.10)
+}
+.saved-practice-callout strong{display:block;font-size:.96rem;margin-bottom:2px}
+.saved-practice-callout span{display:block;font-size:.82rem;line-height:1.4;color:var(--muted);font-weight:600}
+@media(max-width:700px){
+  .saved-practice-callout{padding:12px 13px;align-items:flex-start}
+  .saved-practice-icon{width:38px;height:38px;flex-basis:38px}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="banner">
+
+  <div class="brand-wrap">
+    <div class="brand-mark">LT</div>
+    <div>
+      <div class="brand">LINGOTOTAL</div>
+      <div class="tagline" data-i18n="tagline">Learn any language your way</div>
+    </div>
+  </div>
+
+  <div class="language-controls">
+
+    <div class="language-field">
+      <label for="uiLanguage" data-i18n="uiLanguage">Website language</label>
+
+      <select id="uiLanguage">
+        <option value="en">English</option>
+        <option value="ca">Català</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
+        <option value="eu">Euskara</option>
+        <option value="ja">日本語</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+
+    <div class="language-field">
+      <label for="targetLanguage" data-i18n="targetLanguage">Language to learn</label>
+
+      <select id="targetLanguage">
+        <option value="English">English</option>
+        <option value="Catalan">Català</option>
+        <option value="Spanish">Español</option>
+        <option value="French">Français</option>
+        <option value="German">Deutsch</option>
+        <option value="Italian">Italiano</option>
+        <option value="Portuguese">Português</option>
+        <option value="Basque">Euskara</option>
+        <option value="Japanese">日本語</option>
+        <option value="Arabic">العربية</option>
+      </select>
+    </div>
+
+  </div>
+
+</header>
+
+
+<main class="page">
+
+  <section class="intro">
+    <h1 data-i18n="title">Choose what you want to work on</h1>
+    <p data-i18n="intro">Use language for real life, build a personal collection, and return to your saved phrases so they become easier to remember and use.</p>
+  </section>
+
+  <section class="activity-finder" aria-labelledby="finderTitle">
+    <h2 id="finderTitle" data-i18n="finderTitle">Not sure where to start?</h2>
+    <p data-i18n="finderText">Tell us what you want to practise. Write in any language.</p>
+    <div class="finder-row">
+      <textarea id="finderInput" data-i18n-placeholder="finderPlaceholder" placeholder="For example: I want to practise speaking to a plumber about a leak."></textarea>
+      <button id="finderBtn" class="finder-btn" type="button" data-i18n="finderButton">Find an activity</button>
+    </div>
+    <div id="finderError" class="finder-error" aria-live="polite"></div>
+    <div id="finderResult" class="finder-result hidden" aria-live="polite">
+      <strong><span data-i18n="finderTry">Try this:</span> <span id="finderActivityName"></span></strong>
+      <p id="finderReason"></p>
+      <a id="finderStart" class="finder-start" href="#"><span data-i18n="start">Start</span><span>→</span></a>
+    </div>
+  </section>
+
+  <section class="category-section personal">
+    <div class="category-heading">
+      <div class="category-icon">★</div>
+      <div class="category-copy">
+        <h2 data-i18n="catPersonal">Build your personal language</h2>
+        <p data-i18n="catPersonalText">Discover useful language, save what matters to you, then come back and practise it until it becomes part of your own language.</p>
+      </div>
+    </div>
+    <div class="activity-grid">
+      <a class="activity-card featured" data-page="lingoreal.html" href="lingoreal.html">
+        <div class="card-top"><div class="activity-icon">🗣️</div></div>
+        <h2 data-i18n="lingoReal">LingoReal</h2>
+        <p data-i18n="lingoRealText">Discover what people really say, what they really mean and save useful natural language.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card featured" data-page="lingogo.html" href="lingogo.html">
+        <div class="card-top"><div class="activity-icon">🚀</div></div>
+        <h2 data-i18n="lingoGo">LingoGo</h2>
+        <p data-i18n="lingoGoText">Choose what you want to communicate, discover natural ways to say it and save your favourites.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+      <div class="saved-practice-callout">
+        <div class="saved-practice-icon">🔁</div>
+        <div>
+          <strong data-i18n="savedPracticeTitle">Saved useful phrases?</strong>
+          <span data-i18n="savedPracticeText">Come back to them. Short retrieval practice helps turn saved phrases into language you can actually remember and use.</span>
+        </div>
+      </div>
+
+      <a class="activity-card featured" data-page="lingopractice.html" href="lingopractice.html">
+        <div class="card-top"><div class="activity-icon">🔁</div></div>
+        <h2 data-i18n="lingoPractice">LingoPractice</h2>
+        <p data-i18n="lingoPracticeText">Practise the useful phrases you have saved so that they become language you can use confidently.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card featured" data-page="lingolearnfromme-gemini.html" href="lingolearnfromme-gemini.html">
+        <div class="card-top"><div class="activity-icon">✨</div></div>
+        <h2 data-i18n="learnFromMe">Learn from Me</h2>
+        <p data-i18n="learnFromMeText">Write something of your own and let LingoTotal build a personalised mini-lesson from your language.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="category-section">
+    <div class="category-heading">
+      <div class="category-icon">🌍</div>
+      <div class="category-copy">
+        <h2 data-i18n="catContext">Understand language in context</h2>
+        <p data-i18n="catContextText">Work with natural language in everyday situations, reading and listening.</p>
+      </div>
+    </div>
+    <div class="activity-grid">
+      <a class="activity-card" data-page="lingoeveryday.html" href="lingoeveryday.html">
+        <div class="card-top"><div class="activity-icon">💬</div></div>
+        <h2 data-i18n="everyday">Everyday Language</h2>
+        <p data-i18n="everydayText">Learn natural expressions people really use and choose the right expression for the situation.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card" data-page="lingoreading.html" href="lingoreading.html">
+        <div class="card-top"><div class="activity-icon">📖</div></div>
+        <h2 data-i18n="reading">Reading Challenge</h2>
+        <p data-i18n="readingText">Read a generated text, answer comprehension questions and work out vocabulary from context.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card" data-page="lingocomprehension.html" href="lingocomprehension.html">
+        <div class="card-top"><div class="activity-icon">🎧</div></div>
+        <h2 data-i18n="comprehension">Listening Comprehension</h2>
+        <p data-i18n="comprehensionText">Listen to a short monologue, answer the quiz and reveal the transcript afterwards.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="category-section">
+    <div class="category-heading">
+      <div class="category-icon">🧩</div>
+      <div class="category-copy">
+        <h2 data-i18n="catControl">Build accuracy and control</h2>
+        <p data-i18n="catControlText">Strengthen sentence building, careful listening and grammar.</p>
+      </div>
+    </div>
+    <div class="activity-grid">
+      <a class="activity-card" data-page="lingomatching.html" href="lingomatching.html">
+        <div class="card-top"><div class="activity-icon">↔</div></div>
+        <h2 data-i18n="matching">Matching</h2>
+        <p data-i18n="matchingText">Match sentence beginnings and endings, then complete key missing words.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card" data-page="lingorebuild.html" href="lingorebuild.html">
+        <div class="card-top"><div class="activity-icon">⇄</div></div>
+        <h2 data-i18n="rebuild">Listen & Rebuild</h2>
+        <p data-i18n="rebuildText">Listen to a hidden sentence and rebuild it from jumbled words.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card" data-page="lingocomplete.html" href="lingocomplete.html">
+        <div class="card-top"><div class="activity-icon">✎</div></div>
+        <h2 data-i18n="complete">Listen & Complete</h2>
+        <p data-i18n="completeText">Listen closely and type two important missing words in each sentence.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+
+      <a class="activity-card" data-page="lingogrammar.html" href="lingogrammar.html">
+        <div class="card-top"><div class="activity-icon">G</div></div>
+        <h2 data-i18n="grammar">Grammar Masterclass</h2>
+        <p data-i18n="grammarText">Choose a grammar point and work through a complete personalised lesson from noticing to production.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="category-section">
+    <div class="category-heading">
+      <div class="category-icon">🎯</div>
+      <div class="category-copy">
+        <h2 data-i18n="catPlay">Relax and challenge yourself</h2>
+        <p data-i18n="catPlayText">Practise the language in a lighter, game-like way.</p>
+      </div>
+    </div>
+    <div class="activity-grid">
+      <a class="activity-card" data-page="lingoquiz.html" href="lingoquiz.html">
+        <div class="card-top"><div class="activity-icon">🎯</div></div>
+        <h2 data-i18n="quiz">LingoQuiz</h2>
+        <p data-i18n="quizText">Test your general knowledge while practising the language you are learning.</p>
+        <div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+
+  <section class="category-section special">
+    <div class="category-heading">
+      <div class="category-icon">✦</div>
+      <div class="category-copy">
+        <h2 data-i18n="catSpecial">LingoGo for Real Life</h2>
+        <p data-i18n="catSpecialText">Use language for real goals — work, study and everyday life — then practise the useful phrases you collect.</p>
+      </div>
+    </div>
+
+    <div class="real-life-group">
+      <div class="real-life-subheading">
+        <h3 data-i18n="realLifeYoungTitle">Study, jobs &amp; getting started</h3>
+        <p data-i18n="realLifeYoungText">Practical language for younger people moving into study, work and greater independence.</p>
+      </div>
+      <div class="activity-grid">
+        <a class="activity-card featured" data-page="lingogostudyabroad.html" href="lingogostudyabroad.html"><div class="card-top"><div class="activity-icon">🎓</div></div><h2 data-i18n="lingoGoStudyAbroad">LingoGo Study Abroad</h2><p data-i18n="lingoGoStudyAbroadText">Build the language you need for university, accommodation, social life, placements and everyday independence abroad.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+        <a class="activity-card featured" data-page="lingogoretail.html" href="lingogoretail.html"><div class="card-top"><div class="activity-icon">🛍️</div></div><h2 data-i18n="lingoGoRetail">LingoGo Retail</h2><p data-i18n="lingoGoRetailText">Prepare for retail applications, interviews and customer-facing work, and turn your academic qualifications into strengths employers understand.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+        <a class="activity-card featured" data-page="lingogotourism.html" href="lingogotourism.html"><div class="card-top"><div class="activity-icon">🌍</div></div><h2 data-i18n="lingoGoTourism">LingoGo Tourism</h2><p data-i18n="lingoGoTourismText">Prepare for tourism and hospitality jobs at home or abroad: applications, interviews, guests, teamwork and international workplaces.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+      </div>
+    </div>
+
+    <div class="real-life-group">
+      <div class="real-life-subheading">
+        <h3 data-i18n="realLifePracticalTitle">Everyday practical life</h3>
+        <p data-i18n="realLifePracticalText">The language you need to manage common services, problems and responsibilities in daily life.</p>
+      </div>
+      <div class="activity-grid">
+        <a class="activity-card featured" data-page="lingogomovingcountry.html" href="lingogomovingcountry.html"><div class="card-top"><div class="activity-icon">🧳</div></div><h2 data-i18n="lingoGoMoving">LingoGo Moving &amp; Living Abroad</h2><p data-i18n="lingoGoMovingText">Build the language you need when moving to another country: accommodation, work, services, everyday independence and community life.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+        <a class="activity-card featured" data-page="lingogohealth.html" href="lingogohealth.html"><div class="card-top"><div class="activity-icon">🩺</div></div><h2 data-i18n="lingoGoHealth">LingoGo Health &amp; Care</h2><p data-i18n="lingoGoHealthText">Build the language you need for appointments, pharmacies, dentists, describing symptoms, understanding questions and following up on care.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+        <a class="activity-card featured" data-page="lingogohomeservices.html" href="lingogohomeservices.html"><div class="card-top"><div class="activity-icon">🛠️</div></div><h2 data-i18n="lingoGoHomeServices">LingoGo Home Services &amp; Repairs</h2><p data-i18n="lingoGoHomeServicesText">Build the language you need with plumbers, electricians, builders, decorators, gardeners and repair services.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+      </div>
+    </div>
+
+    <div class="real-life-group specialist-group">
+      <div class="real-life-subheading"><h3 data-i18n="realLifeSpecialistTitle">Specialist study &amp; professional language</h3></div>
+      <div class="activity-grid">
+        <a class="activity-card featured" data-page="lingogodesign.html" href="lingogodesign.html"><div class="card-top"><div class="activity-icon">🎨</div></div><h2 data-i18n="lingoGoDesign">LingoGo Design</h2><p data-i18n="lingoGoDesignText">Practise the language you need to present, critique and explain design work in real university and professional situations.</p><div class="open"><span data-i18n="start">Start</span><span class="arrow">→</span></div></a>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="try-more" data-i18n="tryMore">
+    Try more than one activity — each one makes you work with the language differently.
+  </div>
+
+</main>
+
+
+<footer class="footer">
+  LingoTotal · <span data-i18n="tagline">Learn any language your way</span>
+</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+
+const T={
+
+en:{
+tagline:'Learn any language your way',
+uiLanguage:'Website language',
+targetLanguage:'Language to learn',
+title:'Choose what you want to work on',
+intro:'Choose a real-life goal, build your personal language, or focus on a particular skill.',
+matching:'Matching',
+matchingText:'Match sentence beginnings and endings, then complete key missing words.',
+everyday:'Everyday Language',
+everydayText:'Learn natural expressions people really use and choose the right expression for the situation.',
+reading:'Reading Challenge',
+readingText:'Read a generated text, answer comprehension questions and work out vocabulary from context.',
+comprehension:'Listening Comprehension',
+comprehensionText:'Listen to a short monologue, answer the quiz and reveal the transcript afterwards.',
+complete:'Listen & Complete',
+completeText:'Listen closely and type two important missing words in each sentence.',
+rebuild:'Listen & Rebuild',
+rebuildText:'Listen to a hidden sentence and rebuild it from jumbled words.',
+grammar:'Grammar Masterclass',
+grammarText:'Choose a grammar point and work through a complete personalised lesson from noticing to production.',
+quiz:'LingoQuiz',
+quizText:'Test your general knowledge while practising the language you are learning with questions at Basic or Intermediate level.',
+learnFromMe:'Learn from Me',
+learnFromMeText:'Write something of your own and let LingoTotal build a personalised mini-lesson from your language.',
+start:'Start',
+tryMore:'Try more than one activity — each one makes you work with the language differently.'
+},
+
+ca:{
+tagline:'Aprèn qualsevol llengua a la teva manera',
+uiLanguage:'Llengua del web',
+targetLanguage:'Llengua que vols aprendre',
+title:'Tria una activitat',
+intro:'Comença on vulguis. Prova activitats diferents per practicar la llengua de maneres diferents.',
+matching:'Emparellament',
+matchingText:'Relaciona inicis i finals de frase i després completa paraules clau.',
+everyday:'Llengua quotidiana',
+everydayText:'Aprèn expressions naturals que la gent utilitza realment i tria l’expressió adequada per a cada situació.',
+reading:'Repte de lectura',
+readingText:'Llegeix un text generat, respon preguntes de comprensió i dedueix vocabulari pel context.',
+comprehension:'Comprensió oral',
+comprehensionText:'Escolta un monòleg breu, respon el qüestionari i després descobreix la transcripció.',
+complete:'Escolta i completa',
+completeText:'Escolta atentament i escriu dues paraules importants que falten a cada frase.',
+rebuild:'Escolta i reconstrueix',
+rebuildText:'Escolta una frase oculta i reconstrueix-la amb paraules desordenades.',
+grammar:'Masterclass de gramàtica',
+grammarText:'Tria un punt gramatical i completa una lliçó personalitzada des de l’observació fins a la producció.',
+quiz:'LingoQuiz',
+quizText:'Posa a prova els teus coneixements generals mentre practiques la llengua que aprens amb preguntes de nivell bàsic o intermedi.',
+learnFromMe:'Aprèn de mi',
+learnFromMeText:'Escriu alguna cosa teva i deixa que LingoTotal creï una mini lliçó personalitzada a partir de la teva llengua.',
+start:'Comença',
+tryMore:'Prova més d’una activitat: cadascuna et fa treballar la llengua d’una manera diferent.'
+},
+
+es:{
+tagline:'Aprende cualquier idioma a tu manera',
+uiLanguage:'Idioma de la web',
+targetLanguage:'Idioma que quieres aprender',
+title:'Elige una actividad',
+intro:'Empieza donde quieras. Prueba actividades distintas para practicar el idioma de diferentes maneras.',
+matching:'Emparejamiento',
+matchingText:'Relaciona principios y finales de frase y después completa palabras clave.',
+everyday:'Lenguaje cotidiano',
+everydayText:'Aprende expresiones naturales que la gente usa realmente y elige la expresión adecuada para cada situación.',
+reading:'Reto de lectura',
+readingText:'Lee un texto generado, responde preguntas de comprensión y deduce vocabulario por el contexto.',
+comprehension:'Comprensión oral',
+comprehensionText:'Escucha un monólogo breve, responde el cuestionario y después descubre la transcripción.',
+complete:'Escucha y completa',
+completeText:'Escucha atentamente y escribe dos palabras importantes que faltan en cada frase.',
+rebuild:'Escucha y reconstruye',
+rebuildText:'Escucha una frase oculta y reconstrúyela con palabras desordenadas.',
+grammar:'Masterclass de gramática',
+grammarText:'Elige un punto gramatical y completa una lección personalizada desde la observación hasta la producción.',
+quiz:'LingoQuiz',
+quizText:'Pon a prueba tus conocimientos generales mientras practicas el idioma que estás aprendiendo con preguntas de nivel básico o intermedio.',
+learnFromMe:'Aprende de mí',
+learnFromMeText:'Escribe algo propio y deja que LingoTotal cree una mini lección personalizada a partir de tu lenguaje.',
+start:'Empezar',
+tryMore:'Prueba más de una actividad: cada una te hace trabajar el idioma de una forma diferente.'
+},
+
+fr:{
+tagline:'Apprenez n’importe quelle langue à votre façon',
+uiLanguage:'Langue du site',
+targetLanguage:'Langue à apprendre',
+title:'Choisissez une activité',
+intro:'Commencez où vous voulez. Essayez différentes activités pour travailler la langue de plusieurs façons.',
+matching:'Association',
+matchingText:'Associez des débuts et des fins de phrases, puis complétez les mots clés manquants.',
+everyday:'Langue de tous les jours',
+everydayText:'Apprenez des expressions naturelles réellement utilisées et choisissez celle qui convient à la situation.',
+reading:'Défi de lecture',
+readingText:'Lisez un texte généré, répondez aux questions et déduisez le vocabulaire grâce au contexte.',
+comprehension:'Compréhension orale',
+comprehensionText:'Écoutez un court monologue, répondez au quiz puis découvrez la transcription.',
+complete:'Écoutez et complétez',
+completeText:'Écoutez attentivement et écrivez deux mots importants manquants dans chaque phrase.',
+rebuild:'Écoutez et reconstruisez',
+rebuildText:'Écoutez une phrase cachée et reconstruisez-la avec les mots mélangés.',
+grammar:'Masterclass de grammaire',
+grammarText:'Choisissez un point grammatical et suivez une leçon personnalisée de l’observation à la production.',
+quiz:'LingoQuiz',
+quizText:'Testez votre culture générale tout en pratiquant la langue que vous apprenez avec des questions de niveau débutant ou intermédiaire.',
+learnFromMe:'Apprends de moi',
+learnFromMeText:'Écrivez quelque chose de personnel et laissez LingoTotal créer une mini-leçon personnalisée à partir de votre langue.',
+start:'Commencer',
+tryMore:'Essayez plusieurs activités : chacune vous fait travailler la langue d’une manière différente.'
+},
+
+de:{
+tagline:'Lerne jede Sprache auf deine Art',
+uiLanguage:'Webseitensprache',
+targetLanguage:'Lernsprache',
+title:'Wähle eine Aktivität',
+intro:'Beginne, wo du möchtest. Probiere verschiedene Aktivitäten aus und übe die Sprache auf unterschiedliche Weise.',
+matching:'Sätze zuordnen',
+matchingText:'Ordne Satzanfänge und Satzenden zu und ergänze anschließend wichtige fehlende Wörter.',
+everyday:'Alltagssprache',
+everydayText:'Lerne natürliche Ausdrücke, die Menschen wirklich benutzen, und wähle den passenden Ausdruck für die Situation.',
+reading:'Lese-Challenge',
+readingText:'Lies einen erstellten Text, beantworte Verständnisfragen und erschließe Wortschatz aus dem Kontext.',
+comprehension:'Hörverstehen',
+comprehensionText:'Höre einen kurzen Monolog, beantworte das Quiz und zeige anschließend das Transkript an.',
+complete:'Hören und ergänzen',
+completeText:'Höre genau zu und ergänze in jedem Satz zwei wichtige fehlende Wörter.',
+rebuild:'Hören und rekonstruieren',
+rebuildText:'Höre einen verborgenen Satz und setze ihn aus gemischten Wörtern zusammen.',
+grammar:'Grammatik-Masterclass',
+grammarText:'Wähle ein Grammatikthema und bearbeite eine personalisierte Lektion vom Erkennen bis zur eigenen Produktion.',
+quiz:'LingoQuiz',
+quizText:'Teste dein Allgemeinwissen und übe gleichzeitig deine Lernsprache mit Fragen auf Basis- oder Mittelstufenniveau.',
+learnFromMe:'Lerne von mir',
+learnFromMeText:'Schreibe etwas Eigenes und lass LingoTotal aus deiner Sprache eine personalisierte Mini-Lektion erstellen.',
+start:'Start',
+tryMore:'Probiere mehr als eine Aktivität aus – jede trainiert die Sprache auf eine andere Weise.'
+},
+
+it:{
+tagline:'Impara qualsiasi lingua a modo tuo',
+uiLanguage:'Lingua del sito',
+targetLanguage:'Lingua da imparare',
+title:'Scegli un’attività',
+intro:'Inizia dove vuoi. Prova attività diverse per esercitare la lingua in modi differenti.',
+matching:'Abbinamento',
+matchingText:'Abbina inizi e finali di frase, poi completa le parole chiave mancanti.',
+everyday:'Lingua di tutti i giorni',
+everydayText:'Impara espressioni naturali che le persone usano davvero e scegli quella giusta per la situazione.',
+reading:'Sfida di lettura',
+readingText:'Leggi un testo generato, rispondi alle domande e deduci il vocabolario dal contesto.',
+comprehension:'Comprensione orale',
+comprehensionText:'Ascolta un breve monologo, rispondi al quiz e poi scopri la trascrizione.',
+complete:'Ascolta e completa',
+completeText:'Ascolta attentamente e scrivi due parole importanti mancanti in ogni frase.',
+rebuild:'Ascolta e ricostruisci',
+rebuildText:'Ascolta una frase nascosta e ricostruiscila con le parole in disordine.',
+grammar:'Masterclass di grammatica',
+grammarText:'Scegli un punto grammaticale e segui una lezione personalizzata dall’osservazione alla produzione.',
+quiz:'LingoQuiz',
+quizText:'Metti alla prova la tua cultura generale mentre pratichi la lingua che stai imparando con domande di livello base o intermedio.',
+start:'Inizia',
+tryMore:'Prova più di un’attività: ognuna ti fa lavorare con la lingua in modo diverso.'
+},
+
+pt:{
+tagline:'Aprenda qualquer idioma à sua maneira',
+uiLanguage:'Idioma do site',
+targetLanguage:'Idioma a aprender',
+title:'Escolha uma atividade',
+intro:'Comece onde quiser. Experimente atividades diferentes para praticar a língua de várias maneiras.',
+matching:'Associação',
+matchingText:'Associe inícios e finais de frases e depois complete palavras-chave em falta.',
+everyday:'Linguagem do dia a dia',
+everydayText:'Aprenda expressões naturais que as pessoas usam realmente e escolha a expressão certa para cada situação.',
+reading:'Desafio de leitura',
+readingText:'Leia um texto gerado, responda às perguntas e deduza vocabulário pelo contexto.',
+comprehension:'Compreensão oral',
+comprehensionText:'Ouça um pequeno monólogo, responda ao questionário e depois veja a transcrição.',
+complete:'Ouça e complete',
+completeText:'Ouça com atenção e escreva duas palavras importantes em falta em cada frase.',
+rebuild:'Ouça e reconstrua',
+rebuildText:'Ouça uma frase escondida e reconstrua-a com palavras desordenadas.',
+grammar:'Masterclass de gramática',
+grammarText:'Escolha um ponto gramatical e faça uma lição personalizada da observação à produção.',
+quiz:'LingoQuiz',
+quizText:'Teste os seus conhecimentos gerais enquanto pratica a língua que está a aprender com perguntas de nível básico ou intermédio.',
+start:'Começar',
+tryMore:'Experimente mais do que uma atividade — cada uma trabalha a língua de uma maneira diferente.'
+},
+
+eu:{
+tagline:'Ikasi edozein hizkuntza zure erara',
+uiLanguage:'Webgunearen hizkuntza',
+targetLanguage:'Ikasi nahi duzun hizkuntza',
+title:'Aukeratu jarduera bat',
+intro:'Hasi nahi duzun tokian. Probatu jarduera desberdinak hizkuntza modu desberdinetan lantzeko.',
+matching:'Esaldiak lotu',
+matchingText:'Lotu esaldien hasierak eta amaierak, eta gero osatu falta diren hitz garrantzitsuak.',
+everyday:'Eguneroko hizkuntza',
+everydayText:'Ikasi jendeak benetan erabiltzen dituen esamolde naturalak eta aukeratu egoera bakoitzerako egokiena.',
+reading:'Irakurketa-erronka',
+readingText:'Irakurri sortutako testu bat, erantzun ulermen-galderei eta ondorioztatu hiztegia testuingurutik.',
+comprehension:'Entzumen-ulermena',
+comprehensionText:'Entzun bakarrizketa labur bat, erantzun galdetegiari eta gero ikusi transkripzioa.',
+complete:'Entzun eta osatu',
+completeText:'Entzun arretaz eta idatzi esaldi bakoitzean falta diren bi hitz garrantzitsuak.',
+rebuild:'Entzun eta berreraiki',
+rebuildText:'Entzun ezkutuko esaldi bat eta berreraiki hitz nahasiekin.',
+grammar:'Gramatika masterclassa',
+grammarText:'Aukeratu gramatika-puntu bat eta osatu ikasgai pertsonalizatua behaketatik ekoizpenera.',
+quiz:'LingoQuiz',
+quizText:'Probatu zure kultura orokorra ikasten ari zaren hizkuntza praktikatzen duzun bitartean, oinarrizko edo tarteko mailako galderekin.',
+learnFromMe:'Ikasi nigandik',
+learnFromMeText:'Idatzi zeure zerbait eta utzi LingoTotali zure hizkuntzatik mini-ikasgai pertsonalizatua sortzen.',
+start:'Hasi',
+tryMore:'Probatu jarduera bat baino gehiago: bakoitzak hizkuntza beste modu batean lantzen du.'
+},
+
+ja:{
+tagline:'好きな方法でどんな言語でも学ぼう',
+uiLanguage:'ウェブサイトの言語',
+targetLanguage:'学習する言語',
+title:'アクティビティを選ぶ',
+intro:'好きなところから始めて、さまざまな方法で言語を練習してみましょう。',
+matching:'文のマッチング',
+matchingText:'文の前半と後半を組み合わせ、重要な空欄語を完成させます。',
+everyday:'日常表現',
+everydayText:'実際の会話でよく使われる自然な表現を学び、場面に合う表現を選びます。',
+reading:'読解チャレンジ',
+readingText:'生成された文章を読み、理解問題に答え、文脈から語彙の意味を考えます。',
+comprehension:'リスニング理解',
+comprehensionText:'短いモノローグを聞いてクイズに答え、その後で本文を確認します。',
+complete:'聞いて完成',
+completeText:'よく聞いて、各文の重要な2語を入力します。',
+rebuild:'聞いて文を組み立てる',
+rebuildText:'隠された文を聞き、並べ替えられた語句から再構成します。',
+grammar:'文法マスタークラス',
+grammarText:'文法項目を選び、気づきから自分で使う段階までの個別レッスンを進めます。',
+quiz:'LingoQuiz',
+quizText:'学習中の言語を練習しながら、基礎または中級レベルの問題で一般知識を試します。',
+learnFromMe:'私から学ぶ',
+learnFromMeText:'自分のことを書いて、あなたの表現からLingoTotalにパーソナライズされたミニレッスンを作らせましょう。',
+start:'始める',
+tryMore:'複数のアクティビティに挑戦しましょう。それぞれ違う方法で言語を練習できます。'
+},
+
+ar:{
+tagline:'تعلّم أي لغة بطريقتك',
+uiLanguage:'لغة الموقع',
+targetLanguage:'اللغة التي تريد تعلمها',
+title:'اختر نشاطًا',
+intro:'ابدأ من أي مكان وجرب أنشطة مختلفة للتدرب على اللغة بطرق متنوعة.',
+matching:'مطابقة الجمل',
+matchingText:'طابق بدايات الجمل مع نهاياتها ثم أكمل الكلمات المهمة الناقصة.',
+everyday:'لغة الحياة اليومية',
+everydayText:'تعلّم تعبيرات طبيعية يستخدمها الناس فعلًا واختر التعبير المناسب للموقف.',
+reading:'تحدي القراءة',
+readingText:'اقرأ نصًا مولدًا وأجب عن أسئلة الفهم واستنتج المفردات من السياق.',
+comprehension:'فهم المسموع',
+comprehensionText:'استمع إلى حديث قصير وأجب عن الأسئلة ثم اعرض النص بعد ذلك.',
+complete:'استمع وأكمل',
+completeText:'استمع بعناية واكتب كلمتين مهمتين ناقصتين في كل جملة.',
+rebuild:'استمع وأعد بناء الجملة',
+rebuildText:'استمع إلى جملة مخفية وأعد بناءها من الكلمات المبعثرة.',
+grammar:'دورة القواعد المتقدمة',
+grammarText:'اختر نقطة نحوية وأكمل درسًا مخصصًا من ملاحظة القاعدة إلى استخدامها بنفسك.',
+quiz:'LingoQuiz',
+quizText:'اختبر معلوماتك العامة أثناء ممارسة اللغة التي تتعلمها من خلال أسئلة بالمستوى الأساسي أو المتوسط.',
+start:'ابدأ',
+tryMore:'جرّب أكثر من نشاط واحد — فكل نشاط يدربك على اللغة بطريقة مختلفة.'
+}
+
+};
+
+
+
+// LingoPractice appears both with personal language and again in LingoGo for Real Life.
+Object.assign(T.en,{lingoPractice:"LingoPractice",lingoPracticeText:"Practise the useful phrases you have saved so that they become language you can use confidently."});
+Object.assign(T.ca,{lingoPractice:"LingoPractice",lingoPracticeText:"Practica les frases útils que has desat perquè es converteixin en llengua que puguis utilitzar amb confiança."});
+Object.assign(T.es,{lingoPractice:"LingoPractice",lingoPracticeText:"Practica las frases útiles que has guardado para convertirlas en lenguaje que puedas usar con confianza."});
+Object.assign(T.fr,{lingoPractice:"LingoPractice",lingoPracticeText:"Entraînez-vous avec les phrases utiles que vous avez enregistrées afin de pouvoir les utiliser avec assurance."});
+Object.assign(T.de,{lingoPractice:"LingoPractice",lingoPracticeText:"Übe die nützlichen Sätze, die du gespeichert hast, damit du sie sicher verwenden kannst."});
+Object.assign(T.it,{lingoPractice:"LingoPractice",lingoPracticeText:"Esercitati con le frasi utili che hai salvato, per poterle usare con sicurezza."});
+Object.assign(T.pt,{lingoPractice:"LingoPractice",lingoPracticeText:"Pratique as frases úteis que guardou para conseguir usá-las com confiança."});
+Object.assign(T.eu,{lingoPractice:"LingoPractice",lingoPracticeText:"Praktikatu gorde dituzun esaldi erabilgarriak, konfiantzaz erabili ahal izateko."});
+Object.assign(T.ja,{lingoPractice:"LingoPractice",lingoPracticeText:"保存した便利なフレーズを練習し、自信を持って使える表現にしましょう。"});
+Object.assign(T.ar,{lingoPractice:"LingoPractice",lingoPracticeText:"تدرّب على العبارات المفيدة التي حفظتها حتى تتمكن من استخدامها بثقة."});
+Object.assign(T.en,{catPersonal:'Build your personal language',catPersonalText:'Discover useful language, save the expressions that matter to you and build your own collection.',catContext:'Understand language in context',catContextText:'Work with natural language in everyday situations, reading and listening.',catControl:'Build accuracy and control',catControlText:'Strengthen sentence building, careful listening and grammar.',catPlay:'Relax and challenge yourself',catPlayText:'Practise the language in a lighter, game-like way.',lingoGo:'LingoGo',lingoGoText:'Choose what you want to communicate, discover natural ways to say it and save your favourites.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Prepare for retail applications, interviews and customer-facing work, and turn your academic qualifications into strengths employers understand.'});
+Object.assign(T.ca,{catPersonal:'Construeix el teu llenguatge personal',catPersonalText:'Descobreix llenguatge útil, desa les expressions que t’importen i crea la teva pròpia col·lecció.',catContext:'Entén la llengua en context',catContextText:'Treballa amb llenguatge natural en situacions quotidianes, lectura i comprensió oral.',catControl:'Guanya precisió i control',catControlText:'Reforça la construcció de frases, l’escolta atenta i la gramàtica.',catPlay:'Relaxa’t i posa’t a prova',catPlayText:'Practica la llengua d’una manera més lleugera i lúdica.',lingoGo:'LingoGo',lingoGoText:'Tria què vols comunicar, descobreix maneres naturals de dir-ho i desa les teves preferides.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Prepara sol·licituds, entrevistes i feina de cara al públic en el comerç, i converteix les teves qualificacions acadèmiques en punts forts que els ocupadors entenguin.'});
+Object.assign(T.es,{catPersonal:'Construye tu lenguaje personal',catPersonalText:'Descubre lenguaje útil, guarda las expresiones que te importan y crea tu propia colección.',catContext:'Comprende el idioma en contexto',catContextText:'Trabaja con lenguaje natural en situaciones cotidianas, lectura y comprensión auditiva.',catControl:'Gana precisión y control',catControlText:'Refuerza la construcción de frases, la escucha atenta y la gramática.',catPlay:'Relájate y ponte a prueba',catPlayText:'Practica el idioma de una forma más ligera y lúdica.',lingoGo:'LingoGo',lingoGoText:'Elige lo que quieres comunicar, descubre formas naturales de decirlo y guarda tus favoritas.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Prepárate para solicitudes, entrevistas y trabajo de atención al público en el comercio, y convierte tus titulaciones académicas en puntos fuertes que los empleadores entiendan.'});
+Object.assign(T.fr,{catPersonal:'Construisez votre langage personnel',catPersonalText:'Découvrez des expressions utiles, enregistrez celles qui comptent pour vous et créez votre propre collection.',catContext:'Comprendre la langue en contexte',catContextText:'Travaillez la langue naturelle dans des situations quotidiennes, en lecture et en compréhension orale.',catControl:'Gagner en précision et en maîtrise',catControlText:'Renforcez la construction des phrases, l’écoute attentive et la grammaire.',catPlay:'Détendez-vous et relevez un défi',catPlayText:'Pratiquez la langue de façon plus légère et ludique.',lingoGo:'LingoGo',lingoGoText:'Choisissez ce que vous voulez communiquer, découvrez des façons naturelles de le dire et enregistrez vos préférées.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Préparez vos candidatures, entretiens et situations de contact avec la clientèle dans le commerce, et transformez vos qualifications académiques en atouts compris par les employeurs.'});
+Object.assign(T.de,{catPersonal:'Baue deine persönliche Sprache auf',catPersonalText:'Entdecke nützliche Sprache, speichere wichtige Ausdrücke und baue deine eigene Sammlung auf.',catContext:'Sprache im Kontext verstehen',catContextText:'Arbeite mit natürlicher Sprache in Alltagssituationen, beim Lesen und Hören.',catControl:'Genauigkeit und Kontrolle aufbauen',catControlText:'Stärke Satzbau, genaues Hören und Grammatik.',catPlay:'Entspannt üben und dich testen',catPlayText:'Übe die Sprache auf leichtere, spielerische Weise.',lingoGo:'LingoGo',lingoGoText:'Wähle, was du ausdrücken möchtest, entdecke natürliche Formulierungen und speichere deine Favoriten.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Bereite dich auf Bewerbungen, Vorstellungsgespräche und Kundenkontakt im Einzelhandel vor und zeige Arbeitgebern, wie deine akademischen Qualifikationen zu echten Stärken werden.'});
+Object.assign(T.it,{catPersonal:'Costruisci il tuo linguaggio personale',catPersonalText:'Scopri espressioni utili, salva quelle importanti per te e crea la tua raccolta.',catContext:'Capisci la lingua nel contesto',catContextText:'Lavora con lingua naturale in situazioni quotidiane, nella lettura e nell’ascolto.',catControl:'Sviluppa precisione e controllo',catControlText:'Rafforza la costruzione delle frasi, l’ascolto attento e la grammatica.',catPlay:'Rilassati e mettiti alla prova',catPlayText:'Pratica la lingua in modo più leggero e giocoso.',lingoGo:'LingoGo',lingoGoText:'Scegli cosa vuoi comunicare, scopri modi naturali per dirlo e salva i tuoi preferiti.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Preparati a candidature, colloqui e lavoro a contatto con i clienti nel commercio, trasformando le tue qualifiche accademiche in punti di forza chiari per i datori di lavoro.'});
+Object.assign(T.pt,{catPersonal:'Construa a sua linguagem pessoal',catPersonalText:'Descubra linguagem útil, guarde as expressões importantes para si e crie a sua própria coleção.',catContext:'Compreenda a língua em contexto',catContextText:'Trabalhe com linguagem natural em situações do dia a dia, leitura e compreensão oral.',catControl:'Ganhe precisão e controlo',catControlText:'Reforce a construção de frases, a escuta atenta e a gramática.',catPlay:'Relaxe e desafie-se',catPlayText:'Pratique a língua de uma forma mais leve e divertida.',lingoGo:'LingoGo',lingoGoText:'Escolha o que quer comunicar, descubra formas naturais de o dizer e guarde as suas favoritas.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Prepare candidaturas, entrevistas e trabalho de atendimento ao público no comércio e transforme as suas qualificações académicas em pontos fortes que os empregadores compreendam.'});
+Object.assign(T.eu,{catPersonal:'Eraiki zure hizkuntza pertsonala',catPersonalText:'Ezagutu hizkuntza erabilgarria, gorde zuretzat garrantzitsuak diren esamoldeak eta sortu zure bilduma.',catContext:'Ulertu hizkuntza testuinguruan',catContextText:'Landu hizkuntza naturala eguneroko egoeretan, irakurketan eta entzumenean.',catControl:'Lortu zehaztasuna eta kontrola',catControlText:'Indartu esaldien eraikuntza, entzumen arretatsua eta gramatika.',catPlay:'Lasaitu eta jarri zeure burua proban',catPlayText:'Praktikatu hizkuntza modu arinago eta ludikoagoan.',lingoGo:'LingoGo',lingoGoText:'Aukeratu zer komunikatu nahi duzun, aurkitu esateko modu naturalak eta gorde gogokoenak.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'Prestatu txikizkako lan-eskaerak, elkarrizketak eta bezeroarekiko lana, eta bihurtu zure titulazio akademikoak enplegatzaileek ulertzen dituzten indargune.'});
+Object.assign(T.ja,{catPersonal:'自分だけの使える表現を増やす',catPersonalText:'役立つ表現を見つけ、大切なものを保存して、自分だけのコレクションを作りましょう。',catContext:'文脈の中で言葉を理解する',catContextText:'日常場面、読解、リスニングを通して自然な言葉に触れます。',catControl:'正確さとコントロールを高める',catControlText:'文作り、注意深いリスニング、文法を強化します。',catPlay:'気軽にチャレンジする',catPlayText:'ゲーム感覚で楽しく言語を練習します。',lingoGo:'LingoGo',lingoGoText:'伝えたいことを選び、自然な言い方を見つけ、気に入った表現を保存します。',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'小売業の応募、面接、接客に備え、学歴や学業経験を雇用主に伝わる強みに変える表現を練習します。'});
+Object.assign(T.ar,{catPersonal:'ابنِ لغتك الشخصية',catPersonalText:'اكتشف عبارات مفيدة، واحفظ ما يهمك منها، وابنِ مجموعتك الخاصة.',catContext:'افهم اللغة في سياقها',catContextText:'تدرّب على اللغة الطبيعية في المواقف اليومية والقراءة والاستماع.',catControl:'طوّر الدقة والتحكم',catControlText:'قوِّ بناء الجمل والاستماع الدقيق والقواعد.',catPlay:'استرخِ وتحدَّ نفسك',catPlayText:'تدرّب على اللغة بطريقة أخف وأكثر مرحاً.',lingoGo:'LingoGo',lingoGoText:'اختر ما تريد توصيله، واكتشف طرقاً طبيعية لقوله، واحفظ العبارات المفضلة لديك.',lingoGoRetail:'LingoGo Retail',lingoGoRetailText:'استعد لطلبات التوظيف والمقابلات والعمل مع العملاء في قطاع التجزئة، وتعلّم كيف تحوّل مؤهلاتك الأكاديمية إلى نقاط قوة يفهمها أصحاب العمل.'});
+
+Object.assign(T.ca,{title:'Tria què vols treballar',intro:'Primer tria un objectiu. Pots crear una col·lecció personal de llenguatge o centrar-te en una habilitat concreta.'});
+Object.assign(T.es,{title:'Elige qué quieres trabajar',intro:'Primero elige un objetivo. Puedes crear una colección personal de lenguaje o centrarte en una habilidad concreta.'});
+Object.assign(T.fr,{title:'Choisissez ce que vous voulez travailler',intro:'Choisissez d’abord un objectif. Vous pouvez créer une collection personnelle de langue ou vous concentrer sur une compétence précise.'});
+Object.assign(T.de,{title:'Wähle, woran du arbeiten möchtest',intro:'Wähle zuerst ein Ziel. Du kannst eine persönliche Sprachsammlung aufbauen oder dich auf eine bestimmte Fertigkeit konzentrieren.'});
+Object.assign(T.it,{title:'Scegli su cosa vuoi lavorare',intro:'Scegli prima un obiettivo. Puoi creare una raccolta personale di lingua oppure concentrarti su un’abilità specifica.'});
+Object.assign(T.pt,{title:'Escolha o que quer trabalhar',intro:'Escolha primeiro um objetivo. Pode criar uma coleção pessoal de linguagem ou concentrar-se numa competência específica.'});
+Object.assign(T.eu,{title:'Aukeratu zer landu nahi duzun',intro:'Aukeratu lehenik helburu bat. Zure hizkuntza-bilduma pertsonala sor dezakezu edo trebetasun jakin batean zentratu.'});
+Object.assign(T.ja,{title:'取り組みたいことを選びましょう',intro:'まず目的を選びます。自分だけの表現コレクションを作ることも、特定のスキルに集中することもできます。'});
+Object.assign(T.ar,{title:'اختر ما تريد التركيز عليه',intro:'اختر هدفاً أولاً. يمكنك بناء مجموعة لغوية شخصية أو التركيز على مهارة محددة.'});
+Object.assign(T.en,{whatWouldYouSay:'What Would You Say?',whatWouldYouSayText:'Put yourself in a real-life situation, decide what you would say, then compare it with natural language.',whatDoTheyMean:'What Do They Mean?',whatDoTheyMeanText:'Work out what a speaker really means from the situation, tone and natural everyday language.'});
+Object.assign(T.ca,{whatWouldYouSay:'Què diries?',whatWouldYouSayText:'Posa’t en una situació real, decideix què diries i compara-ho amb una manera natural d’expressar-se.',whatDoTheyMean:'Què volen dir?',whatDoTheyMeanText:'Descobreix què vol dir realment una persona a partir de la situació, el to i la llengua quotidiana.'});
+Object.assign(T.es,{whatWouldYouSay:'¿Qué dirías?',whatWouldYouSayText:'Ponte en una situación real, decide qué dirías y compáralo con una forma natural de expresarse.',whatDoTheyMean:'¿Qué quieren decir?',whatDoTheyMeanText:'Descubre qué quiere decir realmente una persona a partir de la situación, el tono y el lenguaje cotidiano.'});
+Object.assign(T.fr,{whatWouldYouSay:'Que diriez-vous ?',whatWouldYouSayText:'Mettez-vous dans une situation réelle, décidez ce que vous diriez puis comparez avec une expression naturelle.',whatDoTheyMean:'Que veulent-ils dire ?',whatDoTheyMeanText:'Comprenez ce que la personne veut vraiment dire grâce à la situation, au ton et au langage courant.'});
+Object.assign(T.de,{whatWouldYouSay:'Was würdest du sagen?',whatWouldYouSayText:'Versetze dich in eine echte Situation, entscheide, was du sagen würdest, und vergleiche es mit natürlicher Sprache.',whatDoTheyMean:'Was meinen sie?',whatDoTheyMeanText:'Finde anhand von Situation, Ton und natürlicher Alltagssprache heraus, was jemand wirklich meint.'});
+Object.assign(T.it,{whatWouldYouSay:'Cosa diresti?',whatWouldYouSayText:'Immaginati in una situazione reale, decidi cosa diresti e confrontalo con un’espressione naturale.',whatDoTheyMean:'Cosa vogliono dire?',whatDoTheyMeanText:'Capisci cosa intende davvero una persona dalla situazione, dal tono e dalla lingua quotidiana.'});
+Object.assign(T.pt,{whatWouldYouSay:'O que dirias?',whatWouldYouSayText:'Coloca-te numa situação real, decide o que dirias e compara com uma forma natural de falar.',whatDoTheyMean:'O que querem dizer?',whatDoTheyMeanText:'Descobre o que a pessoa realmente quer dizer através da situação, do tom e da linguagem quotidiana.'});
+Object.assign(T.eu,{whatWouldYouSay:'Zer esango zenuke?',whatWouldYouSayText:'Jarri benetako egoera batean, erabaki zer esango zenukeen eta alderatu hizkera naturalarekin.',whatDoTheyMean:'Zer esan nahi dute?',whatDoTheyMeanText:'Asmatu hiztunak benetan zer esan nahi duen egoera, tonua eta eguneroko hizkera kontuan hartuta.'});
+Object.assign(T.ja,{whatWouldYouSay:'あなたなら何と言う？',whatWouldYouSayText:'実際の場面を想像して自分なら何と言うか考え、自然な言い方と比べます。',whatDoTheyMean:'どういう意味？',whatDoTheyMeanText:'状況や口調、自然な日常表現から、話し手の本当の意味を読み取ります。'});
+Object.assign(T.ar,{whatWouldYouSay:'ماذا ستقول؟',whatWouldYouSayText:'ضع نفسك في موقف واقعي، وقرر ماذا ستقول، ثم قارنه بتعبير طبيعي.',whatDoTheyMean:'ماذا يقصدون؟',whatDoTheyMeanText:'استنتج ما يقصده المتحدث فعلاً من الموقف والنبرة واللغة اليومية الطبيعية.'});
+
+Object.assign(T.en,{soundRight:'Does That Sound Right?',soundRightText:'Choose the expression that sounds most natural in a real conversation and get instant feedback.'});
+Object.assign(T.ca,{soundRight:'Això sona bé?',soundRightText:'Tria l’expressió que sona més natural en una conversa real i rep feedback immediat.'});
+Object.assign(T.es,{soundRight:'¿Eso suena bien?',soundRightText:'Elige la expresión que suena más natural en una conversación real y recibe feedback inmediato.'});
+Object.assign(T.fr,{soundRight:'Ça sonne juste ?',soundRightText:'Choisissez l’expression qui semble la plus naturelle dans une vraie conversation et obtenez un retour immédiat.'});
+Object.assign(T.de,{soundRight:'Klingt das richtig?',soundRightText:'Wähle den Ausdruck, der in einem echten Gespräch am natürlichsten klingt, und erhalte sofortiges Feedback.'});
+Object.assign(T.it,{soundRight:'Suona naturale?',soundRightText:'Scegli l’espressione che suona più naturale in una conversazione reale e ricevi un feedback immediato.'});
+Object.assign(T.pt,{soundRight:'Isso soa natural?',soundRightText:'Escolha a expressão que soa mais natural numa conversa real e receba feedback imediato.'});
+Object.assign(T.eu,{soundRight:'Ondo entzuten da?',soundRightText:'Aukeratu benetako elkarrizketa batean naturalen entzuten den esamoldea eta jaso berehalako feedbacka.'});
+Object.assign(T.ja,{soundRight:'自然に聞こえる？',soundRightText:'実際の会話でいちばん自然に聞こえる表現を選び、すぐにフィードバックを受けられます。'});
+Object.assign(T.ar,{soundRight:'هل تبدو طبيعية؟',soundRightText:'اختر التعبير الذي يبدو أكثر طبيعية في محادثة حقيقية واحصل على ملاحظات فورية.'});
+Object.assign(T.en,{lingoReal:'LingoReal',lingoRealText:'Discover what people really say, what they really mean and how to make textbook language sound natural.'});
+Object.assign(T.ca,{lingoReal:'LingoReal',lingoRealText:'Descobreix què diu realment la gent, què vol dir i com fer que el llenguatge de llibre soni natural.'});
+Object.assign(T.es,{lingoReal:'LingoReal',lingoRealText:'Descubre qué dice realmente la gente, qué quiere decir y cómo hacer que el lenguaje de libro suene natural.'});
+Object.assign(T.fr,{lingoReal:'LingoReal',lingoRealText:'Découvrez ce que les gens disent vraiment, ce qu’ils veulent dire et comment rendre le langage scolaire plus naturel.'});
+Object.assign(T.de,{lingoReal:'LingoReal',lingoRealText:'Entdecke, was Menschen wirklich sagen und meinen und wie Lehrbuchsprache natürlicher klingt.'});
+Object.assign(T.it,{lingoReal:'LingoReal',lingoRealText:'Scopri cosa dice davvero la gente, cosa intende e come rendere più naturale la lingua dei libri di testo.'});
+Object.assign(T.pt,{lingoReal:'LingoReal',lingoRealText:'Descubra o que as pessoas realmente dizem e querem dizer e como tornar a linguagem dos manuais mais natural.'});
+Object.assign(T.eu,{lingoReal:'LingoReal',lingoRealText:'Ezagutu jendeak benetan zer esaten duen, zer esan nahi duen eta nola egin testuliburuetako hizkera naturalago.'});
+Object.assign(T.ja,{lingoReal:'LingoReal',lingoRealText:'人々が実際に何と言い、何を意味しているのか、そして教科書的な表現をより自然にする方法を学びます。'});
+Object.assign(T.ar,{lingoReal:'LingoReal',lingoRealText:'اكتشف ما يقوله الناس فعلاً وما يقصدونه وكيف تجعل لغة الكتب الدراسية تبدو أكثر طبيعية.'});
+
+
+
+Object.assign(T.en,{catSpecial:'Lingo Special',catSpecialText:'Explore specialist versions of LingoTotal created for particular subjects, studies and professional situations.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Practise the language you need to present, critique and explain design work in real university and professional situations.'});
+Object.assign(T.ca,{catSpecial:'Lingo Special',catSpecialText:'Explora versions especialitzades de LingoTotal creades per a àmbits d’estudi, matèries i situacions professionals concretes.',lingoGoDesign:'LingoGo Disseny',lingoGoDesignText:'Practica el llenguatge que necessites per presentar, criticar i explicar treballs de disseny en situacions universitàries i professionals reals.'});
+Object.assign(T.es,{catSpecial:'Lingo Special',catSpecialText:'Explora versiones especializadas de LingoTotal creadas para materias, estudios y situaciones profesionales concretas.',lingoGoDesign:'LingoGo Diseño',lingoGoDesignText:'Practica el lenguaje que necesitas para presentar, criticar y explicar trabajos de diseño en situaciones universitarias y profesionales reales.'});
+Object.assign(T.fr,{catSpecial:'Lingo Special',catSpecialText:'Explorez des versions spécialisées de LingoTotal conçues pour des matières, des études et des situations professionnelles particulières.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Pratiquez la langue nécessaire pour présenter, critiquer et expliquer un travail de design dans des situations universitaires et professionnelles réelles.'});
+Object.assign(T.de,{catSpecial:'Lingo Special',catSpecialText:'Entdecke spezialisierte LingoTotal-Versionen für bestimmte Fächer, Studienbereiche und berufliche Situationen.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Übe die Sprache, die du brauchst, um Designarbeiten in realen Hochschul- und Berufssituationen zu präsentieren, zu kritisieren und zu erklären.'});
+Object.assign(T.it,{catSpecial:'Lingo Special',catSpecialText:'Esplora versioni specialistiche di LingoTotal create per specifiche materie, percorsi di studio e situazioni professionali.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Esercita la lingua necessaria per presentare, discutere e spiegare lavori di design in reali situazioni universitarie e professionali.'});
+Object.assign(T.pt,{catSpecial:'Lingo Special',catSpecialText:'Explore versões especializadas do LingoTotal criadas para áreas de estudo, disciplinas e situações profissionais específicas.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Pratique a linguagem necessária para apresentar, analisar e explicar trabalhos de design em situações universitárias e profissionais reais.'});
+Object.assign(T.eu,{catSpecial:'Lingo Special',catSpecialText:'Ezagutu ikasgai, ikasketa-eremu eta lanbide-egoera zehatzetarako sortutako LingoTotal bertsio espezializatuak.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'Praktikatu diseinu-lanak benetako unibertsitate- eta lanbide-egoeretan aurkezteko, kritikatzeko eta azaltzeko behar duzun hizkuntza.'});
+Object.assign(T.ja,{catSpecial:'Lingo Special',catSpecialText:'特定の科目、学習分野、専門的な場面向けに作られたLingoTotalの専門版を試してみましょう。',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'大学や仕事の実際の場面で、デザイン作品を発表・講評・説明するために必要な表現を練習します。'});
+Object.assign(T.ar,{catSpecial:'Lingo Special',catSpecialText:'استكشف إصدارات متخصصة من LingoTotal صُممت لمواد ومجالات دراسية ومواقف مهنية محددة.',lingoGoDesign:'LingoGo Design',lingoGoDesignText:'تدرّب على اللغة التي تحتاجها لعرض أعمال التصميم ونقدها وشرحها في مواقف جامعية ومهنية واقعية.'});
+
+
+// Saved-language motivation and Moving/Living Abroad labels.
+Object.assign(T.en,{
+  intro:'Use language for real life, build a personal collection, and return to your saved phrases so they become easier to remember and use.',
+  catPersonalText:'Discover useful language, save what matters to you, then come back and practise it until it becomes part of your own language.',
+  savedPracticeTitle:'Saved useful phrases?',
+  savedPracticeText:'Come back to them. Short retrieval practice helps turn saved phrases into language you can actually remember and use.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Practise the phrases you chose to save with gap fills, jumbled sentences, listening and recall.',
+  lingoGoMoving:'LingoGo Moving & Living Abroad',
+  lingoGoMovingText:'Build the language you need when moving to another country: accommodation, work, services, everyday independence and community life.'
+});
+Object.assign(T.ca,{
+  intro:'Utilitza la llengua per a la vida real, crea una col·lecció personal i torna a les frases desades perquè siguin més fàcils de recordar i utilitzar.',
+  catPersonalText:'Descobreix llenguatge útil, desa el que t’importa i torna-hi per practicar-lo fins que formi part del teu propi llenguatge.',
+  savedPracticeTitle:'Has desat frases útils?',
+  savedPracticeText:'Torna-hi. Una pràctica breu de recuperació ajuda a convertir les frases desades en llenguatge que realment pots recordar i utilitzar.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Practica les frases que has decidit desar amb buits, frases desordenades, escolta i record actiu.',
+  lingoGoMoving:'LingoGo Viure en un altre país',
+  lingoGoMovingText:'Construeix la llengua que necessites quan et mudes a un altre país: allotjament, feina, serveis, autonomia quotidiana i vida comunitària.'
+});
+Object.assign(T.es,{
+  intro:'Usa el idioma para la vida real, crea una colección personal y vuelve a tus frases guardadas para que sean más fáciles de recordar y usar.',
+  catPersonalText:'Descubre lenguaje útil, guarda lo que te importa y vuelve a practicarlo hasta que forme parte de tu propio lenguaje.',
+  savedPracticeTitle:'¿Has guardado frases útiles?',
+  savedPracticeText:'Vuelve a ellas. Una práctica breve de recuperación ayuda a convertir las frases guardadas en lenguaje que realmente puedes recordar y usar.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Practica las frases que decidiste guardar con huecos, frases desordenadas, escucha y recuerdo activo.',
+  lingoGoMoving:'LingoGo Vivir en otro país',
+  lingoGoMovingText:'Desarrolla el idioma que necesitas al mudarte a otro país: alojamiento, trabajo, servicios, autonomía diaria y vida en la comunidad.'
+});
+Object.assign(T.fr,{
+  intro:'Utilisez la langue dans la vie réelle, créez votre collection personnelle et revenez à vos phrases enregistrées pour mieux les mémoriser et les utiliser.',
+  catPersonalText:'Découvrez des expressions utiles, enregistrez celles qui comptent pour vous, puis entraînez-vous à les retrouver jusqu’à ce qu’elles deviennent vraiment les vôtres.',
+  savedPracticeTitle:'Vous avez enregistré des phrases utiles ?',
+  savedPracticeText:'Revenez-y. De courtes activités de rappel aident à transformer les phrases enregistrées en langage que vous pouvez réellement mémoriser et utiliser.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Retravaillez les phrases que vous avez choisies avec des textes à trous, des phrases mélangées, de l’écoute et du rappel.',
+  lingoGoMoving:'LingoGo Vivre à l’étranger',
+  lingoGoMovingText:'Construisez la langue dont vous avez besoin pour vous installer dans un autre pays : logement, travail, services, autonomie quotidienne et vie dans la communauté.'
+});
+Object.assign(T.de,{
+  intro:'Nutze Sprache für das echte Leben, baue deine persönliche Sammlung auf und kehre zu gespeicherten Sätzen zurück, damit du sie leichter erinnerst und verwendest.',
+  catPersonalText:'Entdecke nützliche Sprache, speichere Wichtiges und übe es später erneut, bis es zu deiner eigenen Sprache wird.',
+  savedPracticeTitle:'Nützliche Sätze gespeichert?',
+  savedPracticeText:'Komm zu ihnen zurück. Kurzes Abruftraining hilft, gespeicherte Sätze in Sprache zu verwandeln, die du wirklich erinnern und verwenden kannst.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Übe deine gespeicherten Sätze mit Lücken, Satzpuzzles, Hörübungen und aktivem Abrufen.',
+  lingoGoMoving:'LingoGo Leben im Ausland',
+  lingoGoMovingText:'Baue die Sprache auf, die du beim Umzug in ein anderes Land brauchst: Wohnen, Arbeit, Dienstleistungen, Alltag und Gemeinschaft.'
+});
+Object.assign(T.it,{
+  intro:'Usa la lingua nella vita reale, crea una raccolta personale e torna alle frasi salvate per ricordarle e usarle con più facilità.',
+  catPersonalText:'Scopri lingua utile, salva ciò che conta per te e poi torna a esercitarti finché diventa parte del tuo linguaggio.',
+  savedPracticeTitle:'Hai salvato frasi utili?',
+  savedPracticeText:'Riprendile. Brevi attività di recupero aiutano a trasformare le frasi salvate in lingua che puoi davvero ricordare e usare.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Esercitati con le frasi che hai scelto di salvare usando completamenti, frasi mescolate, ascolto e richiamo.',
+  lingoGoMoving:'LingoGo Vivere all’estero',
+  lingoGoMovingText:'Costruisci la lingua che ti serve quando ti trasferisci in un altro paese: alloggio, lavoro, servizi, autonomia quotidiana e vita nella comunità.'
+});
+Object.assign(T.pt,{
+  intro:'Use a língua na vida real, crie uma coleção pessoal e volte às frases guardadas para que seja mais fácil recordá-las e usá-las.',
+  catPersonalText:'Descubra linguagem útil, guarde o que é importante para si e volte a praticá-la até fazer parte da sua própria linguagem.',
+  savedPracticeTitle:'Guardou frases úteis?',
+  savedPracticeText:'Volte a elas. Pequenas atividades de recuperação ajudam a transformar frases guardadas em linguagem que consegue realmente recordar e usar.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Pratique as frases que escolheu guardar com lacunas, frases baralhadas, escuta e recuperação ativa.',
+  lingoGoMoving:'LingoGo Viver no estrangeiro',
+  lingoGoMovingText:'Construa a linguagem de que precisa ao mudar-se para outro país: alojamento, trabalho, serviços, autonomia diária e vida comunitária.'
+});
+Object.assign(T.eu,{
+  intro:'Erabili hizkuntza benetako bizitzarako, sortu zure bilduma pertsonala eta itzuli gordetako esaldietara errazago gogoratu eta erabiltzeko.',
+  catPersonalText:'Ezagutu hizkuntza erabilgarria, gorde zuretzat garrantzitsua dena eta praktikatu berriro zure hizkuntzaren parte bihurtu arte.',
+  savedPracticeTitle:'Esaldi erabilgarriak gorde dituzu?',
+  savedPracticeText:'Itzuli haietara. Berreskuratze-praktika laburrak gordetako esaldiak benetan gogoratu eta erabil dezakezun hizkuntza bihurtzen laguntzen du.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'Praktikatu gorde dituzun esaldiak hutsuneekin, esaldi nahasiekin, entzumenarekin eta oroimen aktiboarekin.',
+  lingoGoMoving:'LingoGo Atzerrian bizitzea',
+  lingoGoMovingText:'Eraiki beste herrialde batera joatean behar duzun hizkuntza: ostatua, lana, zerbitzuak, eguneroko autonomia eta komunitateko bizitza.'
+});
+Object.assign(T.ja,{
+  intro:'実生活で言語を使い、自分の表現コレクションを作り、保存したフレーズに戻って、より確実に覚えて使えるようにしましょう。',
+  catPersonalText:'役立つ表現を見つけ、大切なものを保存し、あとで繰り返し練習して自分の言葉にしていきます。',
+  savedPracticeTitle:'役立つフレーズを保存しましたか？',
+  savedPracticeText:'もう一度練習しましょう。短い想起練習を重ねることで、保存したフレーズを実際に思い出して使える表現に変えていきます。',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'保存したフレーズを穴埋め、語順並べ替え、リスニング、想起練習で復習します。',
+  lingoGoMoving:'LingoGo 海外で暮らす',
+  lingoGoMovingText:'他の国へ移るときに必要な言葉を身につけます。住居、仕事、各種サービス、日常生活、地域社会でのコミュニケーションを扱います。'
+});
+Object.assign(T.ar,{
+  intro:'استخدم اللغة في الحياة الواقعية، وابنِ مجموعتك الشخصية، ثم ارجع إلى العبارات التي حفظتها لتصبح أسهل في التذكر والاستخدام.',
+  catPersonalText:'اكتشف لغة مفيدة، واحفظ ما يهمك، ثم عد للتدرب عليها حتى تصبح جزءاً من لغتك الخاصة.',
+  savedPracticeTitle:'هل حفظت عبارات مفيدة؟',
+  savedPracticeText:'ارجع إليها. تساعد تدريبات الاسترجاع القصيرة على تحويل العبارات المحفوظة إلى لغة يمكنك تذكرها واستخدامها فعلاً.',
+  lingoPractice:'LingoPractice',
+  lingoPracticeText:'تدرّب على العبارات التي اخترت حفظها من خلال ملء الفراغات وترتيب الكلمات والاستماع والاسترجاع.',
+  lingoGoMoving:'LingoGo العيش في بلد آخر',
+  lingoGoMovingText:'طوّر اللغة التي تحتاجها عند الانتقال إلى بلد آخر: السكن والعمل والخدمات والاستقلال اليومي والحياة في المجتمع.'
+});
+
+
+// Health & Care labels.
+Object.assign(T.en,{lingoGoHealth:'LingoGo Health & Care',lingoGoHealthText:'Build the language you need for appointments, pharmacies, dentists, describing symptoms, understanding questions and following up on care.'});
+Object.assign(T.ca,{lingoGoHealth:'LingoGo Salut i atenció',lingoGoHealthText:'Construeix la llengua que necessites per a cites, farmàcies, dentistes, descriure símptomes, entendre preguntes i fer el seguiment de l’atenció.'});
+Object.assign(T.es,{lingoGoHealth:'LingoGo Salud y atención',lingoGoHealthText:'Desarrolla el idioma que necesitas para citas, farmacias, dentistas, describir síntomas, entender preguntas y hacer el seguimiento de la atención.'});
+Object.assign(T.fr,{lingoGoHealth:'LingoGo Santé et soins',lingoGoHealthText:'Construisez la langue dont vous avez besoin pour les rendez-vous, pharmacies, dentistes, décrire des symptômes, comprendre les questions et assurer le suivi des soins.'});
+Object.assign(T.de,{lingoGoHealth:'LingoGo Gesundheit & Versorgung',lingoGoHealthText:'Baue die Sprache auf, die du für Termine, Apotheken, Zahnärzte, das Beschreiben von Symptomen, das Verstehen von Fragen und die weitere Versorgung brauchst.'});
+Object.assign(T.it,{lingoGoHealth:'LingoGo Salute e assistenza',lingoGoHealthText:'Costruisci la lingua che ti serve per appuntamenti, farmacie, dentisti, descrivere sintomi, capire domande e gestire il seguito delle cure.'});
+Object.assign(T.pt,{lingoGoHealth:'LingoGo Saúde e cuidados',lingoGoHealthText:'Construa a linguagem de que precisa para consultas, farmácias, dentistas, descrever sintomas, compreender perguntas e acompanhar os cuidados.'});
+Object.assign(T.eu,{lingoGoHealth:'LingoGo Osasuna eta arreta',lingoGoHealthText:'Eraiki hitzorduetarako, farmazietarako, dentistarako, sintomak azaltzeko, galderak ulertzeko eta arretaren jarraipena egiteko behar duzun hizkuntza.'});
+Object.assign(T.ja,{lingoGoHealth:'LingoGo 健康とケア',lingoGoHealthText:'診察予約、薬局、歯科、症状の説明、質問の理解、その後のケアに必要な表現を身につけます。'});
+Object.assign(T.ar,{lingoGoHealth:'LingoGo الصحة والرعاية',lingoGoHealthText:'طوّر اللغة التي تحتاجها للمواعيد والصيدليات وأطباء الأسنان ووصف الأعراض وفهم الأسئلة ومتابعة الرعاية.'});
+
+
+// Real-life grouping and Home Services labels.
+Object.assign(T.en,{realLifeYoungTitle:'Study, jobs & getting started',realLifeYoungText:'Practical language for younger people moving into study, work and greater independence.',realLifePracticalTitle:'Everyday practical life',realLifePracticalText:'The language you need to manage common services, problems and responsibilities in daily life.',realLifeSpecialistTitle:'Specialist study & professional language',lingoGoHomeServices:'LingoGo Home Services & Repairs',lingoGoHomeServicesText:'Build the language you need with plumbers, electricians, builders, decorators, gardeners and repair services.'});
+Object.assign(T.ca,{realLifeYoungTitle:'Estudis, feina i primers passos',realLifeYoungText:'Llengua pràctica per a joves que entren en els estudis, la feina i una major autonomia.',realLifePracticalTitle:'Vida pràctica quotidiana',realLifePracticalText:'La llengua que necessites per gestionar serveis, problemes i responsabilitats habituals de la vida diària.',realLifeSpecialistTitle:'Llengua especialitzada per als estudis i la feina',lingoGoHomeServices:'LingoGo Serveis i reparacions de la llar',lingoGoHomeServicesText:'Construeix la llengua que necessites amb lampistes, electricistes, constructors, pintors, jardiners i serveis de reparació.'});
+Object.assign(T.es,{realLifeYoungTitle:'Estudios, trabajo y primeros pasos',realLifeYoungText:'Idioma práctico para jóvenes que empiezan estudios, trabajo y una mayor independencia.',realLifePracticalTitle:'Vida práctica cotidiana',realLifePracticalText:'El idioma que necesitas para gestionar servicios, problemas y responsabilidades habituales de la vida diaria.',realLifeSpecialistTitle:'Idioma especializado para estudios y trabajo',lingoGoHomeServices:'LingoGo Servicios y reparaciones del hogar',lingoGoHomeServicesText:'Desarrolla el idioma que necesitas con fontaneros, electricistas, albañiles, pintores, jardineros y servicios de reparación.'});
+Object.assign(T.fr,{realLifeYoungTitle:'Études, emploi et premiers pas',realLifeYoungText:'La langue pratique pour les jeunes qui avancent vers les études, l’emploi et une plus grande autonomie.',realLifePracticalTitle:'Vie pratique quotidienne',realLifePracticalText:'La langue nécessaire pour gérer les services, problèmes et responsabilités courants de la vie quotidienne.',realLifeSpecialistTitle:'Langue spécialisée pour les études et le travail',lingoGoHomeServices:'LingoGo Services et réparations à domicile',lingoGoHomeServicesText:'Développez la langue nécessaire avec les plombiers, électriciens, artisans du bâtiment, peintres, jardiniers et services de réparation.'});
+Object.assign(T.de,{realLifeYoungTitle:'Studium, Jobs & erste Schritte',realLifeYoungText:'Praktische Sprache für junge Menschen auf dem Weg in Studium, Arbeit und mehr Selbstständigkeit.',realLifePracticalTitle:'Praktischer Alltag',realLifePracticalText:'Die Sprache, die du brauchst, um alltägliche Dienstleistungen, Probleme und Verpflichtungen zu regeln.',realLifeSpecialistTitle:'Fachsprache für Studium & Beruf',lingoGoHomeServices:'LingoGo Handwerker & Reparaturen',lingoGoHomeServicesText:'Baue die Sprache auf, die du im Umgang mit Installateuren, Elektrikern, Bauhandwerkern, Malern, Gärtnern und Reparaturdiensten brauchst.'});
+Object.assign(T.it,{realLifeYoungTitle:'Studio, lavoro e primi passi',realLifeYoungText:'Lingua pratica per i giovani che entrano nello studio, nel lavoro e in una maggiore autonomia.',realLifePracticalTitle:'Vita pratica quotidiana',realLifePracticalText:'La lingua che ti serve per gestire servizi, problemi e responsabilità comuni della vita quotidiana.',realLifeSpecialistTitle:'Lingua specialistica per studio e lavoro',lingoGoHomeServices:'LingoGo Servizi e riparazioni domestiche',lingoGoHomeServicesText:'Costruisci la lingua che ti serve con idraulici, elettricisti, muratori, imbianchini, giardinieri e servizi di riparazione.'});
+Object.assign(T.pt,{realLifeYoungTitle:'Estudos, emprego e primeiros passos',realLifeYoungText:'Linguagem prática para jovens que avançam para os estudos, o trabalho e uma maior independência.',realLifePracticalTitle:'Vida prática quotidiana',realLifePracticalText:'A linguagem de que precisa para gerir serviços, problemas e responsabilidades comuns do dia a dia.',realLifeSpecialistTitle:'Linguagem especializada para estudo e trabalho',lingoGoHomeServices:'LingoGo Serviços e reparações domésticas',lingoGoHomeServicesText:'Construa a linguagem de que precisa com canalizadores, eletricistas, construtores, pintores, jardineiros e serviços de reparação.'});
+Object.assign(T.eu,{realLifeYoungTitle:'Ikasketak, lana eta lehen urratsak',realLifeYoungText:'Ikasketetara, lanera eta autonomia handiagora igarotzen diren gazteentzako hizkuntza praktikoa.',realLifePracticalTitle:'Eguneroko bizitza praktikoa',realLifePracticalText:'Eguneroko zerbitzuak, arazoak eta erantzukizunak kudeatzeko behar duzun hizkuntza.',realLifeSpecialistTitle:'Ikasketetarako eta lanerako hizkuntza espezializatua',lingoGoHomeServices:'LingoGo Etxeko zerbitzuak eta konponketak',lingoGoHomeServicesText:'Iturgin, elektrikari, eraikitzaile, margolari, lorezain eta konponketa-zerbitzuekin behar duzun hizkuntza landu.'});
+Object.assign(T.ja,{realLifeYoungTitle:'学び・仕事・自立への第一歩',realLifeYoungText:'進学、就職、より自立した生活へ進む若者のための実用的な表現です。',realLifePracticalTitle:'日常生活の実用場面',realLifePracticalText:'日常のサービス、問題、責任に対応するために必要な表現を身につけます。',realLifeSpecialistTitle:'学業・仕事の専門的な言語',lingoGoHomeServices:'LingoGo 住まいのサービスと修理',lingoGoHomeServicesText:'配管工、電気工事業者、建築業者、塗装業者、庭師、修理サービスとのやり取りに必要な表現を身につけます。'});
+Object.assign(T.ar,{realLifeYoungTitle:'الدراسة والعمل والخطوات الأولى',realLifeYoungText:'لغة عملية للشباب الذين ينتقلون إلى الدراسة والعمل ومزيد من الاستقلالية.',realLifePracticalTitle:'الحياة العملية اليومية',realLifePracticalText:'اللغة التي تحتاجها للتعامل مع الخدمات والمشكلات والمسؤوليات اليومية الشائعة.',realLifeSpecialistTitle:'لغة متخصصة للدراسة والعمل',lingoGoHomeServices:'LingoGo خدمات المنزل والإصلاحات',lingoGoHomeServicesText:'طوّر اللغة التي تحتاجها للتعامل مع السباكين والكهربائيين والبنّائين والدهّانين والبستانيين وخدمات الإصلاح.'});
+
+const uiSelect=document.getElementById('uiLanguage');
+const targetSelect=document.getElementById('targetLanguage');
+
+function tr(key){
+  return T[uiSelect.value]?.[key]||T.en[key]||key;
+}
+
+function saveChoices(){
+  localStorage.setItem('lingototal_ui_language',uiSelect.value);
+  localStorage.setItem('lingototal_target_language',targetSelect.value);
+}
+
+function updateLinks(){
+  const ui=encodeURIComponent(uiSelect.value);
+  const target=encodeURIComponent(targetSelect.value);
+
+  document.querySelectorAll('.activity-card').forEach(card=>{
+    card.href=`${card.dataset.page}?ui=${ui}&target=${target}`;
+  });
+}
+
+
+// Activity finder: the learner may describe the goal in ANY language.
+Object.assign(T.en,{finderTitle:'Not sure where to start?',finderText:'Tell us what you want to practise. Write in any language.',finderPlaceholder:'For example: I want to practise speaking to a plumber about a leak.',finderButton:'Find an activity',finderFinding:'Finding the best activity…',finderTry:'Try this:',finderEmpty:'Tell us what you want to practise first.',finderError:'I could not choose an activity just now. Please try again.'});
+Object.assign(T.ca,{finderTitle:'No saps per on començar?',finderText:'Digues què vols practicar. Pots escriure en qualsevol llengua.',finderPlaceholder:'Per exemple: vull practicar com parlar amb un lampista sobre una fuita.',finderButton:'Troba una activitat',finderFinding:'Buscant la millor activitat…',finderTry:'Prova aquesta:',finderEmpty:'Primer digues què vols practicar.',finderError:'Ara mateix no he pogut triar una activitat. Torna-ho a provar.'});
+Object.assign(T.es,{finderTitle:'¿No sabes por dónde empezar?',finderText:'Dinos qué quieres practicar. Puedes escribir en cualquier idioma.',finderPlaceholder:'Por ejemplo: quiero practicar cómo hablar con un fontanero sobre una fuga.',finderButton:'Buscar una actividad',finderFinding:'Buscando la mejor actividad…',finderTry:'Prueba esta:',finderEmpty:'Primero dinos qué quieres practicar.',finderError:'Ahora mismo no he podido elegir una actividad. Inténtalo de nuevo.'});
+Object.assign(T.fr,{finderTitle:'Vous ne savez pas par où commencer ?',finderText:'Dites-nous ce que vous voulez pratiquer. Écrivez dans la langue de votre choix.',finderPlaceholder:'Par exemple : je veux m’entraîner à parler à un plombier d’une fuite.',finderButton:'Trouver une activité',finderFinding:'Recherche de la meilleure activité…',finderTry:'Essayez ceci :',finderEmpty:'Dites-nous d’abord ce que vous voulez pratiquer.',finderError:'Je n’ai pas pu choisir une activité pour le moment. Réessayez.'});
+Object.assign(T.de,{finderTitle:'Du weißt nicht, wo du anfangen sollst?',finderText:'Sag uns, was du üben möchtest. Du kannst in jeder Sprache schreiben.',finderPlaceholder:'Zum Beispiel: Ich möchte üben, mit einem Klempner über ein Leck zu sprechen.',finderButton:'Aktivität finden',finderFinding:'Die passende Aktivität wird gesucht…',finderTry:'Probiere das:',finderEmpty:'Sag uns zuerst, was du üben möchtest.',finderError:'Ich konnte gerade keine Aktivität auswählen. Bitte versuche es noch einmal.'});
+Object.assign(T.it,{finderTitle:'Non sai da dove cominciare?',finderText:'Dicci cosa vuoi praticare. Puoi scrivere in qualsiasi lingua.',finderPlaceholder:'Per esempio: voglio esercitarmi a parlare con un idraulico di una perdita.',finderButton:'Trova un’attività',finderFinding:'Cerco l’attività più adatta…',finderTry:'Prova questa:',finderEmpty:'Prima dicci cosa vuoi praticare.',finderError:'Non sono riuscito a scegliere un’attività. Riprova.'});
+Object.assign(T.pt,{finderTitle:'Não sabe por onde começar?',finderText:'Diga-nos o que quer praticar. Pode escrever em qualquer língua.',finderPlaceholder:'Por exemplo: quero praticar como falar com um canalizador sobre uma fuga.',finderButton:'Encontrar uma atividade',finderFinding:'A procurar a melhor atividade…',finderTry:'Experimente esta:',finderEmpty:'Primeiro diga-nos o que quer praticar.',finderError:'Não consegui escolher uma atividade agora. Tente novamente.'});
+Object.assign(T.eu,{finderTitle:'Ez dakizu nondik hasi?',finderText:'Esan zer praktikatu nahi duzun. Edozein hizkuntzatan idatz dezakezu.',finderPlaceholder:'Adibidez: iturgin batekin ihes bati buruz hitz egiten praktikatu nahi dut.',finderButton:'Bilatu jarduera bat',finderFinding:'Jarduerarik egokiena bilatzen…',finderTry:'Probatu hau:',finderEmpty:'Lehenik esan zer praktikatu nahi duzun.',finderError:'Ezin izan dut jarduera bat aukeratu. Saiatu berriro.'});
+Object.assign(T.ja,{finderTitle:'どこから始めればいい？',finderText:'練習したいことを書いてください。どの言語で書いても大丈夫です。',finderPlaceholder:'例：水漏れについて配管工に話す練習をしたい。',finderButton:'おすすめを探す',finderFinding:'いちばん合うアクティビティを探しています…',finderTry:'これを試してください：',finderEmpty:'まず練習したいことを書いてください。',finderError:'今はアクティビティを選べませんでした。もう一度試してください。'});
+Object.assign(T.ar,{finderTitle:'لست متأكدًا من أين تبدأ؟',finderText:'اكتب ما تريد أن تتدرب عليه. يمكنك الكتابة بأي لغة.',finderPlaceholder:'مثال: أريد أن أتدرب على التحدث مع سباك عن تسرّب.',finderButton:'ابحث عن نشاط',finderFinding:'جارٍ البحث عن أفضل نشاط…',finderTry:'جرّب هذا:',finderEmpty:'اكتب أولاً ما تريد أن تتدرب عليه.',finderError:'لم أتمكن من اختيار نشاط الآن. حاول مرة أخرى.'});
+
+function applyLanguage(){
+  const lang=uiSelect.value;
+
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent=tr(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.placeholder=tr(el.dataset.i18nPlaceholder);
+  });
+
+  document.title='LingoTotal · '+tr('title');
+
+  saveChoices();
+  updateLinks();
+}
+
+function restoreChoices(){
+  const ui=localStorage.getItem('lingototal_ui_language');
+  const target=localStorage.getItem('lingototal_target_language');
+
+  if(ui&&[...uiSelect.options].some(o=>o.value===ui)){
+    uiSelect.value=ui;
+  }
+
+  if(target&&[...targetSelect.options].some(o=>o.value===target)){
+    targetSelect.value=target;
+  }
+}
+
+uiSelect.addEventListener('change',applyLanguage);
+
+targetSelect.addEventListener('change',()=>{
+  saveChoices();
+  updateLinks();
+});
+
+
+const finderInput=document.getElementById('finderInput');
+const finderBtn=document.getElementById('finderBtn');
+const finderResult=document.getElementById('finderResult');
+const finderActivityName=document.getElementById('finderActivityName');
+const finderReason=document.getElementById('finderReason');
+const finderStart=document.getElementById('finderStart');
+const finderError=document.getElementById('finderError');
+
+function availableActivities(){
+  const seen=new Set();
+  return [...document.querySelectorAll('.activity-card[data-page]')].map(card=>{
+    const page=card.dataset.page;
+    if(seen.has(page))return null;
+    seen.add(page);
+    return {page,name:(card.querySelector('h2')?.textContent||page).trim(),description:(card.querySelector('p')?.textContent||'').trim()};
+  }).filter(Boolean);
+}
+
+function parseFinderJSON(text){
+  const clean=String(text||'').replace(/```json|```/gi,'').trim();
+  const a=clean.indexOf('{'),b=clean.lastIndexOf('}');
+  if(a<0||b<a)throw new Error('No JSON');
+  return JSON.parse(clean.slice(a,b+1));
+}
+
+async function callFinderAPI(prompt){
+  const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.2})});
+  let d;try{d=await r.json()}catch{throw new Error('Invalid server response')}
+  if(!r.ok)throw new Error(d?.error||'Server error');
+  const text=d?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
+  if(!text)throw new Error('Empty response');
+  return text;
+}
+
+finderBtn.addEventListener('click',async()=>{
+  const request=finderInput.value.trim();
+  finderError.textContent='';
+  finderResult.classList.add('hidden');
+  if(!request){finderError.textContent=tr('finderEmpty');return}
+  const activities=availableActivities();
+  const uiName=uiSelect.options[uiSelect.selectedIndex]?.textContent||uiSelect.value;
+  const targetName=targetSelect.options[targetSelect.selectedIndex]?.textContent||targetSelect.value;
+  const prompt=`You are the simple activity finder for LingoTotal.
+
+The learner wants to learn: ${targetName}.
+The website interface language is: ${uiName}.
+The learner wrote this request: "${request}"
+
+IMPORTANT: The request may be written in ANY language. Understand its meaning regardless of the language used. Do not require it to be in the target language or interface language.
+
+Choose exactly ONE activity from this exact list:
+${activities.map(x=>`- ${x.page} | ${x.name} | ${x.description}`).join('\n')}
+
+Choose the activity that best matches what the learner wants to practise. Prefer a specific LingoGo real-life page when the request clearly matches it. Otherwise choose the skill activity that best fits the request (speaking/natural language, listening, reading, grammar, sentence building, saved-phrase practice, quiz, etc.). Never invent a page.
+
+Write one short, friendly reason in the website interface language (${uiName}). Use simple everyday wording, not academic language. Maximum 22 words.
+
+Return ONLY valid JSON in this form: {"page":"exact-file-name.html","reason":"short reason"}`;
+  try{
+    finderBtn.disabled=true;finderBtn.textContent=tr('finderFinding');
+    const data=parseFinderJSON(await callFinderAPI(prompt));
+    const choice=activities.find(x=>x.page===data.page);
+    if(!choice)throw new Error('Unknown activity');
+    finderActivityName.textContent=choice.name;
+    finderReason.textContent=String(data.reason||'').trim();
+    const ui=encodeURIComponent(uiSelect.value),target=encodeURIComponent(targetSelect.value);
+    finderStart.href=`${choice.page}?ui=${ui}&target=${target}`;
+    finderResult.classList.remove('hidden');
+  }catch(e){
+    console.error(e);finderError.textContent=tr('finderError');
+  }finally{
+    finderBtn.disabled=false;finderBtn.textContent=tr('finderButton');
+  }
+});
+
+
+restoreChoices();
+applyLanguage();
+
+});
+</script>
+
+</body>
+</html>
