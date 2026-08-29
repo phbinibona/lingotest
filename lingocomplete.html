@@ -1,14 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LingoTotal · Listen & Complete</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LingoTotal · Listen &amp; Complete</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{
   --primary:#1267d6;
@@ -500,136 +499,89 @@ input[type=text]:focus{
     width:min(130px,43vw);
   }
 }
+.level-first-note{font-weight:800;margin:8px 0 12px;color:#26364a}.theme-any-language-note{font-weight:700;margin:10px 0 6px;color:#526174}
 </style>
 </head>
-
 <body>
-
 <header class="banner">
-  <div class="brand-wrap">
-    <div class="brand-mark">LT</div>
-    <div>
-      <div class="brand">LINGOTOTAL</div>
-      <div class="tagline" data-i18n="tagline">Learn any language your way</div>
-    </div>
-  </div>
-
-  <div class="header-tools">
-    <div class="language-pair" id="languagePair">English → Català</div>
-
-    <a class="home-link" href="lingostarter2.html">
-      <span>⌂</span>
-      <span data-i18n="changeLanguages">Activities / change languages</span>
-    </a>
-  </div>
+<div class="brand-wrap">
+<div class="brand-mark">LT</div>
+<div>
+<div class="brand">LINGOTOTAL</div>
+<div class="tagline" data-i18n="tagline">Learn any language your way</div>
+</div>
+</div>
+<div class="header-tools">
+<div class="language-pair" id="languagePair">English → Català</div>
+<a class="home-link" href="lingostarter2.html">
+<span>⌂</span>
+<span data-i18n="changeLanguages">Activities / change languages</span>
+</a>
+</div>
 </header>
-
-
 <main class="page">
+<section class="panel hero">
+<h1 data-i18n="title">Listen &amp; Complete</h1>
+<p data-i18n="intro">Listen to three sentences and complete the two important missing words in each one.</p>
+</section>
+<section class="panel">
+<div class="section-head">
+<div class="number">1</div>
+<div class="section-title" data-i18n="choose">Choose your level first, then write your theme</div>
+</div>
+<label data-i18n="ownTopic" for="themeInput">Write your own theme in any language</label>
+<p class="theme-any-language-note">Write the theme you want to practise. You can write it in any language.</p><input class="attention" data-i18n-placeholder="topicPlaceholder" id="themeInput" placeholder="Write your theme in any language…" type="text"/>
+<p class="level-first-note">1. Choose your level first.  2. Then write your own theme in any language.</p><div class="level-grid">
+<button class="choice level" data-i18n="beginner" data-level="beginner">Revise Basics</button>
+<button class="choice level" data-i18n="intermediate" data-level="intermediate">Building Confidence</button>
 
-  <section class="panel hero">
-    <h1 data-i18n="title">Listen & Complete</h1>
-    <p data-i18n="intro">Listen to three sentences and complete the two important missing words in each one.</p>
-  </section>
+</div>
+<div class="helper" data-i18n="inspiration">Need inspiration?</div>
 
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Choose the level and topic</div>
-    </div>
-
-    <label for="themeInput" data-i18n="ownTopic">Write your own topic</label>
-
-    <input
-      id="themeInput"
-      class="attention"
-      type="text"
-      data-i18n-placeholder="topicPlaceholder"
-      placeholder="For example: travel, technology, nature, food..."
-    >
-
-    <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Revise Basics</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Building Confidence</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">More Advanced</button>
-    </div>
-
-    <div class="helper" data-i18n="inspiration">Need inspiration?</div>
-
-    <div class="example-grid">
-      <button class="choice example" data-theme-key="travel" data-i18n="travel">Travel</button>
-      <button class="choice example" data-theme-key="technology" data-i18n="technology">Technology</button>
-      <button class="choice example" data-theme-key="nature" data-i18n="nature">Nature</button>
-      <button class="choice example" data-theme-key="food" data-i18n="food">Food</button>
-    </div>
-
-  </section>
-
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">2</div>
-      <div class="section-title" data-i18n="exerciseTitle">Listen and complete</div>
-    </div>
-
-    <button id="generateBtn" class="primary-btn" data-i18n="generate">
+</section>
+<section class="panel">
+<div class="section-head">
+<div class="number">2</div>
+<div class="section-title" data-i18n="exerciseTitle">Listen and complete</div>
+</div>
+<button class="primary-btn" data-i18n="generate" id="generateBtn">
       Generate 3 sentences
     </button>
-
-    <div id="loading" class="status">
-      <div class="spinner"></div>
-      <span data-i18n="generating">Generating your sentences…</span>
-    </div>
-
-    <div id="exerciseIntro" class="exercise-intro" data-i18n="waiting">
+<div class="status" id="loading">
+<div class="spinner"></div>
+<span data-i18n="generating">Generating your sentences…</span>
+</div>
+<div class="exercise-intro" data-i18n="waiting" id="exerciseIntro">
       Your exercise will appear here.
     </div>
-
-    <div id="exercise" class="exercise">
-      <div id="sentenceCards"></div>
-
-      <div class="actions">
-        <button id="checkBtn" class="primary-btn" data-i18n="check">Check answers</button>
-        <button id="retryBtn" class="secondary-btn" data-i18n="retry">Try again</button>
-        <button id="newBtn" class="secondary-btn" data-i18n="newExercise">New exercise</button>
-      </div>
-
-      <div id="scorePanel" class="score-panel">
-        <div data-i18n="score">Score</div>
-        <div id="scoreValue" class="score-value">0/6</div>
-        <div id="scoreMessage"></div>
-      </div>
-    </div>
-
-  </section>
-
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">3</div>
-      <div class="section-title" data-i18n="restart">Restart</div>
-    </div>
-
-    <button id="clearBtn" class="secondary-btn" data-i18n="clear">
+<div class="exercise" id="exercise">
+<div id="sentenceCards"></div>
+<div class="actions">
+<button class="primary-btn" data-i18n="check" id="checkBtn">Check answers</button>
+<button class="secondary-btn" data-i18n="retry" id="retryBtn">Try again</button>
+<button class="secondary-btn" data-i18n="newExercise" id="newBtn">New exercise</button>
+</div>
+<div class="score-panel" id="scorePanel">
+<div data-i18n="score">Score</div>
+<div class="score-value" id="scoreValue">0/6</div>
+<div id="scoreMessage"></div>
+</div>
+</div>
+</section>
+<section class="panel">
+<div class="section-head">
+<div class="number">3</div>
+<div class="section-title" data-i18n="restart">Restart</div>
+</div>
+<button class="secondary-btn" data-i18n="clear" id="clearBtn">
       Clear everything
     </button>
-
-  </section>
-
+</section>
 </main>
-
-
-<div id="notice" class="notice"></div>
-
+<div class="notice" id="notice"></div>
 <footer class="footer">
   LingoTotal · <span data-i18n="tagline">Learn any language your way</span>
 </footer>
-
-
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
 
@@ -640,12 +592,12 @@ tagline:'Learn any language your way',
 changeLanguages:'Activities / change languages',
 title:'Listen & Complete',
 intro:'Listen to three sentences and complete the two important missing words in each one.',
-choose:'Choose the level and topic',
-ownTopic:'Write your own topic',
-topicPlaceholder:'For example: travel, technology, nature, food...',
+choose:'Choose your level first, then write your theme',
+ownTopic:'Write your own theme in any language',
+topicPlaceholder:'Write any theme, in any language…',
 beginner:'Revise Basics',
 intermediate:'Building Confidence',
-advanced:'More Advanced',
+advanced:'Advanced (C1–C2)',
 inspiration:'Need inspiration?',
 travel:'Travel',
 technology:'Technology',
@@ -667,7 +619,7 @@ score:'Score',
 restart:'Restart',
 clear:'Clear everything',
 selectLevel:'Select a level first.',
-enterTopic:'Write a topic or choose an example.',
+enterTopic:'Write your own theme in any language.',
 serverError:'The exercise could not be generated.',
 playing:'Playing sentence…',
 noSpeech:'Speech playback is not available in this browser.',
@@ -685,9 +637,9 @@ intro:'Escolta tres frases i completa les dues paraules importants que falten a 
 choose:'Tria el nivell i el tema',
 ownTopic:'Escriu el teu propi tema',
 topicPlaceholder:'Per exemple: viatges, tecnologia, natura, menjar...',
-beginner:'Repassar les bases',
-intermediate:'Guanyar confiança',
-advanced:'Més avançat',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Avançat (C1–C2)',
 inspiration:'Necessites inspiració?',
 travel:'Viatges',
 technology:'Tecnologia',
@@ -727,9 +679,9 @@ intro:'Escucha tres frases y completa las dos palabras importantes que faltan en
 choose:'Elige el nivel y el tema',
 ownTopic:'Escribe tu propio tema',
 topicPlaceholder:'Por ejemplo: viajes, tecnología, naturaleza, comida...',
-beginner:'Repasar lo básico',
-intermediate:'Ganar confianza',
-advanced:'Más avanzado',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Avanzado (C1–C2)',
 inspiration:'¿Necesitas inspiración?',
 travel:'Viajes',
 technology:'Tecnología',
@@ -769,9 +721,9 @@ intro:'Écoutez trois phrases et complétez les deux mots importants manquants d
 choose:'Choisissez le niveau et le thème',
 ownTopic:'Écrivez votre propre thème',
 topicPlaceholder:'Par exemple : voyages, technologie, nature, alimentation...',
-beginner:'Revoir les bases',
-intermediate:'Prendre confiance',
-advanced:'Plus avancé',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Avancé (C1–C2)',
 inspiration:'Besoin d’inspiration ?',
 travel:'Voyages',
 technology:'Technologie',
@@ -811,9 +763,9 @@ intro:'Höre drei Sätze und ergänze in jedem Satz zwei wichtige fehlende Wört
 choose:'Niveau und Thema wählen',
 ownTopic:'Eigenes Thema eingeben',
 topicPlaceholder:'Zum Beispiel: Reisen, Technologie, Natur, Essen ...',
-beginner:'Grundlagen auffrischen',
-intermediate:'Sicherheit gewinnen',
-advanced:'Anspruchsvoller',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Fortgeschritten (C1–C2)',
 inspiration:'Brauchst du Inspiration?',
 travel:'Reisen',
 technology:'Technologie',
@@ -853,9 +805,9 @@ intro:'Ascolta tre frasi e completa le due parole importanti mancanti in ciascun
 choose:'Scegli il livello e l’argomento',
 ownTopic:'Scrivi il tuo argomento',
 topicPlaceholder:'Per esempio: viaggi, tecnologia, natura, cibo...',
-beginner:'Ripassare le basi',
-intermediate:'Acquisire sicurezza',
-advanced:'Più avanzato',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Avanzato (C1–C2)',
 inspiration:'Hai bisogno di ispirazione?',
 travel:'Viaggi',
 technology:'Tecnologia',
@@ -895,9 +847,9 @@ intro:'Ouça três frases e complete as duas palavras importantes em falta em ca
 choose:'Escolha o nível e o tema',
 ownTopic:'Escreva o seu próprio tema',
 topicPlaceholder:'Por exemplo: viagens, tecnologia, natureza, comida...',
-beginner:'Rever as bases',
-intermediate:'Ganhar confiança',
-advanced:'Mais avançado',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Avançado (C1–C2)',
 inspiration:'Precisa de inspiração?',
 travel:'Viagens',
 technology:'Tecnologia',
@@ -937,9 +889,9 @@ intro:'Entzun hiru esaldi eta osatu bakoitzean falta diren bi hitz garrantzitsua
 choose:'Aukeratu maila eta gaia',
 ownTopic:'Idatzi zure gaia',
 topicPlaceholder:'Adibidez: bidaiak, teknologia, natura, janaria...',
-beginner:'Oinarriak berrikusi',
-intermediate:'Konfiantza hartu',
-advanced:'Aurrerago',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'Aurreratua (C1–C2)',
 inspiration:'Inspirazioa behar duzu?',
 travel:'Bidaiak',
 technology:'Teknologia',
@@ -979,9 +931,9 @@ intro:'3つの文を聞き、それぞれの重要な2語を完成させます�
 choose:'レベルとトピックを選ぶ',
 ownTopic:'自分のトピックを書く',
 topicPlaceholder:'例：旅行、テクノロジー、自然、食べ物...',
-beginner:'基礎を復習する',
-intermediate:'自信をつける',
-advanced:'さらに上へ',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'上級 (C1–C2)',
 inspiration:'例から選ぶこともできます。',
 travel:'旅行',
 technology:'テクノロジー',
@@ -1021,9 +973,9 @@ intro:'استمع إلى ثلاث جمل وأكمل الكلمتين المهم�
 choose:'اختر المستوى والموضوع',
 ownTopic:'اكتب موضوعك',
 topicPlaceholder:'مثلاً: السفر، التكنولوجيا، الطبيعة، الطعام...',
-beginner:'مراجعة الأساسيات',
-intermediate:'بناء الثقة',
-advanced:'مستوى أكثر تقدماً',
+beginner:'Revise Basics',
+intermediate:'Building Confidence',
+advanced:'متقدم (C1–C2)',
 inspiration:'هل تحتاج إلى فكرة؟',
 travel:'السفر',
 technology:'التكنولوجيا',
