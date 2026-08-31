@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-interface-language="pending">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -324,10 +324,12 @@ input[type=text]:focus{
 .listen-row{
   display:flex;
   justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
   margin-top:10px;
 }
 
-.listen-btn{
+.listen-btn,.save-btn{
   border:0;
   border-radius:9px;
   padding:8px 11px;
@@ -335,6 +337,11 @@ input[type=text]:focus{
   color:var(--primary-dark);
   font-weight:800;
   cursor:pointer;
+}
+
+.save-btn.saved{
+  background:#e8f7ee;
+  color:#176b3a;
 }
 
 .quiz-card{
@@ -496,193 +503,6 @@ input[type=text]:focus{
 }
 </style>
 
-<!-- ===== LINGOTOTAL 2026 MODERN ACTIVITY THEME · MODEL APPLIED ===== -->
-<style>
-/* Visual language shared with the new LingoTotal index. Functionality unchanged. */
-:root{
-  --primary:#2563eb!important;
-  --primary-dark:#194fbf!important;
-  --primary-light:#eef5ff!important;
-  --accent:#2563eb!important;
-  --ink:#17324d!important;
-  --muted:#607184!important;
-  --surface:#fff!important;
-  --soft:#f7fbff!important;
-  --border:#d5e0ec!important;
-  --shadow:0 16px 40px rgba(35,63,92,.08)!important;
-  --radius:0px!important;
-  --radius-sm:8px!important;
-}
-html{background:#eef3f8!important}
-body{
-  font-family:'Inter',Arial,sans-serif!important;
-  background:#eef3f8!important;
-  color:var(--ink)!important;
-  line-height:1.45!important;
-}
-
-/* compact index-style masthead */
-.banner{
-  position:sticky!important;top:0!important;z-index:100!important;
-  min-height:66px!important;
-  padding:9px clamp(12px,3vw,30px)!important;
-  background:linear-gradient(135deg,#f9fcff 0%,#edf5ff 48%,#dceafa 100%)!important;
-  color:var(--ink)!important;
-  border-bottom:1px solid var(--border)!important;
-  box-shadow:0 4px 16px rgba(35,63,92,.07)!important;
-}
-.brand-wrap{gap:10px!important;min-width:0!important}
-.brand-mark{
-  width:40px!important;height:40px!important;flex:0 0 40px!important;
-  border-radius:0!important;background:var(--primary)!important;color:#fff!important;
-  box-shadow:none!important;font-size:.82rem!important;font-weight:900!important;
-  letter-spacing:-.04em!important;
-}
-.brand{font-size:.88rem!important;font-weight:900!important;letter-spacing:.15em!important;color:var(--ink)!important}
-.tagline{margin-top:2px!important;font-size:.65rem!important;font-weight:700!important;letter-spacing:.035em!important;color:var(--muted)!important;opacity:1!important}
-.header-tools{gap:7px!important;flex-wrap:nowrap!important}
-.language-pair{
-  padding:7px 10px!important;border:1px solid #c8d7e7!important;border-radius:7px!important;
-  background:rgba(255,255,255,.74)!important;color:#456078!important;
-  font-size:.7rem!important;font-weight:800!important;white-space:nowrap!important;
-}
-.home-link{
-  min-height:34px!important;padding:7px 10px!important;border:1px solid #b9cce0!important;
-  border-radius:7px!important;background:#fff!important;color:var(--primary-dark)!important;
-  box-shadow:none!important;font-size:.7rem!important;font-weight:800!important;white-space:nowrap!important;
-}
-.home-link:hover{background:var(--primary-light)!important;border-color:#9dbce0!important}
-
-.page{width:min(900px,calc(100% - 28px))!important;margin:18px auto 44px!important}
-.panel{
-  background:#fff!important;border:1px solid var(--border)!important;border-radius:0!important;
-  box-shadow:0 8px 24px rgba(35,63,92,.055)!important;
-  padding:clamp(17px,2.7vw,25px)!important;margin-bottom:12px!important;
-}
-.hero{
-  position:relative!important;overflow:hidden!important;
-  background:linear-gradient(135deg,#f9fcff 0%,#edf5ff 55%,#e4f0fc 100%)!important;
-  border-left:4px solid var(--primary)!important;
-}
-.hero:before{
-  content:""!important;position:absolute!important;width:230px!important;height:230px!important;
-  border-radius:50%!important;right:-140px!important;top:-150px!important;
-  background:rgba(37,99,235,.07)!important;
-}
-h1{position:relative!important;margin:0 0 7px!important;font-size:clamp(1.42rem,3.5vw,2rem)!important;line-height:1.08!important;letter-spacing:-.035em!important;font-weight:900!important;color:var(--ink)!important}
-.hero p{position:relative!important;margin:0!important;color:var(--muted)!important;font-size:.9rem!important;line-height:1.5!important}
-
-.section-head{gap:9px!important;margin-bottom:12px!important}
-.number,.substep-badge{
-  width:29px!important;height:29px!important;flex:0 0 29px!important;border-radius:7px!important;
-  background:var(--primary-light)!important;color:var(--primary-dark)!important;
-  font-size:.76rem!important;font-weight:900!important;
-}
-.section-title{font-size:1rem!important;font-weight:850!important;letter-spacing:-.015em!important}
-.setup-lead{margin:-2px 0 11px!important;color:var(--muted)!important;font-size:.82rem!important;font-weight:600!important}
-
-.level-grid{gap:7px!important;margin-top:8px!important}
-.choice,.intent,.answer{
-  border:1px solid var(--border)!important;border-radius:8px!important;background:#fff!important;
-  color:var(--ink)!important;box-shadow:none!important;transition:.15s ease!important;
-}
-.choice:hover,.choice.selected,.intent:hover,.intent.selected,.answer:hover{
-  border-color:#9dbce0!important;background:var(--primary-light)!important;color:var(--primary-dark)!important;
-}
-.level-card{min-height:88px!important;padding:12px!important;gap:3px!important}
-.level-name{font-size:.9rem!important;font-weight:850!important}
-.level-note{font-size:.7rem!important;line-height:1.3!important;color:var(--muted)!important;font-weight:600!important}
-.topic-step{grid-template-columns:32px 1fr!important;gap:9px!important;margin-top:18px!important;padding-top:16px!important;border-top:1px solid var(--border)!important}
-.topic-label{font-size:.95rem!important;font-weight:850!important}
-.topic-guidance{margin:1px 0 8px!important;font-size:.78rem!important;color:var(--muted)!important}
-input[type=text],textarea{
-  min-height:44px!important;padding:10px 12px!important;border:1px solid #bdcde0!important;border-radius:8px!important;
-  background:#fff!important;color:var(--ink)!important;font-size:16px!important;
-}
-input[type=text]:focus,textarea:focus{outline:0!important;border-color:var(--primary)!important;box-shadow:0 0 0 3px rgba(37,99,235,.10)!important}
-#themeInput.attention{border-color:#9dbce0!important;animation:none!important}
-.examples-wrap{margin-top:11px!important;padding-top:10px!important;border-top:1px solid #e4ebf3!important}
-.helper{font-size:.7rem!important;color:#74869a!important}
-.example-grid{gap:6px!important;margin-top:6px!important}
-.quiet-examples .choice,.example{padding:7px!important;min-height:34px!important;font-size:.7rem!important;border:1px solid #dce5ee!important;background:#f9fbfd!important;color:#64778a!important}
-
-.primary-btn{
-  min-height:43px!important;padding:10px 15px!important;border-radius:8px!important;
-  background:var(--primary)!important;color:#fff!important;box-shadow:none!important;
-  font-size:.82rem!important;font-weight:850!important;
-}
-.primary-btn:hover{background:var(--primary-dark)!important}
-.secondary-btn,.response-actions button,.collection-btn,.sound-btn{
-  border:1px solid var(--border)!important;border-radius:7px!important;background:#fff!important;
-  color:var(--primary-dark)!important;box-shadow:none!important;font-weight:800!important;
-}
-.collection-bar{margin-bottom:9px!important}
-.collection-btn{padding:8px 11px!important;font-size:.72rem!important}
-.status,.progress{font-size:.76rem!important;color:var(--muted)!important}
-.situation{
-  padding:12px 13px!important;margin-bottom:10px!important;border-left:3px solid var(--primary)!important;
-  background:var(--blue-pale,#f7fbff)!important;font-size:.95rem!important;font-weight:850!important;
-}
-.intentions,.answers{gap:7px!important}
-.intent,.answer{padding:11px 12px!important;font-size:.82rem!important;font-weight:750!important}
-.responses{margin-top:12px!important}
-.response-card,.collection-item,.feedback,.exercise-intro,.natural-box{
-  border:1px solid var(--border)!important;border-radius:8px!important;background:#fff!important;box-shadow:none!important;
-}
-.response-card{padding:12px!important;margin-bottom:8px!important}
-.response-text{font-size:.94rem!important;font-weight:850!important}
-.response-note{font-size:.78rem!important;color:var(--muted)!important}
-.response-actions{gap:6px!important;margin-top:8px!important}
-.response-actions button{padding:7px 9px!important;font-size:.72rem!important}
-.activity-badge{padding:5px 8px!important;border-radius:999px!important;background:var(--primary-light)!important;color:var(--primary-dark)!important;font-size:.68rem!important}
-.feedback,.exercise-intro{padding:12px!important}
-.natural-box{border-left:3px solid var(--primary)!important;padding:10px!important}
-.score{padding:18px!important}.score-value{color:var(--primary)!important;font-weight:900!important}
-.footer{padding:7px 10px 21px!important;color:#8392a3!important;font-size:.67rem!important}
-.notice{top:78px!important;border-radius:8px!important;font-size:.78rem!important;box-shadow:0 8px 24px rgba(35,63,92,.12)!important}
-.notice.info{background:var(--primary)!important}
-
-@media(max-width:700px){
-  .banner{min-height:52px!important;height:52px!important;padding:6px 8px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:6px!important;overflow:hidden!important}
-  .brand-wrap{flex:1 1 auto!important;overflow:hidden!important}
-  .brand-mark{width:34px!important;height:34px!important;flex-basis:34px!important;font-size:.7rem!important}
-  .brand-wrap>div:last-child{min-width:0!important;overflow:hidden!important}
-  .brand{font-size:.76rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  .tagline{display:none!important}
-  .header-tools{width:auto!important;flex:0 0 auto!important;justify-content:flex-end!important;gap:4px!important}
-  .language-pair{display:none!important}
-  .home-link{width:35px!important;height:35px!important;min-height:35px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:0!important}
-  .home-link span:first-child{font-size:1rem!important}
-  .page{width:calc(100% - 14px)!important;margin:8px auto 28px!important}
-  .panel{padding:14px 12px!important;margin-bottom:8px!important}
-  .hero{border-left-width:3px!important}
-  h1{font-size:1.25rem!important}
-  .hero p{font-size:.76rem!important}
-  .section-head{margin-bottom:9px!important}
-  .section-title{font-size:.9rem!important}
-  .setup-lead{font-size:.74rem!important;margin-bottom:9px!important}
-  .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
-  .level-card{min-height:58px!important;padding:8px 6px!important;text-align:center!important;justify-content:center!important}
-  .level-name{font-size:.7rem!important;line-height:1.15!important}
-  .level-note{display:none!important}
-  .topic-step{margin-top:13px!important;padding-top:12px!important;grid-template-columns:28px 1fr!important;gap:7px!important}
-  .number,.substep-badge{width:26px!important;height:26px!important;flex-basis:26px!important;font-size:.68rem!important}
-  .topic-label{font-size:.82rem!important}
-  .topic-guidance{font-size:.7rem!important}
-  .example-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
-  .quiet-examples .choice,.example{font-size:.62rem!important;padding:6px 3px!important;white-space:normal!important}
-  .primary-btn{min-height:40px!important;padding:9px 10px!important;font-size:.76rem!important}
-  .situation{font-size:.84rem!important;padding:10px!important}
-  .intent,.answer{padding:9px 10px!important;font-size:.76rem!important}
-  .response-card{padding:10px!important}.response-text{font-size:.86rem!important}.response-note{font-size:.71rem!important}
-  .collection-btn{font-size:.66rem!important;padding:7px 9px!important}
-}
-@media(max-width:360px){
-  .level-grid{grid-template-columns:1fr!important}
-  .level-card{min-height:48px!important;text-align:left!important}
-  .example-grid{grid-template-columns:repeat(2,1fr)!important}
-}
-</style>
 </head>
 
 <body>
@@ -1254,6 +1074,19 @@ const T={
 
 
 Object.assign(T.en,{choose:'Start by choosing your level',levelPrompt:'Choose the option that feels right for you today.',beginner:'Revising the basics',beginnerNote:'Build useful natural expressions for simple everyday situations.',intermediate:'Building confidence',intermediateNote:'Use more flexible, natural everyday language with greater confidence.',ownTopic:'Now choose your own situation or topic',topicGuidance:'Write something you would genuinely like to handle in everyday conversation.'});
+Object.assign(T.en,{saveSentence:'★ Save',savedSentence:'✓ Saved',alreadySaved:'Already saved.',sentenceSaved:'Saved to your LingoTotal collection.'});
+Object.assign(T.ca,{saveSentence:'★ Desa',savedSentence:'✓ Desat',alreadySaved:'Ja està desat.',sentenceSaved:'Desat a la teva col·lecció de LingoTotal.'});
+Object.assign(T.es,{saveSentence:'★ Guardar',savedSentence:'✓ Guardado',alreadySaved:'Ya está guardado.',sentenceSaved:'Guardado en tu colección de LingoTotal.'});
+Object.assign(T.fr,{saveSentence:'★ Enregistrer',savedSentence:'✓ Enregistré',alreadySaved:'Déjà enregistré.',sentenceSaved:'Enregistré dans votre collection LingoTotal.'});
+Object.assign(T.de,{saveSentence:'★ Speichern',savedSentence:'✓ Gespeichert',alreadySaved:'Bereits gespeichert.',sentenceSaved:'In deiner LingoTotal-Sammlung gespeichert.'});
+Object.assign(T.it,{saveSentence:'★ Salva',savedSentence:'✓ Salvato',alreadySaved:'Già salvato.',sentenceSaved:'Salvato nella tua raccolta LingoTotal.'});
+Object.assign(T.pt,{saveSentence:'★ Guardar',savedSentence:'✓ Guardado',alreadySaved:'Já está guardado.',sentenceSaved:'Guardado na tua coleção LingoTotal.'});
+Object.assign(T.eu,{saveSentence:'★ Gorde',savedSentence:'✓ Gordeta',alreadySaved:'Dagoeneko gordeta.',sentenceSaved:'LingoTotal bilduman gordeta.'});
+Object.assign(T.cy,{saveSentence:'★ Cadw',savedSentence:'✓ Wedi cadw',alreadySaved:'Wedi’i gadw eisoes.',sentenceSaved:'Wedi’i gadw yn eich casgliad LingoTotal.'});
+Object.assign(T.gd,{saveSentence:'★ Sàbhail',savedSentence:'✓ Air a shàbhaladh',alreadySaved:'Air a shàbhaladh mu thràth.',sentenceSaved:'Air a shàbhaladh sa chruinneachadh LingoTotal agad.'});
+Object.assign(T.ja,{saveSentence:'★ 保存',savedSentence:'✓ 保存済み',alreadySaved:'すでに保存されています。',sentenceSaved:'LingoTotalコレクションに保存しました。'});
+Object.assign(T.ar,{saveSentence:'★ حفظ',savedSentence:'✓ تم الحفظ',alreadySaved:'تم الحفظ بالفعل.',sentenceSaved:'تم الحفظ في مجموعة LingoTotal الخاصة بك.'});
+
 Object.assign(T.ca,{beginner:'Repassar les bases',intermediate:'Guanyar confiança'});
 Object.assign(T.es,{beginner:'Repasar lo básico',intermediate:'Ganar confianza'});
 Object.assign(T.fr,{beginner:'Revoir les bases',intermediate:'Prendre confiance'});
@@ -1334,7 +1167,7 @@ let answers={};
 let quizData=[];
 
 function tr(key){
-  return T[uiLanguage]?.[key]||'';
+  return T[uiLanguage]?.[key]||T.en[key]||key;
 }
 
 function applyLanguage(){
@@ -1610,6 +1443,32 @@ function speak(text){
   notice(tr('playing'),'info');
 }
 
+const COLLECTION_KEY='lingototal_saved_sentences_v2';
+
+function saveToCollection(sentence){
+  const clean=String(sentence||'').trim();
+  if(!clean)return false;
+  let items=[];
+  try{ items=JSON.parse(localStorage.getItem(COLLECTION_KEY)||'[]'); }catch(e){ items=[]; }
+  if(!Array.isArray(items))items=[];
+  const exists=items.some(item=>{
+    const text=typeof item==='string'?item:String(item?.sentence||item?.text||'').trim();
+    const lang=typeof item==='object'&&item?String(item.targetLanguage||item.language||''):'';
+    return text===clean && (!lang || lang===targetLanguage);
+  });
+  if(exists){ notice(tr('alreadySaved'),'info'); return false; }
+  items.push({
+    sentence:clean,
+    targetLanguage,
+    targetName:targetLanguage,
+    theme:$('themeInput').value.trim(),
+    source:'Everyday Language'
+  });
+  localStorage.setItem(COLLECTION_KEY,JSON.stringify(items));
+  notice(tr('sentenceSaved'),'success');
+  return true;
+}
+
 function render(){
   const expWrap=$('expressions');
   expWrap.innerHTML='';
@@ -1643,7 +1502,18 @@ function render(){
     listen.textContent='🔊';
     listen.addEventListener('click',()=>speak(x.example));
 
-    listenRow.appendChild(listen);
+    const save=document.createElement('button');
+    save.className='save-btn';
+    save.type='button';
+    save.textContent=tr('saveSentence');
+    save.addEventListener('click',()=>{
+      if(saveToCollection(x.expression)){
+        save.textContent=tr('savedSentence');
+        save.classList.add('saved');
+      }
+    });
+
+    listenRow.append(listen,save);
     card.append(exp,meaning,example,listenRow);
     expWrap.appendChild(card);
   });
@@ -1870,42 +1740,6 @@ $('clearBtn').addEventListener('click',()=>{
 applyLanguage();
 
 });
-</script>
-
-
-<script src="level-first-sequence.js"></script>
-
-<script id="lingototal-strict-interface-language">
-(function(){
-  const VALID_UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
-  const q=new URLSearchParams(location.search);
-  const selected=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  const ui=VALID_UI.includes(selected)?selected:'en';
-  document.documentElement.lang=ui;
-  document.documentElement.dir=(ui==='ar'?'rtl':'ltr');
-  document.documentElement.dataset.interfaceLanguage=ui;
-  window.LINGOTOTAL_STRICT_UI=true;
-
-  // If a translation-controlled element has not been translated by the page,
-  // do not leave its original English authoring text visible for a non-English UI.
-  if(ui!=='en'){
-    const scrub=()=>{
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        if(el.dataset.ltTranslated==='1') return;
-        const key=el.getAttribute('data-i18n');
-        // Existing page translation code normally runs first. We only mark/scrub obvious untouched English.
-        const englishLike=/\b(the|your|choose|start|next|create|learn|language|activity|activities|change|level|theme|write|listen|check|correct|challenge|practice|confidence|basics)\b/i;
-        if(englishLike.test((el.textContent||'').trim()) && !el.closest('select')) el.textContent='';
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
-        if(el.dataset.ltTranslated==='1') return;
-        const v=el.getAttribute('placeholder')||'';
-        if(/\b(try|write|enter|type|choose|your|anything)\b/i.test(v)) el.setAttribute('placeholder','');
-      });
-    };
-    setTimeout(scrub,0);
-  }
-})();
 </script>
 
 </body>
