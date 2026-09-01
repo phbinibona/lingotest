@@ -22,6 +22,27 @@ const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsc
     const pair=document.getElementById('languagePair');
     if(pair&&typeof uiNames!=='undefined'&&typeof targetNames!=='undefined')pair.textContent=uiNames[uiLanguage]+' → '+targetNames[targetLanguage];
     document.title='LingoTotal · '+((OVERRIDES[uiLanguage]&&OVERRIDES[uiLanguage].title)||'LingoGo First Job');
+    // Re-apply page-specific interface text after the main page translation runs.
+    window.addEventListener('DOMContentLoaded',()=>{
+      try{
+        const lang=(typeof uiLanguage!=='undefined'&&OVERRIDES[uiLanguage])?uiLanguage:u;
+        const pageText=OVERRIDES[lang]||OVERRIDES.en;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+          const key=el.dataset.i18n;
+          if(Object.prototype.hasOwnProperty.call(pageText,key))el.textContent=pageText[key];
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+          const key=el.dataset.i18nPlaceholder;
+          if(Object.prototype.hasOwnProperty.call(pageText,key))el.placeholder=pageText[key];
+        });
+        document.querySelectorAll('.example').forEach(el=>{
+          const key=el.dataset.themeKey;
+          if(Object.prototype.hasOwnProperty.call(pageText,key))el.dataset.theme=pageText[key];
+        });
+        document.documentElement.lang=lang;
+        document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+      }catch(err){console.error('LingoGo page-specific interface text:',err)}
+    });
   }catch(e){console.error('LingoGo language handoff:',e)}
 })();
 </script>
