@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LingoTotal · LingoGo Moving Country</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{--primary:#1267d6;--primary-dark:#084ca8;--primary-light:#e8f2ff;--accent:#25b7d3;--success:#198754;--danger:#c83d4f;--ink:#172033;--muted:#5f6b7a;--surface:#fff;--soft:#f5f8fc;--border:#d9e2ef;--shadow:0 10px 28px rgba(26,69,120,.12);--radius:18px;--radius-sm:11px}
 *{box-sizing:border-box}
@@ -1027,43 +1028,117 @@ input:focus,select:focus,textarea:focus,.answer-input:focus{outline:0!important;
   .helper,.help,.small{font-size:.69rem!important}
 }
 </style>
-</head>
+<style id="lingogo-brighter-hero-lettering">
+.hero::after{
+  color:#e24b35 !important;
+  opacity:.82 !important;
+  font-weight:900 !important;
+}
+</style>
+<style id="lingogo-family-standard">
+/* =============================================================
+   LINGOGO FAMILY — CANONICAL RETAIL / DESIGN PRESENTATION LAYER
+   2026-09-01
+   ============================================================= */
+:root{
+  --lg-blue:#1769aa;--lg-blue-dark:#0d4f86;--lg-blue-soft:#eaf4fc;
+  --lg-ink:#19324a;--lg-muted:#64788b;--lg-line:#d9e5ef;--lg-bg:#f3f7fb;
+  --lg-white:#fff;--lg-radius:16px;--lg-shadow:0 8px 24px rgba(21,69,108,.10);
+}
+html,body{background:var(--lg-bg)!important;color:var(--lg-ink)!important}
+body{margin:0!important}
+.banner{
+  background:linear-gradient(135deg,#0f5f9e 0%,#277fbd 58%,#66a9d7 100%)!important;
+  min-height:72px!important;padding:12px 22px!important;box-sizing:border-box!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:18px!important;color:#fff!important;box-shadow:0 5px 18px rgba(18,69,106,.16)!important;
+}
+.brand-wrap{display:flex!important;align-items:center!important;gap:11px!important;min-width:0}
+.brand-mark{width:42px!important;height:42px!important;min-width:42px!important;border-radius:11px!important;background:#fff!important;color:var(--lg-blue-dark)!important;display:grid!important;place-items:center!important;font-weight:900!important;font-size:1rem!important;box-shadow:0 3px 10px rgba(0,0,0,.10)!important}
+.brand{font-weight:900!important;letter-spacing:.055em!important;font-size:1.05rem!important;line-height:1.05!important}
+.tagline{font-size:.76rem!important;opacity:.9!important;margin-top:3px!important}
+.header-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:nowrap!important}
+.language-pair{padding:7px 10px!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:8px!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:.72rem!important;font-weight:750!important;white-space:nowrap!important}
+.home-link,.home-icon{min-height:36px!important;box-sizing:border-box!important;border-radius:8px!important;background:#fff!important;color:var(--lg-blue-dark)!important;border:0!important;box-shadow:none!important}
+.home-link{padding:8px 10px!important;font-size:.72rem!important;font-weight:800!important;white-space:nowrap!important}
+.home-icon{width:36px!important;height:36px!important;min-width:36px!important;padding:0!important;display:grid!important;place-items:center!important}
+
+main,.container,.page,.shell,.wrap{box-sizing:border-box}
+main{width:min(980px,calc(100% - 28px))!important;margin:22px auto 42px!important}
+.hero,.intro-card,.panel,.card,.setup-card,.activity-card,.collection-panel,.result-panel,.step-card{
+  border-color:var(--lg-line)!important;box-shadow:var(--lg-shadow)!important;
+}
+.hero{background:#fff!important;border:1px solid var(--lg-line)!important;border-radius:18px!important;padding:23px!important}
+h1{color:var(--lg-blue-dark)!important;letter-spacing:-.025em!important}
+.level-card,.level-option,.level-btn,.level-button,.choice-card{
+  text-align:left!important;border:1px solid #cdddea!important;border-radius:13px!important;background:#fff!important;box-shadow:none!important;transition:.16s ease!important;
+}
+.level-card:hover,.level-option:hover,.level-btn:hover,.level-button:hover,.choice-card:hover{border-color:#78add1!important;transform:translateY(-1px)}
+.level-card.selected,.level-option.selected,.level-btn.selected,.level-button.selected,.choice-card.selected,[aria-pressed="true"].level-card,[aria-pressed="true"].level-option,[aria-pressed="true"].level-btn,[aria-pressed="true"].level-button{border-color:var(--lg-blue)!important;background:var(--lg-blue-soft)!important;box-shadow:0 0 0 2px rgba(23,105,170,.08)!important}
+.substep-badge,.step-number,.number-badge{background:var(--lg-blue)!important;color:#fff!important;border-radius:10px!important}
+input[type="text"],textarea,select{border:1px solid #cbdbe8!important;border-radius:11px!important;background:#fff!important;color:var(--lg-ink)!important;box-shadow:inset 0 1px 2px rgba(20,60,90,.03)!important}
+input[type="text"]:focus,textarea:focus,select:focus{outline:3px solid rgba(23,105,170,.12)!important;border-color:var(--lg-blue)!important}
+button.primary,.primary-button,.generate-btn,#generateBtn,.generate-button{background:linear-gradient(135deg,var(--lg-blue-dark),var(--lg-blue))!important;color:#fff!important;border:0!important;border-radius:11px!important;box-shadow:0 5px 14px rgba(21,92,145,.18)!important;font-weight:850!important}
+.response-card,.answer-card,.phrase-card,.intention-card,.situation-card{border:1px solid var(--lg-line)!important;border-radius:14px!important;background:#fff!important;box-shadow:0 5px 16px rgba(21,69,108,.07)!important}
+
+/* Current LingoGo convention: exactly two learner levels. */
+.level-card[data-level="advanced"],.level-option[data-level="advanced"],.level-btn[data-level="advanced"],.level-button[data-level="advanced"],button[data-level="advanced"],label[data-level="advanced"]{display:none!important}
+
+/* mobile-only navigation elements inserted into every LingoGo page */
+.mobile-activity-title,.mobile-home-icon{display:none}
+@media (max-width:700px){
+  .banner{
+    min-height:54px!important;height:54px!important;padding:6px 9px!important;
+    display:grid!important;grid-template-columns:38px minmax(0,1fr) 38px!important;
+    align-items:center!important;gap:8px!important;position:relative!important;
+  }
+  .brand-wrap{grid-column:1!important;display:block!important;width:38px!important;min-width:38px!important}
+  .brand-wrap>div:not(.brand-mark),.brand-wrap .brand,.brand-wrap .tagline{display:none!important}
+  .brand-mark{width:34px!important;height:34px!important;min-width:34px!important;border-radius:8px!important;font-size:.78rem!important}
+  .header-tools{display:none!important}
+  .mobile-activity-title{display:block!important;grid-column:2!important;min-width:0!important;text-align:center!important;color:#fff!important;font-size:.91rem!important;font-weight:850!important;line-height:1.08!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;padding:0 2px!important}
+  .mobile-home-icon{grid-column:3!important;display:grid!important;place-items:center!important;width:34px!important;height:34px!important;border-radius:8px!important;background:#fff!important;color:var(--lg-blue-dark)!important;text-decoration:none!important;font-size:1.26rem!important;font-weight:900!important;line-height:1!important;justify-self:end!important;box-shadow:0 2px 7px rgba(0,0,0,.10)!important}
+  main{width:calc(100% - 18px)!important;margin:12px auto 28px!important}
+  .hero{padding:16px!important;border-radius:14px!important}
+  h1{font-size:1.55rem!important;margin-top:0!important}
+  .level-grid,.levels,.level-options{grid-template-columns:1fr!important;gap:8px!important}
+  .level-card,.level-option,.level-btn,.level-button{min-height:0!important;padding:11px 12px!important}
+  .panel,.card,.setup-card,.activity-card,.step-card{border-radius:13px!important}
+}
+</style></head>
 <body>
 <header class="banner">
 <div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline"></div></div></div>
 <div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="https://lingototal.com/"><span data-i18n="changeLanguages"></span></a>
-    <a class="home-icon" href="index.html" data-i18n-aria-label="homeLabel" data-i18n-title="homeLabel" aria-label="Home" title="Home">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 11.5 12 4l9 7.5"></path>
-    <path d="M5.5 10.5V20h13v-9.5"></path>
-    <path d="M9.5 20v-6h5v6"></path>
-  </svg>
+<a aria-label="Home" class="home-icon" data-i18n-aria-label="homeLabel" data-i18n-title="homeLabel" href="index.html" title="Home">
+<svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="M3 11.5 12 4l9 7.5"></path>
+<path d="M5.5 10.5V20h13v-9.5"></path>
+<path d="M9.5 20v-6h5v6"></path>
+</svg>
 </a></div>
-</header>
-
+<div class="mobile-activity-title" data-i18n="title"></div><a aria-label="Home" class="mobile-home-icon" href="index.html" title="Home">⌂</a></header>
 <main class="page">
-<div class="collection-bar"><button id="openCollectionBtn" class="collection-btn">★ <span data-i18n="mySavedSentences"></span> (<span id="collectionCount">0</span>)</button></div>
-<section id="collectionPanel" class="panel collection-panel">
+<div class="collection-bar"><button class="collection-btn" id="openCollectionBtn">★ <span data-i18n="mySavedSentences"></span> (<span id="collectionCount">0</span>)</button></div>
+<section class="panel collection-panel" id="collectionPanel">
 <div class="section-head"><div class="number">★</div><div class="section-title" data-i18n="collectionTitle"></div></div>
 <p class="setup-lead" data-i18n="collectionIntro"></p>
-<div id="collectionList" class="collection-list"></div>
-<div class="response-actions"><button id="downloadCollectionBtn" data-i18n="downloadCollection"></button><button id="closeCollectionBtn" data-i18n="closeCollection"></button></div>
+<div class="collection-list" id="collectionList"></div>
+<div class="response-actions"><button data-i18n="downloadCollection" id="downloadCollectionBtn"></button><button data-i18n="closeCollection" id="closeCollectionBtn"></button></div>
 </section>
-
 <section class="panel hero">
 <div>
-  <div class="design-kicker" data-i18n="designKicker">LINGOGO / STUDY ABROAD · CAMPUS & LIFE</div>
-  <h1 data-i18n="title"></h1>
-  <p data-i18n="intro"></p>
-  <div class="design-fields">
-    <span class="design-chip" data-i18n="chipIdentity">APPLICATIONS</span><span class="design-chip" data-i18n="chipTypography">INTERVIEWS</span>
-    <span class="design-chip" data-i18n="chipEditorial">CUSTOMERS</span><span class="design-chip" data-i18n="chipPackaging">TEAMWORK</span>
-    <span class="design-chip" data-i18n="chipUXUI">SALES</span><span class="design-chip" data-i18n="chipPortfolio">TRANSFERABLE SKILLS</span>
-  </div>
-  <div class="design-disclaimer" data-i18n="designDisclaimer"></div>
+<div class="design-kicker" data-i18n="designKicker">LINGOGO / MOVING COUNTRY · SETTLE IN</div>
+<h1 data-i18n="title"></h1>
+<p data-i18n="intro"></p>
+<div class="design-fields">
+<span class="design-chip" data-i18n="chipIdentity">PAPERWORK</span><span class="design-chip" data-i18n="chipTypography">HOUSING</span>
+<span class="design-chip" data-i18n="chipEditorial">SERVICES</span><span class="design-chip" data-i18n="chipPackaging">HEALTH</span>
+<span class="design-chip" data-i18n="chipUXUI">WORK &amp; FAMILY</span><span class="design-chip" data-i18n="chipPortfolio">SETTLING IN</span>
+</div>
+<div class="design-disclaimer" data-i18n="designDisclaimer"></div>
 </div>
 </section>
-
 <section class="panel">
 <div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose"></div></div>
 <p class="setup-lead" data-i18n="levelPrompt"></p>
@@ -1071,47 +1146,43 @@ input:focus,select:focus,textarea:focus,.answer-input:focus{outline:0!important;
 <button class="choice level level-card" data-level="beginner"><span class="level-name" data-i18n="beginner"></span><span class="level-note" data-i18n="beginnerNote"></span></button>
 <button class="choice level level-card" data-level="intermediate"><span class="level-name" data-i18n="intermediate"></span><span class="level-note" data-i18n="intermediateNote"></span></button>
 </div>
-
 <div class="design-context-wrap">
-  <div class="design-context-label" data-i18n="designContextLabel">Choose a tourism job situation</div>
-  <div class="design-context-grid" id="designContextGrid">
-    <button type="button" class="design-context" data-context="legal_admin"><strong data-i18n="ctxPresent">Apply</strong><span data-i18n="ctxPresentNote">Present your strengths clearly.</span></button>
-    <button type="button" class="design-context" data-context="housing"><strong data-i18n="ctxCritique">Interview</strong><span data-i18n="ctxCritiqueNote">Answer common interview questions.</span></button>
-    <button type="button" class="design-context" data-context="money_services"><strong data-i18n="ctxDecision">Customer</strong><span data-i18n="ctxDecisionNote">Welcome and help guests or visitors.</span></button>
-    <button type="button" class="design-context" data-context="healthcare"><strong data-i18n="ctxClient">Teamwork</strong><span data-i18n="ctxClientNote">Work with colleagues and supervisors.</span></button>
-    <button type="button" class="design-context" data-context="work_family"><strong data-i18n="ctxPortfolio">Availability</strong><span data-i18n="ctxPortfolioNote">Discuss availability, seasons and relocation.</span></button>
-    <button type="button" class="design-context" data-context="settling_in"><strong data-i18n="ctxProcess">Qualifications</strong><span data-i18n="ctxProcessNote">Turn qualifications into tourism strengths.</span></button>
-  </div>
+<div class="design-context-label" data-i18n="designContextLabel">Choose a tourism job situation</div>
+<div class="design-context-grid" id="designContextGrid">
+<button class="design-context" data-context="legal_admin" type="button"><strong data-i18n="ctxPresent">Apply</strong><span data-i18n="ctxPresentNote">Present your strengths clearly.</span></button>
+<button class="design-context" data-context="housing" type="button"><strong data-i18n="ctxCritique">Interview</strong><span data-i18n="ctxCritiqueNote">Answer common interview questions.</span></button>
+<button class="design-context" data-context="money_services" type="button"><strong data-i18n="ctxDecision">Customer</strong><span data-i18n="ctxDecisionNote">Welcome and help guests or visitors.</span></button>
+<button class="design-context" data-context="healthcare" type="button"><strong data-i18n="ctxClient">Teamwork</strong><span data-i18n="ctxClientNote">Work with colleagues and supervisors.</span></button>
+<button class="design-context" data-context="work_family" type="button"><strong data-i18n="ctxPortfolio">Availability</strong><span data-i18n="ctxPortfolioNote">Discuss availability, seasons and relocation.</span></button>
+<button class="design-context" data-context="settling_in" type="button"><strong data-i18n="ctxProcess">Qualifications</strong><span data-i18n="ctxProcessNote">Turn qualifications into tourism strengths.</span></button>
 </div>
-
+</div>
 <div class="topic-step"><div class="substep-badge">2</div><div>
-<label for="themeInput" class="topic-label" data-i18n="ownTopic"></label>
+<label class="topic-label" data-i18n="ownTopic" for="themeInput"></label>
 <p class="topic-guidance" data-i18n="topicGuidance"></p>
-<input id="themeInput" type="text" data-i18n-placeholder="topicPlaceholder">
+<input data-i18n-placeholder="topicPlaceholder" id="themeInput" type="text"/>
 <div class="examples-wrap"><div class="helper" data-i18n="inspiration"></div><div class="example-grid quiet-examples">
-<button class="choice example" data-theme-key="friends" data-i18n="friends"></button><button class="choice example" data-theme-key="travel" data-i18n="example1"></button><button class="choice example" data-theme-key="work" data-i18n="example2"></button><button class="choice example" data-theme-key="food" data-i18n="food"></button>
+<button class="choice example" data-i18n="friends" data-theme-key="friends"></button><button class="choice example" data-i18n="example1" data-theme-key="travel"></button><button class="choice example" data-i18n="example2" data-theme-key="work"></button><button class="choice example" data-i18n="food" data-theme-key="food"></button>
 </div></div>
 </div></div>
 </section>
-
 <section class="panel">
 <div class="section-head"><div class="number">2</div><div class="section-title" data-i18n="generateTitle"></div></div>
-<button id="generateBtn" class="primary-btn" data-i18n="generate"></button>
-<div id="loading" class="status" data-i18n="generating"></div>
-<div id="waiting" class="setup-lead" data-i18n="waiting"></div>
-<div id="activity" class="activity">
-<div id="progress" class="setup-lead"></div>
-<div id="situation" class="situation"></div>
+<button class="primary-btn" data-i18n="generate" id="generateBtn"></button>
+<div class="status" data-i18n="generating" id="loading"></div>
+<div class="setup-lead" data-i18n="waiting" id="waiting"></div>
+<div class="activity" id="activity">
+<div class="setup-lead" id="progress"></div>
+<div class="situation" id="situation"></div>
 <div class="helper" data-i18n="chooseIntention"></div>
-<div id="intentions" class="intentions"></div>
-<div id="responses" class="responses"></div>
-<div id="nextWrap" style="display:none;margin-top:14px"><button id="nextBtn" class="primary-btn" data-i18n="next"></button></div>
+<div class="intentions" id="intentions"></div>
+<div class="responses" id="responses"></div>
+<div id="nextWrap" style="display:none;margin-top:14px"><button class="primary-btn" data-i18n="next" id="nextBtn"></button></div>
 </div>
 </section>
 </main>
-<div id="notice" class="notice"></div>
+<div class="notice" id="notice"></div>
 <footer class="footer">LingoTotal · <span data-i18n="tagline"></span></footer>
-
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
 const T={
