@@ -74,7 +74,7 @@
 <section class="workspace" id="workspace">
   <div class="progress">
     <div class="progress-head">
-      <span id="progressText">Stage 1 of 10</span>
+      <span id="progressText">Stage 1 of 6</span>
       <span id="scoreText">Score: 0</span>
     </div>
     <div class="bar"><span id="progressBar"></span></div>
@@ -402,28 +402,29 @@ let answered = false;
 
 function buildPrompt(grammarPoint) {
   const levelText = $("level").value === "basics"
-    ? "Revising the basics: accessible revision, short clear examples, high-frequency structures and strong support."
+    ? "Revising the basics: short clear examples, high-frequency structures and strong support."
     : "Gaining confidence: natural contemporary language, useful contrasts and less scaffolding.";
 
-  return `Create a complete interactive grammar lesson for LingoTotal.
-Return ONLY valid JSON. No markdown fences.
+  return `Create a SHORT interactive grammar lesson for LingoTotal.
+Return ONLY one complete valid JSON object. No markdown. No commentary.
 
 Interface language: ${UI}
 Target language: ${TARGET}
 Level: ${levelText}
 Grammar topic: ${grammarPoint}
-Context or theme: ${$("context").value.trim() || "everyday life"}
+Context/theme: ${$("context").value.trim() || "everyday life"}
 
-Rules:
-1. All explanations, instructions and feedback must be in ${UI}.
-2. All examples and sentences being practised must be in ${TARGET}.
-3. Keep the entire lesson tightly focused on the chosen grammar topic.
-4. The learner's context/theme is authoritative and must clearly shape the examples and tasks.
-5. Create exactly 10 short stages.
-6. Use these stage types across the lesson: information, multiple_choice, gap_fill, correction, production.
-7. Use natural contemporary language.
+STRICT RULES:
+- Explanations, instructions and feedback: ${UI}.
+- Examples and practice sentences: ${TARGET}.
+- The context/theme must clearly shape every example.
+- Focus only on the selected grammar topic.
+- Keep every string concise.
+- Exactly 6 stages, in this exact order:
+  information, multiple_choice, information, gap_fill, correction, production.
+- Do not add extra fields.
 
-Return:
+Return exactly this structure:
 {
   "stages":[
     {
@@ -445,17 +446,49 @@ Return:
       "incorrectFeedback":"",
       "modelAnswer":"",
       "audioText":""
+    },
+    {
+      "type":"information",
+      "title":"",
+      "instruction":"",
+      "content":"",
+      "examples":["",""],
+      "audioText":""
+    },
+    {
+      "type":"gap_fill",
+      "title":"",
+      "instruction":"",
+      "sentenceBefore":"",
+      "sentenceAfter":"",
+      "answer":"",
+      "correctFeedback":"",
+      "incorrectFeedback":"",
+      "modelAnswer":"",
+      "audioText":""
+    },
+    {
+      "type":"correction",
+      "title":"",
+      "instruction":"",
+      "question":"",
+      "answer":"",
+      "correctFeedback":"",
+      "incorrectFeedback":"",
+      "modelAnswer":"",
+      "audioText":""
+    },
+    {
+      "type":"production",
+      "title":"",
+      "instruction":"",
+      "question":"",
+      "modelAnswer":"",
+      "audioText":""
     }
   ]
+}`;
 }
-
-Expand the stages array to exactly 10 complete stage objects.
-For gap_fill include sentenceBefore, sentenceAfter, answer, correctFeedback, incorrectFeedback, modelAnswer, audioText.
-For correction include question, answer, correctFeedback, incorrectFeedback, modelAnswer, audioText.
-For production include question, modelAnswer, audioText.
-Use zero-based correctIndex and vary its position.`;
-}
-
 function extractLesson(raw) {
   if (raw && Array.isArray(raw.stages)) return raw;
   let text = "";
@@ -487,9 +520,9 @@ $("generateBtn").addEventListener("click", async () => {
     if (!response.ok) throw new Error(raw?.error || "API error");
 
     const lesson = extractLesson(raw);
-    if (!Array.isArray(lesson.stages) || !lesson.stages.length) throw new Error("Incomplete lesson");
+    if (!Array.isArray(lesson.stages) || lesson.stages.length < 6) throw new Error("Incomplete lesson");
 
-    stages = lesson.stages.slice(0,10);
+    stages = lesson.stages.slice(0,6);
     current = 0;
     score = 0;
     scored = 0;
@@ -502,7 +535,16 @@ $("generateBtn").addEventListener("click", async () => {
   } catch (err) {
     console.error(err);
     $("status").className = "status error";
-    $("status").textContent = T.error + " " + err.message;
+    const technical = /JSON|parse|Incomplete lesson|Unexpected|end of data/i.test(String(err.message || ""));
+    $("status").textContent = technical
+      ? T.error + " " + ({
+          "English":"Please try again.",
+          "Català":"Torna-ho a provar.",
+          "Español":"Inténtalo de nuevo.",
+          "Français":"Veuillez réessayer.",
+          "Deutsch":"Bitte versuche es erneut."
+        }[UI] || "Please try again.")
+      : T.error;
   } finally {
     $("generateBtn").disabled = false;
     $("generateBtn").textContent = T.generate;
