@@ -135,7 +135,7 @@ generate:"Generate lesson",loading:"Creating your grammar lesson…",error:"The 
 listen:"Listen",newLesson:"New lesson",show:"Show answer",hide:"Hide answer",next:"Next stage",finish:"See report",
 stage:"Stage",of:"of",score:"Score",correct:"Correct!",notQuite:"Not quite.",model:"Model answer",check:"Check answer",
 again:"Create another lesson",complete:"Lesson complete",report:"Your grammar report",
-levels:[["basics","Revising basics"],["confidence","Building confidence"]]},
+levels:[["basics","Revising the basics"],["confidence","Gaining confidence"]]},
 topics:[["Present tense","Present tense"],["Past tenses","Past tenses"],["Future forms","Future forms"],["Conditionals","Conditionals"],["Modal verbs","Modal verbs"],["Passive voice","Passive voice"],["Reported speech","Reported speech"],["Relative clauses","Relative clauses"],["Articles","Articles"],["Prepositions","Prepositions"],["Pronouns","Pronouns"],["Word order","Word order"],["Questions","Questions"],["Subjunctive","Subjunctive"]]},
 "Català":{tagline:"Aprèn qualsevol llengua a la teva manera",home:"Inici",eyebrow:"Gramàtica amb IA en context real",title:"Classe magistral de gramàtica",
 intro:"Tria el nivell, el tema gramatical i un context o tema. Després treballa una lliçó de gramàtica ben enfocada.",
@@ -195,8 +195,8 @@ const setText=(id,v)=>{$(id).textContent=v};
 ["nextBtn",T.next],["completeText",T.complete],["reportTitle",T.report],["restartBtn",T.again]
 ].forEach(x=>setText(...x));
 $("context").placeholder=T.contextPH;
-T.levels.forEach(([value,label])=>$("level").add(new Option(label,value)));
-T.topics.forEach(([value,label])=>$("grammarTopic").add(new Option(label,value)));
+$("level").innerHTML=""; T.levels.forEach(([value,label])=>$("level").add(new Option(label,value))); $("level").selectedIndex=0;
+$("grammarTopic").innerHTML=""; T.topics.forEach(([value,label])=>$("grammarTopic").add(new Option(label,value))); $("grammarTopic").selectedIndex=0;
 let stages=[],current=0,score=0,scored=0,answered=false;
 
 function promptFor(grammarPoint){
