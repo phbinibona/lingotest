@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingoTotal · LingoGo Home Services & Repairs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1267d6;--primary-dark:#084ca8;--primary-light:#e8f2ff;--accent:#25b7d3;--success:#198754;--danger:#c83d4f;--ink:#172033;--muted:#5f6b7a;--surface:#fff;--soft:#f5f8fc;--border:#d9e2ef;--shadow:0 10px 28px rgba(26,69,120,.12);--radius:18px;--radius-sm:11px}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);line-height:1.55}
+button,input{font:inherit}
+.banner{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:82px;padding:12px clamp(14px,3vw,34px);background:linear-gradient(135deg,#084ca8,#1267d6 58%,#25b7d3);color:#fff;box-shadow:0 3px 14px rgba(8,76,168,.25)}
+.brand-wrap{display:flex;align-items:center;gap:12px}.brand-mark{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#fff;color:var(--primary);font-weight:800;box-shadow:0 6px 14px rgba(0,0,0,.18)}.brand{font-size:1.35rem;font-weight:800;letter-spacing:.055em}.tagline{font-size:.78rem;opacity:.9}
+.header-tools{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}.language-pair{padding:8px 12px;border:1px solid rgba(255,255,255,.5);border-radius:9px;background:rgba(255,255,255,.12);font-size:.78rem;font-weight:700}.home-link{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:9px;background:#fff;color:var(--primary-dark);text-decoration:none;font-size:.78rem;font-weight:800}
+.page{width:min(860px,calc(100% - 22px));margin:20px auto 40px}.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(16px,3vw,28px);margin-bottom:18px}
+.hero{background:linear-gradient(135deg,#fff,#edf5ff)}h1{margin:0 0 7px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.16}.hero p{margin:0;color:var(--muted)}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.number{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:#fff;font-weight:800}.section-title{font-size:1.16rem;font-weight:800}.setup-lead{margin:-5px 0 14px;color:var(--muted);font-weight:600}
+.level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.choice{padding:11px 8px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}.choice:hover,.choice.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}.level-card{min-height:110px;text-align:left;padding:15px 14px;display:flex;flex-direction:column;justify-content:center;gap:5px}.level-name{font-size:1.02rem;font-weight:800}.level-note{font-size:.79rem;line-height:1.35;color:var(--muted)}
+.topic-step{display:grid;grid-template-columns:40px 1fr;gap:12px;margin-top:24px;padding-top:22px;border-top:1px solid var(--border)}.substep-badge{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#dfeaf8;color:var(--primary-dark);font-weight:800}.topic-label{font-size:1.08rem;margin:0 0 4px;font-weight:800}.topic-guidance{margin:0 0 11px;color:var(--muted);font-size:.9rem}
+input[type=text]{width:100%;min-height:48px;padding:11px 13px;border:2px solid var(--border);border-radius:var(--radius-sm)}input[type=text]:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(18,103,214,.13)}
+.examples-wrap{margin-top:15px;padding-top:12px;border-top:1px dashed #d6deea}.helper{font-size:.78rem;color:#7b8796}.example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.quiet-examples .choice{padding:8px 7px;border:1px solid #e0e6ee;background:#f8fafc;color:#657181;font-size:.78rem}
+.primary-btn,.secondary-btn{border:0;border-radius:11px;padding:13px 18px;font-weight:800;cursor:pointer}.primary-btn{width:100%;background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff}.secondary-btn{background:#fff;border:1px solid var(--border);color:var(--ink)}.status{display:none;text-align:center;margin:16px 0;color:var(--muted);font-weight:700}.status.loading-active{display:flex!important;align-items:center;justify-content:center;gap:10px}.status.loading-active::before{content:'';width:20px;height:20px;border:3px solid rgba(18,103,214,.18);border-top-color:var(--primary);border-radius:50%;animation:lingoSpin .8s linear infinite}@keyframes lingoSpin{to{transform:rotate(360deg)}}
+.activity{display:none}.situation{font-weight:800;font-size:1.08rem;margin-bottom:14px}.intentions{display:grid;gap:9px}.intent{width:100%;text-align:left;padding:13px 14px;border:2px solid var(--border);border-radius:11px;background:#fff;cursor:pointer;font-weight:700}.intent:hover,.intent.selected{border-color:var(--primary);background:var(--primary-light)}
+.responses{display:none;margin-top:16px}.response-card{padding:14px;border:1px solid var(--border);border-radius:12px;background:#fff;margin-bottom:10px}.response-text{font-weight:800;font-size:1.05rem}.response-note{margin-top:6px;color:var(--muted);font-size:.9rem}.response-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.response-actions button{border:1px solid var(--border);background:var(--soft);border-radius:8px;padding:8px 10px;cursor:pointer;font-weight:700}
+.collection-bar{display:flex;justify-content:flex-end;margin:0 0 14px}.collection-btn{border:0;border-radius:10px;padding:10px 14px;background:#fff;color:var(--primary-dark);font-weight:800;cursor:pointer;box-shadow:var(--shadow)}.collection-panel{display:none}.collection-list{display:grid;gap:10px;margin-top:14px}.collection-item{padding:12px;border:1px solid var(--border);border-radius:11px;background:#fff}.collection-sentence{font-weight:800}.collection-meta{font-size:.78rem;color:var(--muted);margin-top:4px}
+.notice{position:fixed;right:18px;top:98px;z-index:200;max-width:min(360px,calc(100% - 36px));padding:12px 15px;border-radius:10px;color:#fff;font-weight:700;box-shadow:var(--shadow);transform:translateX(130%);transition:.25s}.notice.show{transform:translateX(0)}.notice.info{background:#1267d6}.notice.success{background:#198754}.notice.error{background:#c83d4f}.footer{text-align:center;color:var(--muted);font-size:.72rem;padding:0 10px 24px}
+@media(max-width:700px){.banner{align-items:flex-start;flex-direction:column}.header-tools{width:100%;justify-content:space-between}.language-pair{flex:1}.level-grid{grid-template-columns:1fr}.example-grid{grid-template-columns:1fr 1fr}.page{margin-top:12px}}
+
+/* Separate Home shortcut: keep the existing Activities / change languages control,
+   with a compact home icon at the far right. */
+.home-icon{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  background:#fff;
+  color:#084ca8;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  box-sizing:border-box;
+  transition:transform .15s ease, background .15s ease;
+}
+.home-icon svg{
+  width:24px;
+  height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-icon:hover{transform:translateY(-1px);background:#f5f9ff}
+.home-icon:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:2px}
+@media(max-width:520px){
+  .home-icon{width:42px;height:42px;flex-basis:42px}
+}
+
+
+/* ===== LINGOGO / RETAIL — job-ready treatment ===== */
+:root{
+  --design-black:#101010;
+  --design-paper:#f4f0e8;
+  --design-white:#fffdf8;
+  --design-red:#e24b35;
+  --design-line:#bdb8ae;
+  --design-grey:#6f6c66;
+}
+
+body{
+  background:
+    linear-gradient(rgba(16,16,16,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,16,16,.035) 1px, transparent 1px),
+    var(--design-paper);
+  background-size:28px 28px;
+  color:var(--design-black);
+}
+
+.banner{
+  background:var(--design-black);
+  box-shadow:none;
+  border-bottom:5px solid var(--design-red);
+}
+
+.brand-mark{
+  border-radius:0;
+  background:var(--design-red);
+  color:#fff;
+  box-shadow:none;
+  font-weight:900;
+}
+
+.brand{letter-spacing:.12em;font-weight:900}
+.tagline{font-family:inherit;letter-spacing:.05em;text-transform:uppercase;opacity:.72}
+.language-pair{border-radius:0;border-color:#6c6c6c;background:transparent}
+.home-link,.home-icon{
+  border-radius:0 !important;
+  background:#fff !important;
+  color:#111 !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+.page{width:min(980px,calc(100% - 24px))}
+.panel{
+  border-radius:0;
+  box-shadow:none;
+  border:1.5px solid var(--design-black);
+  background:var(--design-white);
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:230px;
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(180px,.7fr);
+  align-items:end;
+  gap:28px;
+  background:var(--design-white);
+}
+.hero:after{
+  content:"LINGOGO";
+  align-self:stretch;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  padding:0 0 4px;
+  color:var(--design-red);
+  font-size:clamp(2.2rem,6vw,5.8rem);
+  font-weight:900;
+  line-height:.84;
+  letter-spacing:-.06em;
+  text-align:right;
+  max-width:7ch;
+  word-break:break-word;
+}
+h1{
+  font-size:clamp(2.4rem,7vw,5.7rem);
+  line-height:.88;
+  letter-spacing:-.055em;
+  text-transform:uppercase;
+  max-width:8ch;
+  margin-bottom:18px;
+}
+.hero p{
+  max-width:60ch;
+  color:#45423d;
+  font-size:1rem;
+}
+.design-kicker{
+  margin:0 0 12px;
+  color:var(--design-red);
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.design-disclaimer{
+  margin-top:14px;
+  font-size:.72rem;
+  color:var(--design-grey);
+}
+
+.section-head{align-items:flex-start}
+.number{
+  border-radius:0;
+  background:var(--design-black);
+  color:#fff;
+  font-weight:900;
+}
+.section-title{
+  font-size:1.28rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  font-weight:900;
+}
+.setup-lead{color:#55514b}
+.level-grid{gap:0;border:1.5px solid var(--design-black)}
+.level-card{
+  border:0;
+  border-right:1.5px solid var(--design-black);
+  border-radius:0;
+  background:#fff;
+  min-height:132px;
+}
+.level-card:last-child{border-right:0}
+.level-card:hover,.level-card.selected{
+  background:var(--design-black);
+  color:#fff;
+  border-color:var(--design-black);
+}
+.level-card.selected .level-note,.level-card:hover .level-note{color:#d8d8d8}
+.level-name{text-transform:uppercase;letter-spacing:.02em}
+.topic-step{border-top:1.5px solid var(--design-black)}
+.substep-badge{border-radius:0;background:var(--design-red);color:#fff}
+.topic-label{text-transform:uppercase;letter-spacing:.02em}
+input[type=text]{
+  border-radius:0;
+  border:1.5px solid var(--design-black);
+  min-height:58px;
+  background:#fff;
+  font-size:1.02rem;
+}
+input[type=text]:focus{
+  border-color:var(--design-red);
+  box-shadow:0 0 0 3px rgba(226,75,53,.15);
+}
+.examples-wrap{border-top:1px solid var(--design-line)}
+.quiet-examples .choice{
+  border-radius:0;
+  border:1px solid var(--design-line);
+  background:#f7f4ed;
+}
+.choice:hover,.choice.selected,
+.quiet-examples .choice:hover,.quiet-examples .choice.selected{
+  background:var(--design-red);
+  border-color:var(--design-red);
+  color:#fff;
+}
+.primary-btn{
+  border-radius:0;
+  background:var(--design-red);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.secondary-btn,.response-actions button,.collection-btn{
+  border-radius:0;
+  box-shadow:none;
+}
+.collection-btn{
+  background:var(--design-black);
+  color:#fff;
+}
+.activity{border-top:6px solid var(--design-red)}
+.situation{
+  font-size:clamp(1.45rem,4vw,2.3rem);
+  line-height:1.05;
+  letter-spacing:-.025em;
+  max-width:28ch;
+}
+.intentions{
+  grid-template-columns:repeat(2,1fr);
+  gap:0;
+  border:1.5px solid var(--design-black);
+}
+.intent{
+  min-height:92px;
+  border:0;
+  border-right:1.5px solid var(--design-black);
+  border-radius:0;
+  background:#fff;
+  text-transform:uppercase;
+  letter-spacing:.025em;
+  font-weight:900;
+}
+.intent:last-child{border-right:0}
+.intent:hover,.intent.selected{
+  background:var(--design-black);
+  color:#fff;
+}
+.response-card{
+  border-radius:0;
+  border:1.5px solid var(--design-black);
+  background:#fff;
+  padding:18px;
+}
+.response-card:nth-child(odd){margin-left:0;margin-right:8%}
+.response-card:nth-child(even){margin-left:8%;margin-right:0}
+.response-text{
+  font-size:clamp(1.18rem,3vw,1.7rem);
+  line-height:1.18;
+  letter-spacing:-.02em;
+}
+.response-note{
+  border-top:1px solid var(--design-line);
+  padding-top:9px;
+}
+.design-context-wrap{
+  margin:22px 0 8px;
+  padding-top:20px;
+  border-top:1.5px solid var(--design-black);
+}
+.design-context-label{
+  margin-bottom:9px;
+  font-size:.78rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.design-context-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0;
+  border:1.5px solid var(--design-black);
+}
+.design-context{
+  min-height:92px;
+  border:0;
+  border-right:1.5px solid var(--design-black);
+  border-bottom:1.5px solid var(--design-black);
+  background:#fff;
+  padding:12px;
+  text-align:left;
+  cursor:pointer;
+}
+.design-context:nth-child(3n){border-right:0}
+.design-context:nth-last-child(-n+3){border-bottom:0}
+.design-context:hover,.design-context.selected{
+  background:var(--design-red);
+  color:#fff;
+}
+.design-context strong{
+  display:block;
+  font-size:1rem;
+  text-transform:uppercase;
+  letter-spacing:.025em;
+}
+.design-context span{
+  display:block;
+  margin-top:5px;
+  font-size:.76rem;
+  line-height:1.28;
+  opacity:.78;
+}
+.design-fields{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:14px;
+}
+.design-chip{
+  padding:5px 8px;
+  border:1px solid var(--design-black);
+  font-size:.68rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  background:#fff;
+}
+.footer{
+  color:#4f4b46;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero:after{display:none}
+  .level-grid{grid-template-columns:1fr}
+  .level-card{border-right:0;border-bottom:1.5px solid var(--design-black)}
+  .level-card:last-child{border-bottom:0}
+  .design-context-grid{grid-template-columns:1fr}
+  .design-context{border-right:0 !important;border-bottom:1.5px solid var(--design-black) !important}
+  .design-context:last-child{border-bottom:0 !important}
+  .intentions{grid-template-columns:1fr}
+  .intent{border-right:0;border-bottom:1.5px solid var(--design-black)}
+  .intent:last-child{border-bottom:0}
+  .response-card:nth-child(n){margin-left:0;margin-right:0}
+}
+
+
+/* LingoGo standard compact navigation */
+.home-icon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:9px;background:#fff;color:var(--primary-dark);text-decoration:none}
+.home-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(max-width:700px){
+  .banner{min-height:64px!important;padding:8px 10px!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;flex-wrap:nowrap!important}
+  .brand-wrap{min-width:0!important;gap:8px!important}
+  .brand-mark{width:38px!important;height:38px!important;border-radius:10px!important;flex:0 0 38px!important}
+  .brand{font-size:1rem!important;white-space:nowrap!important}
+  .tagline{display:none!important}
+  .header-tools{width:auto!important;min-width:0!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;flex-wrap:nowrap!important}
+  .language-pair{display:none!important}
+  .home-link{padding:8px 9px!important;font-size:.72rem!important;line-height:1.1!important;white-space:nowrap!important}
+  .home-icon{width:36px!important;height:36px!important;flex-basis:36px!important}
+  .level-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:390px){
+  .brand-mark{display:none!important}
+  .brand{font-size:.92rem!important}
+  .home-link{font-size:.68rem!important;padding:7px 8px!important}
+  .home-icon{width:34px!important;height:34px!important;flex-basis:34px!important}
+}
+
+</style>
+<style id="lingototal-latest-index-style">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{
+  --primary:#3277e8;--primary-dark:#1f5fc7;--primary-light:#202f45;
+  --accent:#3277e8;--success:#3eae78;--danger:#e25c68;
+  --ink:#f7f7f5;--muted:#b8bdc5;--surface:#202020;--soft:#292929;
+  --border:#383838;--shadow:0 16px 40px rgba(0,0,0,.22);--radius:0;--radius-sm:0
+}
+html{background:#171717;scroll-padding-top:72px}
+body{font-family:'Inter',Arial,sans-serif;color:var(--ink);background:#171717;line-height:1.48}
+button,input{font-family:inherit}
+.banner{
+  min-height:72px;padding:10px clamp(14px,4vw,56px);gap:18px;
+  background:
+    linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),
+    radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),
+    linear-gradient(120deg,#24344c,#15191f 62%);
+  border-bottom:1px solid #343b45;box-shadow:0 5px 20px rgba(0,0,0,.28)
+}
+.brand-wrap{gap:10px}.brand-mark{width:40px;height:40px;border-radius:0;background:#f4f4f2;color:#111;box-shadow:none;font-size:.82rem;font-weight:900}
+.brand{font-size:.95rem;font-weight:900;letter-spacing:.16em}.tagline{font-size:.65rem;color:#d7dce3;opacity:1}
+.header-tools{gap:8px;flex-wrap:nowrap}.language-pair{padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:0;background:rgba(0,0,0,.25);font-size:.68rem;white-space:nowrap}
+.home-link{min-height:34px;padding:7px 10px;border:1px solid rgba(255,255,255,.3);border-radius:0;background:#f4f4f2;color:#182033;font-size:.68rem;white-space:nowrap}
+.home-link:hover{background:#dfeaff;color:#153f82}
+.page{width:min(900px,calc(100% - 28px));margin:18px auto 44px}
+.collection-bar{margin-bottom:10px}.collection-btn{border:1px solid #3b4657;border-radius:0;padding:9px 13px;background:#202936;color:#9ec2ff;box-shadow:none;font-size:.76rem}
+.panel{position:relative;overflow:hidden;border:1px solid var(--border);border-radius:0;box-shadow:0 10px 28px rgba(0,0,0,.16);padding:64px clamp(17px,3vw,27px) 24px;margin-bottom:12px;background:
+  linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)) 0 0/100% 42px no-repeat,
+  radial-gradient(circle at 72% 20px,rgba(126,175,255,.55),transparent 27%) 0 0/100% 42px no-repeat,
+  linear-gradient(120deg,#24344c,#15191f 62%) 0 0/100% 42px no-repeat,
+  #202020}
+.panel.hero{min-height:220px;padding:44px clamp(22px,4vw,40px);display:flex;flex-direction:column;justify-content:center;border:0;border-left:5px solid var(--primary);background:
+  linear-gradient(90deg,rgba(16,16,16,.96),rgba(16,16,16,.72)),
+  radial-gradient(circle at 78% 35%,#315f9c 0,transparent 34%),
+  linear-gradient(135deg,#121212 0%,#18253a 57%,#0d0d0d 100%)}
+h1{font-family:Georgia,'Times New Roman',serif;color:#fff;font-size:clamp(2.1rem,5.5vw,4rem);font-weight:700;line-height:.95;letter-spacing:-.045em;margin:0 0 13px}
+.hero p{max-width:690px;color:#cbd1d9;font-size:.92rem;line-height:1.58}
+.section-head{gap:11px;margin-bottom:15px}.number{width:34px;height:34px;flex-basis:34px;border-radius:0;background:var(--primary);font-size:.78rem;font-weight:900}
+.section-title{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:1.42rem;font-weight:700;letter-spacing:-.02em}
+.setup-lead,.topic-guidance{color:var(--muted);font-weight:500}.topic-step{border-top-color:#3a3a3a}.substep-badge{border-radius:0;background:#263a57;color:#9ec2ff}
+.topic-label,.situation{color:#fff}.helper{color:#9ba3ae}
+.level-grid{gap:8px}.choice,.intent{border:1px solid #414141;border-radius:0;background:#252525;color:#f5f5f3;box-shadow:none}
+.choice:hover,.choice.selected,.intent:hover,.intent.selected{border-color:#6699ec;background:#202f45;color:#fff}
+.level-card{min-height:102px;padding:13px}.level-name{color:#fff}.level-note{color:#afb5be}
+.examples-wrap{border-top-color:#3a3a3a}.quiet-examples .choice{border-color:#3b3b3b;background:#242424;color:#aeb5bf}.quiet-examples .choice:hover{border-color:#6699ec;background:#202f45;color:#fff}
+input[type=text]{min-height:48px;border:1px solid #4c4c4c;border-radius:0;background:#151515;color:#fff;caret-color:#8bb7ff}
+input[type=text]::placeholder{color:#858b94}input[type=text]:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
+.primary-btn,.secondary-btn{border-radius:0;padding:13px 18px;letter-spacing:.035em}.primary-btn{background:var(--primary);color:#fff}.primary-btn:hover{background:var(--primary-dark)}
+.secondary-btn{background:#292929;border-color:#454545;color:#fff}.status{color:#aeb6c1}
+.panel.generator-panel{padding:16px clamp(17px,3vw,27px) 19px;background:#202020}
+.generator-panel .primary-btn{min-height:50px}
+.generator-panel .status{margin:13px 0 0}
+.generator-panel #waiting{margin:11px 0 0;text-align:center;font-size:.8rem}
+.generator-panel .activity{margin-top:22px;padding-top:20px;border-top:1px solid #3a3a3a}
+.intentions{gap:7px}.intent{padding:12px 13px}.responses{margin-top:13px}.response-card,.collection-item{border:1px solid #3e3e3e;border-radius:0;background:#242424}
+.response-text,.collection-sentence{color:#fff}.response-note,.collection-meta{color:#adb4bd}.response-actions button{border:1px solid #465164;border-radius:0;background:#202936;color:#bcd4ff}
+.response-actions button:hover{border-color:#6699ec;background:#263b5b;color:#fff}.notice{top:86px;border-radius:0}.footer{color:#7f858d;padding-top:8px}
+@media(max-width:700px){
+  html{scroll-padding-top:58px}.banner{min-height:58px;padding:8px 11px;align-items:center;flex-direction:row}.brand-mark{width:34px;height:34px}.brand{font-size:.76rem}.tagline{font-size:.54rem}
+  .header-tools{width:auto;margin-left:auto;justify-content:flex-end}.language-pair{max-width:118px;overflow:hidden;text-overflow:ellipsis;padding:6px 7px;font-size:.58rem}.home-link{width:34px;min-width:34px;padding:6px;justify-content:center}.home-link span:last-child{display:none}
+  .page{width:100%;margin:0}.collection-bar{margin:10px 11px}.panel{margin:0;border-left:0;border-right:0;border-bottom:0;padding:55px 16px 21px}.panel.hero{min-height:185px;padding:34px 18px;border-left:4px solid var(--primary)}.panel.generator-panel{padding:13px 16px 17px}
+  h1{font-size:2.35rem}.hero p{font-size:.82rem}.section-title{font-size:1.24rem}.level-grid{grid-template-columns:1fr}.level-card{min-height:88px}.example-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<style id="lingototal-specialist-page-style">
+.design-kicker{color:#8bb7ff!important;font-size:.68rem!important;font-weight:900!important;letter-spacing:.15em!important;text-transform:uppercase!important;margin-bottom:9px!important}
+.design-fields{display:flex!important;flex-wrap:wrap!important;gap:6px!important;margin-top:15px!important}
+.design-chip{border:1px solid #40516a!important;border-radius:0!important;background:#202936!important;color:#bcd4ff!important;padding:6px 9px!important;font-size:.68rem!important;font-weight:750!important}
+.design-disclaimer{margin-top:13px!important;color:#9fa7b2!important;font-size:.75rem!important;line-height:1.45!important}
+.panel.hero{min-height:150px!important;padding-top:34px!important;padding-bottom:34px!important}
+.panel.hero h1{display:none!important}
+.panel.hero p{margin:0!important;max-width:720px!important}
+.number,.substep-badge{background:var(--primary)!important;color:#fff!important}
+.panel.generator-panel{padding:16px clamp(17px,3vw,27px) 19px!important;background:#202020!important}
+.generator-panel>.section-head{display:none!important}.generator-panel .primary-btn{min-height:50px!important}
+.generator-panel .activity{margin-top:22px!important;padding-top:20px!important;border-top:1px solid #3a3a3a!important}
+.mobile-activity-title{color:#fff!important;font-size:.72rem!important;font-weight:800!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+@media(max-width:700px){.design-fields{gap:4px!important}.design-chip{font-size:.6rem!important;padding:5px 7px!important}.panel.hero{min-height:0!important;padding:25px 18px!important}.panel.generator-panel{padding:13px 16px 17px!important}}
+</style>
+<style id="lingototal-homeservices-linked-template">
+.panel.hero{grid-template-columns:minmax(0,1fr) auto!important}
+.panel.hero:after{content:"HOME / SERVICES / LANGUAGE"!important;max-width:none!important;white-space:nowrap!important;word-break:normal!important;align-items:center!important;justify-content:flex-end!important;padding:0!important;color:var(--design-red)!important;font-size:clamp(1.2rem,2.45vw,2.35rem)!important;line-height:1!important;letter-spacing:-.045em!important}
+.design-chip{text-decoration:none!important;cursor:pointer!important;transition:background .15s ease,border-color .15s ease,color .15s ease!important}
+.design-chip:hover,.design-chip:focus-visible{background:#2b4770!important;border-color:#72a4f4!important;color:#fff!important;outline:none!important}
+</style></head>
+<body>
+<header class="banner">
+<div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline"></div></div></div>
+<div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="index.html"><span data-i18n="changeLanguages"></span></a></div>
+</header>
+
+<main class="page">
+<div class="collection-bar"><button id="openCollectionBtn" class="collection-btn">★ <span data-i18n="mySavedSentences"></span> (<span id="collectionCount">0</span>)</button></div>
+<section id="collectionPanel" class="panel collection-panel">
+<div class="section-head"><div class="number">★</div><div class="section-title" data-i18n="collectionTitle"></div></div>
+<p class="setup-lead" data-i18n="collectionIntro"></p>
+<div id="collectionList" class="collection-list"></div>
+<div class="response-actions"><button id="downloadCollectionBtn" data-i18n="downloadCollection"></button><button id="closeCollectionBtn" data-i18n="closeCollection"></button></div>
+</section>
+
+<section class="panel hero">
+<div>
+  <div class="design-kicker" data-i18n="designKicker">LINGOGO / HOME SERVICES · REAL LIFE</div>
+  <h1 data-i18n="title"></h1>
+  <p data-i18n="intro"></p>
+  <div class="design-fields"><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipIdentity"></a><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipTypography"></a><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipEditorial"></a><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipPackaging"></a><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipUXUI"></a><a class="design-chip" href="#homeservices-setup" data-homeservices-chip data-i18n="chipPortfolio"></a></div><div class="design-disclaimer" data-i18n="designDisclaimer"></div>
+</div>
+</section>
+
+<section class="panel" id="homeservices-setup">
+<div class="section-head"><div class="number">1</div><div class="section-title" data-i18n="choose"></div></div>
+<p class="setup-lead" data-i18n="levelPrompt"></p>
+<div class="level-grid">
+<button class="choice level level-card" data-level="beginner"><span class="level-name" data-i18n="beginner"></span><span class="level-note" data-i18n="beginnerNote"></span></button>
+<button class="choice level level-card" data-level="intermediate"><span class="level-name" data-i18n="intermediate"></span><span class="level-note" data-i18n="intermediateNote"></span></button>
+</div>
+
+<div class="topic-step"><div class="substep-badge">2</div><div>
+<label for="themeInput" class="topic-label" data-i18n="ownTopic"></label>
+<p class="topic-guidance" data-i18n="topicGuidance"></p>
+<input id="themeInput" type="text" data-i18n-placeholder="topicPlaceholder">
+</div></div>
+</section>
+
+<section class="panel">
+<div class="section-head"><div class="number">2</div><div class="section-title" data-i18n="generateTitle"></div></div>
+<button id="generateBtn" class="primary-btn" data-i18n="generate"></button>
+<div id="loading" class="status" data-i18n="generating"></div>
+<div id="waiting" class="setup-lead" data-i18n="waiting"></div>
+<div id="activity" class="activity">
+<div id="progress" class="setup-lead"></div>
+<div id="situation" class="situation"></div>
+<div class="helper" data-i18n="chooseIntention"></div>
+<div id="intentions" class="intentions"></div>
+<div id="responses" class="responses"></div>
+<div id="nextWrap" style="display:none;margin-top:14px"><button id="nextBtn" class="primary-btn" data-i18n="next"></button></div>
+</div>
+</section>
+</main>
+<div id="notice" class="notice"></div>
+<footer class="footer">LingoTotal · <span data-i18n="tagline"></span></footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+const T={
+en:{example4:'Client feedback',example3:'Portfolio',example2:'Visual identity',example1:'Typography',ctxProcessNote:'Turn academic experience into retail strengths.',ctxProcess:'Process',ctxPortfolioNote:'Discuss shifts and flexibility professionally.',ctxPortfolio:'Portfolio',ctxClientNote:'Work with colleagues and supervisors.',ctxClient:'Client',ctxDecisionNote:'Handle customer-facing situations.',ctxDecision:'Explain',ctxCritiqueNote:'Answer common interview questions.',ctxCritique:'Critique',ctxPresentNote:'Present your strengths clearly.',ctxPresent:'Present',designContextLabel:'Choose a retail job situation',designDisclaimer:'Independent LingoTotal prototype for graphic-design students in Palma. Not an official ESDIB service.',tagline:'Learn any language your way',changeLanguages:'Activities / change languages',title:'LingoGo Health & Care',intro:'Practise the language you need to present, critique and explain design work in real university and professional situations.',choose:'Start by choosing your level',levelPrompt:'Choose the option that feels right for you today.',beginner:'Revising the basics',beginnerNote:'Build useful ways to handle simple everyday situations.',intermediate:'Building confidence',intermediateNote:'Express different intentions naturally and flexibly.',advanced:'More advanced',advancedNote:'Choose language that reflects tone, nuance and relationship.',ownTopic:'What do you need to say?',topicGuidance:'Describe the design situation or message you want to communicate.',topicPlaceholder:'For example: explain why I chose this typeface...',inspiration:'If you are stuck, here are a few ideas:',friends:'Friends',travel:'Travel',work:'Work',food:'Eating out',generateTitle:'Choose what you want to say',generate:'Create my LingoGo challenge',generating:'Creating useful real-life language…',waiting:'Your LingoGo situations will appear here.',chooseIntention:'What do you want to communicate?',next:'Next situation',selectLevel:'Select a level first.',enterTopic:'Write a topic or choose an example.',serverError:'The activity could not be generated.',listen:'🔊 Listen',save:'★ Save',savedMessage:'Saved to My LingoTotal Collection.',alreadySaved:'This sentence is already saved.',mySavedSentences:'My saved sentences',collectionTitle:'My LingoTotal Collection',collectionIntro:'Save useful language here and come back to it later on this device.',downloadCollection:'Download collection',closeCollection:'Close',remove:'Remove',emptyCollection:'No saved sentences yet.',noSaved:'There are no saved sentences yet.',themeLabel:'Theme'},
+es:{tagline:'Aprende cualquier idioma a tu manera',changeLanguages:'Actividades / cambiar idiomas',title:'LingoGo Salud y cuidados',intro:'Practica el lenguaje que necesitas para presentar, criticar y explicar trabajos de diseño en situaciones universitarias y profesionales reales.',choose:'Empieza eligiendo tu nivel',levelPrompt:'Elige la opción que mejor te vaya hoy.',beginner:'Repasar lo básico',beginnerNote:'Construye formas útiles de desenvolverte en situaciones cotidianas sencillas.',intermediate:'Ganar confianza',intermediateNote:'Expresa distintas intenciones de forma natural y flexible.',advanced:'Más avanzado',advancedNote:'Elige lenguaje que refleje tono, matiz y relación.',ownTopic:'¿Qué necesitas decir?',topicGuidance:'Describe la situación de diseño o el mensaje que quieres comunicar.',topicPlaceholder:'Por ejemplo: explicar por qué elegí esta tipografía...',inspiration:'Si no se te ocurre nada:',friends:'Amigos',travel:'Viajes',work:'Trabajo',food:'Comer fuera',generateTitle:'Elige lo que quieres decir',generate:'Crear mi reto LingoGo',generating:'Creando lenguaje útil para situaciones reales…',waiting:'Tus situaciones LingoGo aparecerán aquí.',chooseIntention:'¿Qué quieres comunicar?',next:'Siguiente situación',selectLevel:'Primero selecciona un nivel.',enterTopic:'Escribe un tema o elige un ejemplo.',serverError:'No se ha podido crear la actividad.',listen:'🔊 Escuchar',save:'★ Guardar',savedMessage:'Guardado en Mi colección LingoTotal.',alreadySaved:'Esta frase ya está guardada.',mySavedSentences:'Mis frases guardadas',collectionTitle:'Mi colección LingoTotal',collectionIntro:'Guarda aquí lenguaje útil y vuelve a consultarlo más adelante en este dispositivo.',downloadCollection:'Descargar colección',closeCollection:'Cerrar',remove:'Eliminar',emptyCollection:'Todavía no hay frases guardadas.',noSaved:'Todavía no hay frases guardadas.',themeLabel:'Tema'},
+ca:{example4:'Feedback de cliente',example3:'Portfolio',example2:'Identidad visual',example1:'Tipografía',ctxProcessNote:'Describe investigación, iteración y desarrollo.',ctxProcess:'Proceso',ctxPortfolioNote:'Habla de proyectos y resultados.',ctxPortfolio:'Portfolio',ctxClientNote:'Habla de ideas, cambios y limitaciones.',ctxClient:'Cliente',ctxDecisionNote:'Justifica una decisión de diseño.',ctxDecision:'Explicar',ctxCritiqueNote:'Da feedback útil y respetuoso.',ctxCritique:'Criticar',ctxPresentNote:'Explica tu trabajo y tus decisiones.',ctxPresent:'Presentar',designContextLabel:'Elige una situación de diseño',designDisclaimer:'Prototipo independiente de LingoTotal para estudiantes de diseño gráfico en Palma. No es un servicio oficial de ESDIB.',tagline:'Aprèn qualsevol llengua a la teva manera',changeLanguages:'Activitats / canvia les llengües',title:'LingoGo Disseny',intro:'Practica el llenguatge que necessites per presentar, criticar i explicar treballs de disseny en situacions universitàries i professionals reals.',choose:'Comença triant el teu nivell',levelPrompt:'Tria l’opció que et vagi millor avui.',beginner:'Repassar les bases',beginnerNote:'Construeix maneres útils d’afrontar situacions quotidianes senzilles.',intermediate:'Guanyar confiança',intermediateNote:'Expressa intencions diferents amb naturalitat i flexibilitat.',advanced:'Més avançat',advancedNote:'Tria llenguatge que reflecteixi to, matís i relació.',ownTopic:'Què necessites dir?',topicGuidance:'Descriu la situació de disseny o el missatge que vols comunicar.',topicPlaceholder:'Per exemple: explicar per què he triat aquesta tipografia...',inspiration:'Si no se t’acut res:',friends:'Amics',travel:'Viatges',work:'Feina',food:'Menjar fora',generateTitle:'Tria què vols dir',generate:'Crea el meu repte LingoGo',generating:'Creant llenguatge útil per a situacions reals…',waiting:'Les situacions de LingoGo apareixeran aquí.',chooseIntention:'Què vols comunicar?',next:'Situació següent',selectLevel:'Primer tria un nivell.',enterTopic:'Escriu un tema o tria un exemple.',serverError:'No s’ha pogut crear l’activitat.',listen:'🔊 Escolta',save:'★ Desa',savedMessage:'Desat a la meva col·lecció LingoTotal.',alreadySaved:'Aquesta frase ja està desada.',mySavedSentences:'Les meves frases desades',collectionTitle:'La meva col·lecció LingoTotal',collectionIntro:'Desa aquí llenguatge útil i torna-hi més endavant en aquest dispositiu.',downloadCollection:'Descarrega la col·lecció',closeCollection:'Tanca',remove:'Elimina',emptyCollection:'Encara no hi ha frases desades.',noSaved:'Encara no hi ha frases desades.',themeLabel:'Tema'},
+fr:{example4:'Retour client',example3:'Portfolio',example2:'Identité visuelle',example1:'Typographie',ctxProcessNote:'Décrivez recherche, itération et développement.',ctxProcess:'Processus',ctxPortfolioNote:'Parlez de projets et de résultats.',ctxPortfolio:'Portfolio',ctxClientNote:'Discutez des idées, changements et contraintes.',ctxClient:'Client',ctxDecisionNote:'Justifiez une décision de design.',ctxDecision:'Expliquer',ctxCritiqueNote:'Donnez un retour utile et diplomatique.',ctxCritique:'Critiquer',ctxPresentNote:'Expliquez votre travail et vos choix.',ctxPresent:'Présenter',designContextLabel:'Choisissez une situation de design',designDisclaimer:'Prototype LingoTotal indépendant pour les étudiants en design graphique à Palma. Il ne s’agit pas d’un service officiel de l’ESDIB.',tagline:'Apprenez n’importe quelle langue à votre façon',changeLanguages:'Activités / changer les langues',title:'LingoGo Health & Care',intro:'Pratiquez la langue nécessaire pour présenter, critiquer et expliquer un travail de design dans des situations universitaires et professionnelles réelles.',choose:'Commencez par choisir votre niveau',levelPrompt:'Choisissez l’option qui vous convient aujourd’hui.',beginner:'Revoir les bases',beginnerNote:'Construisez des façons utiles de gérer des situations quotidiennes simples.',intermediate:'Prendre confiance',intermediateNote:'Exprimez différentes intentions avec naturel et souplesse.',advanced:'Plus avancé',advancedNote:'Choisissez une langue qui reflète le ton, la nuance et la relation.',ownTopic:'Que devez-vous dire ?',topicGuidance:'Décrivez la situation de design ou le message que vous voulez communiquer.',topicPlaceholder:'Par exemple : expliquer pourquoi j’ai choisi cette police...',inspiration:'Si vous manquez d’idées :',friends:'Amis',travel:'Voyages',work:'Travail',food:'Restaurant',generateTitle:'Choisissez ce que vous voulez dire',generate:'Créer mon défi LingoGo',generating:'Création de langue utile pour des situations réelles…',waiting:'Vos situations LingoGo apparaîtront ici.',chooseIntention:'Que voulez-vous communiquer ?',next:'Situation suivante',selectLevel:'Choisissez d’abord un niveau.',enterTopic:'Écrivez un thème ou choisissez un exemple.',serverError:'Impossible de créer l’activité.',listen:'🔊 Écouter',save:'★ Enregistrer',savedMessage:'Enregistré dans Ma collection LingoTotal.',alreadySaved:'Cette phrase est déjà enregistrée.',mySavedSentences:'Mes phrases enregistrées',collectionTitle:'Ma collection LingoTotal',collectionIntro:'Enregistrez ici les expressions utiles et retrouvez-les plus tard sur cet appareil.',downloadCollection:'Télécharger la collection',closeCollection:'Fermer',remove:'Supprimer',emptyCollection:'Aucune phrase enregistrée pour le moment.',noSaved:'Aucune phrase enregistrée pour le moment.',themeLabel:'Thème'},
+de:{example4:'Kundenfeedback',example3:'Portfolio',example2:'Visuelle Identität',example1:'Typografie',ctxProcessNote:'Beschreibe Recherche, Iteration und Entwicklung.',ctxProcess:'Prozess',ctxPortfolioNote:'Sprich über Projekte und Ergebnisse.',ctxPortfolio:'Portfolio',ctxClientNote:'Besprich Ideen, Änderungen und Grenzen.',ctxClient:'Kunde',ctxDecisionNote:'Begründe eine Designentscheidung.',ctxDecision:'Erklären',ctxCritiqueNote:'Gib hilfreiches, respektvolles Feedback.',ctxCritique:'Kritik',ctxPresentNote:'Erkläre deine Arbeit und Entscheidungen.',ctxPresent:'Präsentieren',designContextLabel:'Wähle eine Designsituation',designDisclaimer:'Unabhängiger LingoTotal-Prototyp für Grafikdesign-Studierende in Palma. Kein offizieller ESDIB-Dienst.',tagline:'Lerne jede Sprache auf deine Art',changeLanguages:'Aktivitäten / Sprachen ändern',title:'LingoGo Health & Care',intro:'Übe die Sprache, die du brauchst, um Designarbeiten in realen Hochschul- und Berufssituationen zu präsentieren, zu kritisieren und zu erklären.',choose:'Starte mit deinem Niveau',levelPrompt:'Wähle die Option, die heute zu dir passt.',beginner:'Grundlagen auffrischen',beginnerNote:'Baue nützliche Formulierungen für einfache Alltagssituationen auf.',intermediate:'Sicherheit gewinnen',intermediateNote:'Drücke unterschiedliche Absichten natürlich und flexibel aus.',advanced:'Anspruchsvoller',advancedNote:'Wähle Sprache passend zu Ton, Nuance und Beziehung.',ownTopic:'Was möchtest du sagen?',topicGuidance:'Beschreibe die Designsituation oder Botschaft, die du kommunizieren möchtest.',topicPlaceholder:'Zum Beispiel: erklären, warum ich diese Schrift gewählt habe...',inspiration:'Falls dir nichts einfällt:',friends:'Freunde',travel:'Reisen',work:'Arbeit',food:'Essen gehen',generateTitle:'Wähle, was du sagen möchtest',generate:'LingoGo-Challenge erstellen',generating:'Nützliche Sprache für echte Situationen wird erstellt…',waiting:'Deine LingoGo-Situationen erscheinen hier.',chooseIntention:'Was möchtest du ausdrücken?',next:'Nächste Situation',selectLevel:'Wähle zuerst ein Niveau.',enterTopic:'Gib ein Thema ein oder wähle ein Beispiel.',serverError:'Die Aktivität konnte nicht erstellt werden.',listen:'🔊 Anhören',save:'★ Speichern',savedMessage:'In Meine LingoTotal-Sammlung gespeichert.',alreadySaved:'Dieser Satz ist bereits gespeichert.',mySavedSentences:'Meine gespeicherten Sätze',collectionTitle:'Meine LingoTotal-Sammlung',collectionIntro:'Speichere hier nützliche Sprache und rufe sie später auf diesem Gerät wieder auf.',downloadCollection:'Sammlung herunterladen',closeCollection:'Schließen',remove:'Entfernen',emptyCollection:'Noch keine Sätze gespeichert.',noSaved:'Noch keine Sätze gespeichert.',themeLabel:'Thema'}
+};
+T.it={tagline:'Impara qualsiasi lingua a modo tuo',changeLanguages:'Attività / cambia lingue',title:'LingoGo · Di’ quello che vuoi dire',intro:'Scegli la tua intenzione, scopri modi naturali per esprimerla e salva il linguaggio che vuoi riutilizzare.',choose:'Inizia scegliendo il tuo livello',levelPrompt:'Scegli l’opzione che oggi ti sembra più adatta.',beginner:'Ripassare le basi',beginnerNote:'Costruisci modi utili per gestire semplici situazioni quotidiane.',intermediate:'Acquisire sicurezza',intermediateNote:'Esprimi intenzioni diverse in modo naturale e flessibile.',advanced:'Più avanzato',advancedNote:'Scegli il linguaggio in base a tono, sfumatura e relazione.',ownTopic:'Ora scegli il tuo argomento',topicGuidance:'Scegli una situazione o un argomento di cui vorresti davvero parlare.',topicPlaceholder:'Prova: viaggi, lavoro, conoscere persone, famiglia, ristoranti...',inspiration:'Se non hai idee:',friends:'Amici',travel:'Viaggi',work:'Lavoro',food:'Mangiare fuori',generateTitle:'Scegli cosa vuoi dire',generate:'Crea la mia sfida LingoGo',generating:'Creazione di linguaggio utile per situazioni reali…',waiting:'Le tue situazioni LingoGo appariranno qui.',chooseIntention:'Cosa vuoi comunicare?',next:'Situazione successiva',selectLevel:'Seleziona prima un livello.',enterTopic:'Scrivi un argomento o scegli un esempio.',serverError:'Non è stato possibile creare l’attività.',listen:'🔊 Ascolta',save:'★ Salva',savedMessage:'Salvato nella mia raccolta LingoTotal.',alreadySaved:'Questa frase è già salvata.',mySavedSentences:'Le mie frasi salvate',collectionTitle:'La mia raccolta LingoTotal',collectionIntro:'Salva qui il linguaggio utile e ritrovalo più tardi su questo dispositivo.',downloadCollection:'Scarica la raccolta',closeCollection:'Chiudi',remove:'Rimuovi',emptyCollection:'Non ci sono ancora frasi salvate.',noSaved:'Non ci sono ancora frasi salvate.',themeLabel:'Argomento'};
+T.pt={tagline:'Aprenda qualquer idioma à sua maneira',changeLanguages:'Atividades / mudar idiomas',title:'LingoGo · Diga o que quer dizer',intro:'Escolha a sua intenção, descubra formas naturais de a expressar e guarde a linguagem que quer voltar a usar.',choose:'Comece por escolher o seu nível',levelPrompt:'Escolha a opção que lhe parece certa hoje.',beginner:'Rever as bases',beginnerNote:'Construa formas úteis de lidar com situações simples do dia a dia.',intermediate:'Ganhar confiança',intermediateNote:'Expresse diferentes intenções de forma natural e flexível.',advanced:'Mais avançado',advancedNote:'Escolha linguagem adequada ao tom, nuance e relação.',ownTopic:'Agora escolha o seu próprio tema',topicGuidance:'Escolha uma situação ou assunto sobre o qual gostaria realmente de falar.',topicPlaceholder:'Experimente: viagens, trabalho, conhecer pessoas, família, restaurantes...',inspiration:'Se não tiver uma ideia:',friends:'Amigos',travel:'Viagens',work:'Trabalho',food:'Comer fora',generateTitle:'Escolha o que quer dizer',generate:'Criar o meu desafio LingoGo',generating:'A criar linguagem útil para situações reais…',waiting:'As suas situações LingoGo aparecerão aqui.',chooseIntention:'O que quer comunicar?',next:'Situação seguinte',selectLevel:'Primeiro selecione um nível.',enterTopic:'Escreva um tema ou escolha um exemplo.',serverError:'Não foi possível criar a atividade.',listen:'🔊 Ouvir',save:'★ Guardar',savedMessage:'Guardado na minha coleção LingoTotal.',alreadySaved:'Esta frase já está guardada.',mySavedSentences:'As minhas frases guardadas',collectionTitle:'A minha coleção LingoTotal',collectionIntro:'Guarde aqui linguagem útil e volte a consultá-la mais tarde neste dispositivo.',downloadCollection:'Descarregar coleção',closeCollection:'Fechar',remove:'Remover',emptyCollection:'Ainda não há frases guardadas.',noSaved:'Ainda não há frases guardadas.',themeLabel:'Tema'};
+T.eu={tagline:'Ikasi edozein hizkuntza zure erara',changeLanguages:'Jarduerak / hizkuntzak aldatu',title:'LingoGo · Esan esan nahi duzuna',intro:'Aukeratu zure asmoa, aurkitu modu naturalak adierazteko eta gorde berriro erabili nahi duzun hizkuntza.',choose:'Hasi zure maila aukeratuz',levelPrompt:'Aukeratu gaur ondoen datorkizun aukera.',beginner:'Oinarriak berrikusi',beginnerNote:'Eraiki eguneroko egoera errazetarako esamolde erabilgarriak.',intermediate:'Konfiantza hartu',intermediateNote:'Adierazi asmo desberdinak modu natural eta malguan.',advanced:'Aurrerago',advancedNote:'Aukeratu tonua, ñabardura eta harremana islatzen duen hizkuntza.',ownTopic:'Orain aukeratu zure gaia',topicGuidance:'Aukeratu benetan hitz egin nahiko zenukeen egoera edo gaia.',topicPlaceholder:'Adibidez: bidaiak, lana, jendea ezagutzea, familia, jatetxeak...',inspiration:'Ideiarik ez baduzu:',friends:'Lagunak',travel:'Bidaiak',work:'Lana',food:'Kanpoan jatea',generateTitle:'Aukeratu zer esan nahi duzun',generate:'Sortu nire LingoGo erronka',generating:'Benetako egoeretarako hizkuntza erabilgarria sortzen…',waiting:'Zure LingoGo egoerak hemen agertuko dira.',chooseIntention:'Zer komunikatu nahi duzu?',next:'Hurrengo egoera',selectLevel:'Aukeratu maila lehenik.',enterTopic:'Idatzi gai bat edo aukeratu adibide bat.',serverError:'Ezin izan da jarduera sortu.',listen:'🔊 Entzun',save:'★ Gorde',savedMessage:'Nire LingoTotal bilduman gordeta.',alreadySaved:'Esaldi hau dagoeneko gordeta dago.',mySavedSentences:'Gordetako esaldiak',collectionTitle:'Nire LingoTotal bilduma',collectionIntro:'Gorde hemen hizkuntza erabilgarria eta itzuli geroago gailu honetan.',downloadCollection:'Deskargatu bilduma',closeCollection:'Itxi',remove:'Kendu',emptyCollection:'Oraindik ez dago gordetako esaldirik.',noSaved:'Oraindik ez dago gordetako esaldirik.',themeLabel:'Gaia'};
+T.ja={tagline:'好きな方法でどんな言語でも学ぼう',changeLanguages:'アクティビティ / 言語を変更',title:'LingoGo · 言いたいことを伝えよう',intro:'伝えたい意図を選び、自然な言い方を見つけ、また使いたい表現を保存しましょう。',choose:'まずレベルを選びましょう',levelPrompt:'今日の自分に合うものを選んでください。',beginner:'基礎を復習する',beginnerNote:'簡単な日常場面で使える表現を増やします。',intermediate:'自信をつける',intermediateNote:'さまざまな意図を自然かつ柔軟に表現します。',advanced:'さらに上へ',advancedNote:'口調、ニュアンス、人間関係に合う表現を選びます。',ownTopic:'次に自分のテーマを選びましょう',topicGuidance:'実際に話してみたい場面やテーマを選んでください。',topicPlaceholder:'例：旅行、仕事、人との出会い、家族、レストラン...',inspiration:'迷ったら：',friends:'友達',travel:'旅行',work:'仕事',food:'外食',generateTitle:'言いたいことを選ぼう',generate:'LingoGoチャレンジを作成',generating:'実生活で使える表現を作成中…',waiting:'LingoGoの場面はここに表示されます。',chooseIntention:'何を伝えたいですか？',next:'次の場面',selectLevel:'最初にレベルを選んでください。',enterTopic:'トピックを書くか、例を選んでください。',serverError:'アクティビティを作成できませんでした。',listen:'🔊 聞く',save:'★ 保存',savedMessage:'マイLingoTotalコレクションに保存しました。',alreadySaved:'この文はすでに保存されています。',mySavedSentences:'保存した文',collectionTitle:'マイLingoTotalコレクション',collectionIntro:'役立つ表現をここに保存して、この端末で後から復習できます。',downloadCollection:'コレクションをダウンロード',closeCollection:'閉じる',remove:'削除',emptyCollection:'保存した文はまだありません。',noSaved:'保存した文はまだありません。',themeLabel:'テーマ'};
+T.ar={tagline:'تعلّم أي لغة بطريقتك',changeLanguages:'الأنشطة / تغيير اللغات',title:'LingoGo · قل ما تريد قوله',intro:'اختر نيتك، واكتشف طرقاً طبيعية للتعبير عنها، واحفظ اللغة التي تريد استخدامها مرة أخرى.',choose:'ابدأ باختيار مستواك',levelPrompt:'اختر الخيار الأنسب لك اليوم.',beginner:'مراجعة الأساسيات',beginnerNote:'كوّن عبارات مفيدة للتعامل مع مواقف يومية بسيطة.',intermediate:'بناء الثقة',intermediateNote:'عبّر عن نيات مختلفة بطريقة طبيعية ومرنة.',advanced:'مستوى أكثر تقدماً',advancedNote:'اختر لغة تناسب النبرة والفروق الدقيقة والعلاقة.',ownTopic:'اختر الآن موضوعك',topicGuidance:'اختر موقفاً أو موضوعاً ترغب فعلاً في الحديث عنه.',topicPlaceholder:'جرّب: السفر، العمل، التعرف على الناس، العائلة، المطاعم...',inspiration:'إذا لم تكن لديك فكرة:',friends:'الأصدقاء',travel:'السفر',work:'العمل',food:'تناول الطعام خارج المنزل',generateTitle:'اختر ما تريد قوله',generate:'أنشئ تحدي LingoGo',generating:'جارٍ إنشاء لغة مفيدة لمواقف حقيقية…',waiting:'ستظهر مواقف LingoGo هنا.',chooseIntention:'ماذا تريد أن توصل؟',next:'الموقف التالي',selectLevel:'اختر مستوى أولاً.',enterTopic:'اكتب موضوعاً أو اختر مثالاً.',serverError:'تعذر إنشاء النشاط.',listen:'🔊 استمع',save:'★ احفظ',savedMessage:'تم الحفظ في مجموعتي في LingoTotal.',alreadySaved:'هذه الجملة محفوظة بالفعل.',mySavedSentences:'جملي المحفوظة',collectionTitle:'مجموعتي في LingoTotal',collectionIntro:'احفظ هنا العبارات المفيدة وارجع إليها لاحقاً على هذا الجهاز.',downloadCollection:'تنزيل المجموعة',closeCollection:'إغلاق',remove:'حذف',emptyCollection:'لا توجد جمل محفوظة بعد.',noSaved:'لا توجد جمل محفوظة بعد.',themeLabel:'الموضوع'};
+
+const DESIGN_I18N={
+  en:{homeLabel:'Home',designKicker:'LINGOGO / HOME SERVICES · REAL LIFE',chipIdentity:'IDENTITY',chipTypography:'TYPOGRAPHY',chipEditorial:'EDITORIAL',chipPackaging:'PACKAGING',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',example4:'Client feedback',example3:'Portfolio',example2:'Visual identity',example1:'Typography',ctxProcessNote:'Turn academic experience into retail strengths.',ctxProcess:'Process',ctxPortfolioNote:'Discuss shifts and flexibility professionally.',ctxPortfolio:'Portfolio',ctxClientNote:'Work with colleagues and supervisors.',ctxClient:'Client',ctxDecisionNote:'Handle customer-facing situations.',ctxDecision:'Explain',ctxCritiqueNote:'Answer common interview questions.',ctxCritique:'Critique',ctxPresentNote:'Present your strengths clearly.',ctxPresent:'Present',designContextLabel:'Choose a retail job situation',designDisclaimer:'Independent LingoTotal prototype for graphic-design students in Palma. Not an official ESDIB service.'},
+  ca:{homeLabel:'Inici',designKicker:'LINGOGO / DISSENY · PALMA',chipIdentity:'IDENTITAT',chipTypography:'TIPOGRAFIA',chipEditorial:'EDITORIAL',chipPackaging:'PACKAGING',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',example4:'Feedback de client',example3:'Portfolio',example2:'Identitat visual',example1:'Tipografia',ctxProcessNote:'Descriu la recerca, la iteració i el desenvolupament.',ctxProcess:'Procés',ctxPortfolioNote:'Parla de projectes i resultats.',ctxPortfolio:'Portfolio',ctxClientNote:'Parla d’idees, canvis i limitacions.',ctxClient:'Client',ctxDecisionNote:'Justifica una decisió de disseny.',ctxDecision:'Explicar',ctxCritiqueNote:'Dona feedback útil i respectuós.',ctxCritique:'Criticar',ctxPresentNote:'Explica el teu treball i les teves decisions.',ctxPresent:'Presentar',designContextLabel:'Tria una situació de disseny',designDisclaimer:'Prototip independent de LingoTotal per a estudiants de disseny gràfic a Palma. No és un servei oficial d’ESDIB.'},
+  es:{homeLabel:'Inicio',designKicker:'LINGOGO / DISEÑO · PALMA',chipIdentity:'IDENTIDAD',chipTypography:'TIPOGRAFÍA',chipEditorial:'EDITORIAL',chipPackaging:'PACKAGING',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',example4:'Comentarios del cliente',example3:'Portfolio',example2:'Identidad visual',example1:'Tipografía',ctxProcessNote:'Describe la investigación, la iteración y el desarrollo.',ctxProcess:'Proceso',ctxPortfolioNote:'Habla de proyectos y resultados.',ctxPortfolio:'Portfolio',ctxClientNote:'Habla de ideas, cambios y limitaciones.',ctxClient:'Cliente',ctxDecisionNote:'Justifica una decisión de diseño.',ctxDecision:'Explicar',ctxCritiqueNote:'Da comentarios útiles y diplomáticos.',ctxCritique:'Criticar',ctxPresentNote:'Explica tu trabajo y tus decisiones.',ctxPresent:'Presentar',designContextLabel:'Elige una situación de diseño',designDisclaimer:'Prototipo independiente de LingoTotal para estudiantes de diseño gráfico en Palma. No es un servicio oficial de ESDIB.'},
+  fr:{homeLabel:'Accueil',designKicker:'LINGOGO / HOME SERVICES · REAL LIFE',chipIdentity:'IDENTITÉ',chipTypography:'TYPOGRAPHIE',chipEditorial:'ÉDITORIAL',chipPackaging:'PACKAGING',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',example4:'Retour client',example3:'Portfolio',example2:'Identité visuelle',example1:'Typographie',ctxProcessNote:'Décrivez la recherche, l’itération et le développement.',ctxProcess:'Processus',ctxPortfolioNote:'Parlez de projets et de résultats.',ctxPortfolio:'Portfolio',ctxClientNote:'Discutez des idées, changements et contraintes.',ctxClient:'Client',ctxDecisionNote:'Justifiez une décision de design.',ctxDecision:'Expliquer',ctxCritiqueNote:'Donnez un retour utile et diplomatique.',ctxCritique:'Critiquer',ctxPresentNote:'Expliquez votre travail et vos choix.',ctxPresent:'Présenter',designContextLabel:'Choisissez une situation de design',designDisclaimer:'Prototype LingoTotal indépendant pour les étudiants en design graphique à Palma. Il ne s’agit pas d’un service officiel de l’ESDIB.'},
+  de:{homeLabel:'Startseite',designKicker:'LINGOGO / HOME SERVICES · REAL LIFE',chipIdentity:'IDENTITÄT',chipTypography:'TYPOGRAFIE',chipEditorial:'EDITORIAL',chipPackaging:'VERPACKUNG',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',example4:'Kundenfeedback',example3:'Portfolio',example2:'Visuelle Identität',example1:'Typografie',ctxProcessNote:'Beschreibe Recherche, Iteration und Entwicklung.',ctxProcess:'Prozess',ctxPortfolioNote:'Sprich über Projekte und Ergebnisse.',ctxPortfolio:'Portfolio',ctxClientNote:'Besprich Ideen, Änderungen und Grenzen.',ctxClient:'Kunde',ctxDecisionNote:'Begründe eine Designentscheidung.',ctxDecision:'Erklären',ctxCritiqueNote:'Gib hilfreiches, respektvolles Feedback.',ctxCritique:'Kritik',ctxPresentNote:'Erkläre deine Arbeit und Entscheidungen.',ctxPresent:'Präsentieren',designContextLabel:'Wähle eine Designsituation',designDisclaimer:'Unabhängiger LingoTotal-Prototyp für Grafikdesign-Studierende in Palma. Kein offizieller ESDIB-Dienst.'},
+  it:{homeLabel:'Home',designKicker:'LINGOGO / HOME SERVICES · REAL LIFE',chipIdentity:'IDENTITÀ',chipTypography:'TIPOGRAFIA',chipEditorial:'EDITORIALE',chipPackaging:'PACKAGING',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIO',title:'LingoGo Health & Care',intro:'Esercita la lingua necessaria per presentare, criticare e spiegare lavori di design in situazioni universitarie e professionali reali.',ownTopic:'Che cosa devi dire?',topicGuidance:'Descrivi la situazione di design o il messaggio che vuoi comunicare.',topicPlaceholder:'Per esempio: spiegare perché ho scelto questo carattere tipografico...',example4:'Feedback del cliente',example3:'Portfolio',example2:'Identità visiva',example1:'Tipografia',ctxProcessNote:'Descrivi ricerca, iterazione e sviluppo.',ctxProcess:'Processo',ctxPortfolioNote:'Parla di progetti e risultati.',ctxPortfolio:'Portfolio',ctxClientNote:'Discuti idee, modifiche e vincoli.',ctxClient:'Cliente',ctxDecisionNote:'Giustifica una decisione di design.',ctxDecision:'Spiegare',ctxCritiqueNote:'Dai un feedback utile e diplomatico.',ctxCritique:'Criticare',ctxPresentNote:'Spiega il tuo lavoro e le tue scelte.',ctxPresent:'Presentare',designContextLabel:'Scegli una situazione di design',designDisclaimer:'Prototipo LingoTotal indipendente per studenti di graphic design a Palma. Non è un servizio ufficiale ESDIB.'},
+  pt:{homeLabel:'Início',designKicker:'LINGOGO / HOME SERVICES · REAL LIFE',chipIdentity:'IDENTIDADE',chipTypography:'TIPOGRAFIA',chipEditorial:'EDITORIAL',chipPackaging:'EMBALAGEM',chipUXUI:'UX/UI',chipPortfolio:'PORTFÓLIO',title:'LingoGo Health & Care',intro:'Pratique a linguagem de que precisa para apresentar, criticar e explicar trabalhos de design em situações universitárias e profissionais reais.',ownTopic:'O que precisa de dizer?',topicGuidance:'Descreva a situação de design ou a mensagem que quer comunicar.',topicPlaceholder:'Por exemplo: explicar por que escolhi este tipo de letra...',example4:'Feedback do cliente',example3:'Portfólio',example2:'Identidade visual',example1:'Tipografia',ctxProcessNote:'Descreva pesquisa, iteração e desenvolvimento.',ctxProcess:'Processo',ctxPortfolioNote:'Fale sobre projetos e resultados.',ctxPortfolio:'Portfólio',ctxClientNote:'Discuta ideias, alterações e limitações.',ctxClient:'Cliente',ctxDecisionNote:'Justifique uma decisão de design.',ctxDecision:'Explicar',ctxCritiqueNote:'Dê feedback útil e diplomático.',ctxCritique:'Criticar',ctxPresentNote:'Explique o seu trabalho e as suas escolhas.',ctxPresent:'Apresentar',designContextLabel:'Escolha uma situação de design',designDisclaimer:'Protótipo independente LingoTotal para estudantes de design gráfico em Palma. Não é um serviço oficial da ESDIB.'},
+  eu:{homeLabel:'Hasiera',designKicker:'LINGOGO / DISEINUA · PALMA',chipIdentity:'IDENTITATEA',chipTypography:'TIPOGRAFIA',chipEditorial:'EDITORIALA',chipPackaging:'PAKETEA',chipUXUI:'UX/UI',chipPortfolio:'PORTFOLIOA',title:'LingoGo Diseinua',intro:'Praktikatu diseinu-lanak unibertsitateko eta laneko benetako egoeretan aurkezteko, kritikatzeko eta azaltzeko behar duzun hizkuntza.',ownTopic:'Zer esan behar duzu?',topicGuidance:'Deskribatu komunikatu nahi duzun diseinu-egoera edo mezua.',topicPlaceholder:'Adibidez: azaldu zergatik aukeratu dudan tipografia hau...',example4:'Bezeroaren feedbacka',example3:'Portfolioa',example2:'Identitate bisuala',example1:'Tipografia',ctxProcessNote:'Deskribatu ikerketa, iterazioa eta garapena.',ctxProcess:'Prozesua',ctxPortfolioNote:'Hitz egin proiektuez eta emaitzez.',ctxPortfolio:'Portfolioa',ctxClientNote:'Eztabaidatu ideiak, aldaketak eta mugak.',ctxClient:'Bezeroa',ctxDecisionNote:'Justifikatu diseinu-erabaki bat.',ctxDecision:'Azaldu',ctxCritiqueNote:'Eman feedback erabilgarria eta errespetuzkoa.',ctxCritique:'Kritikatu',ctxPresentNote:'Azaldu zure lana eta aukerak.',ctxPresent:'Aurkeztu',designContextLabel:'Aukeratu diseinu-egoera bat',designDisclaimer:'LingoTotalen prototipo independentea, Palmako diseinu grafikoko ikasleentzat. Ez da ESDIBen zerbitzu ofiziala.'},
+  ja:{homeLabel:'ホーム',designKicker:'LINGOGO / デザイン · PALMA',chipIdentity:'アイデンティティ',chipTypography:'タイポグラフィ',chipEditorial:'エディトリアル',chipPackaging:'パッケージ',chipUXUI:'UX/UI',chipPortfolio:'ポートフォリオ',title:'LingoGo Health & Care',intro:'大学や仕事の実際の場面で、デザイン作品を発表・講評・説明するために必要な言語を練習します。',ownTopic:'何を伝える必要がありますか？',topicGuidance:'伝えたいデザイン上の状況やメッセージを説明してください。',topicPlaceholder:'例：なぜこの書体を選んだのか説明する…',example4:'クライアントのフィードバック',example3:'ポートフォリオ',example2:'ビジュアル・アイデンティティ',example1:'タイポグラフィ',ctxProcessNote:'リサーチ、反復、開発について説明します。',ctxProcess:'プロセス',ctxPortfolioNote:'プロジェクトと成果について話します。',ctxPortfolio:'ポートフォリオ',ctxClientNote:'アイデア、変更、制約について話し合います。',ctxClient:'クライアント',ctxDecisionNote:'デザイン上の判断を説明します。',ctxDecision:'説明',ctxCritiqueNote:'役立つ丁寧なフィードバックをします。',ctxCritique:'講評',ctxPresentNote:'作品と選択について説明します。',ctxPresent:'発表',designContextLabel:'デザインの場面を選んでください',designDisclaimer:'Palmaのグラフィックデザイン学生向けの独立したLingoTotalプロトタイプです。ESDIBの公式サービスではありません。'},
+  ar:{homeLabel:'الرئيسية',designKicker:'LINGOGO / التصميم · PALMA',chipIdentity:'الهوية',chipTypography:'الطباعة',chipEditorial:'التصميم التحريري',chipPackaging:'التغليف',chipUXUI:'UX/UI',chipPortfolio:'ملف الأعمال',title:'LingoGo Health & Care',intro:'تدرّب على اللغة التي تحتاجها لعرض أعمال التصميم ونقدها وشرحها في مواقف جامعية ومهنية حقيقية.',ownTopic:'ماذا تحتاج أن تقول؟',topicGuidance:'صف موقف التصميم أو الرسالة التي تريد إيصالها.',topicPlaceholder:'مثلاً: شرح سبب اختياري لهذا الخط...',example4:'ملاحظات العميل',example3:'ملف الأعمال',example2:'الهوية البصرية',example1:'الطباعة',ctxProcessNote:'صف البحث والتكرار والتطوير.',ctxProcess:'العملية',ctxPortfolioNote:'تحدث عن المشاريع والنتائج.',ctxPortfolio:'ملف الأعمال',ctxClientNote:'ناقش الأفكار والتغييرات والقيود.',ctxClient:'العميل',ctxDecisionNote:'برّر قراراً تصميمياً.',ctxDecision:'اشرح',ctxCritiqueNote:'قدّم ملاحظات مفيدة ولبقة.',ctxCritique:'نقد',ctxPresentNote:'اشرح عملك واختياراتك.',ctxPresent:'عرض',designContextLabel:'اختر موقفاً في التصميم',designDisclaimer:'نموذج مستقل من LingoTotal لطلاب التصميم الجرافيكي في بالما. ليس خدمة رسمية من ESDIB.'}
+};
+Object.entries(DESIGN_I18N).forEach(([lang,extra])=>Object.assign(T[lang]||(T[lang]={}),extra));
+
+// Retail-specialised interface text. The selected interface language controls all instructions and labels.
+Object.assign(T.en, {"title": "LingoGo Retail", "intro": "Practise the language you need to apply for retail jobs, succeed in interviews and show how your academic qualifications transfer to customer-facing work.", "designKicker": "LINGOGO / HOME SERVICES · REAL LIFE", "chipIdentity": "APPOINTMENTS", "chipTypography": "EXPLAINING SYMPTOMS", "chipEditorial": "PHARMACY", "chipPackaging": "FOLLOW-UP", "chipUXUI": "DENTAL CARE", "chipPortfolio": "URGENT HELP", "designDisclaimer": "A practical language activity for young job applicants with academic qualifications who want to communicate their value in retail.", "choose": "Start by choosing your level", "levelPrompt": "Choose the option that feels right for you today.", "beginner": "Revising the basics", "beginnerNote": "Build clear, useful phrases for applications, interviews and simple customer situations.", "intermediate": "Building confidence", "intermediateNote": "Explain your strengths, experience and availability naturally and flexibly.", "advanced": "More advanced", "advancedNote": "Handle nuance, persuasion, difficult questions and professional tone with confidence.", "designContextLabel": "Choose a retail job situation", "ctxPresent": "Apply", "ctxPresentNote": "Present your strengths clearly.", "ctxCritique": "Interview", "ctxCritiqueNote": "Answer common interview questions.", "ctxDecision": "Customer", "ctxDecisionNote": "Handle customer-facing situations.", "ctxClient": "Teamwork", "ctxClientNote": "Work with colleagues and supervisors.", "ctxPortfolio": "Availability", "ctxPortfolioNote": "Discuss shifts and flexibility professionally.", "ctxProcess": "Qualifications", "ctxProcessNote": "Turn academic experience into retail strengths.", "ownTopic": "What do you need to say?", "topicGuidance": "Describe the retail job, interview question or workplace situation you want to practise.", "topicPlaceholder": "For example: explain why my degree is useful for a sales assistant job...", "inspiration": "If you are stuck, try one of these:", "friends": "Fashion shop", "example1": "Supermarket", "example2": "Electronics store", "food": "Sports shop", "generateTitle": "Prepare for the situation", "generate": "Create my retail challenge", "generating": "Creating useful job-ready language…", "waiting": "Your retail job situations will appear here.", "chooseIntention": "What do you want to communicate?"});
+Object.assign(T.es, {"title": "LingoGo Retail", "intro": "Practica el lenguaje que necesitas para solicitar empleos en comercio, superar entrevistas y demostrar cómo tus estudios se convierten en habilidades útiles de atención al cliente.", "designKicker": "LINGOGO / RETAIL · PREPÁRATE PARA TRABAJAR", "chipIdentity": "SOLICITUDES", "chipTypography": "ENTREVISTAS", "chipEditorial": "CLIENTES", "chipPackaging": "TRABAJO EN EQUIPO", "chipUXUI": "VENTAS", "chipPortfolio": "HABILIDADES TRANSFERIBLES", "designDisclaimer": "Actividad práctica de idiomas para jóvenes con formación académica que quieren comunicar su valor en el sector minorista.", "choose": "Empieza eligiendo tu nivel", "levelPrompt": "Elige la opción que mejor te vaya hoy.", "beginner": "Repasar lo básico", "beginnerNote": "Construye frases claras para solicitudes, entrevistas y situaciones sencillas con clientes.", "intermediate": "Ganar confianza", "intermediateNote": "Explica tus puntos fuertes, experiencia y disponibilidad de forma natural.", "advanced": "Más avanzado", "advancedNote": "Gestiona matices, persuasión, preguntas difíciles y tono profesional con seguridad.", "designContextLabel": "Elige una situación de empleo en comercio", "ctxPresent": "Solicitar", "ctxPresentNote": "Presenta tus puntos fuertes con claridad.", "ctxCritique": "Entrevista", "ctxCritiqueNote": "Responde preguntas habituales de entrevista.", "ctxDecision": "Cliente", "ctxDecisionNote": "Maneja situaciones de atención al cliente.", "ctxClient": "Equipo", "ctxClientNote": "Trabaja con compañeros y responsables.", "ctxPortfolio": "Disponibilidad", "ctxPortfolioNote": "Habla de turnos y flexibilidad profesionalmente.", "ctxProcess": "Estudios", "ctxProcessNote": "Convierte tu experiencia académica en fortalezas para retail.", "ownTopic": "¿Qué necesitas decir?", "topicGuidance": "Describe el puesto, la pregunta de entrevista o la situación laboral que quieres practicar.", "topicPlaceholder": "Por ejemplo: explicar por qué mi carrera es útil para un puesto de dependiente...", "inspiration": "Si no se te ocurre nada, prueba:", "friends": "Tienda de moda", "example1": "Supermercado", "example2": "Tienda de electrónica", "food": "Tienda de deportes", "generateTitle": "Prepárate para la situación", "generate": "Crear mi reto de retail", "generating": "Creando lenguaje útil para conseguir trabajo…", "waiting": "Tus situaciones de empleo aparecerán aquí.", "chooseIntention": "¿Qué quieres comunicar?"});
+Object.assign(T.ca, {"title": "LingoGo Retail", "intro": "Practica el llenguatge que necessites per sol·licitar feines de comerç, superar entrevistes i mostrar com els teus estudis es transformen en habilitats útils de cara al públic.", "designKicker": "LINGOGO / RETAIL · PREPARA’T PER TREBALLAR", "chipIdentity": "SOL·LICITUDS", "chipTypography": "ENTREVISTES", "chipEditorial": "CLIENTS", "chipPackaging": "TREBALL EN EQUIP", "chipUXUI": "VENDES", "chipPortfolio": "HABILITATS TRANSFERIBLES", "designDisclaimer": "Activitat pràctica d’idiomes per a joves amb formació acadèmica que volen comunicar el seu valor en el comerç minorista.", "choose": "Comença triant el teu nivell", "levelPrompt": "Tria l’opció que et vagi millor avui.", "beginner": "Repassar les bases", "beginnerNote": "Construeix frases clares per a sol·licituds, entrevistes i situacions senzilles amb clients.", "intermediate": "Guanyar confiança", "intermediateNote": "Explica els teus punts forts, experiència i disponibilitat amb naturalitat.", "advanced": "Més avançat", "advancedNote": "Gestiona matisos, persuasió, preguntes difícils i to professional amb confiança.", "designContextLabel": "Tria una situació de feina en comerç", "ctxPresent": "Sol·licitar", "ctxPresentNote": "Presenta els teus punts forts amb claredat.", "ctxCritique": "Entrevista", "ctxCritiqueNote": "Respon preguntes habituals d’entrevista.", "ctxDecision": "Client", "ctxDecisionNote": "Gestiona situacions d’atenció al client.", "ctxClient": "Equip", "ctxClientNote": "Treballa amb companys i responsables.", "ctxPortfolio": "Disponibilitat", "ctxPortfolioNote": "Parla de torns i flexibilitat professionalment.", "ctxProcess": "Estudis", "ctxProcessNote": "Converteix l’experiència acadèmica en fortaleses per al retail.", "ownTopic": "Què necessites dir?", "topicGuidance": "Descriu la feina, la pregunta d’entrevista o la situació laboral que vols practicar.", "topicPlaceholder": "Per exemple: explicar per què la meva carrera és útil per a una feina de dependent...", "inspiration": "Si no se t’acut res, prova:", "friends": "Botiga de moda", "example1": "Supermercat", "example2": "Botiga d’electrònica", "food": "Botiga d’esports", "generateTitle": "Prepara’t per a la situació", "generate": "Crea el meu repte de retail", "generating": "Creant llenguatge útil per aconseguir feina…", "waiting": "Les teves situacions de feina apareixeran aquí.", "chooseIntention": "Què vols comunicar?"});
+Object.assign(T.fr, {"title": "LingoGo Retail", "intro": "Pratiquez la langue nécessaire pour postuler dans le commerce, réussir un entretien et montrer comment vos études deviennent des compétences utiles face aux clients.", "designKicker": "LINGOGO / RETAIL · PRÊT À TRAVAILLER", "chipIdentity": "CANDIDATURES", "chipTypography": "ENTRETIENS", "chipEditorial": "CLIENTS", "chipPackaging": "TRAVAIL D’ÉQUIPE", "chipUXUI": "VENTE", "chipPortfolio": "COMPÉTENCES TRANSFÉRABLES", "designDisclaimer": "Une activité linguistique pratique pour de jeunes candidats diplômés qui veulent valoriser leur profil dans le commerce.", "choose": "Commencez par choisir votre niveau", "levelPrompt": "Choisissez l’option qui vous convient aujourd’hui.", "beginner": "Revoir les bases", "beginnerNote": "Construisez des phrases claires pour les candidatures, entretiens et situations simples avec les clients.", "intermediate": "Prendre confiance", "intermediateNote": "Expliquez naturellement vos points forts, votre expérience et vos disponibilités.", "advanced": "Plus avancé", "advancedNote": "Gérez la nuance, la persuasion, les questions difficiles et le ton professionnel.", "designContextLabel": "Choisissez une situation d’emploi dans le commerce", "ctxPresent": "Postuler", "ctxPresentNote": "Présentez clairement vos points forts.", "ctxCritique": "Entretien", "ctxCritiqueNote": "Répondez aux questions courantes d’entretien.", "ctxDecision": "Client", "ctxDecisionNote": "Gérez des situations face aux clients.", "ctxClient": "Équipe", "ctxClientNote": "Travaillez avec collègues et responsables.", "ctxPortfolio": "Disponibilités", "ctxPortfolioNote": "Parlez des horaires et de votre flexibilité avec professionnalisme.", "ctxProcess": "Études", "ctxProcessNote": "Transformez votre parcours académique en atouts pour le commerce.", "ownTopic": "Que devez-vous dire ?", "topicGuidance": "Décrivez le poste, la question d’entretien ou la situation de travail que vous voulez pratiquer.", "topicPlaceholder": "Par exemple : expliquer pourquoi mon diplôme est utile pour un poste de vendeur...", "inspiration": "Si vous manquez d’idées :", "friends": "Magasin de mode", "example1": "Supermarché", "example2": "Magasin d’électronique", "food": "Magasin de sport", "generateTitle": "Préparez-vous à la situation", "generate": "Créer mon défi retail", "generating": "Création de langue utile pour l’emploi…", "waiting": "Vos situations d’emploi apparaîtront ici.", "chooseIntention": "Que voulez-vous communiquer ?"});
+Object.assign(T.de, {"title": "LingoGo Retail", "intro": "Übe die Sprache für Bewerbungen im Einzelhandel, Vorstellungsgespräche und um zu zeigen, wie deine akademischen Qualifikationen im Kundenkontakt nützlich sind.", "designKicker": "LINGOGO / RETAIL · BEREIT FÜR DEN JOB", "chipIdentity": "BEWERBUNGEN", "chipTypography": "EXPLAINING SYMPTOMS", "chipEditorial": "KUNDEN", "chipPackaging": "TEAMARBEIT", "chipUXUI": "VERKAUF", "chipPortfolio": "ÜBERTRAGBARE KOMPETENZEN", "designDisclaimer": "Praktische Sprachübung für junge Bewerberinnen und Bewerber mit akademischer Ausbildung, die ihren Wert im Einzelhandel zeigen möchten.", "choose": "Wähle zuerst dein Niveau", "levelPrompt": "Wähle die Option, die heute zu dir passt.", "beginner": "Grundlagen auffrischen", "beginnerNote": "Baue klare Formulierungen für Bewerbungen, Interviews und einfache Kundensituationen auf.", "intermediate": "Sicherheit gewinnen", "intermediateNote": "Erkläre Stärken, Erfahrung und Verfügbarkeit natürlich und flexibel.", "advanced": "Anspruchsvoller", "advancedNote": "Bewältige Nuancen, Überzeugung, schwierige Fragen und professionellen Ton sicher.", "designContextLabel": "Wähle eine Situation im Einzelhandel", "ctxPresent": "Bewerben", "ctxPresentNote": "Stelle deine Stärken klar dar.", "ctxCritique": "Interview", "ctxCritiqueNote": "Beantworte typische Interviewfragen.", "ctxDecision": "Kunde", "ctxDecisionNote": "Bewältige Situationen mit Kundschaft.", "ctxClient": "Team", "ctxClientNote": "Arbeite mit Kolleginnen, Kollegen und Vorgesetzten.", "ctxPortfolio": "Verfügbarkeit", "ctxPortfolioNote": "Sprich professionell über Schichten und Flexibilität.", "ctxProcess": "Qualifikationen", "ctxProcessNote": "Übertrage akademische Erfahrungen auf Stärken im Einzelhandel.", "ownTopic": "Was möchtest du sagen?", "topicGuidance": "Beschreibe die Stelle, Interviewfrage oder Arbeitssituation, die du üben möchtest.", "topicPlaceholder": "Zum Beispiel: erklären, warum mein Studium für eine Verkaufsstelle nützlich ist...", "inspiration": "Falls dir nichts einfällt:", "friends": "Modegeschäft", "example1": "Supermarkt", "example2": "Elektronikgeschäft", "food": "Sportgeschäft", "generateTitle": "Bereite dich auf die Situation vor", "generate": "Meine Retail-Challenge erstellen", "generating": "Nützliche Sprache für den Beruf wird erstellt…", "waiting": "Deine Jobsituationen erscheinen hier.", "chooseIntention": "Was möchtest du kommunizieren?"});
+Object.assign(T.it, {"title": "LingoGo Retail", "intro": "Esercitati con la lingua necessaria per candidarti nel retail, affrontare i colloqui e mostrare come le tue qualifiche accademiche diventano competenze utili a contatto con il pubblico.", "designKicker": "LINGOGO / RETAIL · PRONTO AL LAVORO", "chipIdentity": "CANDIDATURE", "chipTypography": "COLLOQUI", "chipEditorial": "CLIENTI", "chipPackaging": "LAVORO DI SQUADRA", "chipUXUI": "VENDITE", "chipPortfolio": "COMPETENZE TRASFERIBILI", "designDisclaimer": "Attività linguistica pratica per giovani candidati con qualifiche accademiche che vogliono valorizzarsi nel retail.", "choose": "Inizia scegliendo il tuo livello", "levelPrompt": "Scegli l’opzione che oggi ti sembra più adatta.", "beginner": "Ripassare le basi", "beginnerNote": "Costruisci frasi chiare per candidature, colloqui e semplici situazioni con i clienti.", "intermediate": "Acquisire sicurezza", "intermediateNote": "Spiega con naturalezza punti di forza, esperienza e disponibilità.", "advanced": "Più avanzato", "advancedNote": "Gestisci sfumature, persuasione, domande difficili e tono professionale.", "designContextLabel": "Scegli una situazione di lavoro nel retail", "ctxPresent": "Candidatura", "ctxPresentNote": "Presenta chiaramente i tuoi punti di forza.", "ctxCritique": "Colloquio", "ctxCritiqueNote": "Rispondi alle domande comuni di colloquio.", "ctxDecision": "Cliente", "ctxDecisionNote": "Gestisci situazioni a contatto con i clienti.", "ctxClient": "Squadra", "ctxClientNote": "Lavora con colleghi e responsabili.", "ctxPortfolio": "Disponibilità", "ctxPortfolioNote": "Parla di turni e flessibilità in modo professionale.", "ctxProcess": "Qualifiche", "ctxProcessNote": "Trasforma l’esperienza accademica in punti di forza per il retail.", "ownTopic": "Che cosa devi dire?", "topicGuidance": "Descrivi il lavoro, la domanda di colloquio o la situazione che vuoi esercitare.", "topicPlaceholder": "Per esempio: spiegare perché la mia laurea è utile per un lavoro da addetto alle vendite...", "inspiration": "Se non hai idee:", "friends": "Negozio di moda", "example1": "Supermercato", "example2": "Negozio di elettronica", "food": "Negozio di sport", "generateTitle": "Preparati alla situazione", "generate": "Crea la mia sfida retail", "generating": "Creazione di lingua utile per il lavoro…", "waiting": "Le tue situazioni di lavoro appariranno qui.", "chooseIntention": "Che cosa vuoi comunicare?"});
+Object.assign(T.pt, {"title": "LingoGo Retail", "intro": "Pratique a linguagem de que precisa para se candidatar a empregos no comércio, ter sucesso em entrevistas e mostrar como as suas qualificações académicas se traduzem em competências úteis no atendimento.", "designKicker": "LINGOGO / RETAIL · PRONTO PARA TRABALHAR", "chipIdentity": "CANDIDATURAS", "chipTypography": "ENTREVISTAS", "chipEditorial": "CLIENTES", "chipPackaging": "TRABALHO EM EQUIPA", "chipUXUI": "VENDAS", "chipPortfolio": "COMPETÊNCIAS TRANSFERÍVEIS", "designDisclaimer": "Atividade linguística prática para jovens candidatos com qualificações académicas que querem mostrar o seu valor no comércio.", "choose": "Comece por escolher o seu nível", "levelPrompt": "Escolha a opção que lhe parece certa hoje.", "beginner": "Rever as bases", "beginnerNote": "Construa frases claras para candidaturas, entrevistas e situações simples com clientes.", "intermediate": "Ganhar confiança", "intermediateNote": "Explique os seus pontos fortes, experiência e disponibilidade com naturalidade.", "advanced": "Mais avançado", "advancedNote": "Lide com nuance, persuasão, perguntas difíceis e tom profissional com confiança.", "designContextLabel": "Escolha uma situação de emprego no comércio", "ctxPresent": "Candidatar-se", "ctxPresentNote": "Apresente claramente os seus pontos fortes.", "ctxCritique": "Entrevista", "ctxCritiqueNote": "Responda a perguntas comuns de entrevista.", "ctxDecision": "Cliente", "ctxDecisionNote": "Lide com situações de atendimento ao cliente.", "ctxClient": "Equipa", "ctxClientNote": "Trabalhe com colegas e responsáveis.", "ctxPortfolio": "Disponibilidade", "ctxPortfolioNote": "Fale de turnos e flexibilidade profissionalmente.", "ctxProcess": "Qualificações", "ctxProcessNote": "Transforme a experiência académica em pontos fortes para o comércio.", "ownTopic": "O que precisa de dizer?", "topicGuidance": "Descreva o emprego, a pergunta de entrevista ou a situação de trabalho que quer praticar.", "topicPlaceholder": "Por exemplo: explicar por que a minha licenciatura é útil para um emprego de vendas...", "inspiration": "Se não tiver uma ideia:", "friends": "Loja de moda", "example1": "Supermercado", "example2": "Loja de eletrónica", "food": "Loja de desporto", "generateTitle": "Prepare-se para a situação", "generate": "Criar o meu desafio retail", "generating": "A criar linguagem útil para o emprego…", "waiting": "As suas situações de emprego aparecerão aqui.", "chooseIntention": "O que quer comunicar?"});
+Object.assign(T.eu, {"title": "LingoGo Retail", "intro": "Praktikatu txikizkako lanpostuetara aurkezteko, elkarrizketak gainditzeko eta zure ikasketa akademikoak bezeroekin lan egiteko gaitasun erabilgarri bihurtzen direla azaltzeko behar duzun hizkuntza.", "designKicker": "LINGOGO / RETAIL · LANERAKO PREST", "chipIdentity": "ESKAERAK", "chipTypography": "ELKARRIZKETAK", "chipEditorial": "BEZEROAK", "chipPackaging": "TALDE-LANA", "chipUXUI": "SALMENTAK", "chipPortfolio": "GAITASUN TRANSFERIGARRIAK", "designDisclaimer": "Prestakuntza akademikoa duten gazteentzako hizkuntza-jarduera praktikoa, txikizkako merkataritzan duten balioa azaltzeko.", "choose": "Hasi zure maila aukeratuz", "levelPrompt": "Aukeratu gaur ondoen datorkizun aukera.", "beginner": "Oinarriak berrikusi", "beginnerNote": "Eraiki esaldi argiak eskaeretarako, elkarrizketetarako eta bezeroekin egoera errazetarako.", "intermediate": "Konfiantza hartu", "intermediateNote": "Azaldu zure indarguneak, esperientzia eta erabilgarritasuna modu naturalean.", "advanced": "Aurrerago", "advancedNote": "Kudeatu ñabardura, konbentzimendua, galdera zailak eta tonu profesionala.", "designContextLabel": "Aukeratu txikizkako lan-egoera bat", "ctxPresent": "Aurkeztu", "ctxPresentNote": "Aurkeztu zure indarguneak argi.", "ctxCritique": "Elkarrizketa", "ctxCritiqueNote": "Erantzun ohiko elkarrizketa-galderei.", "ctxDecision": "Bezeroa", "ctxDecisionNote": "Kudeatu bezeroekin egoerak.", "ctxClient": "Taldea", "ctxClientNote": "Lan egin lankide eta arduradunekin.", "ctxPortfolio": "Erabilgarritasuna", "ctxPortfolioNote": "Hitz egin txandez eta malgutasunaz modu profesionalean.", "ctxProcess": "Ikasketak", "ctxProcessNote": "Bihurtu esperientzia akademikoa retailerako indargune.", "ownTopic": "Zer esan behar duzu?", "topicGuidance": "Deskribatu praktikatu nahi duzun lanpostua, elkarrizketa-galdera edo lan-egoera.", "topicPlaceholder": "Adibidez: azaldu zergatik den nire titulua erabilgarria saltzaile lan baterako...", "inspiration": "Ideiarik ez baduzu:", "friends": "Moda-denda", "example1": "Supermerkatua", "example2": "Elektronika-denda", "food": "Kirol-denda", "generateTitle": "Prestatu egoerarako", "generate": "Sortu nire retail erronka", "generating": "Lanerako hizkuntza erabilgarria sortzen…", "waiting": "Zure lan-egoerak hemen agertuko dira.", "chooseIntention": "Zer komunikatu nahi duzu?"});
+Object.assign(T.ja, {"title": "LingoGo Retail", "intro": "小売業の仕事に応募し、面接で力を発揮し、学業で得た資格や経験が接客の仕事にどう生かせるかを伝えるための表現を練習します。", "designKicker": "LINGOGO / RETAIL · 就職準備", "chipIdentity": "応募", "chipTypography": "面接", "chipEditorial": "接客", "chipPackaging": "チームワーク", "chipUXUI": "販売", "chipPortfolio": "応用できるスキル", "designDisclaimer": "学業上の資格を持つ若い求職者が、小売業で自分の強みを伝えるための実践的な言語活動です。", "choose": "まずレベルを選びましょう", "levelPrompt": "今日の自分に合うものを選んでください。", "beginner": "基礎を復習する", "beginnerNote": "応募、面接、簡単な接客場面で使える明確な表現を身につけます。", "intermediate": "自信をつける", "intermediateNote": "自分の強み、経験、勤務可能時間を自然に説明します。", "advanced": "さらに上へ", "advancedNote": "ニュアンス、説得、難しい質問、プロらしい口調に対応します。", "designContextLabel": "小売業の就職場面を選びましょう", "ctxPresent": "応募", "ctxPresentNote": "自分の強みを明確に伝えます。", "ctxCritique": "面接", "ctxCritiqueNote": "よくある面接質問に答えます。", "ctxDecision": "接客", "ctxDecisionNote": "お客様対応の場面を練習します。", "ctxClient": "チーム", "ctxClientNote": "同僚や上司とのやり取りを練習します。", "ctxPortfolio": "勤務可能時間", "ctxPortfolioNote": "シフトや柔軟性をプロらしく伝えます。", "ctxProcess": "学歴・資格", "ctxProcessNote": "学業経験を小売業で役立つ強みに変えて伝えます。", "ownTopic": "何を言えるようになりたいですか？", "topicGuidance": "練習したい仕事、面接質問、職場の場面を書いてください。", "topicPlaceholder": "例：自分の学位が販売スタッフの仕事にどう役立つか説明する...", "inspiration": "迷ったら：", "friends": "ファッション店", "example1": "スーパーマーケット", "example2": "家電店", "food": "スポーツ店", "generateTitle": "場面に備えましょう", "generate": "小売業チャレンジを作成", "generating": "就職に役立つ表現を作成中…", "waiting": "就職場面はここに表示されます。", "chooseIntention": "何を伝えたいですか？"});
+Object.assign(T.ar, {"title": "LingoGo Retail", "intro": "تدرّب على اللغة التي تحتاجها للتقدّم لوظائف البيع بالتجزئة والنجاح في المقابلات وشرح كيف يمكن لمؤهلاتك الأكاديمية أن تتحول إلى مهارات مفيدة في التعامل مع العملاء.", "designKicker": "LINGOGO / RETAIL · جاهز للعمل", "chipIdentity": "طلبات التوظيف", "chipTypography": "المقابلات", "chipEditorial": "العملاء", "chipPackaging": "العمل الجماعي", "chipUXUI": "المبيعات", "chipPortfolio": "المهارات القابلة للنقل", "designDisclaimer": "نشاط لغوي عملي للشباب ذوي المؤهلات الأكاديمية الذين يريدون إبراز قيمتهم في قطاع البيع بالتجزئة.", "choose": "ابدأ باختيار مستواك", "levelPrompt": "اختر الخيار الأنسب لك اليوم.", "beginner": "مراجعة الأساسيات", "beginnerNote": "كوّن عبارات واضحة لطلبات التوظيف والمقابلات والمواقف البسيطة مع العملاء.", "intermediate": "بناء الثقة", "intermediateNote": "اشرح نقاط قوتك وخبرتك وتوافرك بطريقة طبيعية.", "advanced": "مستوى أكثر تقدماً", "advancedNote": "تعامل بثقة مع الفروق الدقيقة والإقناع والأسئلة الصعبة والنبرة المهنية.", "designContextLabel": "اختر موقفاً وظيفياً في البيع بالتجزئة", "ctxPresent": "التقدّم", "ctxPresentNote": "قدّم نقاط قوتك بوضوح.", "ctxCritique": "المقابلة", "ctxCritiqueNote": "أجب عن أسئلة المقابلات الشائعة.", "ctxDecision": "العميل", "ctxDecisionNote": "تعامل مع مواقف خدمة العملاء.", "ctxClient": "الفريق", "ctxClientNote": "تواصل مع الزملاء والمشرفين.", "ctxPortfolio": "التوافر", "ctxPortfolioNote": "تحدث عن المناوبات والمرونة بطريقة مهنية.", "ctxProcess": "المؤهلات", "ctxProcessNote": "حوّل خبرتك الأكاديمية إلى نقاط قوة للعمل في المتاجر.", "ownTopic": "ماذا تحتاج أن تقول؟", "topicGuidance": "صِف الوظيفة أو سؤال المقابلة أو موقف العمل الذي تريد التدرب عليه.", "topicPlaceholder": "مثال: اشرح لماذا شهادتي مفيدة لوظيفة مساعد مبيعات...", "inspiration": "إذا لم تكن لديك فكرة، جرّب:", "friends": "متجر أزياء", "example1": "سوبرماركت", "example2": "متجر إلكترونيات", "food": "متجر رياضي", "generateTitle": "استعد للموقف", "generate": "أنشئ تحدي البيع بالتجزئة", "generating": "جارٍ إنشاء لغة مفيدة للحصول على وظيفة…", "waiting": "ستظهر مواقف العمل هنا.", "chooseIntention": "ماذا تريد أن توصل؟"});
+
+const uiNames={en:'English',ca:'Català',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',eu:'Euskara',ja:'日本語',ar:'العربية'};
+const targetNames={English:'English',Catalan:'Català',Spanish:'Español',French:'Français',German:'Deutsch',Italian:'Italiano',Portuguese:'Português',Basque:'Euskara',Japanese:'日本語',Arabic:'العربية'};
+const voiceLocales={English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'};
+
+Object.assign(T.en,{title:'LingoGo Home Services & Repairs',intro:'Build the language you need when dealing with tradespeople, repairs and services around the home.',ownTopic:'What job, repair or service do you need to deal with?',topicGuidance:'Describe exactly what you need to communicate. You can write this in any language.',topicPlaceholder:'For example: I need to explain a leaking pipe to a plumber and ask when it can be repaired.',generateTitle:'Create language for your situation',generate:'Create my Home Services challenge',generating:'Creating useful language for your home-service situation…',waiting:'Your three closely related situations will appear here.',translate:'Translate',translation:'Translation',enterTopic:'Describe the job, repair or home-service situation you need help with.',designDisclaimer:'Practical language for dealing with tradespeople and home services: plumbers, electricians, painters, decorators, builders, gardeners, repair people and more.'});
+Object.assign(T.es,{title:'LingoGo Servicios y reparaciones del hogar',intro:'Desarrolla el idioma que necesitas para tratar con profesionales, reparaciones y servicios del hogar.',ownTopic:'¿Qué trabajo, reparación o servicio necesitas gestionar?',topicGuidance:'Describe exactamente lo que necesitas comunicar. Puedes escribirlo en cualquier idioma.',topicPlaceholder:'Por ejemplo: necesito explicar una fuga a un fontanero y preguntar cuándo puede repararla.',generateTitle:'Crea lenguaje para tu situación',generate:'Crear mi reto de Servicios del hogar',generating:'Creando lenguaje útil para tu situación…',waiting:'Aquí aparecerán tres situaciones estrechamente relacionadas.',translate:'Traducir',translation:'Traducción',enterTopic:'Describe el trabajo, reparación o servicio del hogar para el que necesitas ayuda.',designDisclaimer:'Lenguaje práctico para tratar con fontaneros, electricistas, pintores, decoradores, albañiles, jardineros, técnicos y otros profesionales.'});
+Object.assign(T.ca,{title:'LingoGo Serveis i reparacions de la llar',intro:'Construeix la llengua que necessites per tractar amb professionals, reparacions i serveis de la llar.',ownTopic:'Quina feina, reparació o servei necessites gestionar?',topicGuidance:'Descriu exactament què necessites comunicar. Ho pots escriure en qualsevol llengua.',topicPlaceholder:'Per exemple: he d’explicar una fuita a un lampista i demanar quan la pot reparar.',generateTitle:'Crea llengua per a la teva situació',generate:'Crea el meu repte de Serveis de la llar',generating:'Creant llengua útil per a la teva situació…',waiting:'Aquí apareixeran tres situacions estretament relacionades.',translate:'Tradueix',translation:'Traducció',enterTopic:'Descriu la feina, reparació o servei de la llar per al qual necessites ajuda.',designDisclaimer:'Llengua pràctica per tractar amb lampistes, electricistes, pintors, decoradors, constructors, jardiners, tècnics i altres professionals.'});
+Object.assign(T.fr,{title:'LingoGo Services et réparations à domicile',intro:'Développez la langue dont vous avez besoin pour gérer artisans, réparations et services à domicile.',ownTopic:'Quel travail, quelle réparation ou quel service devez-vous gérer ?',topicGuidance:'Décrivez exactement ce que vous devez communiquer. Vous pouvez écrire dans n’importe quelle langue.',topicPlaceholder:'Par exemple : je dois expliquer une fuite à un plombier et demander quand elle peut être réparée.',generateTitle:'Créez le langage adapté à votre situation',generate:'Créer mon défi Services à domicile',generating:'Création d’un langage utile pour votre situation…',waiting:'Trois situations étroitement liées apparaîtront ici.',translate:'Traduire',translation:'Traduction',enterTopic:'Décrivez le travail, la réparation ou le service à domicile pour lequel vous avez besoin d’aide.',designDisclaimer:'Langue pratique pour communiquer avec plombiers, électriciens, peintres, décorateurs, maçons, jardiniers, réparateurs et autres professionnels.'});
+Object.assign(T.de,{title:'LingoGo Handwerker & Reparaturen',intro:'Baue die Sprache auf, die du für Handwerker, Reparaturen und Dienstleistungen rund ums Zuhause brauchst.',ownTopic:'Welche Arbeit, Reparatur oder Dienstleistung musst du regeln?',topicGuidance:'Beschreibe genau, was du mitteilen musst. Du kannst in jeder Sprache schreiben.',topicPlaceholder:'Zum Beispiel: Ich muss einem Klempner ein undichtes Rohr erklären und fragen, wann es repariert werden kann.',generateTitle:'Erstelle Sprache für deine Situation',generate:'Meine Handwerker-Challenge erstellen',generating:'Nützliche Sprache für deine Situation wird erstellt…',waiting:'Hier erscheinen drei eng zusammenhängende Situationen.',translate:'Übersetzen',translation:'Übersetzung',enterTopic:'Beschreibe die Arbeit, Reparatur oder Dienstleistung, bei der du sprachliche Hilfe brauchst.',designDisclaimer:'Praktische Sprache für den Umgang mit Klempnern, Elektrikern, Malern, Dekorateuren, Bauleuten, Gärtnern, Reparaturdiensten und anderen Fachleuten.'});
+Object.assign(T.it,{title:'LingoGo Servizi e riparazioni di casa',intro:'Costruisci la lingua che ti serve per gestire artigiani, riparazioni e servizi domestici.',ownTopic:'Quale lavoro, riparazione o servizio devi gestire?',topicGuidance:'Descrivi esattamente cosa devi comunicare. Puoi scrivere in qualsiasi lingua.',topicPlaceholder:'Per esempio: devo spiegare una perdita a un idraulico e chiedere quando può ripararla.',generateTitle:'Crea la lingua per la tua situazione',generate:'Crea la mia sfida Servizi di casa',generating:'Creazione di lingua utile per la tua situazione…',waiting:'Qui compariranno tre situazioni strettamente collegate.',translate:'Traduci',translation:'Traduzione',enterTopic:'Descrivi il lavoro, la riparazione o il servizio domestico per cui ti serve aiuto.',designDisclaimer:'Lingua pratica per trattare con idraulici, elettricisti, imbianchini, decoratori, muratori, giardinieri, tecnici e altri professionisti.'});
+Object.assign(T.pt,{title:'LingoGo Serviços e reparações em casa',intro:'Construa a linguagem de que precisa para lidar com profissionais, reparações e serviços domésticos.',ownTopic:'Que trabalho, reparação ou serviço precisa de tratar?',topicGuidance:'Descreva exatamente o que precisa de comunicar. Pode escrever em qualquer língua.',topicPlaceholder:'Por exemplo: preciso de explicar uma fuga a um canalizador e perguntar quando pode repará-la.',generateTitle:'Crie linguagem para a sua situação',generate:'Criar o meu desafio Serviços em casa',generating:'A criar linguagem útil para a sua situação…',waiting:'Aqui aparecerão três situações estreitamente relacionadas.',translate:'Traduzir',translation:'Tradução',enterTopic:'Descreva o trabalho, reparação ou serviço doméstico em que precisa de ajuda.',designDisclaimer:'Linguagem prática para lidar com canalizadores, eletricistas, pintores, decoradores, construtores, jardineiros, técnicos e outros profissionais.'});
+Object.assign(T.eu,{title:'LingoGo Etxeko zerbitzuak eta konponketak',intro:'Eraiki etxeko lan, konponketa eta zerbitzuetako profesionalekin aritzeko behar duzun hizkuntza.',ownTopic:'Zer lan, konponketa edo zerbitzu kudeatu behar duzu?',topicGuidance:'Azaldu zehazki zer komunikatu behar duzun. Edozein hizkuntzatan idatz dezakezu.',topicPlaceholder:'Adibidez: iturgin bati ur-ihesa azaldu eta noiz konpon dezakeen galdetu behar diot.',generateTitle:'Sortu zure egoerarako hizkuntza',generate:'Sortu nire Etxeko zerbitzuen erronka',generating:'Zure egoerarako hizkuntza erabilgarria sortzen…',waiting:'Hemen elkarren artean lotura estua duten hiru egoera agertuko dira.',translate:'Itzuli',translation:'Itzulpena',enterTopic:'Azaldu laguntza behar duzun etxeko lana, konponketa edo zerbitzua.',designDisclaimer:'Iturgin, elektrikari, margolari, dekoratzaile, eraikitzaile, lorezain, konpontzaile eta bestelako profesionalekin aritzeko hizkuntza praktikoa.'});
+Object.assign(T.ja,{title:'LingoGo 住宅サービスと修理',intro:'職人や修理業者、家庭向けサービスとやり取りするための実用的な表現を身につけましょう。',ownTopic:'どのような作業、修理、サービスについて話す必要がありますか？',topicGuidance:'伝えたいことを具体的に書いてください。どの言語で書いてもかまいません。',topicPlaceholder:'例：水漏れについて配管業者に説明し、いつ修理できるか聞きたい。',generateTitle:'あなたの状況に合う表現を作る',generate:'住宅サービスのチャレンジを作成',generating:'役立つ表現を作成しています…',waiting:'関連する3つの場面がここに表示されます。',translate:'翻訳',translation:'翻訳',enterTopic:'助けが必要な作業、修理、住宅サービスの状況を書いてください。',designDisclaimer:'配管業者、電気工事業者、塗装業者、内装業者、建設業者、庭師、修理業者などと話すための実用的な言語練習です。'});
+Object.assign(T.ar,{title:'LingoGo خدمات المنزل والإصلاحات',intro:'تدرّب على اللغة التي تحتاجها للتعامل مع الحرفيين والإصلاحات والخدمات المنزلية.',ownTopic:'ما العمل أو الإصلاح أو الخدمة التي تحتاج إلى التعامل معها؟',topicGuidance:'صِف بالضبط ما تحتاج إلى قوله. يمكنك الكتابة بأي لغة.',topicPlaceholder:'مثال: أحتاج إلى شرح تسرب ماء لسباك وسؤاله متى يمكن إصلاحه.',generateTitle:'أنشئ لغة تناسب موقفك',generate:'أنشئ تحدي خدمات المنزل',generating:'جارٍ إنشاء لغة مفيدة لموقفك…',waiting:'ستظهر هنا ثلاثة مواقف مترابطة بشكل وثيق.',translate:'ترجمة',translation:'الترجمة',enterTopic:'صِف العمل أو الإصلاح أو الخدمة المنزلية التي تحتاج إلى مساعدة بشأنها.',designDisclaimer:'تدريب لغوي عملي للتعامل مع السباكين والكهربائيين والدهانين والديكور والبنائين والبستانيين وفنيي الإصلاح وغيرهم.'});
+Object.assign(T.en,{designKicker:'LINGOGO / HOME SERVICES · REAL LIFE'});
+Object.assign(T.es,{designKicker:'LINGOGO / SERVICIOS DEL HOGAR · VIDA REAL'});
+Object.assign(T.ca,{designKicker:'LINGOGO / SERVEIS DE LA LLAR · VIDA REAL'});
+Object.assign(T.fr,{designKicker:'LINGOGO / SERVICES À DOMICILE · VIE RÉELLE'});
+Object.assign(T.de,{designKicker:'LINGOGO / HANDWERKER & REPARATUREN · ALLTAG'});
+Object.assign(T.it,{designKicker:'LINGOGO / SERVIZI DI CASA · VITA REALE'});
+Object.assign(T.pt,{designKicker:'LINGOGO / SERVIÇOS EM CASA · VIDA REAL'});
+Object.assign(T.eu,{designKicker:'LINGOGO / ETXEKO ZERBITZUAK · BENETAKO BIZITZA'});
+Object.assign(T.ja,{designKicker:'LINGOGO / 住宅サービス · 実生活'});
+Object.assign(T.ar,{designKicker:'LINGOGO / خدمات المنزل · الحياة اليومية'});
+
+
+const params=new URLSearchParams(location.search);
+let uiLanguage=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
+let targetLanguage=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
+if(!uiNames[uiLanguage])uiLanguage='en';if(!targetNames[targetLanguage])targetLanguage='English';
+localStorage.setItem('lingototal_ui_language',uiLanguage);localStorage.setItem('lingototal_target_language',targetLanguage);
+const $=id=>document.getElementById(id),tr=k=>(T[uiLanguage]||T.en)[k]||T.en[k]||k;
+let selectedLevel='',selectedDesignContext='',situations=[],current=0;
+function applyLanguage(){document.documentElement.lang=uiLanguage;document.documentElement.dir=uiLanguage==='ar'?'rtl':'ltr';document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=tr(e.dataset.i18n));document.querySelectorAll('[data-i18n-placeholder]').forEach(e=>e.placeholder=tr(e.dataset.i18nPlaceholder));document.querySelectorAll('[data-i18n-aria-label]').forEach(e=>e.setAttribute('aria-label',tr(e.dataset.i18nAriaLabel)));document.querySelectorAll('[data-i18n-title]').forEach(e=>e.setAttribute('title',tr(e.dataset.i18nTitle)));document.querySelectorAll('.example').forEach(b=>b.dataset.theme=tr(b.dataset.themeKey));$('languagePair').textContent=uiNames[uiLanguage]+' → '+targetNames[targetLanguage];document.title='LingoTotal · '+tr('title')}
+function notice(m,t='info'){const n=$('notice');n.textContent=m;n.className='notice show '+t;clearTimeout(notice.timer);notice.timer=setTimeout(()=>n.classList.remove('show'),3000)}
+function speak(text){LingoTTS.speak(text,voiceLocales[targetLanguage]||'en-GB',.9).catch(()=>{})}
+document.querySelectorAll('.level').forEach(b=>b.onclick=()=>{document.querySelectorAll('.level').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedLevel=b.dataset.level});
+
+document.querySelectorAll('.design-context').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.design-context').forEach(x=>x.classList.remove('selected'));
+  b.classList.add('selected');
+  selectedDesignContext=b.dataset.context;
+});
+
+document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{$('themeInput').value=b.dataset.theme});
+async function callGeminiAPI(prompt){const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.7})});let d;try{d=await r.json()}catch{throw new Error('Invalid server response')}if(!r.ok)throw new Error(d?.error||'Server error');const result=d?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';if(!result)throw new Error('Empty AI response');return result}
+function parseJSON(text){const clean=String(text||'').replace(/```json/gi,'').replace(/```/g,'').trim();const start=clean.indexOf('{'),end=clean.lastIndexOf('}');if(start<0||end<0)throw new Error('AI format error');let d;try{d=JSON.parse(clean.slice(start,end+1))}catch{throw new Error('AI format error')}const raw=Array.isArray(d?.situations)?d.situations:[];const usable=raw.slice(0,3).map(s=>{const situation=String(s?.situation||'').trim();const intentions=(Array.isArray(s?.intentions)?s.intentions:[]).slice(0,3).map(i=>{const label=String(i?.label||'').trim();const responses=(Array.isArray(i?.responses)?i.responses:[]).slice(0,2).map(r=>({text:String(r?.text||'').trim(),note:String(r?.note||'').trim()})).filter(r=>r.text);return {label,responses}}).filter(i=>i.label&&i.responses.length);return {situation,intentions}}).filter(s=>s.situation&&s.intentions.length);if(!usable.length)throw new Error('AI format error');return usable}
+function renderSituation(){const s=situations[current];$('activity').style.display='block';$('waiting').style.display='none';$('progress').textContent=(current+1)+' / '+situations.length;$('situation').textContent=s.situation;$('intentions').innerHTML='';$('responses').style.display='none';$('responses').innerHTML='';$('nextWrap').style.display='none';s.intentions.forEach(intent=>{const b=document.createElement('button');b.className='intent';b.textContent=intent.label;b.onclick=()=>showResponses(intent,b);$('intentions').appendChild(b)})}
+function showResponses(intent,b){document.querySelectorAll('.intent').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');const box=$('responses');box.innerHTML='';box.style.display='block';intent.responses.forEach(r=>{const card=document.createElement('div');card.className='response-card';card.innerHTML='<div class="response-text">'+r.text+'</div><div class="response-note">'+r.note+'</div>';const actions=document.createElement('div');actions.className='response-actions';const listen=document.createElement('button');listen.textContent=tr('listen');listen.onclick=()=>speak(r.text);const save=document.createElement('button');save.textContent=tr('save');save.onclick=()=>saveSentence(r.text);const translate=document.createElement('button');translate.textContent=tr('translate');translate.onclick=async()=>{translate.disabled=true;try{const prompt='Translate this '+targetLanguage+' sentence into '+uiNames[uiLanguage]+'. Return only the translation, no explanation: '+JSON.stringify(r.text);const txt=(await callGeminiAPI(prompt)).trim();let out=card.querySelector('.response-translation');if(!out){out=document.createElement('div');out.className='response-note response-translation';card.insertBefore(out,actions)}out.textContent=tr('translation')+': '+txt}catch(e){notice(tr('serverError'),'error')}finally{translate.disabled=false}};actions.append(listen,translate,save);card.append(actions);box.append(card)});$('nextWrap').style.display='block'}
+$('nextBtn').onclick=()=>{current=(current+1)%situations.length;renderSituation()};
+const COLLECTION_KEY='lingototal_saved_sentences_v2';
+function getCollection(){try{return JSON.parse(localStorage.getItem(COLLECTION_KEY)||'[]')}catch{return []}}
+function setCollection(d){localStorage.setItem(COLLECTION_KEY,JSON.stringify(d));$('collectionCount').textContent=d.length}
+function saveSentence(sentence){const d=getCollection();if(d.some(x=>x.sentence===sentence&&x.targetLanguage===targetLanguage))return notice(tr('alreadySaved'),'info');d.unshift({sentence,targetLanguage,targetName:targetNames[targetLanguage],theme:$('themeInput').value.trim()});setCollection(d);notice(tr('savedMessage'),'success')}
+function renderCollection(){const list=$('collectionList'),d=getCollection();list.innerHTML='';if(!d.length){list.textContent=tr('emptyCollection');return}d.forEach((x,i)=>{const row=document.createElement('div');row.className='collection-item';row.innerHTML='<div class="collection-sentence">'+x.sentence+'</div><div class="collection-meta">'+(x.targetName||'')+(x.theme?' · '+tr('themeLabel')+': '+x.theme:'')+'</div>';const a=document.createElement('div');a.className='response-actions';const l=document.createElement('button');l.textContent=tr('listen');l.onclick=()=>speak(x.sentence);const r=document.createElement('button');r.textContent=tr('remove');r.onclick=()=>{d.splice(i,1);setCollection(d);renderCollection()};a.append(l,r);row.append(a);list.append(row)})}
+$('openCollectionBtn').onclick=()=>{renderCollection();$('collectionPanel').style.display='block'};$('closeCollectionBtn').onclick=()=>{$('collectionPanel').style.display='none'};
+$('downloadCollectionBtn').onclick=()=>{const d=getCollection();if(!d.length)return notice(tr('noSaved'),'info');const blob=new Blob(['\uFEFF'+d.map((x,i)=>(i+1)+'. '+x.sentence).join('\n')],{type:'text/plain;charset=utf-8'});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='My-LingoTotal-Collection.txt';a.click();setTimeout(()=>URL.revokeObjectURL(u),500)};
+$('generateBtn').onclick=async()=>{const theme=$('themeInput').value.trim();if(!selectedLevel)return notice(tr('selectLevel'),'error');if(!theme)return notice(tr('enterTopic'),'error');const level={beginner:'A1-A2 simple high-frequency spoken language',intermediate:'B1-B2 natural everyday and workplace language with flexibility and common conversational chunks'}[selectedLevel];const prompt=`Create a LingoGo Home Services & Repairs language-learning activity for a learner of ${targetLanguage}.
+
+LEARNER'S EXACT REQUEST — THIS HAS ABSOLUTE PRIORITY:
+"${theme}"
+
+Level: ${level}.
+
+The learner may have written the request in ANY language. Understand the request as written, but produce the activity according to the language rules below.
+
+CRITICAL RELEVANCE RULES:
+- Create exactly THREE closely related real-life situations.
+- All three situations must explore different useful aspects of the learner's exact job, repair or home-service need.
+- Do not drift into generic DIY vocabulary, unrelated trades, or a fixed home-maintenance syllabus.
+- The learner's submission remains authoritative at situation, intention and response level.
+- Use realistic contexts where relevant: making first contact, explaining the problem or job, arranging a visit, asking about availability, describing access, discussing materials or options, clarifying what is included, asking for an estimate or price, agreeing dates, dealing with delays, checking progress, raising a problem politely, asking for changes, discussing payment, guarantees or follow-up.
+- Suitable professionals can include plumbers, electricians, painters, decorators, builders, carpenters, gardeners, appliance repairers, handymen, installers, technicians and similar services, but ONLY introduce a trade if it fits the learner's exact request.
+- Do not invent defects, prices, legal obligations, guarantees, safety certifications or technical facts that the learner has not supplied.
+- If the learner describes a potentially dangerous electrical, gas, structural or other hazard, focus on language for explaining the issue and seeking an appropriately qualified professional; do not give technical repair instructions.
+
+For EACH of the 3 situations:
+- Write the situation in the interface language ${uiNames[uiLanguage]}.
+- Give exactly 3 clearly different communicative intentions in ${uiNames[uiLanguage]}.
+- For EACH intention give exactly 2 short, natural ${targetLanguage} responses.
+- For each response give one brief note in ${uiNames[uiLanguage]} explaining tone, usefulness or nuance.
+- Keep the target-language responses concise, natural and genuinely useful for speaking.
+- Prefer normal spoken language over textbook language or overly technical terminology.
+- Include polite but confident language for clarifying costs, timing, responsibilities or problems when relevant.
+- Do not translate the target-language response in the note.
+
+Return ONLY valid JSON, with no markdown or commentary, in exactly this structure:
+{"situations":[{"situation":"...","intentions":[{"label":"...","responses":[{"text":"...","note":"..."},{"text":"...","note":"..."}]}]}]}`;try{$('loading').classList.add('loading-active');$('waiting').style.display='none';$('generateBtn').disabled=true;situations=parseJSON(await callGeminiAPI(prompt));current=0;renderSituation()}catch(e){$('waiting').style.display='block';notice(tr('serverError')+' '+e.message,'error')}finally{$('loading').classList.remove('loading-active');$('generateBtn').disabled=false}};
+applyLanguage();$('collectionCount').textContent=getCollection().length;
+});
+</script>
+<script>
+(function(){const cache=new Map();let audio=null;async function speak(text,language='en-GB',speakingRate=.95){if(audio){try{audio.pause()}catch{}}const key=language+'|'+speakingRate+'|'+text;let src=cache.get(key);if(!src){const r=await fetch('/.netlify/functions/google-tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,language,speakingRate})});if(!r.ok)throw new Error('Audio error');const b=await r.blob();src=URL.createObjectURL(b);cache.set(key,src)}audio=new Audio(src);await audio.play()}window.LingoTTS={speak}})();
+</script>
+
+<script id="lingototal-generator-bar-init">
+(function(){function init(){var b=document.getElementById('generateBtn');if(!b)return;var p=b.closest('.panel');if(p)p.classList.add('generator-panel')}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script>
+<script id="lingototal-homeservices-chip-links">(function(){function init(){document.querySelectorAll('[data-homeservices-chip]').forEach(function(link){link.addEventListener('click',function(){var input=document.getElementById('themeInput');if(!input)return;input.value=link.textContent.trim();setTimeout(function(){input.focus()},350)})})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script></body>
+</html>
