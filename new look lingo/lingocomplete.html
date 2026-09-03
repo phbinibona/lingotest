@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LingoTotal · Listen & Complete</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LingoTotal · Listen &amp; Complete</title>
 <style>
 :root{
   --primary:#1267d6;
@@ -26,9 +21,7 @@
   --radius:18px;
   --radius-sm:11px;
 }
-
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:'Quicksand',sans-serif;
@@ -36,9 +29,7 @@ body{
   background:linear-gradient(180deg,#eaf3ff 0,#f6f9fd 260px,#f3f6fa 100%);
   line-height:1.55;
 }
-
 button,input{font:inherit}
-
 /* HEADER */
 .banner{
   position:sticky;
@@ -54,14 +45,12 @@ button,input{font:inherit}
   color:#fff;
   box-shadow:0 3px 14px rgba(8,76,168,.25);
 }
-
 .brand-wrap{
   display:flex;
   align-items:center;
   gap:12px;
   min-width:210px;
 }
-
 .brand-mark{
   width:48px;
   height:48px;
@@ -74,18 +63,15 @@ button,input{font:inherit}
   font-size:1.05rem;
   box-shadow:0 6px 14px rgba(0,0,0,.18);
 }
-
 .brand{
   font-size:1.35rem;
   font-weight:800;
   letter-spacing:.055em;
 }
-
 .tagline{
   font-size:.78rem;
   opacity:.9;
 }
-
 .header-tools{
   display:flex;
   align-items:center;
@@ -93,7 +79,6 @@ button,input{font:inherit}
   gap:10px;
   flex-wrap:wrap;
 }
-
 .language-pair{
   padding:8px 12px;
   border:1px solid rgba(255,255,255,.5);
@@ -102,7 +87,6 @@ button,input{font:inherit}
   font-size:.78rem;
   font-weight:700;
 }
-
 .home-link{
   display:inline-flex;
   align-items:center;
@@ -115,13 +99,11 @@ button,input{font:inherit}
   font-size:.78rem;
   font-weight:800;
 }
-
 /* PAGE */
 .page{
   width:min(760px,calc(100% - 22px));
   margin:20px auto 40px;
 }
-
 .panel{
   background:var(--surface);
   border:1px solid var(--border);
@@ -130,13 +112,11 @@ button,input{font:inherit}
   padding:clamp(16px,3vw,28px);
   margin-bottom:18px;
 }
-
 .hero{
   position:relative;
   overflow:hidden;
   background:linear-gradient(135deg,#fff,#edf5ff);
 }
-
 .hero:before{
   content:"";
   position:absolute;
@@ -147,7 +127,6 @@ button,input{font:inherit}
   top:-80px;
   background:rgba(37,183,211,.14);
 }
-
 h1{
   position:relative;
   z-index:1;
@@ -155,21 +134,18 @@ h1{
   font-size:clamp(1.55rem,4vw,2.15rem);
   line-height:1.16;
 }
-
 .hero p{
   position:relative;
   z-index:1;
   margin:0;
   color:var(--muted);
 }
-
 .section-head{
   display:flex;
   align-items:center;
   gap:12px;
   margin-bottom:16px;
 }
-
 .number{
   width:36px;
   height:36px;
@@ -181,18 +157,15 @@ h1{
   color:white;
   font-weight:800;
 }
-
 .section-title{
   font-size:1.16rem;
   font-weight:800;
 }
-
 label{
   display:block;
   margin-bottom:6px;
   font-weight:700;
 }
-
 input[type=text]{
   width:100%;
   min-height:48px;
@@ -202,37 +175,31 @@ input[type=text]{
   background:#fff;
   color:var(--ink);
 }
-
 input[type=text]:focus{
   outline:0;
   border-color:var(--primary);
   box-shadow:0 0 0 4px rgba(18,103,214,.13);
 }
-
 #themeInput.attention{
   border-color:var(--accent);
   animation:pulse 1.4s infinite;
 }
-
 @keyframes pulse{
   50%{box-shadow:0 0 0 8px rgba(37,183,211,0)}
   0%,100%{box-shadow:0 0 0 0 rgba(37,183,211,.35)}
 }
-
 .level-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:9px;
   margin-top:12px;
 }
-
 .example-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:9px;
   margin-top:12px;
 }
-
 .choice{
   padding:11px 8px;
   border:2px solid var(--border);
@@ -242,20 +209,17 @@ input[type=text]:focus{
   font-weight:700;
   cursor:pointer;
 }
-
 .choice:hover,
 .choice.selected{
   border-color:var(--primary);
   background:var(--primary-light);
   color:var(--primary-dark);
 }
-
 .helper{
   margin-top:14px;
   color:var(--muted);
   font-size:.88rem;
 }
-
 .primary-btn,
 .secondary-btn{
   border:0;
@@ -264,31 +228,26 @@ input[type=text]:focus{
   font-weight:800;
   cursor:pointer;
 }
-
 .primary-btn{
   width:100%;
   background:linear-gradient(135deg,var(--primary-dark),var(--primary));
   color:#fff;
 }
-
 .primary-btn:disabled{
   opacity:.5;
   cursor:not-allowed;
 }
-
 .secondary-btn{
   background:#fff;
   border:1px solid var(--border);
   color:var(--ink);
 }
-
 .status{
   display:none;
   text-align:center;
   margin:16px 0;
   color:var(--muted);
 }
-
 .spinner{
   width:30px;
   height:30px;
@@ -298,9 +257,7 @@ input[type=text]:focus{
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
-
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .exercise-intro{
   padding:15px;
   border-radius:12px;
@@ -308,12 +265,10 @@ input[type=text]:focus{
   border:1px solid var(--border);
   margin-top:15px;
 }
-
 .exercise{
   display:none;
   margin-top:18px;
 }
-
 .sentence-card{
   padding:16px;
   margin-top:13px;
@@ -321,7 +276,6 @@ input[type=text]:focus{
   border-radius:13px;
   background:var(--soft);
 }
-
 .sentence-top{
   display:flex;
   align-items:center;
@@ -329,12 +283,10 @@ input[type=text]:focus{
   gap:10px;
   margin-bottom:12px;
 }
-
 .sentence-label{
   font-weight:800;
   color:var(--primary-dark);
 }
-
 .listen-btn{
   border:0;
   border-radius:9px;
@@ -344,12 +296,10 @@ input[type=text]:focus{
   font-weight:800;
   cursor:pointer;
 }
-
 .gap-line{
   font-size:1rem;
   line-height:2.15;
 }
-
 .gap-input{
   width:min(145px,40vw);
   min-height:38px;
@@ -360,17 +310,14 @@ input[type=text]:focus{
   background:#fff;
   color:var(--ink);
 }
-
 .gap-input.correct{
   border-color:#78bd96;
   background:#eefaf3;
 }
-
 .gap-input.wrong{
   border-color:#e09aa4;
   background:#fff5f6;
 }
-
 .feedback{
   display:none;
   margin-top:10px;
@@ -378,21 +325,18 @@ input[type=text]:focus{
   border-radius:9px;
   font-weight:700;
 }
-
 .feedback.success{
   display:block;
   background:#e9f7ef;
   color:#136c45;
   border:1px solid #9bd2b5;
 }
-
 .feedback.error{
   display:block;
   background:#fff0f2;
   color:#a72f40;
   border:1px solid #efb6bf;
 }
-
 .answer-box{
   display:none;
   margin-top:10px;
@@ -402,19 +346,16 @@ input[type=text]:focus{
   border:1px solid #c5daf4;
   font-weight:700;
 }
-
 .actions{
   display:flex;
   gap:9px;
   flex-wrap:wrap;
   margin-top:15px;
 }
-
 .actions .primary-btn{
   width:auto;
   flex:1;
 }
-
 .score-panel{
   display:none;
   margin-top:16px;
@@ -424,13 +365,11 @@ input[type=text]:focus{
   border:1px solid #c5daf4;
   border-radius:13px;
 }
-
 .score-value{
   font-size:1.9rem;
   font-weight:800;
   color:var(--primary);
 }
-
 .notice{
   position:fixed;
   right:18px;
@@ -445,197 +384,402 @@ input[type=text]:focus{
   transform:translateX(130%);
   transition:.25s;
 }
-
 .notice.show{transform:translateX(0)}
 .notice.info{background:#1267d6}
 .notice.success{background:#198754}
 .notice.error{background:#c83d4f}
-
 .target-rtl{
   direction:rtl;
   text-align:right;
 }
-
 .footer{
   text-align:center;
   color:var(--muted);
   font-size:.72rem;
   padding:0 10px 24px;
 }
-
 @media(max-width:700px){
   .banner{
     align-items:flex-start;
     flex-direction:column;
   }
-
   .brand-wrap{min-width:0}
-
   .header-tools{
     width:100%;
     justify-content:space-between;
   }
-
   .language-pair{flex:1}
-
   .page{margin-top:12px}
-
   .level-grid{grid-template-columns:1fr}
-
   .example-grid{grid-template-columns:1fr 1fr}
-
   .sentence-top{
     align-items:flex-start;
     flex-direction:column;
   }
-
   .listen-btn{width:100%}
-
   .actions{flex-direction:column}
-
   .actions .primary-btn,
   .actions .secondary-btn{width:100%}
-
   .gap-input{
     width:min(130px,43vw);
   }
 }
+.level-name{white-space:pre-line!important}
 </style>
-<link rel="stylesheet" href="newlook-skills.css">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style id="lingototal-new-lingoreal-master" media="not all">
+/* Visual language shared with the new LingoTotal index. Functionality unchanged. */
+:root{
+  --primary:#2563eb!important;
+  --primary-dark:#194fbf!important;
+  --primary-light:#eef5ff!important;
+  --accent:#2563eb!important;
+  --ink:#17324d!important;
+  --muted:#607184!important;
+  --surface:#fff!important;
+  --soft:#f7fbff!important;
+  --border:#d5e0ec!important;
+  --shadow:0 16px 40px rgba(35,63,92,.08)!important;
+  --radius:0px!important;
+  --radius-sm:8px!important;
+}
+html{background:#eef3f8!important}
+body{
+  font-family:'Inter',Arial,sans-serif!important;
+  background:#eef3f8!important;
+  color:var(--ink)!important;
+  line-height:1.45!important;
+}
+/* compact index-style masthead */
+.banner{
+  position:sticky!important;top:0!important;z-index:100!important;
+  min-height:66px!important;
+  padding:9px clamp(12px,3vw,30px)!important;
+  background:linear-gradient(135deg,#f9fcff 0%,#edf5ff 48%,#dceafa 100%)!important;
+  color:var(--ink)!important;
+  border-bottom:1px solid var(--border)!important;
+  box-shadow:0 4px 16px rgba(35,63,92,.07)!important;
+}
+.brand-wrap{gap:10px!important;min-width:0!important}
+.brand-mark{
+  width:40px!important;height:40px!important;flex:0 0 40px!important;
+  border-radius:0!important;background:var(--primary)!important;color:#fff!important;
+  box-shadow:none!important;font-size:.82rem!important;font-weight:900!important;
+  letter-spacing:-.04em!important;
+}
+.brand{font-size:.88rem!important;font-weight:900!important;letter-spacing:.15em!important;color:var(--ink)!important}
+.tagline{margin-top:2px!important;font-size:.65rem!important;font-weight:700!important;letter-spacing:.035em!important;color:var(--muted)!important;opacity:1!important}
+.header-tools{gap:7px!important;flex-wrap:nowrap!important}
+.language-pair{
+  padding:7px 10px!important;border:1px solid #c8d7e7!important;border-radius:7px!important;
+  background:rgba(255,255,255,.74)!important;color:#456078!important;
+  font-size:.7rem!important;font-weight:800!important;white-space:nowrap!important;
+}
+.home-link{
+  min-height:34px!important;padding:7px 10px!important;border:1px solid #b9cce0!important;
+  border-radius:7px!important;background:#fff!important;color:var(--primary-dark)!important;
+  box-shadow:none!important;font-size:.7rem!important;font-weight:800!important;white-space:nowrap!important;
+}
+.home-link:hover{background:var(--primary-light)!important;border-color:#9dbce0!important}
+.page{width:min(900px,calc(100% - 28px))!important;margin:18px auto 44px!important}
+.panel{
+  background:#fff!important;border:1px solid var(--border)!important;border-radius:0!important;
+  box-shadow:0 8px 24px rgba(35,63,92,.055)!important;
+  padding:clamp(17px,2.7vw,25px)!important;margin-bottom:12px!important;
+}
+.hero{
+  position:relative!important;overflow:hidden!important;
+  background:linear-gradient(135deg,#f9fcff 0%,#edf5ff 55%,#e4f0fc 100%)!important;
+  border-left:4px solid var(--primary)!important;
+}
+.hero:before{
+  content:""!important;position:absolute!important;width:230px!important;height:230px!important;
+  border-radius:50%!important;right:-140px!important;top:-150px!important;
+  background:rgba(37,99,235,.07)!important;
+}
+h1{position:relative!important;margin:0 0 7px!important;font-size:clamp(1.42rem,3.5vw,2rem)!important;line-height:1.08!important;letter-spacing:-.035em!important;font-weight:900!important;color:var(--ink)!important}
+.hero p{position:relative!important;margin:0!important;color:var(--muted)!important;font-size:.9rem!important;line-height:1.5!important}
+.section-head{gap:9px!important;margin-bottom:12px!important}
+.number,.substep-badge{
+  width:29px!important;height:29px!important;flex:0 0 29px!important;border-radius:7px!important;
+  background:var(--primary-light)!important;color:var(--primary-dark)!important;
+  font-size:.76rem!important;font-weight:900!important;
+}
+.section-title{font-size:1rem!important;font-weight:850!important;letter-spacing:-.015em!important}
+.setup-lead{margin:-2px 0 11px!important;color:var(--muted)!important;font-size:.82rem!important;font-weight:600!important}
+.level-grid{gap:7px!important;margin-top:8px!important}
+.choice,.intent,.answer{
+  border:1px solid var(--border)!important;border-radius:8px!important;background:#fff!important;
+  color:var(--ink)!important;box-shadow:none!important;transition:.15s ease!important;
+}
+.choice:hover,.choice.selected,.intent:hover,.intent.selected,.answer:hover{
+  border-color:#9dbce0!important;background:var(--primary-light)!important;color:var(--primary-dark)!important;
+}
+.level-card{min-height:88px!important;padding:12px!important;gap:3px!important}
+.level-name{font-size:.9rem!important;font-weight:850!important}
+.level-note{font-size:.7rem!important;line-height:1.3!important;color:var(--muted)!important;font-weight:600!important}
+.topic-step{grid-template-columns:32px 1fr!important;gap:9px!important;margin-top:18px!important;padding-top:16px!important;border-top:1px solid var(--border)!important}
+.topic-label{font-size:.95rem!important;font-weight:850!important}
+.topic-guidance{margin:1px 0 8px!important;font-size:.78rem!important;color:var(--muted)!important}
+input[type=text],textarea{
+  min-height:44px!important;padding:10px 12px!important;border:1px solid #bdcde0!important;border-radius:8px!important;
+  background:#fff!important;color:var(--ink)!important;font-size:16px!important;
+}
+input[type=text]:focus,textarea:focus{outline:0!important;border-color:var(--primary)!important;box-shadow:0 0 0 3px rgba(37,99,235,.10)!important}
+#themeInput.attention{border-color:#9dbce0!important;animation:none!important}
+.examples-wrap{margin-top:11px!important;padding-top:10px!important;border-top:1px solid #e4ebf3!important}
+.helper{font-size:.7rem!important;color:#74869a!important}
+.example-grid{gap:6px!important;margin-top:6px!important}
+.quiet-examples .choice,.example{padding:7px!important;min-height:34px!important;font-size:.7rem!important;border:1px solid #dce5ee!important;background:#f9fbfd!important;color:#64778a!important}
+.primary-btn{
+  min-height:43px!important;padding:10px 15px!important;border-radius:8px!important;
+  background:var(--primary)!important;color:#fff!important;box-shadow:none!important;
+  font-size:.82rem!important;font-weight:850!important;
+}
+.primary-btn:hover{background:var(--primary-dark)!important}
+.secondary-btn,.response-actions button,.collection-btn,.sound-btn{
+  border:1px solid var(--border)!important;border-radius:7px!important;background:#fff!important;
+  color:var(--primary-dark)!important;box-shadow:none!important;font-weight:800!important;
+}
+.collection-bar{margin-bottom:9px!important}
+.collection-btn{padding:8px 11px!important;font-size:.72rem!important}
+.status,.progress{font-size:.76rem!important;color:var(--muted)!important}
+.situation{
+  padding:12px 13px!important;margin-bottom:10px!important;border-left:3px solid var(--primary)!important;
+  background:var(--blue-pale,#f7fbff)!important;font-size:.95rem!important;font-weight:850!important;
+}
+.intentions,.answers{gap:7px!important}
+.intent,.answer{padding:11px 12px!important;font-size:.82rem!important;font-weight:750!important}
+.responses{margin-top:12px!important}
+.response-card,.collection-item,.feedback,.exercise-intro,.natural-box{
+  border:1px solid var(--border)!important;border-radius:8px!important;background:#fff!important;box-shadow:none!important;
+}
+.response-card{padding:12px!important;margin-bottom:8px!important}
+.response-text{font-size:.94rem!important;font-weight:850!important}
+.response-note{font-size:.78rem!important;color:var(--muted)!important}
+.response-actions{gap:6px!important;margin-top:8px!important}
+.response-actions button{padding:7px 9px!important;font-size:.72rem!important}
+.activity-badge{padding:5px 8px!important;border-radius:999px!important;background:var(--primary-light)!important;color:var(--primary-dark)!important;font-size:.68rem!important}
+.feedback,.exercise-intro{padding:12px!important}
+.natural-box{border-left:3px solid var(--primary)!important;padding:10px!important}
+.score{padding:18px!important}.score-value{color:var(--primary)!important;font-weight:900!important}
+.footer{padding:7px 10px 21px!important;color:#8392a3!important;font-size:.67rem!important}
+.notice{top:78px!important;border-radius:8px!important;font-size:.78rem!important;box-shadow:0 8px 24px rgba(35,63,92,.12)!important}
+.notice.info{background:var(--primary)!important}
+@media(max-width:700px){
+  .banner{min-height:52px!important;height:52px!important;padding:6px 8px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:6px!important;overflow:hidden!important}
+  .brand-wrap{flex:1 1 auto!important;overflow:hidden!important}
+  .brand-mark{width:34px!important;height:34px!important;flex-basis:34px!important;font-size:.7rem!important}
+  .brand-wrap>div:last-child{min-width:0!important;overflow:hidden!important}
+  .brand{font-size:.76rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .tagline{display:none!important}
+  .header-tools{width:auto!important;flex:0 0 auto!important;justify-content:flex-end!important;gap:4px!important}
+  .language-pair{display:none!important}
+  .home-link{width:35px!important;height:35px!important;min-height:35px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:0!important}
+  .home-link span:first-child{font-size:1rem!important}
+  .page{width:calc(100% - 14px)!important;margin:8px auto 28px!important}
+  .panel{padding:14px 12px!important;margin-bottom:8px!important}
+  .hero{border-left-width:3px!important}
+  h1{font-size:1.25rem!important}
+  .hero p{font-size:.76rem!important}
+  .section-head{margin-bottom:9px!important}
+  .section-title{font-size:.9rem!important}
+  .setup-lead{font-size:.74rem!important;margin-bottom:9px!important}
+  .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .level-card{min-height:58px!important;padding:8px 6px!important;text-align:center!important;justify-content:center!important}
+  .level-name{font-size:.7rem!important;line-height:1.15!important}
+  .level-note{display:none!important}
+  .topic-step{margin-top:13px!important;padding-top:12px!important;grid-template-columns:28px 1fr!important;gap:7px!important}
+  .number,.substep-badge{width:26px!important;height:26px!important;flex-basis:26px!important;font-size:.68rem!important}
+  .topic-label{font-size:.82rem!important}
+  .topic-guidance{font-size:.7rem!important}
+  .example-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important}
+  .quiet-examples .choice,.example{font-size:.62rem!important;padding:6px 3px!important;white-space:normal!important}
+  .primary-btn{min-height:40px!important;padding:9px 10px!important;font-size:.76rem!important}
+  .situation{font-size:.84rem!important;padding:10px!important}
+  .intent,.answer{padding:9px 10px!important;font-size:.76rem!important}
+  .response-card{padding:10px!important}.response-text{font-size:.86rem!important}.response-note{font-size:.71rem!important}
+  .collection-btn{font-size:.66rem!important;padding:7px 9px!important}
+}
+@media(max-width:360px){
+  .level-grid{grid-template-columns:1fr!important}
+  .level-card{min-height:48px!important;text-align:left!important}
+  .example-grid{grid-template-columns:repeat(2,1fr)!important}
+}
+/* Two-level LingoReal policy */
+.level-grid,.lt-level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(max-width:360px){.level-grid,.lt-level-grid{grid-template-columns:1fr!important}}
+/* First-step gate without adding extra template UI */
+.lt-activity-content.lt-locked{opacity:.38!important;pointer-events:none!important;user-select:none!important;filter:saturate(.7)!important}
+</style>
+<style id="lt-strict-level-first">
+</style>
+<style id="lt-level-box-layout-fix">
+/* Level boxes: title on top, description underneath, left aligned */
+.level{
+  text-align:left!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:4px!important;
+}
+.level .level-name{
+  display:block!important;
+  width:100%!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  text-align:left!important;
+}
+.level .level-note{
+  display:block!important;
+  width:100%!important;
+  font-size:.72rem!important;
+  font-weight:500!important;
+  line-height:1.35!important;
+  text-align:left!important;
+  color:var(--muted)!important;
+}
+</style>
+<style id="lt-generation-wheel">
+#loading{
+  display:none;
+  margin:14px 0 4px!important;
+  padding:14px!important;
+  text-align:center!important;
+  border:1px solid var(--border)!important;
+  background:#f8fbff!important;
+}
+#loading .spinner{
+  width:34px!important;
+  height:34px!important;
+  margin:0 auto 9px!important;
+  border:4px solid #dbe7f7!important;
+  border-top-color:var(--primary)!important;
+  border-radius:50%!important;
+  animation:spin .8s linear infinite!important;
+}
+#loading span{
+  display:block!important;
+  font-size:.82rem!important;
+  font-weight:700!important;
+  color:var(--muted)!important;
+}
+</style>
+<style id="lingototal-dark-editorial-new-look">
+  :root{
+    --primary:#3277e8;--primary-dark:#1f5fc7;--primary-light:#202f45;
+    --ink:#f7f7f5;--muted:#b8bdc5;--surface:#202020;--soft:#292929;
+    --border:#383838;--shadow:0 16px 40px rgba(0,0,0,.22);--radius:0;--radius-sm:0;
+  }
+  html{background:#171717!important;scroll-padding-top:72px}
+  body{font-family:'Inter',Arial,sans-serif!important;color:var(--ink)!important;background:#171717!important;line-height:1.48}
+  button,input{font-family:inherit}
+  .banner{
+    min-height:72px!important;padding:10px clamp(14px,4vw,56px)!important;
+    background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),linear-gradient(120deg,#24344c,#15191f 62%)!important;
+    color:#fff!important;border-bottom:1px solid #343b45!important;box-shadow:0 5px 20px rgba(0,0,0,.28)!important;
+  }
+  .brand-mark{width:40px!important;height:40px!important;border-radius:0!important;background:#f4f4f2!important;color:#111!important;box-shadow:none!important;font-size:.82rem!important}
+  .brand{font-size:.95rem!important;font-weight:900!important;letter-spacing:.16em!important;color:#fff!important}
+  .tagline{font-size:.65rem!important;color:#d7dce3!important;opacity:1!important}
+  .language-pair{border:1px solid rgba(255,255,255,.28)!important;border-radius:0!important;background:rgba(0,0,0,.25)!important;color:#fff!important;font-size:.68rem!important}
+  .home-link{min-height:34px!important;padding:7px 10px!important;border:1px solid rgba(255,255,255,.3)!important;border-radius:0!important;background:#f4f4f2!important;color:#182033!important;font-size:.68rem!important}
+  .page{width:min(900px,calc(100% - 28px))!important;margin:18px auto 44px!important}
+  .panel{
+    border:1px solid var(--border)!important;border-radius:0!important;box-shadow:0 10px 28px rgba(0,0,0,.16)!important;
+    padding:64px clamp(17px,3vw,27px) 24px!important;margin-bottom:12px!important;
+    background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)) 0 0/100% 42px no-repeat,radial-gradient(circle at 72% 20px,rgba(126,175,255,.55),transparent 27%) 0 0/100% 42px no-repeat,linear-gradient(120deg,#24344c,#15191f 62%) 0 0/100% 42px no-repeat,#202020!important;
+  }
+  .panel.hero{min-height:170px!important;padding:34px clamp(22px,4vw,40px)!important;border:0!important;border-left:5px solid var(--primary)!important;background:linear-gradient(90deg,rgba(16,16,16,.96),rgba(16,16,16,.72)),radial-gradient(circle at 78% 35%,#315f9c 0,transparent 34%),linear-gradient(135deg,#121212 0%,#18253a 57%,#0d0d0d 100%)!important}
+  h1{color:#fff!important;font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(2rem,5vw,3.6rem)!important;line-height:.98!important;letter-spacing:-.045em!important;margin:0 0 13px!important}
+  .hero p{color:#cbd1d9!important;font-size:.9rem!important;line-height:1.58!important}
+  .section-head{gap:11px!important;margin-bottom:15px!important}
+  .number{width:34px!important;height:34px!important;flex-basis:34px!important;border-radius:0!important;background:var(--primary)!important;color:#fff!important;font-size:.78rem!important}
+  .section-title{color:#fff!important;font-family:Georgia,'Times New Roman',serif!important;font-size:1.42rem!important;font-weight:700!important}
+  .setup-lead{color:var(--muted)!important}
+  .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .choice,.level-card{border:1px solid #414141!important;border-radius:0!important;background:#252525!important;color:#f5f5f3!important;box-shadow:none!important}
+  .choice:hover,.choice.selected,.level-card:hover,.level-card.selected{border-color:#6699ec!important;background:#202f45!important;color:#fff!important}
+  .level-card{min-height:102px!important;padding:13px!important;text-align:left!important}
+  .level-name{color:#fff!important}.level-note{color:#afb5be!important}
+  input[type=text],.gap-input{border:1px solid #4c4c4c!important;border-radius:0!important;background:#151515!important;color:#fff!important;caret-color:#8bb7ff!important}
+  input[type=text]:focus,.gap-input:focus{outline:0!important;border-color:#6699ec!important;box-shadow:0 0 0 3px rgba(50,119,232,.16)!important}
+  .primary-btn,.secondary-btn,.listen-btn{border-radius:0!important;font-weight:800!important}
+  .primary-btn,.listen-btn{background:var(--primary)!important;color:#fff!important;box-shadow:none!important}
+  .primary-btn:hover,.listen-btn:hover{background:var(--primary-dark)!important}
+  .secondary-btn{background:#292929!important;border:1px solid #454545!important;color:#fff!important}
+  .exercise-intro,.sentence-card,.score-panel,.answer-box{border:1px solid #3e3e3e!important;border-radius:0!important;background:#242424!important;color:#fff!important;box-shadow:none!important}
+  .sentence-label{color:#9ec2ff!important}.gap-line{color:#f5f5f3!important}
+  .gap-input.correct{border-color:#3eae78!important;background:#19372a!important}.gap-input.wrong{border-color:#e25c68!important;background:#3b2024!important}
+  .feedback{border-radius:0!important}.feedback.success{background:#19372a!important;color:#a7e1c0!important;border-color:#347453!important}.feedback.error{background:#3b2024!important;color:#ffb8c0!important;border-color:#8c3f49!important}
+  .score-value{color:#8bb7ff!important}.status{color:var(--muted)!important}.footer{color:#7f858d!important}
+  @media(max-width:700px){
+    html{scroll-padding-top:58px}.banner{min-height:58px!important;height:58px!important;padding:8px 11px!important}
+    .brand-mark{width:34px!important;height:34px!important}.tagline{display:none!important}.language-pair{display:none!important}
+    .home-link{width:35px!important;height:35px!important;min-height:35px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:0!important}.home-link span:first-child{font-size:1rem!important}
+    .page{width:100%!important;margin:0!important}.panel{margin:0!important;border-left:0!important;border-right:0!important;border-bottom:0!important;padding:55px 16px 21px!important}
+    .panel.hero{min-height:150px!important;padding:28px 18px!important;border-left:4px solid var(--primary)!important}
+    h1{font-size:2.1rem!important}.hero p{font-size:.82rem!important}.section-title{font-size:1.24rem!important}
+    .level-grid{grid-template-columns:1fr!important}.level-card{min-height:88px!important;text-align:left!important}.level-note{display:block!important}
+    .actions{display:grid!important;grid-template-columns:1fr!important}.actions .primary-btn{width:100%!important}
+  }
+</style>
 </head>
-
 <body>
-
-<header class="banner">
-  <div class="brand-wrap">
-    <div class="brand-mark">LT</div>
-    <div>
-      <div class="brand">LINGOTOTAL</div>
-      <div class="tagline" data-i18n="tagline">Learn any language your way</div>
-    </div>
-  </div>
-
-  <div class="header-tools">
-    <div class="language-pair" id="languagePair">English → Català</div>
-
-    <a class="home-link" href="lingostarter2.html">
-      <span>⌂</span>
-      <span data-i18n="changeLanguages">Activities / change languages</span>
-    </a>
-  </div>
-</header>
-
-
-<main class="page">
-
-  <section class="panel hero">
-    <h1 data-i18n="title">Listen & Complete</h1>
-    <p data-i18n="intro">Listen to three sentences and complete the two important missing words in each one.</p>
-  </section>
-
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">1</div>
-      <div class="section-title" data-i18n="choose">Choose the level and topic</div>
-    </div>
-
-    <label for="themeInput" data-i18n="ownTopic">Write your own topic</label>
-
-    <input
-      id="themeInput"
-      class="attention"
-      type="text"
-      data-i18n-placeholder="topicPlaceholder"
-      placeholder="For example: travel, technology, nature, food..."
-    >
-
-    <div class="level-grid">
-      <button class="choice level" data-level="beginner" data-i18n="beginner">Beginner (A1–A2)</button>
-      <button class="choice level" data-level="intermediate" data-i18n="intermediate">Intermediate (B1–B2)</button>
-      <button class="choice level" data-level="advanced" data-i18n="advanced">Advanced (C1–C2)</button>
-    </div>
-
-    <div class="helper" data-i18n="inspiration">Need inspiration?</div>
-
-    <div class="example-grid">
-      <button class="choice example" data-theme-key="travel" data-i18n="travel">Travel</button>
-      <button class="choice example" data-theme-key="technology" data-i18n="technology">Technology</button>
-      <button class="choice example" data-theme-key="nature" data-i18n="nature">Nature</button>
-      <button class="choice example" data-theme-key="food" data-i18n="food">Food</button>
-    </div>
-
-  </section>
-
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">2</div>
-      <div class="section-title" data-i18n="exerciseTitle">Listen and complete</div>
-    </div>
-
-    <button id="generateBtn" class="primary-btn" data-i18n="generate">
+<header class="banner lt-master-header"><div class="brand-wrap"><div class="brand-mark">LT</div><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline">Learn any language your way</div></div></div><div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link" href="index.html" id="homeLink"><span>⌂</span><span data-i18n="changeLanguages"></span></a></div></header>
+<main class="page lt-master-page"><section class="panel hero lt-master-hero"><h1 data-i18n="title">Listen &amp; Complete</h1><p data-i18n="intro">Listen to three sentences and complete the two important missing words in each one.</p></section><section class="panel lt-master-panel lt-level-first"><div class="section-head lt-section-head"><div class="number lt-number">1</div><div class="section-title lt-section-title" data-shell-i18n="choose">Start by choosing your level</div></div><p class="setup-lead lt-setup-lead" data-shell-i18n="lead">Choose the option that feels right for you today.</p><div class="level-grid lt-level-grid"><button class="choice level level-card lt-level-card" data-level="beginner" type="button"><span class="level-name" data-shell-i18n="basic">Revising<br>the basics</span><span class="level-note" data-shell-i18n="basicNote">Notice useful, natural language in simple everyday situations.</span></button><button class="choice level level-card lt-level-card" data-level="intermediate" type="button"><span class="level-name" data-shell-i18n="conf">Building<br>confidence</span><span class="level-note" data-shell-i18n="confNote">Understand more natural reactions, tone and everyday expressions.</span></button></div></section><div class="lt-activity-content"><section class="panel">
+<div class="section-head">
+<div class="number">2</div>
+<div class="section-title" id="topicStepTitle">Write your topic</div>
+</div>
+<input class="attention" data-i18n-placeholder="topicPlaceholder" id="themeInput" placeholder="Write it in any language" type="text"/>
+</section><section class="panel">
+<div class="section-head">
+<div class="number">3</div>
+<div class="section-title" data-i18n="exerciseTitle">Listen and complete</div>
+</div>
+<button class="primary-btn" data-i18n="generate" id="generateBtn">
       Generate 3 sentences
     </button>
-
-    <div id="loading" class="status">
-      <div class="spinner"></div>
-      <span data-i18n="generating">Generating your sentences…</span>
-    </div>
-
-    <div id="exerciseIntro" class="exercise-intro" data-i18n="waiting">
+<div class="status" id="loading">
+<div class="spinner"></div>
+<span data-i18n="generating">Generating your sentences…</span>
+</div>
+<div class="exercise-intro" data-i18n="waiting" id="exerciseIntro">
       Your exercise will appear here.
     </div>
-
-    <div id="exercise" class="exercise">
-      <div id="sentenceCards"></div>
-
-      <div class="actions">
-        <button id="checkBtn" class="primary-btn" data-i18n="check">Check answers</button>
-        <button id="retryBtn" class="secondary-btn" data-i18n="retry">Try again</button>
-        <button id="newBtn" class="secondary-btn" data-i18n="newExercise">New exercise</button>
-      </div>
-
-      <div id="scorePanel" class="score-panel">
-        <div data-i18n="score">Score</div>
-        <div id="scoreValue" class="score-value">0/6</div>
-        <div id="scoreMessage"></div>
-      </div>
-    </div>
-
-  </section>
-
-
-  <section class="panel">
-
-    <div class="section-head">
-      <div class="number">3</div>
-      <div class="section-title" data-i18n="restart">Restart</div>
-    </div>
-
-    <button id="clearBtn" class="secondary-btn" data-i18n="clear">
+<div class="exercise" id="exercise">
+<div id="sentenceCards"></div>
+<div class="actions">
+<button class="primary-btn" data-i18n="check" id="checkBtn">Check answers</button>
+<button class="secondary-btn" data-i18n="retry" id="retryBtn">Try again</button>
+<button class="secondary-btn" data-i18n="newExercise" id="newBtn">New exercise</button>
+</div>
+<div class="score-panel" id="scorePanel">
+<div data-i18n="score">Score</div>
+<div class="score-value" id="scoreValue">0/6</div>
+<div id="scoreMessage"></div>
+</div>
+</div>
+</section><section class="panel">
+<div class="section-head">
+<div class="number">4</div>
+<div class="section-title" data-i18n="restart">Restart</div>
+</div>
+<button class="secondary-btn" data-i18n="clear" id="clearBtn">
       Clear everything
     </button>
-
-  </section>
-
-</main>
-
-
-<div id="notice" class="notice"></div>
-
+</section></div></main>
+<div class="notice" id="notice"></div>
 <footer class="footer">
   LingoTotal · <span data-i18n="tagline">Learn any language your way</span>
 </footer>
-
-
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
-
 const T={
-
 en:{
 tagline:'Learn any language your way',
 changeLanguages:'Activities / change languages',
@@ -677,7 +821,6 @@ scoreSome:'Good work. Listen again and check the remaining words.',
 firstAttempt:'After two unsuccessful checks, the correct sentence becomes available.',
 levelSelected:'Level selected'
 },
-
 ca:{
 tagline:'Aprèn qualsevol llengua a la teva manera',
 changeLanguages:'Activitats / canvia les llengües',
@@ -719,7 +862,6 @@ scoreSome:'Bona feina. Torna a escoltar i comprova les paraules que falten.',
 firstAttempt:'Després de dues comprovacions incorrectes, podràs veure la frase correcta.',
 levelSelected:'Nivell seleccionat'
 },
-
 es:{
 tagline:'Aprende cualquier idioma a tu manera',
 changeLanguages:'Actividades / cambiar idiomas',
@@ -761,7 +903,6 @@ scoreSome:'Buen trabajo. Escucha otra vez y comprueba las palabras restantes.',
 firstAttempt:'Después de dos comprobaciones incorrectas, podrás ver la frase correcta.',
 levelSelected:'Nivel seleccionado'
 },
-
 fr:{
 tagline:'Apprenez n’importe quelle langue à votre façon',
 changeLanguages:'Activités / changer les langues',
@@ -803,7 +944,6 @@ scoreSome:'Bon travail. Réécoutez et vérifiez les mots restants.',
 firstAttempt:'Après deux vérifications incorrectes, la phrase correcte sera disponible.',
 levelSelected:'Niveau sélectionné'
 },
-
 de:{
 tagline:'Lerne jede Sprache auf deine Art',
 changeLanguages:'Aktivitäten / Sprachen ändern',
@@ -845,7 +985,6 @@ scoreSome:'Gute Arbeit. Höre noch einmal und überprüfe die übrigen Wörter.'
 firstAttempt:'Nach zwei falschen Prüfungen wird der richtige Satz angezeigt.',
 levelSelected:'Niveau gewählt'
 },
-
 it:{
 tagline:'Impara qualsiasi lingua a modo tuo',
 changeLanguages:'Attività / cambia lingue',
@@ -887,7 +1026,6 @@ scoreSome:'Buon lavoro. Ascolta di nuovo e controlla le parole rimanenti.',
 firstAttempt:'Dopo due controlli errati sarà disponibile la frase corretta.',
 levelSelected:'Livello selezionato'
 },
-
 pt:{
 tagline:'Aprenda qualquer idioma à sua maneira',
 changeLanguages:'Atividades / mudar idiomas',
@@ -929,7 +1067,6 @@ scoreSome:'Bom trabalho. Ouça novamente e verifique as palavras restantes.',
 firstAttempt:'Após duas verificações incorretas, a frase correta ficará disponível.',
 levelSelected:'Nível selecionado'
 },
-
 eu:{
 tagline:'Ikasi edozein hizkuntza zure erara',
 changeLanguages:'Jarduerak / hizkuntzak aldatu',
@@ -971,7 +1108,6 @@ scoreSome:'Lan ona. Entzun berriro eta egiaztatu gainerako hitzak.',
 firstAttempt:'Bi egiaztapen okerren ondoren, esaldi zuzena ikusgai egongo da.',
 levelSelected:'Maila aukeratuta'
 },
-
 ja:{
 tagline:'好きな方法でどんな言語でも学ぼう',
 changeLanguages:'アクティビティ / 言語を変更',
@@ -1013,7 +1149,6 @@ scoreSome:'よくできました。もう一度聞いて残りの語を確認し
 firstAttempt:'2回不正解になると、正しい文を表示できます。',
 levelSelected:'レベルを選択しました'
 },
-
 ar:{
 tagline:'تعلّم أي لغة بطريقتك',
 changeLanguages:'الأنشطة / تغيير اللغات',
@@ -1055,9 +1190,7 @@ scoreSome:'عمل جيد. استمع مرة أخرى وتحقق من الكلم�
 firstAttempt:'بعد محاولتين غير صحيحتين ستظهر الجملة الصحيحة.',
 levelSelected:'تم اختيار المستوى'
 }
-
 };
-
 const uiNames={
 en:'English',
 ca:'Català',
@@ -1070,7 +1203,6 @@ eu:'Euskara',
 ja:'日本語',
 ar:'العربية'
 };
-
 const targetNames={
 English:'English',
 Catalan:'Català',
@@ -1083,7 +1215,6 @@ Basque:'Euskara',
 Japanese:'日本語',
 Arabic:'العربية'
 };
-
 const voices={
 English:'en-GB',
 Catalan:'ca-ES',
@@ -1096,57 +1227,70 @@ Basque:'eu-ES',
 Japanese:'ja-JP',
 Arabic:'ar-SA'
 };
-
+const targetAliases={
+  en:'English',english:'English',
+  ca:'Catalan',catalan:'Catalan',català:'Catalan',
+  es:'Spanish',spanish:'Spanish',español:'Spanish',
+  fr:'French',french:'French',français:'French',
+  de:'German',german:'German',deutsch:'German',
+  it:'Italian',italian:'Italian',italiano:'Italian',
+  pt:'Portuguese',portuguese:'Portuguese',português:'Portuguese',
+  eu:'Basque',basque:'Basque',euskara:'Basque',
+  ja:'Japanese',japanese:'Japanese','日本語':'Japanese',
+  ar:'Arabic',arabic:'Arabic','العربية':'Arabic'
+};
+function normalizeTarget(value){
+  const raw=String(value||'').trim();
+  if(targetNames[raw])return raw;
+  return targetAliases[raw.toLowerCase()]||'English';
+}
 const params=new URLSearchParams(window.location.search);
-
 let uiLanguage=
   params.get('ui')
   ||localStorage.getItem('lingototal_ui_language')
   ||'en';
-
 let targetLanguage=
-  params.get('target')
-  ||localStorage.getItem('lingototal_target_language')
-  ||'English';
-
+ormalizeTarget(
+    params.get('target')
+    ||localStorage.getItem('lingototal_target_language')
+    ||'English'
+  );
 if(!uiNames[uiLanguage])uiLanguage='en';
-if(!targetNames[targetLanguage])targetLanguage='English';
-
 localStorage.setItem('lingototal_ui_language',uiLanguage);
 localStorage.setItem('lingototal_target_language',targetLanguage);
-
 const $=id=>document.getElementById(id);
-
+function goToIndex(event){
+  if(event)event.preventDefault();
+  stopAudio();
+  localStorage.setItem('lingototal_ui_language',uiLanguage);
+  localStorage.setItem('lingototal_target_language',targetLanguage);
+  const indexUrl=new URL('./index.html',window.location.href);
+  indexUrl.searchParams.set('ui',uiLanguage);
+  indexUrl.searchParams.set('target',targetLanguage);
+  window.location.assign(indexUrl.href);
+}
 let selectedLevel='';
 let sentences=[];
 let attempts=[0,0,0];
-
 function tr(key){
-  return T[uiLanguage]?.[key]||T.en[key]||key;
+  return (T[uiLanguage]&&T[uiLanguage][key])||'';
 }
-
 function applyLanguage(){
   document.documentElement.lang=uiLanguage;
   document.documentElement.dir=uiLanguage==='ar'?'rtl':'ltr';
-
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     el.textContent=tr(el.dataset.i18n);
   });
-
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
     el.placeholder=tr(el.dataset.i18nPlaceholder);
   });
-
   document.querySelectorAll('.example').forEach(btn=>{
     btn.dataset.theme=tr(btn.dataset.themeKey);
   });
-
   $('languagePair').textContent=
     `${uiNames[uiLanguage]} → ${targetNames[targetLanguage]}`;
-
   document.title='LingoTotal · '+tr('title');
 }
-
 function notice(message,type='info'){
   const n=$('notice');
   n.textContent=message;
@@ -1154,12 +1298,10 @@ function notice(message,type='info'){
   clearTimeout(notice.timer);
   notice.timer=setTimeout(()=>n.classList.remove('show'),3000);
 }
-
 function setLoading(on){
   $('generateBtn').disabled=on;
   $('loading').style.display=on?'block':'none';
 }
-
 function normalise(text){
   return String(text||'')
     .toLocaleLowerCase()
@@ -1168,7 +1310,6 @@ function normalise(text){
     .replace(/[.,!?;:«»"'“”‘’()¿¡؟،。]/g,'')
     .trim();
 }
-
 function levelInstruction(){
   if(selectedLevel==='beginner'){
     return 'CEFR A1-A2. Use clear common everyday language and short natural sentences.';
@@ -1178,7 +1319,6 @@ function levelInstruction(){
   }
   return 'CEFR C1-C2. Use natural colloquial everyday language, idiomatic and authentic. Avoid literary, pompous or essay-like language.';
 }
-
 async function api(prompt){
   const r=await fetch('/.netlify/functions/gemini',{
     method:'POST',
@@ -1189,41 +1329,30 @@ async function api(prompt){
       temperature:.72
     })
   });
-
   const data=await r.json().catch(()=>({}));
-
   if(!r.ok){
     throw new Error(data?.error||'Server error');
   }
-
   const text=data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
   if(!text){
     throw new Error('Empty AI response');
   }
-
   return text;
 }
-
 function parse(raw){
   const clean=String(raw)
     .replace(/```json/gi,'')
     .replace(/```/g,'')
     .trim();
-
   const a=clean.indexOf('{');
   const b=clean.lastIndexOf('}');
-
   if(a<0||b<a){
     throw new Error('AI format error');
   }
-
   const data=JSON.parse(clean.slice(a,b+1));
-
   if(!Array.isArray(data.sentences)||data.sentences.length!==3){
     throw new Error('AI format error');
   }
-
   return data.sentences.map(item=>{
     if(
       typeof item.sentence!=='string'
@@ -1232,32 +1361,25 @@ function parse(raw){
     ){
       throw new Error('AI format error');
     }
-
     return{
       sentence:item.sentence.trim(),
       gaps:item.gaps.map(g=>String(g).trim())
     };
   });
 }
-
 function buildPrompt(theme){
   return `
 Create exactly THREE natural sentences in ${targetLanguage}.
-
 TOPIC: ${theme}
 LEVEL: ${levelInstruction()}
-
 For each sentence choose exactly TWO important content words strongly connected to the topic.
 Do NOT choose neutral connectors, articles, pronouns, auxiliaries or generic verbs unless they are genuinely central to the topic.
 The two gap words must occur exactly once each in the sentence.
 Use correct spelling, punctuation, contractions, elisions and apostrophes.
-
 For Basque, use natural standard Euskara and idiomatic word order.
 For Japanese, use natural Japanese with no artificial spaces.
 For Arabic, use natural Arabic script and punctuation.
-
 Return ONLY valid JSON in this exact structure:
-
 {
   "sentences":[
     {
@@ -1274,39 +1396,100 @@ Return ONLY valid JSON in this exact structure:
     }
   ]
 }
-
 Do not add explanations or markdown.
 `.trim();
 }
-
-function speak(text){
-  if(!('speechSynthesis'in window)){
-    notice(tr('noSpeech'),'error');
+let currentAudio=null;
+const audioCache=new Map();
+let audioRequestId=0;
+function stopAudio(){
+  audioRequestId++;
+  if(currentAudio){
+    try{
+      currentAudio.pause();
+      currentAudio.currentTime=0;
+    }catch(e){}
+    currentAudio=null;
+  }
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+  }
+}
+function fallbackSpeak(text,language,speakingRate){
+  if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
+otice(tr('noSpeech'),'error');
     return;
   }
-
-  speechSynthesis.cancel();
-
   const u=new SpeechSynthesisUtterance(text);
-  u.lang=voices[targetLanguage]||'en-GB';
-  u.rate=1;
-
-  speechSynthesis.speak(u);
-  notice(tr('playing'),'info');
+  u.lang=language;
+  u.rate=speakingRate;
+  const wanted=language.toLowerCase();
+  const base=wanted.split('-')[0];
+  const available=window.speechSynthesis.getVoices();
+  const matchingVoice=
+    available.find(v=>String(v.lang||'').toLowerCase()===wanted) ||
+    available.find(v=>String(v.lang||'').toLowerCase().startsWith(base+'-'));
+  if(matchingVoice)u.voice=matchingVoice;
+  window.speechSynthesis.speak(u);
 }
-
+async function speak(text){
+  text=String(text||'').trim();
+  if(!text)return;
+  stopAudio();
+  const requestId=audioRequestId;
+  const canonicalTarget=normalizeTarget(targetLanguage);
+  const language=voices[canonicalTarget];
+  const speakingRate=.92;
+  if(!language){
+otice(tr('noSpeech'),'error');
+    return;
+  }
+  const cacheKey=`${language}|${speakingRate}|${text}`;
+otice(tr('playing'),'info');
+  try{
+    let src=audioCache.get(cacheKey);
+    if(!src){
+      const response=await fetch('/.netlify/functions/google-tts',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          text,
+          language,
+          speakingRate
+        })
+      });
+      if(!response.ok){
+        let message='Audio could not be generated.';
+        try{
+          const data=await response.json();
+          if(data?.error)message=data.error;
+        }catch(e){}
+        throw new Error(message);
+      }
+      const blob=await response.blob();
+      src=URL.createObjectURL(blob);
+      audioCache.set(cacheKey,src);
+    }
+    if(requestId!==audioRequestId)return;
+    currentAudio=new Audio(src);
+    currentAudio.onended=()=>{currentAudio=null};
+    currentAudio.onerror=()=>{currentAudio=null};
+    await currentAudio.play();
+  }catch(err){
+    console.error('Google TTS error:',err);
+    if(requestId!==audioRequestId)return;
+    fallbackSpeak(text,language,speakingRate);
+  }
+}
 function splitForGap(sentence,gaps){
   const positions=[];
-
   gaps.forEach((gap,index)=>{
     const lowSentence=sentence.toLocaleLowerCase();
     const lowGap=gap.toLocaleLowerCase();
     const pos=lowSentence.indexOf(lowGap);
-
     if(pos<0){
       throw new Error('Gap word not found');
     }
-
     positions.push({
       index,
       start:pos,
@@ -1314,61 +1497,45 @@ function splitForGap(sentence,gaps){
       answer:sentence.slice(pos,pos+gap.length)
     });
   });
-
   positions.sort((a,b)=>a.start-b.start);
-
   if(positions[0].end>positions[1].start){
     throw new Error('Overlapping gaps');
   }
-
   const parts=[];
   let cursor=0;
-
   positions.forEach(p=>{
     parts.push({type:'text',text:sentence.slice(cursor,p.start)});
     parts.push({type:'gap',gapIndex:p.index,answer:p.answer});
     cursor=p.end;
   });
-
   parts.push({type:'text',text:sentence.slice(cursor)});
-
   return parts;
 }
-
 function renderExercise(){
   const wrap=$('sentenceCards');
   wrap.innerHTML='';
   attempts=[0,0,0];
-
   sentences.forEach((item,sentenceIndex)=>{
     const card=document.createElement('div');
     card.className='sentence-card';
-
     if(targetLanguage==='Arabic'){
       card.classList.add('target-rtl');
     }
-
     const top=document.createElement('div');
     top.className='sentence-top';
-
     const label=document.createElement('div');
     label.className='sentence-label';
     label.textContent=`${tr('sentence')} ${sentenceIndex+1}`;
-
     const listen=document.createElement('button');
     listen.className='listen-btn';
     listen.type='button';
     listen.textContent=tr('listen');
     listen.addEventListener('click',()=>speak(item.sentence));
-
     top.append(label,listen);
     card.appendChild(top);
-
     const line=document.createElement('div');
     line.className='gap-line';
-
     const parts=splitForGap(item.sentence,item.gaps);
-
     parts.forEach(part=>{
       if(part.type==='text'){
         line.appendChild(document.createTextNode(part.text));
@@ -1384,88 +1551,68 @@ function renderExercise(){
         line.appendChild(input);
       }
     });
-
     card.appendChild(line);
-
     const feedback=document.createElement('div');
     feedback.id=`feedback-${sentenceIndex}`;
     feedback.className='feedback';
     card.appendChild(feedback);
-
     const answer=document.createElement('div');
     answer.id=`answer-${sentenceIndex}`;
     answer.className='answer-box';
     answer.textContent=`${tr('showAnswer')}: ${item.sentence}`;
     card.appendChild(answer);
-
     wrap.appendChild(card);
   });
-
   $('scorePanel').style.display='none';
   $('exercise').style.display='block';
   $('exerciseIntro').textContent=tr('firstAttempt');
 }
-
 function checkAnswers(){
   let correctWords=0;
-
   sentences.forEach((item,sentenceIndex)=>{
     attempts[sentenceIndex]++;
-
     const inputs=[
       ...document.querySelectorAll(
         `.gap-input[data-sentence="${sentenceIndex}"]`
       )
     ];
-
     let sentenceCorrect=true;
-
     inputs.forEach(input=>{
       const ok=
-        normalise(input.value)
+ormalise(input.value)
         ===normalise(input.dataset.answer);
-
       input.classList.toggle('correct',ok);
       input.classList.toggle('wrong',!ok);
-
       if(ok){
         correctWords++;
       }else{
         sentenceCorrect=false;
       }
     });
-
     const fb=$(`feedback-${sentenceIndex}`);
     fb.className=
       'feedback '
       +(sentenceCorrect?'success':'error');
-
     fb.textContent=
       sentenceCorrect
       ?tr('correct')
       :tr('wrong');
-
     const answer=$(`answer-${sentenceIndex}`);
-
     answer.style.display=
       !sentenceCorrect&&attempts[sentenceIndex]>=2
       ?'block'
       :'none';
   });
-
   $('scoreValue').textContent=`${correctWords}/6`;
   $('scoreMessage').textContent=
     correctWords===6
     ?tr('scorePerfect')
     :tr('scoreSome');
-
   $('scorePanel').style.display='block';
-
   if(correctWords===6){
-    notice(tr('scorePerfect'),'success');
+otice(tr('scorePerfect'),'success');
   }
 }
-
 function retry(){
   document.querySelectorAll('.gap-input').forEach(input=>{
     if(!input.classList.contains('correct')){
@@ -1473,33 +1620,26 @@ function retry(){
     }
     input.classList.remove('wrong');
   });
-
   document.querySelectorAll('.feedback').forEach(f=>{
     f.style.display='none';
     f.className='feedback';
   });
-
   $('scorePanel').style.display='none';
 }
-
 async function generate(){
   const theme=$('themeInput').value.trim();
-
   if(!selectedLevel){
-    notice(tr('selectLevel'),'error');
+otice(tr('selectLevel'),'error');
     return;
   }
-
   if(!theme){
-    notice(tr('enterTopic'),'error');
+otice(tr('enterTopic'),'error');
     $('themeInput').focus();
     return;
   }
-
   setLoading(true);
   $('exercise').style.display='none';
   $('exerciseIntro').textContent=tr('generating');
-
   try{
     sentences=parse(await api(buildPrompt(theme)));
     renderExercise();
@@ -1507,27 +1647,23 @@ async function generate(){
   }catch(err){
     console.error(err);
     $('exerciseIntro').textContent=tr('serverError');
-    notice(tr('serverError'),'error');
+otice(tr('serverError'),'error');
   }finally{
     setLoading(false);
   }
 }
-
 /* EVENTS */
-
 $('themeInput').addEventListener('focus',()=>{
   $('themeInput').classList.remove('attention');
 },{once:true});
-
 document.querySelectorAll('.level').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedLevel=btn.dataset.level;
-    notice(`${tr('levelSelected')}: ${btn.textContent}`,'info');
+otice(`${tr('levelSelected')}: ${btn.textContent}`,'info');
   });
 });
-
 document.querySelectorAll('.example').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.example').forEach(b=>b.classList.remove('selected'));
@@ -1536,14 +1672,13 @@ document.querySelectorAll('.example').forEach(btn=>{
     $('themeInput').classList.remove('attention');
   });
 });
-
 $('generateBtn').addEventListener('click',generate);
 $('checkBtn').addEventListener('click',checkAnswers);
 $('retryBtn').addEventListener('click',retry);
 $('newBtn').addEventListener('click',generate);
-
+$('homeLink').addEventListener('click',goToIndex);
 $('clearBtn').addEventListener('click',()=>{
-  speechSynthesis?.cancel();
+  stopAudio();
   $('themeInput').value='';
   $('themeInput').classList.add('attention');
   selectedLevel='';
@@ -1552,11 +1687,78 @@ $('clearBtn').addEventListener('click',()=>{
   $('exercise').style.display='none';
   $('exerciseIntro').textContent=tr('waiting');
 });
-
 applyLanguage();
-
 });
 </script>
-
+<script id="lingototal-new-lingoreal-level-gate">(function(){
+const UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
+const S={
+en:{choose:'Start by choosing your level',lead:'Choose the option that feels right for you today.',basic:'Revising\nthe basics',basicNote:'Notice useful, natural language in simple everyday situations.',conf:'Building\nconfidence',confNote:'Understand more natural reactions, tone and everyday expressions.'},
+ca:{choose:'Comença triant el teu nivell',lead:'Tria l’opció que et vagi millor avui.',basic:'Repassar\nles bases',basicNote:'Descobreix llenguatge útil i natural en situacions quotidianes senzilles.',conf:'Guanyar\nconfiança',confNote:'Entén reaccions, tons i expressions quotidianes més naturals.'},
+es:{choose:'Empieza eligiendo tu nivel',lead:'Elige la opción que mejor te vaya hoy.',basic:'Repasar\nlo básico',basicNote:'Descubre lenguaje útil y natural en situaciones cotidianas sencillas.',conf:'Ganar\nconfianza',confNote:'Comprende reacciones, tonos y expresiones cotidianas más naturales.'},
+fr:{choose:'Commencez par choisir votre niveau',lead:'Choisissez l’option qui vous convient aujourd’hui.',basic:'Revoir\nles bases',basicNote:'Repérez une langue utile et naturelle dans des situations simples.',conf:'Prendre\nconfiance',confNote:'Comprenez des réactions, des tons et des expressions plus naturels.'},
+de:{choose:'Starte mit deinem Niveau',lead:'Wähle die Option, die heute zu dir passt.',basic:'Grundlagen\nauffrischen',basicNote:'Entdecke nützliche, natürliche Sprache in einfachen Alltagssituationen.',conf:'Sicherheit\ngewinnen',confNote:'Verstehe natürlichere Reaktionen, Tonlagen und Alltagsausdrücke.'},
+it:{choose:'Inizia scegliendo il tuo livello',lead:'Scegli l’opzione che oggi ti sembra più adatta.',basic:'Ripassare\nle basi',basicNote:'Nota espressioni utili e naturali in semplici situazioni quotidiane.',conf:'Acquisire\nsicurezza',confNote:'Comprendi reazioni, tono ed espressioni quotidiane più naturali.'},
+pt:{choose:'Comece por escolher o seu nível',lead:'Escolha a opção que lhe parece certa hoje.',basic:'Rever\nas bases',basicNote:'Repare em linguagem útil e natural em situações simples do dia a dia.',conf:'Ganhar\nconfiança',confNote:'Compreenda reações, tons e expressões quotidianas mais naturais.'},
+eu:{choose:'Hasi zure maila aukeratuz',lead:'Aukeratu gaur ondoen datorkizun aukera.',basic:'Oinarriak\nberrikusi',basicNote:'Ohartu eguneroko egoera errazetako hizkuntza erabilgarri eta naturalaz.',conf:'Konfiantza irabazi',confNote:'Ulertu erreakzio, tonu eta eguneroko adierazpen naturalagoak.'},
+ja:{choose:'まずレベルを選びましょう',lead:'今日の自分に合うものを選んでください。',basic:'基礎を復習する',basicNote:'簡単な日常場面で役立つ自然な表現に気づきます。',conf:'自信をつける',confNote:'より自然な反応、口調、日常表現を理解します。'},
+ar:{choose:'ابدأ باختيار مستواك',lead:'اختر الخيار الأنسب لك اليوم.',basic:'مراجعة\nالأساسيات',basicNote:'لاحظ اللغة المفيدة والطبيعية في مواقف يومية بسيطة.',conf:'بناء\nالثقة',confNote:'افهم ردود الفعل والنبرة والتعبيرات اليومية الطبيعية.'}
+};
+function currentUI(){const q=new URLSearchParams(location.search);let u=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';if(!UI.includes(u))u='en';return u}
+function init(){const ui=currentUI(),t=S[ui];document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';
+ document.querySelectorAll('[data-shell-i18n]').forEach(el=>{
+  const v=t[el.dataset.shellI18n];
+  if(v!==undefined){
+    if(el.classList.contains('level-name')) el.innerHTML=String(v).replace(/\n/g,'<br>');
+    else el.textContent=v;
+  }
+});
+ const content=document.querySelector('.lt-activity-content');const levels=[...document.querySelectorAll('.lt-level-card')];if(!content||!levels.length)return;
+ levels.forEach(btn=>btn.addEventListener('click',()=>{levels.forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');localStorage.setItem('lingototal_level',btn.dataset.level);}));
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script>
+<script id="lt-level-first-controller">
+(function(){
+  function setup(){
+    const input = document.getElementById('themeInput');
+    const generate = document.getElementById('generateBtn');
+    const levelButtons = [...document.querySelectorAll('.level')];
+    if(!input || !generate || !levelButtons.length) return;
+    // Theme can be typed immediately.
+    input.disabled = false;
+    // Generation requires BOTH a chosen level and a non-empty theme.
+    let levelChosen = levelButtons.some(btn =>
+      btn.classList.contains('selected') ||
+      btn.getAttribute('aria-pressed') === 'true'
+    );
+    function updateGenerate(){
+      generate.disabled = !(levelChosen && input.value.trim());
+    }
+    levelButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        levelChosen = true;
+        updateGenerate();
+      });
+    });
+    input.addEventListener('input', updateGenerate);
+    const clear = document.getElementById('clearBtn');
+    if(clear){
+      clear.addEventListener('click', () => {
+        setTimeout(() => {
+          levelChosen = false;
+          updateGenerate();
+        }, 0);
+      });
+    }
+    updateGenerate();
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
+</script>
 </body>
 </html>
