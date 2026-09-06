@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LingoTotal · Evaluation</title>
+<script>
+(function(){
+  if(location.protocol==='file:')return;
+  try{
+    const access=JSON.parse(sessionStorage.getItem('lingototal_evaluation_access')||'null');
+    if(!access||!access.group||Number(access.expiresAt)<=Date.now()){
+      sessionStorage.removeItem('lingototal_evaluation_access');
+      sessionStorage.removeItem('lingototal_evaluation_group');
+      location.replace('index.html#evaluation');
+      return;
+    }
+    sessionStorage.setItem('lingototal_evaluation_group',String(access.group));
+  }catch{
+    location.replace('index.html#evaluation');
+  }
+})();
+</script>
+<style>
+:root{--blue:#3277e8;--bg:#171717;--panel:#202020;--soft:#292929;--ink:#f7f7f5;--muted:#b8bdc5;--border:#383838}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5}
+button,input,textarea,select{font:inherit}
+.banner{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;min-height:72px;padding:10px clamp(14px,4vw,56px);gap:18px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),linear-gradient(120deg,#24344c,#15191f 62%);border-bottom:1px solid #343b45}
+.brand-wrap{display:flex;align-items:center;gap:11px}.brand-mark{width:40px;height:40px;display:grid;place-items:center;background:var(--blue);color:#fff;text-decoration:none;font-weight:900}.brand{font-size:.95rem;font-weight:900;letter-spacing:.12em}.tagline{font-size:.65rem;color:#d7dce3}.activity-name{position:absolute;left:50%;transform:translateX(-50%);font-size:.82rem;font-weight:900;letter-spacing:.1em}.header-tools{display:flex;align-items:center;gap:7px}.language-pair{padding:7px 10px;border:1px solid #ffffff47;background:#0004;font-size:.68rem;font-weight:800}.home-link{width:40px;height:40px;display:grid;place-items:center;background:#f4f4f2;color:#182033;text-decoration:none;font-size:20px}
+.page{width:min(980px,calc(100% - 28px));margin:18px auto 48px}.hero,.panel{background:var(--panel);border:1px solid var(--border);padding:28px;margin-bottom:18px}.hero{border-left:4px solid var(--blue);background:linear-gradient(135deg,#222,#1b222d)}.hero h1{font-family:Georgia,serif;font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:8px 0 12px}.hero p,.lead{color:#cbd1d9}.notice{margin-top:18px;padding:13px;background:#232832;border:1px solid #35445b}.panel h2{margin-top:0}.task{padding:14px 16px;background:#292929;border-left:3px solid var(--blue);margin:12px 0}.field{margin:18px 0}label.legend{display:block;font-weight:800;margin-bottom:8px}textarea,input[type=text],select{width:100%;padding:12px;border:1px solid #4a4a4a;background:#171717;color:#fff}textarea{min-height:95px}.choices{display:grid;gap:8px}.choice{display:flex;gap:9px;align-items:flex-start;padding:10px;background:#292929;border:1px solid #3c3c3c}.rating{display:grid;grid-template-columns:minmax(240px,1fr) repeat(5,48px);border-top:1px solid #3a3a3a}.rlabel,.rhead,.rcell{padding:9px 6px;border-bottom:1px solid #343434}.rhead,.rcell{text-align:center}.rhead{font-size:.7rem;color:#9eabb9}.small{font-size:.78rem;color:var(--muted)}.memory{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn,.link-btn{display:inline-block;padding:11px 14px;border:0;background:var(--blue);color:#fff;text-decoration:none;font-weight:900;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}.secondary{background:#292929;border:1px solid #4a4a4a}.actions{display:flex;gap:8px;flex-wrap:wrap}.summary{display:none;margin-top:16px;padding:14px;background:#1e2938;border:1px solid #355178}.summary.success{display:block;border-color:#3eae78;background:#1c3026}.summary.error{display:block;border-color:#e25c68;background:#382126}.hidden-field{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}.progress{position:sticky;top:72px;z-index:60;background:#171717eF;padding:8px 0;margin-bottom:8px}.track{height:6px;background:#292929}.track span{display:block;height:100%;width:0;background:var(--blue)}.pct{text-align:right;color:#9da5af;font-size:.68rem;margin-top:4px}
+@media(max-width:700px){.banner{height:58px;min-height:58px;padding:8px 11px}.tagline{display:none}.brand-mark{width:34px;height:34px}.brand{font-size:.76rem}.activity-name{font-size:.64rem}.language-pair{font-size:0}.language-pair:after{content:attr(data-short);font-size:.62rem}.home-link{width:36px;height:36px}.progress{top:58px}.rating{grid-template-columns:1fr repeat(5,34px)}.rlabel{font-size:.78rem}.memory{grid-template-columns:1fr}}
+</style>
+<style id="lt-evaluation-rtl">
+html[dir="rtl"] body{text-align:right}
+html[dir="rtl"] .activity-name{direction:rtl}
+html[dir="rtl"] .choice{flex-direction:row-reverse;justify-content:flex-end}
+html[dir="rtl"] .rating{direction:rtl}
+html[dir="rtl"] input,html[dir="rtl"] textarea,html[dir="rtl"] select{text-align:right}
+html[dir="rtl"] .notice,html[dir="rtl"] .task{border-left:1px solid #35445b;border-right:3px solid var(--blue)}
+</style>
+</head>
+<body>
+<header class="banner">
+<div class="brand-wrap"><a class="brand-mark index-link" href="index.html">LT</a><div><div class="brand">LINGO TOTAL</div><div class="tagline">Learn any language your way</div></div></div>
+<div class="activity-name">EVALUATION</div>
+<div class="header-tools"><div class="language-pair" id="languagePair" data-short="EN → ES">Interface → Target</div><a class="home-link index-link" href="index.html" aria-label="Home">⌂</a></div>
+</header>
+<main class="page">
+<section class="hero">
+<div class="small">LINGOTOTAL USER EVALUATION</div>
+<h1>Help us find out what works</h1>
+<p>This evaluation looks at how people use LingoTotal, what kinds of language they discover, and whether saving and practising personally useful phrases helps them remember and use more language.</p>
+<div class="notice"><strong>Please answer from your own experience.</strong> We are interested in both positive and negative reactions. There are no preferred answers.</div>
+</section>
+<div class="progress"><div class="track"><span id="bar"></span></div><div class="pct" id="pct">0% complete</div></div>
+<form id="form" name="lingototal-evaluation" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+<input type="hidden" name="form-name" value="lingototal-evaluation">
+<input type="hidden" name="evaluationGroup" id="evaluationGroup" value="">
+<input type="hidden" name="interfaceLanguage" id="interfaceLanguage" value="">
+<input type="hidden" name="submittedAt" id="submittedAt" value="">
+<p class="hidden-field"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<section class="panel">
+<h2>1. About you</h2>
+<div class="field"><label class="legend">Which language did you practise?</label><input type="text" name="targetLanguage" id="targetLanguage"></div>
+<div class="field"><label class="legend">How would you describe your current level?</label>
+<div class="choices">
+<label class="choice"><input type="radio" name="level" value="Beginner"> Beginner</label>
+<label class="choice"><input type="radio" name="level" value="Elementary"> Elementary</label>
+<label class="choice"><input type="radio" name="level" value="Intermediate"> Intermediate</label>
+<label class="choice"><input type="radio" name="level" value="Upper intermediate"> Upper intermediate</label>
+<label class="choice"><input type="radio" name="level" value="Advanced"> Advanced</label>
+<label class="choice"><input type="radio" name="level" value="Not sure"> Not sure</label>
+</div></div>
+<div class="field"><label class="legend">Why are you learning or using this language?</label><textarea name="reason"></textarea></div>
+</section>
+<section class="panel">
+<h2>2. Try LingoTotal in your own way</h2>
+<p class="lead">Please spend some time using the website before completing the main evaluation.</p>
+<div class="task"><strong>Choose something you genuinely want to practise.</strong><br>Enter a topic, situation or language need that matters to you. Notice whether the generated activity responds to what you asked for.</div>
+<div class="task"><strong>Look for language you would actually like to use.</strong><br>Notice useful, natural or personally relevant phrases and expressions.</div>
+<div class="task"><strong>Save useful language.</strong><br>Save several phrases that you would genuinely like to remember.</div>
+<div class="task"><strong>Use LingoPractice.</strong><br>Return to your saved language and practise it again.</div>
+<div class="actions"><a class="link-btn index-link" target="_blank" href="index.html">Open activities</a><a class="link-btn" id="practiceLink" target="_blank" href="lingopractice.html">Open LingoPractice</a></div>
+</section>
+<section class="panel">
+<h2>3. Content, choice and relevance</h2>
+<p class="lead">1 = strongly disagree · 5 = strongly agree</p>
+<div class="rating">
+<div class="rlabel"></div><div class="rhead">1</div><div class="rhead">2</div><div class="rhead">3</div><div class="rhead">4</div><div class="rhead">5</div>
+<div class="rlabel">The activities responded well to the topic or situation I entered.</div>
+<div class="rcell"><input type="radio" name="responded" value="1"></div><div class="rcell"><input type="radio" name="responded" value="2"></div><div class="rcell"><input type="radio" name="responded" value="3"></div><div class="rcell"><input type="radio" name="responded" value="4"></div><div class="rcell"><input type="radio" name="responded" value="5"></div>
+<div class="rlabel">The generated language was relevant to my own needs or interests.</div>
+<div class="rcell"><input type="radio" name="relevant" value="1"></div><div class="rcell"><input type="radio" name="relevant" value="2"></div><div class="rcell"><input type="radio" name="relevant" value="3"></div><div class="rcell"><input type="radio" name="relevant" value="4"></div><div class="rcell"><input type="radio" name="relevant" value="5"></div>
+<div class="rlabel">Being able to influence the content made the activity more useful to me.</div>
+<div class="rcell"><input type="radio" name="influence" value="1"></div><div class="rcell"><input type="radio" name="influence" value="2"></div><div class="rcell"><input type="radio" name="influence" value="3"></div><div class="rcell"><input type="radio" name="influence" value="4"></div><div class="rcell"><input type="radio" name="influence" value="5"></div>
+<div class="rlabel">The language felt natural and appropriate to real situations.</div>
+<div class="rcell"><input type="radio" name="natural" value="1"></div><div class="rcell"><input type="radio" name="natural" value="2"></div><div class="rcell"><input type="radio" name="natural" value="3"></div><div class="rcell"><input type="radio" name="natural" value="4"></div><div class="rcell"><input type="radio" name="natural" value="5"></div>
+<div class="rlabel">I encountered useful language that I do not often meet in language-learning materials.</div>
+<div class="rcell"><input type="radio" name="unusualUseful" value="1"></div><div class="rcell"><input type="radio" name="unusualUseful" value="2"></div><div class="rcell"><input type="radio" name="unusualUseful" value="3"></div><div class="rcell"><input type="radio" name="unusualUseful" value="4"></div><div class="rcell"><input type="radio" name="unusualUseful" value="5"></div>
+</div>
+<div class="field"><label class="legend">Give one example of language you found especially useful, natural or relevant, if you can.</label><textarea name="usefulExample"></textarea></div>
+<div class="field"><label class="legend">Did you encounter anything that seemed incorrect, unnatural or unsuitable?</label><textarea name="unnaturalExample"></textarea></div>
+</section>
+<section class="panel">
+<h2>4. Saving phrases and LingoPractice</h2>
+<div class="field"><label class="legend">Approximately how many phrases did you save?</label><select name="savedCount"><option value="">Choose one</option><option>None</option><option>1–5</option><option>6–10</option><option>11–20</option><option>More than 20</option></select></div>
+<div class="rating">
+<div class="rlabel"></div><div class="rhead">1</div><div class="rhead">2</div><div class="rhead">3</div><div class="rhead">4</div><div class="rhead">5</div>
+<div class="rlabel">Saving phrases made me pay more attention to useful language.</div>
+<div class="rcell"><input type="radio" name="attention" value="1"></div><div class="rcell"><input type="radio" name="attention" value="2"></div><div class="rcell"><input type="radio" name="attention" value="3"></div><div class="rcell"><input type="radio" name="attention" value="4"></div><div class="rcell"><input type="radio" name="attention" value="5"></div>
+<div class="rlabel">The phrases I chose felt personally worth remembering.</div>
+<div class="rcell"><input type="radio" name="worth" value="1"></div><div class="rcell"><input type="radio" name="worth" value="2"></div><div class="rcell"><input type="radio" name="worth" value="3"></div><div class="rcell"><input type="radio" name="worth" value="4"></div><div class="rcell"><input type="radio" name="worth" value="5"></div>
+<div class="rlabel">LingoPractice helped me remember phrases I had saved.</div>
+<div class="rcell"><input type="radio" name="memory" value="1"></div><div class="rcell"><input type="radio" name="memory" value="2"></div><div class="rcell"><input type="radio" name="memory" value="3"></div><div class="rcell"><input type="radio" name="memory" value="4"></div><div class="rcell"><input type="radio" name="memory" value="5"></div>
+<div class="rlabel">After practising, I felt more able to use some of the phrases myself.</div>
+<div class="rcell"><input type="radio" name="activeUse" value="1"></div><div class="rcell"><input type="radio" name="activeUse" value="2"></div><div class="rcell"><input type="radio" name="activeUse" value="3"></div><div class="rcell"><input type="radio" name="activeUse" value="4"></div><div class="rcell"><input type="radio" name="activeUse" value="5"></div>
+</div>
+<div class="field"><label class="legend">Compared with before practising your saved phrases, how much of that language do you now feel able to remember and use?</label>
+<div class="choices">
+<label class="choice"><input type="radio" name="acquisition" value="A great deal more"> A great deal more</label>
+<label class="choice"><input type="radio" name="acquisition" value="Quite a lot more"> Quite a lot more</label>
+<label class="choice"><input type="radio" name="acquisition" value="Somewhat more"> Somewhat more</label>
+<label class="choice"><input type="radio" name="acquisition" value="A little more"> A little more</label>
+<label class="choice"><input type="radio" name="acquisition" value="No noticeable difference"> No noticeable difference</label>
+</div></div>
+</section>
+<section class="panel">
+<h2>5. What stayed with you?</h2>
+<p class="lead">Without looking at your saved list, write down up to five phrases or expressions that you remember. This is not a test.</p>
+<div class="memory"><input type="text" name="remembered1" placeholder="Phrase 1"><input type="text" name="remembered2" placeholder="Phrase 2"><input type="text" name="remembered3" placeholder="Phrase 3"><input type="text" name="remembered4" placeholder="Phrase 4"><input type="text" name="remembered5" placeholder="Phrase 5"></div>
+<div class="field"><label class="legend">How many of these do you think you could now use appropriately in a real situation?</label><select name="usableRemembered"><option value="">Choose one</option><option>None</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+<p class="small">For a stronger study, this recall task can be repeated later to measure retention rather than immediate memory alone.</p>
+</section>
+<section class="panel">
+<h2>6. Overall experience</h2>
+<div class="rating">
+<div class="rlabel"></div><div class="rhead">1</div><div class="rhead">2</div><div class="rhead">3</div><div class="rhead">4</div><div class="rhead">5</div>
+<div class="rlabel">LingoTotal was easy to understand and navigate.</div>
+<div class="rcell"><input type="radio" name="easy" value="1"></div><div class="rcell"><input type="radio" name="easy" value="2"></div><div class="rcell"><input type="radio" name="easy" value="3"></div><div class="rcell"><input type="radio" name="easy" value="4"></div><div class="rcell"><input type="radio" name="easy" value="5"></div>
+<div class="rlabel">The activities were appropriate for my level.</div>
+<div class="rcell"><input type="radio" name="levelFit" value="1"></div><div class="rcell"><input type="radio" name="levelFit" value="2"></div><div class="rcell"><input type="radio" name="levelFit" value="3"></div><div class="rcell"><input type="radio" name="levelFit" value="4"></div><div class="rcell"><input type="radio" name="levelFit" value="5"></div>
+<div class="rlabel">LingoTotal helped me discover language I would like to use in real life.</div>
+<div class="rcell"><input type="radio" name="realLife" value="1"></div><div class="rcell"><input type="radio" name="realLife" value="2"></div><div class="rcell"><input type="radio" name="realLife" value="3"></div><div class="rcell"><input type="radio" name="realLife" value="4"></div><div class="rcell"><input type="radio" name="realLife" value="5"></div>
+<div class="rlabel">I would use LingoTotal again.</div>
+<div class="rcell"><input type="radio" name="again" value="1"></div><div class="rcell"><input type="radio" name="again" value="2"></div><div class="rcell"><input type="radio" name="again" value="3"></div><div class="rcell"><input type="radio" name="again" value="4"></div><div class="rcell"><input type="radio" name="again" value="5"></div>
+</div>
+<div class="field"><label class="legend">If choosing how to practise a language, which would you prefer?</label>
+<div class="choices">
+<label class="choice"><input type="radio" name="preference" value="Mostly predetermined course content"> Mostly predetermined course content</label>
+<label class="choice"><input type="radio" name="preference" value="Mostly content generated around my needs and interests"> Mostly content generated around my needs and interests</label>
+<label class="choice"><input type="radio" name="preference" value="A combination of both"> A combination of both</label>
+<label class="choice"><input type="radio" name="preference" value="Not sure"> Not sure</label>
+</div></div>
+</section>
+<section class="panel">
+<h2>7. Final comments</h2>
+<div class="field"><label class="legend">What was the most valuable aspect of LingoTotal for you?</label><textarea name="valuable"></textarea></div>
+<div class="field"><label class="legend">What is the ONE thing you would most like us to improve?</label><textarea name="improve"></textarea></div>
+<div class="field"><label class="legend">Anything else you would like to tell us?</label><textarea name="comments"></textarea></div>
+<label class="choice"><input type="checkbox" name="followUp" value="Yes"> I would be willing to take part in a later follow-up to see how much language I still remember.</label>
+<div class="actions" style="margin-top:18px"><button class="btn" type="submit" id="finish">Submit evaluation</button></div>
+<div class="summary" id="summary" role="status" aria-live="polite">Thank you. Your evaluation has been submitted.</div>
+</section>
+</form>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+const params=new URLSearchParams(location.search);
+const rawUi=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
+const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
+const aliases={
+  English:'en',en:'en',
+  Catalan:'ca','Català':'ca',ca:'ca',
+  Spanish:'es','Español':'es',es:'es',
+  French:'fr','Français':'fr',fr:'fr',
+  German:'de',Deutsch:'de',de:'de',
+  Italian:'it',it:'it',
+  Portuguese:'pt','Português':'pt',pt:'pt',
+  Basque:'eu','Euskara':'eu',eu:'eu',
+  Japanese:'ja','日本語':'ja',ja:'ja',
+  Arabic:'ar','العربية':'ar',ar:'ar'
+};
+const ui=aliases[rawUi]||String(rawUi).toLowerCase().slice(0,2);
+const codes={
+  en:'EN',English:'EN',ca:'CA',Catalan:'CA','Català':'CA',
+  es:'ES',Spanish:'ES','Español':'ES',fr:'FR',French:'FR','Français':'FR',
+  de:'DE',German:'DE',Deutsch:'DE',it:'IT',Italian:'IT',
+  pt:'PT',Portuguese:'PT','Português':'PT',eu:'EU',Basque:'EU','Euskara':'EU',
+  ja:'JA',Japanese:'JA','日本語':'JA',ar:'AR',Arabic:'AR','العربية':'AR'
+};
+const T={
+en:{
+activity:'EVALUATION',tag:'Learn any language your way',eyebrow:'LINGOTOTAL USER EVALUATION',
+hero:'Help us find out what works',
+heroText:'This evaluation looks at how people use LingoTotal, what kinds of language they discover, and whether saving and practising personally useful phrases helps them remember and use more language.',
+notice:'Please answer from your own experience. We are interested in both positive and negative reactions. There are no preferred answers.',
+about:'1. About you',lang:'Which language did you practise?',level:'How would you describe your current level?',reason:'Why are you learning or using this language?',
+levels:['Beginner','Elementary','Intermediate','Upper intermediate','Advanced','Not sure'],
+tryTitle:'2. Try LingoTotal in your own way',
+tryLead:'Please spend some time using the website before completing the main evaluation.',
+task1:'Choose something you genuinely want to practise.',task1b:'Enter a topic, situation or language need that matters to you. Notice whether the generated activity responds to what you asked for.',
+task2:'Look for language you would actually like to use.',task2b:'Notice useful, natural or personally relevant phrases and expressions.',
+task3:'Save useful language.',task3b:'Save several phrases that you would genuinely like to remember.',
+task4:'Use LingoPractice.',task4b:'Return to your saved language and practise it again.',
+openActivities:'Open activities',openPractice:'Open LingoPractice',
+contentTitle:'3. Content, choice and relevance',scale:'1 = strongly disagree · 5 = strongly agree',
+q1:'The activities responded well to the topic or situation I entered.',
+q2:'The generated language was relevant to my own needs or interests.',
+q3:'Being able to influence the content made the activity more useful to me.',
+q4:'The language felt natural and appropriate to real situations.',
+q5:'I encountered useful language that I do not often meet in language-learning materials.',
+example:'Give one example of language you found especially useful, natural or relevant, if you can.',
+bad:'Did you encounter anything that seemed incorrect, unnatural or unsuitable?',
+practiceTitle:'4. Saving phrases and LingoPractice',
+savedCount:'Approximately how many phrases did you save?',
+choose:'Choose one',savedOpts:['None','1–5','6–10','11–20','More than 20'],
+p1:'Saving phrases made me pay more attention to useful language.',
+p2:'The phrases I chose felt personally worth remembering.',
+p3:'LingoPractice helped me remember phrases I had saved.',
+p4:'After practising, I felt more able to use some of the phrases myself.',
+acq:'Compared with before practising your saved phrases, how much of that language do you now feel able to remember and use?',
+acqOpts:['A great deal more','Quite a lot more','Somewhat more','A little more','No noticeable difference'],
+memoryTitle:'5. What stayed with you?',
+memoryLead:'Without looking at your saved list, write down up to five phrases or expressions that you remember. This is not a test.',
+phrase:'Phrase',
+usable:'How many of these do you think you could now use appropriately in a real situation?',
+none:'None',
+memoryNote:'For a stronger study, this recall task can be repeated later to measure retention rather than immediate memory alone.',
+overallTitle:'6. Overall experience',
+o1:'LingoTotal was easy to understand and navigate.',
+o2:'The activities were appropriate for my level.',
+o3:'LingoTotal helped me discover language I would like to use in real life.',
+o4:'I would use LingoTotal again.',
+pref:'If choosing how to practise a language, which would you prefer?',
+prefOpts:['Mostly predetermined course content','Mostly content generated around my needs and interests','A combination of both','Not sure'],
+finalTitle:'7. Final comments',
+valuable:'What was the most valuable aspect of LingoTotal for you?',
+improve:'What is the ONE thing you would most like us to improve?',
+comments:'Anything else you would like to tell us?',
+follow:'I would be willing to take part in a later follow-up to see how much language I still remember.',
+finish:'Submit evaluation',submitting:'Submitting…',
+thanks:'Thank you. Your evaluation has been submitted.',submitError:'Your evaluation could not be submitted. Please check your connection and try again.',
+complete:'complete'
+},
+es:{
+activity:'EVALUACIÓN',tag:'Aprende cualquier idioma a tu manera',eyebrow:'EVALUACIÓN DE USUARIOS DE LINGOTOTAL',
+hero:'Ayúdanos a descubrir qué funciona',
+heroText:'Esta evaluación analiza cómo se utiliza LingoTotal, qué tipo de lenguaje se descubre y si guardar y practicar frases personalmente útiles ayuda a recordarlas y utilizarlas mejor.',
+notice:'Responde según tu propia experiencia. Nos interesan tanto las reacciones positivas como las negativas. No hay respuestas preferidas.',
+about:'1. Sobre ti',lang:'¿Qué idioma practicaste?',level:'¿Cómo describirías tu nivel actual?',reason:'¿Por qué aprendes o utilizas este idioma?',
+levels:['Principiante','Elemental','Intermedio','Intermedio alto','Avanzado','No estoy seguro/a'],
+tryTitle:'2. Prueba LingoTotal a tu manera',tryLead:'Dedica un tiempo a utilizar la web antes de completar la evaluación principal.',
+task1:'Elige algo que realmente quieras practicar.',task1b:'Introduce un tema, una situación o una necesidad lingüística importante para ti. Observa si la actividad generada responde a lo que pediste.',
+task2:'Busca lenguaje que realmente te gustaría utilizar.',task2b:'Fíjate en frases y expresiones útiles, naturales o personalmente relevantes.',
+task3:'Guarda lenguaje útil.',task3b:'Guarda varias frases que realmente te gustaría recordar.',
+task4:'Utiliza LingoPractice.',task4b:'Vuelve al lenguaje que has guardado y practícalo de nuevo.',
+openActivities:'Abrir actividades',openPractice:'Abrir LingoPractice',
+contentTitle:'3. Contenido, elección y relevancia',scale:'1 = totalmente en desacuerdo · 5 = totalmente de acuerdo',
+q1:'Las actividades respondieron bien al tema o situación que introduje.',
+q2:'El lenguaje generado fue relevante para mis necesidades o intereses.',
+q3:'Poder influir en el contenido hizo que la actividad me resultara más útil.',
+q4:'El lenguaje parecía natural y apropiado para situaciones reales.',
+q5:'Encontré lenguaje útil que no suelo encontrar en materiales de aprendizaje de idiomas.',
+example:'Da un ejemplo de lenguaje que te haya parecido especialmente útil, natural o relevante, si puedes.',
+bad:'¿Encontraste algo que pareciera incorrecto, poco natural o inadecuado?',
+practiceTitle:'4. Guardar frases y LingoPractice',savedCount:'Aproximadamente, ¿cuántas frases guardaste?',choose:'Elige una opción',
+savedOpts:['Ninguna','1–5','6–10','11–20','Más de 20'],
+p1:'Guardar frases hizo que prestara más atención al lenguaje útil.',
+p2:'Las frases que elegí me parecieron personalmente dignas de recordar.',
+p3:'LingoPractice me ayudó a recordar frases que había guardado.',
+p4:'Después de practicar, sentí que podía utilizar mejor algunas de las frases por mi cuenta.',
+acq:'Comparado con antes de practicar tus frases guardadas, ¿cuánto más de ese lenguaje crees que ahora puedes recordar y utilizar?',
+acqOpts:['Muchísimo más','Bastante más','Algo más','Un poco más','Ninguna diferencia apreciable'],
+memoryTitle:'5. ¿Qué se te quedó?',memoryLead:'Sin mirar tu lista guardada, escribe hasta cinco frases o expresiones que recuerdes. No es un examen.',
+phrase:'Frase',usable:'¿Cuántas de estas crees que ahora podrías utilizar adecuadamente en una situación real?',none:'Ninguna',
+memoryNote:'Para una evaluación más sólida, esta tarea de recuerdo puede repetirse más adelante para medir la retención y no solo la memoria inmediata.',
+overallTitle:'6. Experiencia global',
+o1:'LingoTotal fue fácil de entender y navegar.',o2:'Las actividades eran adecuadas para mi nivel.',o3:'LingoTotal me ayudó a descubrir lenguaje que me gustaría utilizar en la vida real.',o4:'Volvería a utilizar LingoTotal.',
+pref:'Si eligieras cómo practicar un idioma, ¿qué preferirías?',
+prefOpts:['Principalmente contenido predeterminado de un curso','Principalmente contenido generado según mis necesidades e intereses','Una combinación de ambos','No estoy seguro/a'],
+finalTitle:'7. Comentarios finales',valuable:'¿Cuál fue para ti el aspecto más valioso de LingoTotal?',improve:'¿Qué ÚNICA cosa te gustaría que mejoráramos?',comments:'¿Hay algo más que quieras decirnos?',
+follow:'Estaría dispuesto/a a participar en un seguimiento posterior para comprobar cuánto lenguaje sigo recordando.',
+finish:'Enviar evaluación',submitting:'Enviando…',
+thanks:'Gracias. Tu evaluación se ha enviado.',submitError:'No se ha podido enviar la evaluación. Comprueba la conexión e inténtalo de nuevo.',
+complete:'completado'
+},
+ca:{
+activity:'AVALUACIÓ',tag:'Aprèn qualsevol llengua a la teva manera',eyebrow:"AVALUACIÓ D'USUARIS DE LINGOTOTAL",
+hero:'Ajuda’ns a descobrir què funciona',
+heroText:'Aquesta avaluació analitza com s’utilitza LingoTotal, quin tipus de llengua s’hi descobreix i si guardar i practicar frases personalment útils ajuda a recordar-les i utilitzar-les millor.',
+notice:'Respon segons la teva pròpia experiència. Ens interessen tant les reaccions positives com les negatives. No hi ha respostes preferides.',
+about:'1. Sobre tu',lang:'Quina llengua has practicat?',level:'Com descriuries el teu nivell actual?',reason:'Per què aprens o utilitzes aquesta llengua?',
+levels:['Principiant','Elemental','Intermedi','Intermedi alt','Avançat/da','No n’estic segur/a'],
+tryTitle:'2. Prova LingoTotal a la teva manera',tryLead:'Dedica una estona a utilitzar el web abans de completar l’avaluació principal.',
+task1:'Tria alguna cosa que realment vulguis practicar.',task1b:'Introdueix un tema, una situació o una necessitat lingüística que sigui important per a tu. Observa si l’activitat generada respon al que has demanat.',
+task2:'Busca llengua que realment voldries utilitzar.',task2b:'Fixa’t en frases i expressions útils, naturals o rellevants per a tu.',
+task3:'Guarda llengua útil.',task3b:'Guarda diverses frases que realment voldries recordar.',
+task4:'Utilitza LingoPractice.',task4b:'Torna a la llengua que has guardat i practica-la de nou.',
+openActivities:'Obre les activitats',openPractice:'Obre LingoPractice',
+contentTitle:'3. Contingut, elecció i rellevància',scale:'1 = totalment en desacord · 5 = totalment d’acord',
+q1:'Les activitats van respondre bé al tema o situació que vaig introduir.',q2:'La llengua generada era rellevant per a les meves necessitats o interessos.',q3:'Poder influir en el contingut va fer que l’activitat em fos més útil.',q4:'La llengua semblava natural i adequada per a situacions reals.',q5:'Vaig trobar llengua útil que no sol aparèixer en materials d’aprenentatge de llengües.',
+example:'Dona un exemple de llengua que t’hagi semblat especialment útil, natural o rellevant, si pots.',bad:'Has trobat res que et semblés incorrecte, poc natural o inadequat?',
+practiceTitle:'4. Guardar frases i LingoPractice',savedCount:'Aproximadament, quantes frases has guardat?',choose:'Tria una opció',savedOpts:['Cap','1–5','6–10','11–20','Més de 20'],
+p1:'Guardar frases va fer que prestés més atenció a la llengua útil.',p2:'Les frases que vaig triar em semblaven personalment dignes de recordar.',p3:'LingoPractice em va ajudar a recordar frases que havia guardat.',p4:'Després de practicar, em vaig sentir més capaç d’utilitzar algunes frases pel meu compte.',
+acq:'Comparat amb abans de practicar les frases guardades, quanta més llengua creus que ara pots recordar i utilitzar?',acqOpts:['Moltíssima més','Bastant més','Una mica més','Una mica més, però poc','Cap diferència apreciable'],
+memoryTitle:'5. Què t’ha quedat?',memoryLead:'Sense mirar la teva llista guardada, escriu fins a cinc frases o expressions que recordis. No és un examen.',
+phrase:'Frase',usable:'Quantes d’aquestes creus que ara podries utilitzar adequadament en una situació real?',none:'Cap',
+memoryNote:'Per a una avaluació més sòlida, aquesta tasca de record es pot repetir més endavant per mesurar la retenció i no només la memòria immediata.',
+overallTitle:'6. Experiència global',o1:'LingoTotal era fàcil d’entendre i navegar.',o2:'Les activitats eren adequades per al meu nivell.',o3:'LingoTotal em va ajudar a descobrir llengua que voldria utilitzar a la vida real.',o4:'Tornaria a utilitzar LingoTotal.',
+pref:'Si triessis com practicar una llengua, què preferiries?',prefOpts:['Principalment contingut de curs predeterminat','Principalment contingut generat segons les meves necessitats i interessos','Una combinació de tots dos','No n’estic segur/a'],
+finalTitle:'7. Comentaris finals',valuable:'Quin va ser per a tu l’aspecte més valuós de LingoTotal?',improve:'Quina és l’ÚNICA cosa que t’agradaria que milloréssim?',comments:'Hi ha res més que ens vulguis dir?',follow:'Estaria disposat/da a participar en un seguiment posterior per comprovar quanta llengua encara recordo.',
+finish:'Envia l’avaluació',submitting:'Enviant…',thanks:'Gràcies. La teva avaluació s’ha enviat.',submitError:'No s’ha pogut enviar l’avaluació. Comprova la connexió i torna-ho a provar.',complete:'completat'
+},
+fr:{
+activity:'ÉVALUATION',tag:'Apprenez la langue de votre choix, à votre façon',eyebrow:'ÉVALUATION DES UTILISATEURS DE LINGOTOTAL',hero:'Aidez-nous à comprendre ce qui fonctionne',
+heroText:'Cette évaluation porte sur la manière dont les utilisateurs utilisent LingoTotal, les types de langue qu’ils découvrent et sur la question de savoir si sauvegarder et pratiquer des phrases personnellement utiles aide à mieux les mémoriser et les utiliser.',
+notice:'Répondez d’après votre propre expérience. Les réactions positives comme négatives nous intéressent. Il n’y a pas de réponse attendue.',
+about:'1. À propos de vous',lang:'Quelle langue avez-vous pratiquée ?',level:'Comment décririez-vous votre niveau actuel ?',reason:'Pourquoi apprenez-vous ou utilisez-vous cette langue ?',levels:['Débutant','Élémentaire','Intermédiaire','Intermédiaire avancé','Avancé','Je ne sais pas'],
+tryTitle:'2. Essayez LingoTotal à votre façon',tryLead:'Prenez un peu de temps pour utiliser le site avant de remplir l’évaluation principale.',
+task1:'Choisissez quelque chose que vous voulez vraiment pratiquer.',task1b:'Saisissez un thème, une situation ou un besoin linguistique qui compte pour vous. Observez si l’activité générée répond à votre demande.',
+task2:'Repérez de la langue que vous aimeriez réellement utiliser.',task2b:'Remarquez les phrases et expressions utiles, naturelles ou personnellement pertinentes.',
+task3:'Sauvegardez de la langue utile.',task3b:'Sauvegardez plusieurs phrases que vous aimeriez vraiment retenir.',
+task4:'Utilisez LingoPractice.',task4b:'Revenez à la langue sauvegardée et pratiquez-la à nouveau.',openActivities:'Ouvrir les activités',openPractice:'Ouvrir LingoPractice',
+contentTitle:'3. Contenu, choix et pertinence',scale:'1 = pas du tout d’accord · 5 = tout à fait d’accord',
+q1:'Les activités ont bien répondu au thème ou à la situation que j’ai saisi.',q2:'La langue générée correspondait à mes besoins ou intérêts personnels.',q3:'Le fait de pouvoir influencer le contenu a rendu l’activité plus utile pour moi.',q4:'La langue semblait naturelle et adaptée à des situations réelles.',q5:'J’ai rencontré de la langue utile que je vois rarement dans les supports d’apprentissage.',
+example:'Donnez, si possible, un exemple de langue que vous avez trouvée particulièrement utile, naturelle ou pertinente.',bad:'Avez-vous rencontré quelque chose qui vous a semblé incorrect, peu naturel ou inadapté ?',
+practiceTitle:'4. Sauvegarder des phrases et LingoPractice',savedCount:'Environ combien de phrases avez-vous sauvegardées ?',choose:'Choisissez',savedOpts:['Aucune','1–5','6–10','11–20','Plus de 20'],
+p1:'Sauvegarder des phrases m’a fait prêter davantage attention à la langue utile.',p2:'Les phrases choisies me semblaient personnellement dignes d’être retenues.',p3:'LingoPractice m’a aidé à mémoriser les phrases sauvegardées.',p4:'Après la pratique, je me sentais davantage capable d’utiliser certaines phrases moi-même.',
+acq:'Par rapport à avant la pratique, quelle quantité supplémentaire de cette langue pensez-vous pouvoir maintenant mémoriser et utiliser ?',acqOpts:['Beaucoup plus','Nettement plus','Un peu plus','Très légèrement plus','Aucune différence perceptible'],
+memoryTitle:'5. Qu’est-ce qui vous est resté ?',memoryLead:'Sans consulter votre liste sauvegardée, écrivez jusqu’à cinq phrases ou expressions dont vous vous souvenez. Ce n’est pas un test.',
+phrase:'Phrase',usable:'Combien de ces phrases pensez-vous pouvoir maintenant utiliser correctement dans une situation réelle ?',none:'Aucune',
+memoryNote:'Pour une étude plus solide, cette tâche de rappel peut être répétée plus tard afin de mesurer la rétention et pas seulement la mémoire immédiate.',
+overallTitle:'6. Expérience globale',o1:'LingoTotal était facile à comprendre et à utiliser.',o2:'Les activités correspondaient à mon niveau.',o3:'LingoTotal m’a aidé à découvrir de la langue que j’aimerais utiliser dans la vie réelle.',o4:'J’utiliserais de nouveau LingoTotal.',
+pref:'Si vous choisissiez comment pratiquer une langue, que préféreriez-vous ?',prefOpts:['Principalement un contenu de cours prédéfini','Principalement un contenu généré selon mes besoins et intérêts','Une combinaison des deux','Je ne sais pas'],
+finalTitle:'7. Commentaires finaux',valuable:'Quel a été pour vous l’aspect le plus utile de LingoTotal ?',improve:'Quelle est LA chose que vous souhaiteriez le plus nous voir améliorer ?',comments:'Souhaitez-vous ajouter autre chose ?',follow:'J’accepterais de participer à un suivi ultérieur pour voir quelle quantité de langue je me rappelle encore.',
+finish:'Envoyer l’évaluation',submitting:'Envoi…',thanks:'Merci. Votre évaluation a été envoyée.',submitError:'Votre évaluation n’a pas pu être envoyée. Vérifiez votre connexion et réessayez.',complete:'terminé'
+},
+de:{
+activity:'BEWERTUNG',tag:'Lerne jede Sprache auf deine Weise',eyebrow:'LINGOTOTAL-NUTZERBEWERTUNG',hero:'Helfen Sie uns herauszufinden, was funktioniert',
+heroText:'Diese Bewertung untersucht, wie LingoTotal genutzt wird, welche Art von Sprache Nutzer entdecken und ob das Speichern und Üben persönlich nützlicher Wendungen dabei hilft, mehr Sprache zu behalten und anzuwenden.',
+notice:'Bitte antworten Sie aus Ihrer eigenen Erfahrung. Positive wie negative Rückmeldungen sind willkommen. Es gibt keine bevorzugten Antworten.',
+about:'1. Über Sie',lang:'Welche Sprache haben Sie geübt?',level:'Wie würden Sie Ihr derzeitiges Niveau beschreiben?',reason:'Warum lernen oder verwenden Sie diese Sprache?',levels:['Anfänger','Grundstufe','Mittelstufe','Obere Mittelstufe','Fortgeschritten','Nicht sicher'],
+tryTitle:'2. Probieren Sie LingoTotal auf Ihre Weise aus',tryLead:'Nutzen Sie die Website eine Weile, bevor Sie die eigentliche Bewertung ausfüllen.',
+task1:'Wählen Sie etwas, das Sie wirklich üben möchten.',task1b:'Geben Sie ein Thema, eine Situation oder einen Sprachbedarf ein, der für Sie wichtig ist. Achten Sie darauf, ob die erzeugte Aktivität darauf eingeht.',
+task2:'Achten Sie auf Sprache, die Sie tatsächlich verwenden möchten.',task2b:'Beachten Sie nützliche, natürliche oder für Sie persönlich relevante Wendungen.',
+task3:'Speichern Sie nützliche Sprache.',task3b:'Speichern Sie mehrere Wendungen, die Sie sich wirklich merken möchten.',
+task4:'Nutzen Sie LingoPractice.',task4b:'Kehren Sie zu Ihrer gespeicherten Sprache zurück und üben Sie sie erneut.',openActivities:'Aktivitäten öffnen',openPractice:'LingoPractice öffnen',
+contentTitle:'3. Inhalt, Auswahl und Relevanz',scale:'1 = stimme überhaupt nicht zu · 5 = stimme voll zu',
+q1:'Die Aktivitäten reagierten gut auf das von mir eingegebene Thema bzw. die Situation.',q2:'Die erzeugte Sprache war für meine eigenen Bedürfnisse oder Interessen relevant.',q3:'Dass ich den Inhalt beeinflussen konnte, machte die Aktivität für mich nützlicher.',q4:'Die Sprache wirkte natürlich und für reale Situationen passend.',q5:'Ich begegnete nützlicher Sprache, die ich in Sprachlernmaterialien nicht oft sehe.',
+example:'Nennen Sie, wenn möglich, ein Beispiel für Sprache, die Sie besonders nützlich, natürlich oder relevant fanden.',bad:'Gab es etwas, das Ihnen falsch, unnatürlich oder unpassend erschien?',
+practiceTitle:'4. Wendungen speichern und LingoPractice',savedCount:'Wie viele Wendungen haben Sie ungefähr gespeichert?',choose:'Auswählen',savedOpts:['Keine','1–5','6–10','11–20','Mehr als 20'],
+p1:'Das Speichern von Wendungen ließ mich stärker auf nützliche Sprache achten.',p2:'Die von mir gewählten Wendungen waren es für mich persönlich wert, behalten zu werden.',p3:'LingoPractice half mir, gespeicherte Wendungen zu behalten.',p4:'Nach dem Üben fühlte ich mich eher in der Lage, einige Wendungen selbst zu verwenden.',
+acq:'Wie viel mehr dieser Sprache können Sie Ihrer Einschätzung nach jetzt im Vergleich zu vorher erinnern und verwenden?',acqOpts:['Sehr viel mehr','Deutlich mehr','Etwas mehr','Ein wenig mehr','Kein spürbarer Unterschied'],
+memoryTitle:'5. Was ist hängen geblieben?',memoryLead:'Schreiben Sie ohne Blick auf Ihre gespeicherte Liste bis zu fünf Wendungen oder Ausdrücke auf, an die Sie sich erinnern. Dies ist kein Test.',
+phrase:'Wendung',usable:'Wie viele davon könnten Sie Ihrer Einschätzung nach jetzt passend in einer realen Situation verwenden?',none:'Keine',
+memoryNote:'Für eine aussagekräftigere Studie kann diese Erinnerungsaufgabe später wiederholt werden, um Behalten statt nur unmittelbare Erinnerung zu messen.',
+overallTitle:'6. Gesamterfahrung',o1:'LingoTotal war leicht zu verstehen und zu bedienen.',o2:'Die Aktivitäten passten zu meinem Niveau.',o3:'LingoTotal half mir, Sprache zu entdecken, die ich im wirklichen Leben verwenden möchte.',o4:'Ich würde LingoTotal wieder verwenden.',
+pref:'Wenn Sie wählen könnten, wie Sie eine Sprache üben, was würden Sie bevorzugen?',prefOpts:['Überwiegend vorgegebene Kursinhalte','Überwiegend Inhalte, die nach meinen Bedürfnissen und Interessen erzeugt werden','Eine Kombination aus beidem','Nicht sicher'],
+finalTitle:'7. Abschließende Kommentare',valuable:'Was war für Sie der wertvollste Aspekt von LingoTotal?',improve:'Welche EINE Sache sollten wir Ihrer Meinung nach am dringendsten verbessern?',comments:'Möchten Sie uns noch etwas mitteilen?',follow:'Ich wäre bereit, später an einer Nachbefragung teilzunehmen, um zu sehen, wie viel Sprache ich noch erinnere.',
+finish:'Bewertung absenden',submitting:'Wird gesendet…',thanks:'Vielen Dank. Ihre Bewertung wurde übermittelt.',submitError:'Ihre Bewertung konnte nicht gesendet werden. Prüfen Sie die Verbindung und versuchen Sie es erneut.',complete:'abgeschlossen'
+},
+it:{
+activity:'VALUTAZIONE',tag:'Impara qualsiasi lingua a modo tuo',eyebrow:'VALUTAZIONE UTENTI LINGOTOTAL',hero:'Aiutaci a capire cosa funziona',
+heroText:'Questa valutazione esamina come viene usato LingoTotal, quale tipo di lingua viene scoperto e se salvare e praticare frasi personalmente utili aiuta a ricordare e usare più lingua.',
+notice:'Rispondi in base alla tua esperienza. Ci interessano sia le reazioni positive sia quelle negative. Non ci sono risposte preferite.',
+about:'1. Informazioni su di te',lang:'Quale lingua hai praticato?',level:'Come descriveresti il tuo livello attuale?',reason:'Perché stai imparando o usando questa lingua?',levels:['Principiante','Elementare','Intermedio','Intermedio superiore','Avanzato','Non sono sicuro/a'],
+tryTitle:'2. Prova LingoTotal a modo tuo',tryLead:'Dedica un po’ di tempo al sito prima di completare la valutazione principale.',
+task1:'Scegli qualcosa che vuoi davvero praticare.',task1b:'Inserisci un argomento, una situazione o un’esigenza linguistica importante per te. Osserva se l’attività generata risponde alla tua richiesta.',
+task2:'Cerca lingua che vorresti davvero usare.',task2b:'Nota frasi ed espressioni utili, naturali o personalmente rilevanti.',
+task3:'Salva lingua utile.',task3b:'Salva diverse frasi che vorresti davvero ricordare.',
+task4:'Usa LingoPractice.',task4b:'Torna alla lingua salvata e praticala di nuovo.',openActivities:'Apri le attività',openPractice:'Apri LingoPractice',
+contentTitle:'3. Contenuto, scelta e rilevanza',scale:'1 = per niente d’accordo · 5 = completamente d’accordo',
+q1:'Le attività hanno risposto bene all’argomento o alla situazione che ho inserito.',q2:'La lingua generata era pertinente ai miei bisogni o interessi.',q3:'Poter influenzare il contenuto ha reso l’attività più utile per me.',q4:'La lingua sembrava naturale e adatta a situazioni reali.',q5:'Ho incontrato lingua utile che non trovo spesso nei materiali per l’apprendimento.',
+example:'Se puoi, fornisci un esempio di lingua che hai trovato particolarmente utile, naturale o rilevante.',bad:'Hai incontrato qualcosa che sembrava scorretto, innaturale o inadeguato?',
+practiceTitle:'4. Salvare frasi e LingoPractice',savedCount:'Circa quante frasi hai salvato?',choose:'Scegli',savedOpts:['Nessuna','1–5','6–10','11–20','Più di 20'],
+p1:'Salvare frasi mi ha fatto prestare più attenzione alla lingua utile.',p2:'Le frasi che ho scelto mi sembravano personalmente degne di essere ricordate.',p3:'LingoPractice mi ha aiutato a ricordare le frasi salvate.',p4:'Dopo la pratica, mi sono sentito/a più capace di usare autonomamente alcune frasi.',
+acq:'Rispetto a prima della pratica, quanta più lingua pensi di riuscire ora a ricordare e usare?',acqOpts:['Molta di più','Abbastanza di più','Un po’ di più','Solo leggermente di più','Nessuna differenza evidente'],
+memoryTitle:'5. Che cosa ti è rimasto?',memoryLead:'Senza guardare l’elenco salvato, scrivi fino a cinque frasi o espressioni che ricordi. Non è un test.',
+phrase:'Frase',usable:'Quante di queste pensi di poter ora usare in modo appropriato in una situazione reale?',none:'Nessuna',
+memoryNote:'Per uno studio più solido, questa attività di richiamo può essere ripetuta in seguito per misurare la ritenzione e non solo la memoria immediata.',
+overallTitle:'6. Esperienza complessiva',o1:'LingoTotal era facile da capire e da navigare.',o2:'Le attività erano adatte al mio livello.',o3:'LingoTotal mi ha aiutato a scoprire lingua che vorrei usare nella vita reale.',o4:'Userei di nuovo LingoTotal.',
+pref:'Se potessi scegliere come praticare una lingua, cosa preferiresti?',prefOpts:['Soprattutto contenuti di corso prestabiliti','Soprattutto contenuti generati in base ai miei bisogni e interessi','Una combinazione di entrambi','Non sono sicuro/a'],
+finalTitle:'7. Commenti finali',valuable:'Qual è stato per te l’aspetto più utile di LingoTotal?',improve:'Qual è l’UNICA cosa che vorresti che migliorassimo?',comments:'C’è altro che vorresti dirci?',follow:'Sarei disposto/a a partecipare a un follow-up successivo per vedere quanta lingua ricordo ancora.',
+finish:'Invia valutazione',submitting:'Invio…',thanks:'Grazie. La tua valutazione è stata inviata.',submitError:'Non è stato possibile inviare la valutazione. Controlla la connessione e riprova.',complete:'completato'
+},
+pt:{
+activity:'AVALIAÇÃO',tag:'Aprenda qualquer língua à sua maneira',eyebrow:'AVALIAÇÃO DE UTILIZADORES DO LINGOTOTAL',hero:'Ajude-nos a perceber o que funciona',
+heroText:'Esta avaliação analisa como as pessoas usam o LingoTotal, que tipo de linguagem descobrem e se guardar e praticar frases pessoalmente úteis ajuda a recordar e usar mais linguagem.',
+notice:'Responda com base na sua própria experiência. Interessam-nos tanto reações positivas como negativas. Não há respostas preferidas.',
+about:'1. Sobre si',lang:'Que língua praticou?',level:'Como descreveria o seu nível atual?',reason:'Por que razão está a aprender ou a usar esta língua?',levels:['Principiante','Elementar','Intermédio','Intermédio superior','Avançado','Não tenho a certeza'],
+tryTitle:'2. Experimente o LingoTotal à sua maneira',tryLead:'Passe algum tempo a utilizar o site antes de completar a avaliação principal.',
+task1:'Escolha algo que queira realmente praticar.',task1b:'Introduza um tema, uma situação ou uma necessidade linguística importante para si. Observe se a atividade gerada responde ao que pediu.',
+task2:'Procure linguagem que gostaria realmente de usar.',task2b:'Repare em frases e expressões úteis, naturais ou pessoalmente relevantes.',
+task3:'Guarde linguagem útil.',task3b:'Guarde várias frases que gostaria realmente de recordar.',
+task4:'Use o LingoPractice.',task4b:'Volte à linguagem que guardou e pratique-a novamente.',openActivities:'Abrir atividades',openPractice:'Abrir LingoPractice',
+contentTitle:'3. Conteúdo, escolha e relevância',scale:'1 = discordo totalmente · 5 = concordo totalmente',
+q1:'As atividades responderam bem ao tema ou situação que introduzi.',q2:'A linguagem gerada foi relevante para as minhas necessidades ou interesses.',q3:'Poder influenciar o conteúdo tornou a atividade mais útil para mim.',q4:'A linguagem pareceu natural e adequada a situações reais.',q5:'Encontrei linguagem útil que não costumo encontrar em materiais de aprendizagem de línguas.',
+example:'Dê, se puder, um exemplo de linguagem que tenha considerado especialmente útil, natural ou relevante.',bad:'Encontrou algo que lhe pareceu incorreto, pouco natural ou inadequado?',
+practiceTitle:'4. Guardar frases e LingoPractice',savedCount:'Aproximadamente quantas frases guardou?',choose:'Escolha',savedOpts:['Nenhuma','1–5','6–10','11–20','Mais de 20'],
+p1:'Guardar frases fez-me prestar mais atenção à linguagem útil.',p2:'As frases que escolhi pareceram-me pessoalmente dignas de recordar.',p3:'O LingoPractice ajudou-me a recordar frases que tinha guardado.',p4:'Depois de praticar, senti-me mais capaz de usar algumas frases por mim próprio/a.',
+acq:'Em comparação com antes de praticar as frases guardadas, quanta mais linguagem sente agora conseguir recordar e usar?',acqOpts:['Muito mais','Bastante mais','Um pouco mais','Ligeiramente mais','Nenhuma diferença percetível'],
+memoryTitle:'5. O que ficou consigo?',memoryLead:'Sem consultar a sua lista guardada, escreva até cinco frases ou expressões de que se lembre. Isto não é um teste.',
+phrase:'Frase',usable:'Quantas destas acha que conseguiria agora usar adequadamente numa situação real?',none:'Nenhuma',
+memoryNote:'Para uma avaliação mais sólida, esta tarefa de recordação pode ser repetida mais tarde para medir retenção e não apenas memória imediata.',
+overallTitle:'6. Experiência global',o1:'O LingoTotal foi fácil de compreender e navegar.',o2:'As atividades eram adequadas ao meu nível.',o3:'O LingoTotal ajudou-me a descobrir linguagem que gostaria de usar na vida real.',o4:'Voltaria a utilizar o LingoTotal.',
+pref:'Se pudesse escolher como praticar uma língua, o que preferiria?',prefOpts:['Principalmente conteúdo de curso predeterminado','Principalmente conteúdo gerado em torno das minhas necessidades e interesses','Uma combinação de ambos','Não tenho a certeza'],
+finalTitle:'7. Comentários finais',valuable:'Qual foi para si o aspeto mais valioso do LingoTotal?',improve:'Qual é a ÚNICA coisa que mais gostaria que melhorássemos?',comments:'Há mais alguma coisa que gostaria de nos dizer?',follow:'Estaria disponível para participar num acompanhamento posterior para verificar quanta linguagem ainda recordo.',
+finish:'Enviar avaliação',submitting:'A enviar…',thanks:'Obrigado. A sua avaliação foi enviada.',submitError:'Não foi possível enviar a avaliação. Verifique a ligação e tente novamente.',complete:'concluído'
+},
+eu:{
+activity:'EBALUAZIOA',tag:'Ikasi edozein hizkuntza zure erara',eyebrow:'LINGOTOTAL ERABILTZAILEEN EBALUAZIOA',hero:'Lagundu zer dabilen ondo jakiten',
+heroText:'Ebaluazio honek aztertzen du jendeak LingoTotal nola erabiltzen duen, zer hizkuntza mota aurkitzen duen eta norberarentzat erabilgarriak diren esaldiak gordetzeak eta praktikatzeak hizkuntza gehiago gogoratzen eta erabiltzen laguntzen duen.',
+notice:'Erantzun zure esperientziaren arabera. Iritzi positiboak zein negatiboak interesatzen zaizkigu. Ez dago erantzun hobetsirik.',
+about:'1. Zuri buruz',lang:'Zein hizkuntza praktikatu duzu?',level:'Nola deskribatuko zenuke zure egungo maila?',reason:'Zergatik ikasten edo erabiltzen duzu hizkuntza hau?',levels:['Hasiberria','Oinarrizkoa','Ertaina','Ertain-altua','Aurreratua','Ez nago ziur'],
+tryTitle:'2. Probatu LingoTotal zure erara',tryLead:'Erabili webgunea pixka batean ebaluazio nagusia bete aurretik.',
+task1:'Aukeratu benetan praktikatu nahi duzun zerbait.',task1b:'Sartu zuretzat garrantzitsua den gai, egoera edo hizkuntza-behar bat. Begiratu sortutako jarduerak zure eskaerari erantzuten dion.',
+task2:'Bilatu benetan erabili nahi zenukeen hizkuntza.',task2b:'Erreparatu esaldi eta adierazpen erabilgarri, natural edo zuretzat esanguratsuei.',
+task3:'Gorde hizkuntza erabilgarria.',task3b:'Gorde benetan gogoratu nahi dituzun hainbat esaldi.',
+task4:'Erabili LingoPractice.',task4b:'Itzuli gordetako hizkuntzara eta praktikatu berriro.',openActivities:'Jarduerak ireki',openPractice:'LingoPractice ireki',
+contentTitle:'3. Edukia, aukera eta garrantzia',scale:'1 = guztiz desados · 5 = guztiz ados',
+q1:'Jarduerek ondo erantzun zioten sartu nuen gaiari edo egoerari.',q2:'Sortutako hizkuntza nire behar edo interesetarako egokia zen.',q3:'Edukian eragina izateak jarduera erabilgarriago egin zuen niretzat.',q4:'Hizkuntza naturala eta egoera errealetarako egokia iruditu zitzaidan.',q5:'Hizkuntzak ikasteko materialetan askotan ikusten ez dudan hizkuntza erabilgarria aurkitu nuen.',
+example:'Ahal baduzu, eman bereziki erabilgarri, natural edo garrantzitsu iruditu zaizun hizkuntzaren adibide bat.',bad:'Okerra, naturala ez dena edo desegokia iruditu zaizun zerbait aurkitu al duzu?',
+practiceTitle:'4. Esaldiak gorde eta LingoPractice',savedCount:'Gutxi gorabehera zenbat esaldi gorde dituzu?',choose:'Aukeratu',savedOpts:['Bat ere ez','1–5','6–10','11–20','20 baino gehiago'],
+p1:'Esaldiak gordetzeak hizkuntza erabilgarriari arreta handiagoa jartzera eraman ninduen.',p2:'Aukeratu nituen esaldiak niretzat gogoratzea merezi zuten.',p3:'LingoPracticek gordetako esaldiak gogoratzen lagundu zidan.',p4:'Praktikatu ondoren, esaldi batzuk neuk erabiltzeko gaiago sentitu nintzen.',
+acq:'Gordetako esaldiak praktikatu aurretik baino zenbat hizkuntza gehiago uste duzu orain gogoratu eta erabil dezakezula?',acqOpts:['Askoz gehiago','Nahiko gehiago','Zerbait gehiago','Pixka bat gehiago','Aldaketa nabarmenik ez'],
+memoryTitle:'5. Zer geratu zaizu?',memoryLead:'Gordetako zerrenda begiratu gabe, idatzi gogoratzen dituzun gehienez bost esaldi edo adierazpen. Ez da azterketa bat.',
+phrase:'Esaldia',usable:'Horietatik zenbat uste duzu orain egoera erreal batean behar bezala erabil ditzakezula?',none:'Bat ere ez',
+memoryNote:'Azterketa sendoago baterako, oroimen-zeregin hau geroago errepika daiteke, atxikipena neurtzeko eta ez bakarrik berehalako oroimena.',
+overallTitle:'6. Esperientzia orokorra',o1:'LingoTotal ulertzeko eta nabigatzeko erraza izan zen.',o2:'Jarduerak nire mailarako egokiak ziren.',o3:'LingoTotalek bizitza errealean erabili nahiko nukeen hizkuntza aurkitzen lagundu zidan.',o4:'LingoTotal berriro erabiliko nuke.',
+pref:'Hizkuntza bat nola praktikatu aukeratuko bazenu, zer nahiago zenuke?',prefOpts:['Batez ere aurrez zehaztutako ikastaro-edukia','Batez ere nire behar eta interesen arabera sortutako edukia','Bien konbinazioa','Ez nago ziur'],
+finalTitle:'7. Azken iruzkinak',valuable:'Zein izan da zuretzat LingoTotalen alderdirik baliotsuena?',improve:'Zein da gehien hobetu beharko genukeen GAUZA BAKARRA?',comments:'Beste zerbait esan nahi diguzu?',follow:'Prest egongo nintzateke geroagoko jarraipen batean parte hartzeko, zenbat hizkuntza gogoratzen dudan ikusteko.',
+finish:'Bidali ebaluazioa',submitting:'Bidaltzen…',thanks:'Eskerrik asko. Zure ebaluazioa bidali da.',submitError:'Ezin izan da ebaluazioa bidali. Egiaztatu konexioa eta saiatu berriro.',complete:'osatuta'
+},
+ja:{
+activity:'評価',tag:'自分のやり方で、どんな言語でも学ぶ',eyebrow:'LINGOTOTAL ユーザー評価',hero:'何が有効かを教えてください',
+heroText:'この評価では、LingoTotal がどのように使われ、どのような言葉に出会い、自分にとって役立つ表現を保存して練習することが、記憶や実際の使用につながるかを調べます。',
+notice:'ご自身の経験に基づいて答えてください。良かった点も悪かった点も重要です。望ましい答えはありません。',
+about:'1. あなたについて',lang:'どの言語を練習しましたか？',level:'現在のレベルをどのように説明しますか？',reason:'なぜこの言語を学んだり使ったりしていますか？',levels:['初級','初級後半','中級','中上級','上級','わからない'],
+tryTitle:'2. 自分のやり方で LingoTotal を試す',tryLead:'本評価に回答する前に、しばらくサイトを使ってみてください。',
+task1:'本当に練習したいことを選んでください。',task1b:'自分にとって重要な話題、状況、言語上の必要を入力してください。生成された活動が入力内容に対応しているか確認してください。',
+task2:'実際に使いたい言葉を探してください。',task2b:'役立つ、自然な、自分に関連のある表現に注目してください。',
+task3:'役立つ表現を保存してください。',task3b:'本当に覚えたい表現をいくつか保存してください。',
+task4:'LingoPractice を使ってください。',task4b:'保存した表現に戻って、もう一度練習してください。',openActivities:'活動を開く',openPractice:'LingoPractice を開く',
+contentTitle:'3. 内容・選択・関連性',scale:'1 = まったくそう思わない · 5 = 強くそう思う',
+q1:'活動は、私が入力した話題や状況にうまく対応していた。',q2:'生成された言葉は、自分の必要や関心に関連していた。',q3:'内容に影響を与えられることで、活動がより役立つものになった。',q4:'言葉は自然で、実際の状況にふさわしいと感じた。',q5:'一般的な語学教材ではあまり見かけない、役立つ表現に出会った。',
+example:'特に役立つ、自然だ、または自分に関連していると感じた表現があれば、例を一つ書いてください。',bad:'不自然、誤り、不適切だと感じるものはありましたか？',
+practiceTitle:'4. 表現の保存と LingoPractice',savedCount:'およそ何個の表現を保存しましたか？',choose:'選択してください',savedOpts:['なし','1–5','6–10','11–20','20以上'],
+p1:'表現を保存することで、役立つ言葉により注意を向けるようになった。',p2:'自分で選んだ表現は、覚える価値があると感じた。',p3:'LingoPractice は、保存した表現を覚えるのに役立った。',p4:'練習後、いくつかの表現を自分で使えるという感覚が強まった。',
+acq:'保存した表現を練習する前と比べて、今はどの程度多くの言葉を覚えて使えると感じますか？',acqOpts:['かなり多く','かなり増えた','少し増えた','わずかに増えた','特に変化はない'],
+memoryTitle:'5. 何が残りましたか？',memoryLead:'保存リストを見ずに、覚えている表現を最大5つ書いてください。これはテストではありません。',
+phrase:'表現',usable:'そのうち、実際の場面で適切に使えると思うものはいくつありますか？',none:'なし',
+memoryNote:'より確かな評価のために、この想起課題を後日もう一度行い、直後の記憶ではなく定着を測ることができます。',
+overallTitle:'6. 全体的な経験',o1:'LingoTotal は理解しやすく、使いやすかった。',o2:'活動は自分のレベルに合っていた。',o3:'LingoTotal は、実生活で使いたい言葉を見つけるのに役立った。',o4:'LingoTotal をまた使いたい。',
+pref:'言語練習の方法を選べるとしたら、どれを好みますか？',prefOpts:['主にあらかじめ決められたコース内容','主に自分の必要や関心に応じて生成される内容','両方の組み合わせ','わからない'],
+finalTitle:'7. 最後のコメント',valuable:'LingoTotal で最も価値があった点は何ですか？',improve:'最も改善してほしい点を一つ挙げるとしたら何ですか？',comments:'ほかに伝えたいことはありますか？',follow:'後日、どのくらい言葉を覚えているかを確認する追跡調査に参加してもよい。',
+finish:'評価を送信',submitting:'送信中…',thanks:'ありがとうございます。評価が送信されました。',submitError:'評価を送信できませんでした。接続を確認して、もう一度お試しください。',complete:'完了'
+},
+ar:{
+activity:'التقييم',tag:'تعلّم أي لغة بطريقتك',eyebrow:'تقييم مستخدمي LINGOTOTAL',hero:'ساعدنا في معرفة ما الذي ينجح',
+heroText:'يبحث هذا التقييم في كيفية استخدام LingoTotal، ونوع اللغة التي يكتشفها المستخدم، وما إذا كان حفظ العبارات المفيدة شخصياً والتدرّب عليها يساعدان على تذكّر مزيد من اللغة واستخدامها.',
+notice:'أجب بناءً على تجربتك أنت. نهتم بالآراء الإيجابية والسلبية معاً. لا توجد إجابات مفضلة.',
+about:'1. عنك',lang:'ما اللغة التي تدربت عليها؟',level:'كيف تصف مستواك الحالي؟',reason:'لماذا تتعلم هذه اللغة أو تستخدمها؟',levels:['مبتدئ','أساسي','متوسط','فوق المتوسط','متقدم','لست متأكداً'],
+tryTitle:'2. جرّب LingoTotal بطريقتك',tryLead:'استخدم الموقع لبعض الوقت قبل إكمال التقييم الرئيسي.',
+task1:'اختر شيئاً تريد فعلاً التدرب عليه.',task1b:'أدخل موضوعاً أو موقفاً أو حاجة لغوية تهمك. لاحظ ما إذا كان النشاط المُنشأ يستجيب لما طلبته.',
+task2:'ابحث عن لغة ترغب فعلاً في استخدامها.',task2b:'انتبه إلى العبارات المفيدة والطبيعية أو المرتبطة باحتياجاتك الشخصية.',
+task3:'احفظ اللغة المفيدة.',task3b:'احفظ عدة عبارات ترغب فعلاً في تذكرها.',
+task4:'استخدم LingoPractice.',task4b:'ارجع إلى اللغة التي حفظتها وتدرّب عليها مرة أخرى.',openActivities:'فتح الأنشطة',openPractice:'فتح LingoPractice',
+contentTitle:'3. المحتوى والاختيار والملاءمة',scale:'1 = لا أوافق إطلاقاً · 5 = أوافق تماماً',
+q1:'استجابت الأنشطة جيداً للموضوع أو الموقف الذي أدخلته.',q2:'كانت اللغة المُنشأة مرتبطة باحتياجاتي أو اهتماماتي.',q3:'جعلت القدرة على التأثير في المحتوى النشاط أكثر فائدة لي.',q4:'بدت اللغة طبيعية ومناسبة لمواقف واقعية.',q5:'صادفت لغة مفيدة لا أجدها كثيراً في مواد تعلم اللغات.',
+example:'إن أمكن، اذكر مثالاً على لغة وجدتها مفيدة أو طبيعية أو مرتبطة بك بشكل خاص.',bad:'هل وجدت شيئاً بدا غير صحيح أو غير طبيعي أو غير مناسب؟',
+practiceTitle:'4. حفظ العبارات وLingoPractice',savedCount:'كم عبارة حفظت تقريباً؟',choose:'اختر',savedOpts:['لا شيء','1–5','6–10','11–20','أكثر من 20'],
+p1:'جعلني حفظ العبارات أنتبه أكثر إلى اللغة المفيدة.',p2:'شعرت أن العبارات التي اخترتها تستحق أن أتذكرها شخصياً.',p3:'ساعدني LingoPractice على تذكّر العبارات التي حفظتها.',p4:'بعد التدريب، شعرت أنني أقدر أكثر على استخدام بعض العبارات بنفسي.',
+acq:'مقارنة بما قبل التدريب على العبارات المحفوظة، ما مقدار اللغة الإضافية التي تشعر أنك تستطيع الآن تذكرها واستخدامها؟',acqOpts:['أكثر بكثير','أكثر بدرجة واضحة','أكثر إلى حد ما','أكثر بقليل','لا فرق ملحوظ'],
+memoryTitle:'5. ماذا بقي في ذاكرتك؟',memoryLead:'من دون النظر إلى قائمتك المحفوظة، اكتب ما يصل إلى خمس عبارات أو تعبيرات تتذكرها. هذا ليس اختباراً.',
+phrase:'عبارة',usable:'كم من هذه العبارات تعتقد أنك تستطيع الآن استخدامها بشكل مناسب في موقف حقيقي؟',none:'لا شيء',
+memoryNote:'لإجراء دراسة أقوى، يمكن تكرار مهمة التذكر هذه لاحقاً لقياس الاحتفاظ وليس الذاكرة الفورية فقط.',
+overallTitle:'6. التجربة العامة',o1:'كان LingoTotal سهل الفهم والتنقل.',o2:'كانت الأنشطة مناسبة لمستواي.',o3:'ساعدني LingoTotal على اكتشاف لغة أود استخدامها في الحياة الواقعية.',o4:'سأستخدم LingoTotal مرة أخرى.',
+pref:'إذا كنت تختار طريقة ممارسة لغة، فما الذي تفضله؟',prefOpts:['محتوى مقرر محدد مسبقاً في الغالب','محتوى يُنشأ حول احتياجاتي واهتماماتي في الغالب','مزيج من الاثنين','لست متأكداً'],
+finalTitle:'7. تعليقات أخيرة',valuable:'ما الجانب الأكثر قيمة في LingoTotal بالنسبة لك؟',improve:'ما الشيء الواحد الذي تود منا تحسينه أكثر من غيره؟',comments:'هل هناك شيء آخر تود إخبارنا به؟',follow:'أوافق على المشاركة في متابعة لاحقة لمعرفة مقدار اللغة التي ما زلت أتذكرها.',
+finish:'إرسال التقييم',submitting:'جارٍ الإرسال…',thanks:'شكراً لك. تم إرسال تقييمك.',submitError:'تعذّر إرسال التقييم. تحقق من الاتصال وحاول مرة أخرى.',complete:'مكتمل'
+}
+};
+const t=T[ui]||T.en;
+document.documentElement.lang=ui;
+document.documentElement.dir=ui==='ar'?'rtl':'ltr';
+document.body.classList.toggle('rtl',ui==='ar');
+const pair=document.getElementById('languagePair');
+pair.textContent=rawUi+' → '+target;
+pair.dataset.short=(codes[rawUi]||codes[ui]||String(rawUi).slice(0,2).toUpperCase())+' → '+(codes[target]||String(target).slice(0,2).toUpperCase());
+document.querySelectorAll('.index-link').forEach(a=>a.href=`index.html?ui=${encodeURIComponent(rawUi)}&target=${encodeURIComponent(target)}`);
+document.getElementById('practiceLink').href=`lingopractice.html?ui=${encodeURIComponent(rawUi)}&target=${encodeURIComponent(target)}`;
+document.getElementById('targetLanguage').value=target;
+document.getElementById('interfaceLanguage').value=ui;
+document.getElementById('evaluationGroup').value=sessionStorage.getItem('lingototal_evaluation_group')||'';
+const q=(sel)=>document.querySelector(sel), qa=(sel)=>[...document.querySelectorAll(sel)];
+q('.activity-name').textContent=t.activity;
+q('.tagline').textContent=t.tag;
+q('.hero .small').textContent=t.eyebrow;
+q('.hero h1').textContent=t.hero;
+q('.hero p').textContent=t.heroText;
+q('.notice').innerHTML='<strong>'+t.notice+'</strong>';
+const panels=qa('.panel');
+panels[0].querySelector('h2').textContent=t.about;
+panels[0].querySelectorAll('.legend')[0].textContent=t.lang;
+panels[0].querySelectorAll('.legend')[1].textContent=t.level;
+panels[0].querySelectorAll('.legend')[2].textContent=t.reason;
+panels[0].querySelectorAll('.choice').forEach((el,i)=>{ if(t.levels[i]){ el.childNodes[el.childNodes.length-1].textContent=' '+t.levels[i]; el.querySelector('input').value=t.levels[i]; }});
+panels[1].querySelector('h2').textContent=t.tryTitle;
+panels[1].querySelector('.lead').textContent=t.tryLead;
+const tasks=panels[1].querySelectorAll('.task');
+[[t.task1,t.task1b],[t.task2,t.task2b],[t.task3,t.task3b],[t.task4,t.task4b]].forEach((v,i)=>tasks[i].innerHTML='<strong>'+v[0]+'</strong><br>'+v[1]);
+panels[1].querySelectorAll('.link-btn')[0].textContent=t.openActivities;
+panels[1].querySelectorAll('.link-btn')[1].textContent=t.openPractice;
+panels[2].querySelector('h2').textContent=t.contentTitle;
+panels[2].querySelector('.lead').textContent=t.scale;
+const cLabels=panels[2].querySelectorAll('.rlabel');
+[t.q1,t.q2,t.q3,t.q4,t.q5].forEach((v,i)=>cLabels[i+1].textContent=v);
+panels[2].querySelectorAll('.legend')[0].textContent=t.example;
+panels[2].querySelectorAll('.legend')[1].textContent=t.bad;
+panels[3].querySelector('h2').textContent=t.practiceTitle;
+panels[3].querySelector('.legend').textContent=t.savedCount;
+const savedSel=panels[3].querySelector('select');
+savedSel.options[0].text=t.choose; t.savedOpts.forEach((v,i)=>{savedSel.options[i+1].text=v;savedSel.options[i+1].value=v});
+const pLabels=panels[3].querySelectorAll('.rlabel');
+[t.p1,t.p2,t.p3,t.p4].forEach((v,i)=>pLabels[i+1].textContent=v);
+panels[3].querySelectorAll('.legend')[1].textContent=t.acq;
+panels[3].querySelectorAll('.choice').forEach((el,i)=>{if(t.acqOpts[i]){el.childNodes[el.childNodes.length-1].textContent=' '+t.acqOpts[i];el.querySelector('input').value=t.acqOpts[i]}});
+panels[4].querySelector('h2').textContent=t.memoryTitle;
+panels[4].querySelector('.lead').textContent=t.memoryLead;
+panels[4].querySelectorAll('.memory input').forEach((el,i)=>el.placeholder=t.phrase+' '+(i+1));
+panels[4].querySelector('.legend').textContent=t.usable;
+const memSel=panels[4].querySelector('select'); memSel.options[0].text=t.choose; memSel.options[1].text=t.none;
+panels[4].querySelector('.small').textContent=t.memoryNote;
+panels[5].querySelector('h2').textContent=t.overallTitle;
+const oLabels=panels[5].querySelectorAll('.rlabel');
+[t.o1,t.o2,t.o3,t.o4].forEach((v,i)=>oLabels[i+1].textContent=v);
+panels[5].querySelector('.legend').textContent=t.pref;
+panels[5].querySelectorAll('.choice').forEach((el,i)=>{if(t.prefOpts[i]){el.childNodes[el.childNodes.length-1].textContent=' '+t.prefOpts[i];el.querySelector('input').value=t.prefOpts[i]}});
+panels[6].querySelector('h2').textContent=t.finalTitle;
+const fLeg=panels[6].querySelectorAll('.legend');
+fLeg[0].textContent=t.valuable;fLeg[1].textContent=t.improve;fLeg[2].textContent=t.comments;
+const follow=panels[6].querySelector('.choice'); follow.childNodes[follow.childNodes.length-1].textContent=' '+t.follow;
+document.getElementById('finish').textContent=t.finish;
+document.getElementById('summary').textContent=t.thanks;
+const form=document.getElementById('form'),bar=document.getElementById('bar'),pct=document.getElementById('pct');
+function update(){
+ const els=[...form.querySelectorAll('input:not([type="hidden"]):not([name="bot-field"]),textarea,select')],seen=new Set();let total=0,done=0;
+ els.forEach(el=>{
+   if(el.type==='radio'){if(seen.has(el.name))return;seen.add(el.name);total++;if(form.querySelector(`input[name="${el.name}"]:checked`))done++}
+   else if(el.type==='checkbox'){total++;if(el.checked)done++}
+   else{total++;if(String(el.value).trim())done++}
+ });
+ const n=total?Math.round(done/total*100):0;bar.style.width=n+'%';pct.textContent=n+'% '+t.complete;
+}
+form.addEventListener('input',update);form.addEventListener('change',update);update();
+form.addEventListener('submit',async event=>{
+ event.preventDefault();
+ const submit=document.getElementById('finish'),summary=document.getElementById('summary');
+ submit.disabled=true;submit.textContent=t.submitting||t.finish;
+ summary.className='summary';summary.textContent='';
+ document.getElementById('submittedAt').value=new Date().toISOString();
+ document.getElementById('evaluationGroup').value=sessionStorage.getItem('lingototal_evaluation_group')||document.getElementById('evaluationGroup').value;
+ try{
+  const response=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()});
+  if(!response.ok)throw new Error('Submission failed');
+  summary.textContent=t.thanks;summary.className='summary success';
+  submit.textContent=t.finish;submit.disabled=true;
+  summary.scrollIntoView({behavior:'smooth',block:'center'});
+ }catch(error){
+  console.error(error);summary.textContent=t.submitError||T.en.submitError;summary.className='summary error';
+  submit.textContent=t.finish;submit.disabled=false;
+ }
+});
+});
+</script>
+</body>
+</html>
