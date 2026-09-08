@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LingoTotal · Word to Sentence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ----- reset & base ----- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #171717;
+      color: #f7f7f5;
+      font-family: 'Inter', Arial, sans-serif;
+      line-height: 1.48;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    button, input, textarea { font: inherit; }
+
+    /* ----- header (matches LingoTotal) ----- */
+    .banner {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      padding: 10px clamp(14px, 4vw, 56px);
+      gap: 18px;
+      background:
+        linear-gradient(135deg, rgba(50,119,232,.22), rgba(255,255,255,.03)),
+        radial-gradient(circle at 72% 40%, rgba(126,175,255,.55), transparent 27%),
+        linear-gradient(120deg, #24344c, #15191f 62%);
+      color: #fff;
+      border-bottom: 1px solid #343b45;
+      box-shadow: 0 5px 20px rgba(0,0,0,.28);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: #3277e8;
+      color: #fff;
+      font-weight: 900;
+      font-size: .78rem;
+      letter-spacing: -.04em;
+      border: 1px solid rgba(255,255,255,.2);
+      text-decoration: none;
+    }
+    .brand-mark:hover {
+      background: #1f5fc7;
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+    .brand {
+      font-size: .95rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      color: #fff;
+    }
+    .tagline {
+      font-size: .65rem;
+      color: #d7dce3;
+    }
+    .activity-name {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .language-pair {
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(0,0,0,.25);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .home-link {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.3);
+      background: #f4f4f2;
+      color: #182033;
+      text-decoration: none;
+      border-radius: 0;
+    }
+    .home-link svg {
+      width: 19px;
+      height: 19px;
+      fill: currentColor;
+    }
+    .home-link:hover {
+      background: #fff;
+      outline: 2px solid #3277e8;
+      outline-offset: 2px;
+    }
+
+    /* ----- main layout ----- */
+    .page {
+      flex: 1;
+      width: min(900px, calc(100% - 28px));
+      margin: 18px auto 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .panel {
+      background: #202020;
+      border: 1px solid #383838;
+      padding: clamp(17px, 2.7vw, 28px);
+    }
+    .panel-label {
+      font-size: .68rem;
+      letter-spacing: .15em;
+      font-weight: 900;
+      color: #8bb7ff;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .panel h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+      margin: 0 0 8px;
+      color: #fff;
+    }
+    .panel p {
+      color: #cbd1d9;
+      margin: 0 0 16px;
+      max-width: 700px;
+    }
+
+    /* ----- game area ----- */
+    .word-display {
+      background: #292929;
+      padding: 20px;
+      border: 1px solid #3c3c3c;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .word-display .word {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #8bb7ff;
+      letter-spacing: .02em;
+      font-family: Georgia, serif;
+    }
+    .word-display .hint {
+      font-size: .82rem;
+      color: var(--muted, #b8bdc5);
+      margin-top: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 13px;
+      border: 1px solid #4a4a4a;
+      background: #171717;
+      color: #fff;
+      outline: none;
+      resize: vertical;
+      font-size: 1rem;
+    }
+    textarea:focus {
+      border-color: #3277e8;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .btn {
+      border: 0;
+      padding: 12px 20px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #3277e8;
+      color: #fff;
+      min-width: 140px;
+      transition: background .15s;
+    }
+    .btn:hover {
+      background: #1f5fc7;
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+    .btn-secondary {
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #4a4a4a;
+    }
+    .btn-secondary:hover {
+      background: #3a3a3a;
+    }
+
+    /* ----- feedback area ----- */
+    .feedback-block {
+      margin-top: 20px;
+      padding: 16px;
+      background: #1e1e1e;
+      border-left: 4px solid #3277e8;
+      display: none;
+    }
+    .feedback-block.show {
+      display: block;
+    }
+    .feedback-block .overall {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feedback-block .correction {
+      color: #7ecf8a;
+    }
+    .feedback-block .error {
+      color: #f9a68b;
+    }
+    .feedback-block .suggestion {
+      color: #d0d8e0;
+      margin-top: 6px;
+    }
+
+    /* ----- responsiveness ----- */
+    @media (max-width: 700px) {
+      .banner { min-height: 58px; padding: 8px 11px; gap: 8px; }
+      .tagline { display: none; }
+      .brand-mark { width: 34px; height: 34px; flex-basis: 34px; }
+      .brand { font-size: .76rem; white-space: nowrap; }
+      .activity-name { font-size: .68rem; letter-spacing: .06em; }
+      .language-pair { padding: 6px 8px; font-size: 0; }
+      .language-pair::after { content: attr(data-short); font-size: .62rem; letter-spacing: .02em; }
+      .home-link { width: 36px; height: 36px; flex-basis: 36px; }
+      .home-link svg { width: 18px; height: 18px; }
+      .page { margin-top: 12px; }
+      .panel { padding: 16px; }
+    }
+    @media (max-width: 520px) {
+      .brand-copy { display: none; }
+      .activity-name { font-size: .64rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="banner">
+  <div class="brand-wrap">
+    <a aria-label='LingoTotal home' class='brand-mark' href='/'>LT</a>
+    <div class="brand-copy">
+      <div class="brand">LINGO TOTAL</div>
+      <div class="tagline" id="tagline">Learn any language your way</div>
+    </div>
+  </div>
+
+  <div class="activity-name">WORD TO SENTENCE</div>
+
+  <div class="header-tools">
+    <div class="language-pair" id="languagePair" data-short="EN → EN">Interface → Target</div>
+    <a aria-label='Activities / change languages' class='home-link' href='/' title='Activities / change languages'>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3.2 2.8 11h2.3v9h5.3v-5.7h3.2V20h5.3v-9h2.3L12 3.2z"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="panel">
+    <div class="panel-label">GAME</div>
+    <h1>Write a sentence</h1>
+    <p>Use the word below to write a full sentence. Try to make it natural and meaningful. You'll receive feedback on grammar and style.</p>
+    <div class="word-display">
+      <div class="word" id="currentWord">…</div>
+      <div class="hint" id="wordHint">Click "New word" to start</div>
+    </div>
+    <textarea id="sentenceInput" placeholder="Write your sentence here..."></textarea>
+    <div class="button-row">
+      <button class="btn" id="submitBtn">✏️ Get feedback</button>
+      <button class="btn btn-secondary" id="newWordBtn">🔄 New word</button>
+    </div>
+    <div class="feedback-block" id="feedbackBlock">
+      <div id="feedbackContent"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ============================================================
+// LANGUAGE SETUP
+// ============================================================
+const params = new URLSearchParams(location.search);
+const uiLang = params.get('ui') || localStorage.getItem('lingototal_ui_language') || 'en';
+const targetLang = params.get('target') || localStorage.getItem('lingototal_target_language') || 'English';
+
+const uiNames = {
+  en: 'English', ca: 'Català', es: 'Español', fr: 'Français',
+  de: 'Deutsch', it: 'Italiano', pt: 'Português', eu: 'Euskara',
+  ja: '日本語', ar: 'العربية'
+};
+const targetNames = {
+  English: 'English', Catalan: 'Català', Spanish: 'Español',
+  French: 'Français', German: 'Deutsch', Italian: 'Italiano',
+  Portuguese: 'Português', Basque: 'Euskara', Japanese: '日本語',
+  Arabic: 'العربية'
+};
+const codes = { en: 'EN', ca: 'CA', es: 'ES', fr: 'FR', de: 'DE', it: 'IT', pt: 'PT', eu: 'EU', ja: 'JA', ar: 'AR' };
+const voiceLocales = {
+  English: 'en-GB', Catalan: 'ca-ES', Spanish: 'es-ES',
+  French: 'fr-FR', German: 'de-DE', Italian: 'it-IT',
+  Portuguese: 'pt-PT', Basque: 'eu-ES', Japanese: 'ja-JP', Arabic: 'ar-SA'
+};
+
+document.getElementById('languagePair').textContent =
+  (uiNames[uiLang] || uiLang) + ' → ' + (targetNames[targetLang] || targetLang);
+document.getElementById('languagePair').dataset.short =
+  (codes[uiLang] || uiLang.slice(0,2).toUpperCase()) + ' → ' +
+  (codes[targetLang] || targetLang.slice(0,2).toUpperCase());
+
+// ============================================================
+// GAME STATE
+// ============================================================
+let currentWord = '';
+let usedWords = [];
+let wordList = [
+  'imagine', 'discover', 'challenge', 'balance', 'explore',
+  'future', 'passion', 'journey', 'collaborate', 'sustain',
+  'innovate', 'transform', 'thrive', 'connect', 'belong'
+];
+
+// UI translations for the game
+const UI = {
+  en: {
+    hint: 'Click "New word" to start',
+    placeholder: 'Write your sentence here...',
+    submit: '✏️ Get feedback',
+    newWord: '🔄 New word',
+    feedbackTitle: 'Feedback on your sentence',
+    analysing: 'Analysing…'
+  },
+  ca: {
+    hint: 'Clica "Nova paraula" per començar',
+    placeholder: 'Escriu la teva frase aquí...',
+    submit: '✏️ Demana feedback',
+    newWord: '🔄 Nova paraula',
+    feedbackTitle: 'Feedback sobre la teva frase',
+    analysing: 'Analitzant…'
+  },
+  es: {
+    hint: 'Haz clic en "Nueva palabra" para empezar',
+    placeholder: 'Escribe tu frase aquí...',
+    submit: '✏️ Pedir feedback',
+    newWord: '🔄 Nueva palabra',
+    feedbackTitle: 'Feedback sobre tu frase',
+    analysing: 'Analizando…'
+  },
+  fr: {
+    hint: 'Cliquez sur "Nouveau mot" pour commencer',
+    placeholder: 'Écrivez votre phrase ici...',
+    submit: '✏️ Demander un retour',
+    newWord: '🔄 Nouveau mot',
+    feedbackTitle: 'Retour sur votre phrase',
+    analysing: 'Analyse…'
+  },
+  de: {
+    hint: 'Klicke auf "Neues Wort" zum Starten',
+    placeholder: 'Schreibe deinen Satz hier...',
+    submit: '✏️ Feedback anfordern',
+    newWord: '🔄 Neues Wort',
+    feedbackTitle: 'Feedback zu deinem Satz',
+    analysing: 'Analysiere…'
+  },
+  it: {
+    hint: 'Clicca "Nuova parola" per iniziare',
+    placeholder: 'Scrivi la tua frase qui...',
+    submit: '✏️ Chiedi feedback',
+    newWord: '🔄 Nuova parola',
+    feedbackTitle: 'Feedback sulla tua frase',
+    analysing: 'Analisi…'
+  },
+  pt: {
+    hint: 'Clique "Nova palavra" para começar',
+    placeholder: 'Escreve a tua frase aqui...',
+    submit: '✏️ Pedir feedback',
+    newWord: '🔄 Nova palavra',
+    feedbackTitle: 'Feedback sobre a tua frase',
+    analysing: 'Analisando…'
+  },
+  eu: {
+    hint: 'Egin klik "Hitz berria" hasteko',
+    placeholder: 'Idatzi zure esaldia hemen...',
+    submit: '✏️ Eskatu feedbacka',
+    newWord: '🔄 Hitz berria',
+    feedbackTitle: 'Zure esaldiaren feedbacka',
+    analysing: 'Aztertzen…'
+  },
+  ja: {
+    hint: '「新しい単語」をクリックして始めましょう',
+    placeholder: 'ここに文章を書いてください...',
+    submit: '✏️ フィードバックを取得',
+    newWord: '🔄 新しい単語',
+    feedbackTitle: 'あなたの文章へのフィードバック',
+    analysing: '分析中…'
+  },
+  ar: {
+    hint: 'انقر على "كلمة جديدة" للبدء',
+    placeholder: 'اكتب جملتك هنا...',
+    submit: '✏️ احصل على ملاحظات',
+    newWord: '🔄 كلمة جديدة',
+    feedbackTitle: 'ملاحظات حول جملتك',
+    analysing: 'جارٍ التحليل…'
+  }
+};
+
+const t = UI[uiLang] || UI.en;
+
+// Update UI text
+document.getElementById('wordHint').textContent = t.hint;
+document.getElementById('sentenceInput').placeholder = t.placeholder;
+document.getElementById('submitBtn').textContent = t.submit;
+document.getElementById('newWordBtn').textContent = t.newWord;
+
+// ============================================================
+// WORD GENERATION
+// ============================================================
+function getNewWord() {
+  if (usedWords.length >= wordList.length) {
+    usedWords = [];
+  }
+  const available = wordList.filter(w => !usedWords.includes(w));
+  const word = available[Math.floor(Math.random() * available.length)];
+  usedWords.push(word);
+  currentWord = word;
+  document.getElementById('currentWord').textContent = word;
+  document.getElementById('wordHint').textContent = '';
+  // Clear previous feedback and input
+  document.getElementById('sentenceInput').value = '';
+  document.getElementById('feedbackBlock').classList.remove('show');
+  document.getElementById('feedbackContent').innerHTML = '';
+}
+
+// Initial word
+getNewWord();
+
+document.getElementById('newWordBtn').addEventListener('click', getNewWord);
+
+// ============================================================
+// SUBMIT SENTENCE & GET FEEDBACK
+// ============================================================
+async function callGemini(prompt) {
+  const resp = await fetch('/.netlify/functions/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, model: 'gemini-2.5-flash', temperature: 0.7 })
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data?.error || 'API error');
+  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('Empty response');
+  return text;
+}
+
+document.getElementById('submitBtn').addEventListener('click', async function() {
+  const sentence = document.getElementById('sentenceInput').value.trim();
+  if (!sentence) {
+    alert('Please write a sentence first.');
+    return;
+  }
+  if (!currentWord) {
+    alert('Please get a word first.');
+    return;
+  }
+
+  this.disabled = true;
+  this.textContent = t.analysing;
+  const feedbackBlock = document.getElementById('feedbackBlock');
+  const content = document.getElementById('feedbackContent');
+
+  const prompt = `The learner has been given the word "${currentWord}" and has written this sentence in ${targetLang}: "${sentence}". Analyse the sentence for grammatical errors, vocabulary use, and overall naturalness. Provide a friendly, encouraging feedback in ${uiLang}. Structure: first a brief overall comment, then list any corrections (with the corrected phrase), and finally a suggestion for improvement. Keep it concise and supportive. Use emojis and line breaks for readability.`;
+
+  try {
+    const raw = await callGemini(prompt);
+    feedbackBlock.classList.add('show');
+    content.innerHTML = raw.replace(/\n/g, '<br>');
+  } catch (err) {
+    content.innerHTML = '⚠️ Could not generate feedback. Please try again.';
+    feedbackBlock.classList.add('show');
+  } finally {
+    this.disabled = false;
+    this.textContent = t.submit;
+  }
+});
+
+// ============================================================
+// KEYBOARD SHORTCUT: Ctrl+Enter to submit
+// ============================================================
+document.getElementById('sentenceInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    document.getElementById('submitBtn').click();
+  }
+});
+
+// ============================================================
+// LANGUAGE PAIR UPDATE FOR INDEX LINKS (if needed)
+// ============================================================
+document.querySelectorAll('.index-link').forEach(a => {
+  a.href = `index.html?ui=${encodeURIComponent(uiLang)}&target=${encodeURIComponent(targetLang)}`;
+});
+</script>
+</body>
+</html>
