@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1267d6">
+  <title>LingoTotal · Medicine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
+    *{box-sizing:border-box}html{scroll-padding-top:78px}body{margin:0;background:linear-gradient(180deg,#e9f3ff 0,#f7f9fc 280px,#f2f5f9 100%);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}button,input{font:inherit}
+    .topbar{position:sticky;top:0;z-index:50;min-height:72px;padding:10px clamp(12px,3vw,32px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;background:linear-gradient(135deg,#084ca8,#1267d6 62%,#25b7d3);box-shadow:0 3px 15px rgba(8,76,168,.28);color:#fff}
+    .logo,.home{color:inherit;text-decoration:none}.logo{display:flex;align-items:center;gap:10px;justify-self:start}.logo-mark{width:42px;height:42px;display:grid;place-items:center;background:#fff;color:var(--blue);font-weight:900;border-radius:10px}.logo-word{font-weight:900;letter-spacing:.08em}.activity-name{font-family:"Libre Franklin",Inter,sans-serif;font-weight:800;text-align:center;font-size:1.05rem}.right-tools{justify-self:end;display:flex;align-items:center;gap:8px}.pair{padding:7px 10px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);border-radius:8px;font-size:.73rem;font-weight:800}.home{width:38px;height:38px;display:grid;place-items:center;border-radius:9px;background:#fff;color:var(--blue-dark);font-size:1.08rem}
+    main{width:min(900px,calc(100% - 24px));margin:18px auto 42px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(18px,3vw,30px);margin-bottom:16px}.hero{position:relative;overflow:hidden;background:linear-gradient(100deg,rgba(4,45,99,.98),rgba(18,103,214,.9)),radial-gradient(circle at 88% 12%,#52d0df,transparent 42%);color:#fff;border:0}.hero:after{content:"+";position:absolute;right:25px;top:-34px;font-size:11rem;font-weight:900;line-height:1;color:rgba(255,255,255,.09)}h1{position:relative;margin:0 0 9px;font-family:"Libre Franklin",Inter,sans-serif;font-size:clamp(2rem,5vw,3.7rem);line-height:1}.hero p{position:relative;max-width:680px;margin:0;color:#e9f3ff}.safety{margin-top:14px;font-size:.77rem;color:#dbeaff}
+    .section-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}.step{width:36px;height:36px;display:grid;place-items:center;flex:0 0 36px;border-radius:10px;background:var(--blue);color:#fff;font-weight:900}.section-title{font-size:1.18rem;font-weight:900}.lead{margin:-6px 0 15px;color:var(--muted)}.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{width:100%;padding:15px;text-align:left;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}.choice:hover,.choice.selected{border-color:var(--blue);background:var(--blue-soft)}.choice strong{display:block;margin-bottom:3px}.choice small{color:var(--muted)}
+    .theme-block{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}label{display:block;font-weight:800;margin-bottom:7px}.hint{margin:0 0 10px;color:var(--muted);font-size:.88rem}input{width:100%;min-height:49px;padding:11px 13px;border:2px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,103,214,.12)}.examples{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.example{border:1px solid var(--line);border-radius:999px;background:var(--soft);padding:7px 10px;color:#526174;font-size:.76rem;cursor:pointer}
+    .primary,.secondary,.action{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.primary{width:100%;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff}.primary:disabled{opacity:.55;cursor:not-allowed}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}.generator{padding:16px 20px}.status{text-align:center;color:var(--muted);font-size:.9rem;margin-top:11px}.hidden{display:none!important}
+    .progress{display:flex;gap:7px;justify-content:center;margin-bottom:17px}.dot{width:37px;height:37px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--muted);font-weight:800;cursor:pointer}.dot.current{border-color:var(--blue);background:var(--blue);color:#fff}.dot.done{border-color:#91cbb0;background:#eaf8f1;color:#12643d}
+    .scenario-kicker{color:var(--blue);font-size:.73rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.scenario-title{margin:5px 0 7px;font-size:clamp(1.35rem,3vw,1.85rem)}.scenario-text{margin:0 0 18px;color:var(--muted)}.task-title{font-weight:900;margin-bottom:9px}
+    .intention-block{margin-bottom:16px;border:1px solid var(--line);border-radius:12px;padding:14px;background:#fbfdff}
+    .intention-block .label{font-weight:900;color:var(--blue-dark);margin-bottom:9px;font-size:1rem}
+    .phrase-card{padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:9px}
+    .phrase-target{font-size:1.06rem;font-weight:900}
+    .phrase-meaning{margin-top:4px;color:var(--muted);font-size:.88rem}
+    .phrase-note{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:#526174;font-size:.8rem}
+    .phrase-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .action{padding:8px 10px;border:1px solid var(--line);background:var(--soft);color:var(--blue-dark);font-size:.78rem}
+    .action.saved{background:#eaf8f1;color:#12643d;border-color:#91cbb0}
+    .nav-row{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.nav-row button{width:auto}
+    .collection-toggle{display:flex;justify-content:flex-end;margin-bottom:10px}.collection{margin-bottom:16px}
+    .saved-list{display:grid;gap:9px}.saved-item{padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}.saved-item strong{display:block}.saved-item small{color:var(--muted)}.empty{text-align:center;color:var(--muted)}
+    .toast{position:fixed;right:18px;top:88px;z-index:100;max-width:min(360px,calc(100% - 36px));padding:11px 14px;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;box-shadow:var(--shadow);transform:translateX(130%);transition:.25s}.toast.show{transform:translateX(0)}.footer{text-align:center;color:#77818e;font-size:.7rem;padding:8px 12px 24px}
+    /* Practice panel */
+    .practice-type-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+    .practice-type{min-height:54px;padding:10px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-weight:800;cursor:pointer}
+    .practice-type:hover,.practice-type.selected{border-color:var(--blue);background:var(--blue-soft);color:var(--blue-dark)}
+    .exercise{margin-top:16px;padding:17px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}
+    .prompt{margin-bottom:14px;font-size:1.05rem;font-weight:800}
+    .wordbank{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+    .word{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);cursor:pointer;font-weight:700}
+    .word:hover{border-color:var(--blue);background:var(--blue-soft)}
+    .answer-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-height:58px;margin:10px 0 14px;padding:10px;border:1px dashed var(--line);background:#fff;border-radius:10px}
+    .answer-line .word{border-color:#3c5270;background:var(--blue-soft);color:var(--blue-dark)}
+    .answer-placeholder,.jumble-label{color:var(--muted);font-size:.8rem}.jumble-label{margin-top:10px;font-weight:800}
+    .jumble-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .options{display:grid;gap:8px}
+    .option{width:100%;padding:11px;text-align:left;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;font-weight:700}
+    .option:hover{border-color:var(--blue);background:var(--blue-soft)}
+    .option.correct{border-color:var(--green);background:#eaf8f1}.option.wrong{border-color:var(--red);background:#fdecee}
+    .feedback{margin-top:12px;font-weight:800}.feedback.good{color:#12643d}.feedback.bad{color:#a5303c}
+    [dir="rtl"] .choice,[dir="rtl"] .intent,[dir="rtl"] .phrase-card,[dir="rtl"] .intention-block{text-align:right}
+    @media(max-width:650px){html{scroll-padding-top:60px}.topbar{min-height:58px;padding:7px 10px;gap:7px}.logo-mark{width:34px;height:34px;border-radius:8px}.logo-word{display:none}.activity-name{font-size:.83rem}.pair{max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:6px;font-size:.59rem}.home{width:34px;height:34px}main{width:100%;margin:0}.card{border-radius:0;border-left:0;border-right:0;margin:0;border-top:0;padding:18px 16px}.hero{padding:28px 18px}.hero:after{font-size:8rem}.generator{padding:13px 16px}.level-grid{grid-template-columns:1fr}.choice{padding:12px}.nav-row{position:sticky;bottom:0;background:rgba(255,255,255,.95);padding:9px 0}.collection-toggle{padding:10px 12px 0;margin:0}.practice-type-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:360px){.practice-type-grid{grid-template-columns:1fr}}
+  </style>
+  <style id="lingototal-newlook-style">
+    :root{--blue:#3277e8;--blue-dark:#1f5fc7;--blue-soft:#202f45;--ink:#f7f7f5;--muted:#b8bdc5;--paper:#202020;--soft:#292929;--line:#383838;--green:#3eae78;--red:#e25c68;--shadow:0 16px 40px rgba(0,0,0,.22)}
+    html{background:#171717;scroll-padding-top:72px}body{background:#171717;color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.48}
+    .topbar{min-height:72px;padding:10px clamp(14px,4vw,56px);gap:18px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),linear-gradient(120deg,#24344c,#15191f 62%);border-bottom:1px solid #343b45;box-shadow:0 5px 20px rgba(0,0,0,.28)}
+    .logo{gap:9px}.logo-mark{width:40px;height:40px;border-radius:0;background:#3277e8;color:#fff;box-shadow:none;font-size:.82rem;font-weight:900}.logo-word{font-size:.9rem;font-weight:900;letter-spacing:.16em}.activity-name{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;letter-spacing:.015em}
+    .right-tools{gap:8px}.pair{padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:0;background:rgba(0,0,0,.25);font-size:.68rem;white-space:nowrap}.home{width:36px;height:36px;border:1px solid rgba(255,255,255,.3);border-radius:0;background:#f4f4f2;color:#182033;font-size:1rem}.home:hover{background:#dfeaff;color:#153f82}
+    main{width:min(900px,calc(100% - 28px));margin:18px auto 44px}
+    .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:0;box-shadow:0 10px 28px rgba(0,0,0,.16);padding:64px clamp(17px,3vw,27px) 24px;margin-bottom:12px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)) 0 0/100% 42px no-repeat,radial-gradient(circle at 72% 20px,rgba(126,175,255,.55),transparent 27%) 0 0/100% 42px no-repeat,linear-gradient(120deg,#24344c,#15191f 62%) 0 0/100% 42px no-repeat,#202020}
+    .hero{min-height:265px;padding:54px clamp(24px,5vw,48px);display:flex;flex-direction:column;justify-content:center;border:0;border-left:5px solid var(--blue);background:linear-gradient(90deg,rgba(16,16,16,.97),rgba(16,16,16,.72)),radial-gradient(circle at 78% 35%,#315f9c 0,transparent 34%),linear-gradient(135deg,#121212 0%,#18253a 57%,#0d0d0d 100%)}
+    .hero:after{right:32px;top:-45px;color:rgba(112,163,244,.17);font-size:13rem}
+    h1{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.8rem,6.2vw,5.4rem);font-weight:700;line-height:.92;letter-spacing:-.052em;margin:0 0 17px}
+    .hero p{max-width:690px;color:#d3d7dd;font-size:.98rem;line-height:1.6}.safety{color:#9ebbe5;font-size:.72rem;letter-spacing:.02em}
+    .collection-toggle{margin:0 0 10px}.collection-toggle .secondary{border:1px solid #3b4657;border-radius:0;padding:9px 13px;background:#202936;color:#9ec2ff;box-shadow:none;font-size:.76rem}
+    .section-head{gap:11px;margin-bottom:15px}.step{width:34px;height:34px;flex-basis:34px;border-radius:0;background:var(--blue);font-size:.78rem;font-weight:900}.section-title{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:1.42rem;font-weight:700;letter-spacing:-.02em}.lead,.hint{color:var(--muted);font-weight:500}
+    .theme-block{border-top-color:#3a3a3a}.choice,.intent{border:1px solid #414141;border-radius:0;background:#252525;color:#f5f5f3;box-shadow:none}.choice:hover,.choice.selected,.intent:hover,.intent.selected{border-color:#6699ec;background:#202f45;color:#fff}.choice small{color:#afb5be}
+    label,.task-title,.scenario-title,.phrase-target,.saved-item strong{color:#fff}.example{border:1px solid #3b3b3b;border-radius:0;background:#242424;color:#aeb5bf}.example:hover{border-color:#6699ec;background:#202f45;color:#fff}
+    input{min-height:48px;border:1px solid #4c4c4c;border-radius:0;background:#151515;color:#fff;caret-color:#8bb7ff}input::placeholder{color:#858b94}input:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
+    .primary,.secondary,.action{border-radius:0;letter-spacing:.025em}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue-dark)}.secondary{background:#292929;border-color:#454545;color:#fff}
+    .generator{padding:16px clamp(17px,3vw,27px) 19px;background:#202020}.generator .primary{min-height:50px}.status{color:#aeb6c1}
+    .progress{margin-bottom:19px}.dot{border:1px solid #454545;border-radius:0;background:#292929;color:#c3c8cf}.dot.current{border-color:var(--blue);background:var(--blue);color:#fff}.dot.done{border-color:#47765f;background:#233a30;color:#a5e4c3}
+    .scenario-kicker{color:#8cbaff}.scenario-text{color:#b8bdc5}
+    .intention-block{border:1px solid #3e3e3e;border-radius:0;background:#1d1d1d;padding:14px;margin-bottom:14px}
+    .intention-block .label{color:#8bb7ff;font-weight:900;margin-bottom:10px;font-size:.95rem}
+    .phrase-card,.saved-item{border:1px solid #3e3e3e;border-radius:0;background:#242424}.phrase-meaning,.phrase-note,.saved-item small{color:#adb4bd}.phrase-note{border-top-color:#3c3c3c}.action{border:1px solid #465164;background:#202936;color:#bcd4ff}.action:hover{border-color:#6699ec;background:#263b5b;color:#fff}.action.saved{background:#21382d;color:#a5e4c3;border-color:#47765f}
+    .nav-row{border-top:1px solid #363636;padding-top:14px}.empty{color:#aab0b8}.toast{top:86px;border-radius:0}.footer{color:#7f858d}
+    /* Practice panel dark */
+    .practice-type-grid{gap:8px}
+    .practice-type{border:1px solid #414141;border-radius:0;background:#1b1b1b;color:#f5f5f3}.practice-type:hover,.practice-type.selected{border-color:#6699ec;background:#202f45;color:#fff}
+    .exercise{border:1px solid #3e3e3e;border-left:4px solid var(--blue);border-radius:0;background:#242424}
+    .prompt{color:#fff}
+    .word{border:1px solid #454545;border-radius:0;background:#1b1b1b;color:#fff}.word:hover{border-color:#6699ec;background:#202f45}
+    .answer-line{border:1px dashed #65717f;background:#151515;border-radius:0}
+    .answer-line .word{border-color:#3c5270;background:#202f45;color:#bcd5ff}
+    .jumble-label{color:#b8bdc5}
+    .option{border:1px solid #454545;border-radius:0;background:#1b1b1b;color:#f5f5f3}.option:hover{border-color:#6699ec;background:#202f45}.option.correct{border-color:#3eae78;background:#19372a}.option.wrong{border-color:#e25c68;background:#3b2024}
+    .feedback.good{color:#a7e1c0}.feedback.bad{color:#ffb8c0}
+    @media(max-width:650px){html{scroll-padding-top:58px}.topbar{min-height:58px;padding:8px 11px;gap:7px}.logo-mark{width:34px;height:34px}.logo-word{display:none}.activity-name{font-size:.9rem}.pair{max-width:92px;padding:6px;font-size:.59rem}.home{width:34px;height:34px}main{width:100%;margin:0}.card{border-left:0;border-right:0;margin:0;padding:58px 16px 18px}.hero{min-height:218px;padding:34px 20px;border-left:0;border-bottom:4px solid var(--blue)}h1{font-size:clamp(2.6rem,14vw,4.4rem)}.hero:after{font-size:9rem;right:10px}.generator{padding:13px 16px}.collection-toggle{padding:10px 12px 0;margin:0;background:#171717}.nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a aria-label='LingoTotal home' class='logo' href='/'><span class="logo-mark">LT</span><span class="logo-word">LingoTotal</span></a>
+    <div class="activity-name" data-t="activity">Medicine</div>
+    <div class="right-tools"><span class="pair" id="pair">EN → ES</span><a aria-label='Home' class='home' href='/'>⌂</a></div>
+  </header>
+
+  <main>
+    <section class="card hero">
+      <h1 data-t="title">Medicine</h1>
+      <p data-t="subtitle">Practise the language used by medical students with patients and healthcare colleagues.</p>
+      <div class="safety" data-t="safety">For language practice only. This activity does not provide medical advice.</div>
+    </section>
+
+    <div class="collection-toggle"><button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button></div>
+    <section class="card collection hidden" id="collectionPanel">
+      <div class="section-head"><span class="step">★</span><div class="section-title" data-t="saved">Saved phrases</div></div>
+      <div class="saved-list" id="savedList"></div>
+    </section>
+
+    <section class="card" id="setup">
+      <div class="section-head"><span class="step">1</span><div class="section-title" data-t="chooseLevel">Choose your level</div></div>
+      <p class="lead" data-t="levelLead">Select a level before entering your context.</p>
+      <div class="level-grid">
+        <button class="choice level" type="button" data-level="basics"><strong data-t="basics">Revising the basics</strong><small data-t="basicsNote">Clear, useful language for straightforward clinical encounters.</small></button>
+        <button class="choice level" type="button" data-level="confidence"><strong data-t="confidence">Gaining confidence</strong><small data-t="confidenceNote">More natural, precise language for demanding situations.</small></button>
+      </div>
+      <div class="theme-block">
+        <label for="theme" data-t="context">Medical topic or situation</label>
+        <p class="hint" data-t="contextHint">Type any speciality, task or clinical situation. You can write in any language.</p>
+        <input id="theme" type="text" maxlength="180" data-ph="placeholder" placeholder="For example: taking a patient history">
+        <div class="examples" aria-label="Examples">
+          <button class="example" type="button" data-example="Taking a patient history">Taking a patient history</button>
+          <button class="example" type="button" data-example="Explaining an examination">Explaining an examination</button>
+          <button class="example" type="button" data-example="Presenting a case">Presenting a case</button>
+          <button class="example" type="button" data-example="Reassuring a worried patient">Reassuring a worried patient</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card generator" id="generator">
+      <button class="primary" id="generateBtn" type="button" data-t="create">Create my practice</button>
+      <div class="status hidden" id="status" role="status" data-t="creating">Creating three medical situations…</div>
+    </section>
+
+    <section class="card hidden" id="activity">
+      <div class="progress" id="progress"></div>
+      <div class="scenario-kicker" id="scenarioKicker"></div>
+      <h2 class="scenario-title" id="scenarioTitle"></h2>
+      <p class="scenario-text" id="scenarioText"></p>
+      <div class="task-title" data-t="choosePurpose">What do you need to communicate?</div>
+      <div id="intentionsWithPhrases"></div>
+      <div class="nav-row">
+        <button class="secondary" id="prevBtn" type="button" data-t="previous">Previous</button>
+        <button class="primary" id="nextBtn" type="button" data-t="next">Next situation</button>
+      </div>
+    </section>
+
+    <!-- Practice panel for Medicine-saved phrases -->
+    <section class="card" id="practicePanel">
+      <div class="section-head"><span class="step">2</span><div class="section-title" data-t="practiceTitle">Practise your saved phrases</div></div>
+      <p class="lead" data-t="practiceIntro">Choose a practice type. Only the phrases you have saved on this page are used.</p>
+      <div class="practice-type-grid" id="typeGrid">
+        <button class="practice-type selected" data-type="gap" data-t="gap">Gap fill</button>
+        <button class="practice-type" data-type="jumble" data-t="jumble">Jumbled sentence</button>
+        <button class="practice-type" data-type="listen" data-t="listen">Listen &amp; rebuild</button>
+        <button class="practice-type" data-type="recall" data-t="recall">Recall</button>
+      </div>
+      <div class="actions" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn primary" id="startBtn" style="width:auto" data-t="start">Start practice</button>
+      </div>
+      <div id="exercise" class="exercise hidden"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <footer class="footer">LingoTotal · <span data-t="footer">Personalised language learning</span></footer>
+
+  <script src="tts.js"></script>
+  <script>
+  (() => {
+    'use strict';
+    // ============================================================
+    // LANGUAGE
+    // ============================================================
+    const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}};
+    const I={
+      en:{activity:'Medicine',title:'Medicine',subtitle:'Practise the language used by medical students with patients and healthcare colleagues.',safety:'For language practice only. This activity does not provide medical advice.',saved:'Saved phrases',chooseLevel:'Choose your level',levelLead:'Select a level before entering your context.',basics:'Revising the basics',basicsNote:'Clear, useful language for straightforward clinical encounters.',confidence:'Gaining confidence',confidenceNote:'More natural, precise language for demanding situations.',context:'Medical topic or situation',contextHint:'Type any speciality, task or clinical situation. You can write in any language.',placeholder:'For example: taking a patient history',create:'Create my practice',creating:'Creating three medical situations…',choosePurpose:'What do you need to communicate?',previous:'Previous',next:'Next situation',newChallenge:'Create a new challenge',listen:'Listen',save:'Save phrase',savedDone:'Saved',empty:'No phrases saved yet.',selectLevel:'Please choose your level first.',enterContext:'Please enter a medical topic or situation.',error:'The practice could not be created. Please try again.',situation:'Situation',footer:'Personalised language learning',removed:'Phrase removed',savedToast:'Phrase saved',practiceTitle:'Practise your saved phrases',practiceIntro:'Choose a practice type. Only the phrases you have saved on this page are used.',gap:'Gap fill',jumble:'Jumbled sentence',recall:'Recall',start:'Start practice',noPhrases:'Save some phrases above first.',correct:'Correct',tryAgain:'Try again',yourAnswer:'Your answer',listenNow:'Listen',typeSentence:'Type the sentence you heard.',recallPrompt:'Try to recall the complete phrase before revealing it.',show:'Show answer',check:'Check',incomplete:'Use all the words before checking.',buildSentence:'Build the sentence',jumbledWords:'Jumbled words',clearSentence:'Clear sentence'},
+      ca:{activity:'Medicina',title:'Medicina',subtitle:'Practica el llenguatge que fan servir els estudiants de medicina amb pacients i professionals sanitaris.',safety:'Només per practicar idiomes. Aquesta activitat no ofereix consell mèdic.',saved:'Frases desades',chooseLevel:'Tria el teu nivell',levelLead:'Tria un nivell abans d’escriure el context.',basics:'Revisar les bases',basicsNote:'Llenguatge clar i útil per a situacions clíniques senzilles.',confidence:'Guanyar confiança',confidenceNote:'Llenguatge més natural i precís per a situacions exigents.',context:'Tema o situació mèdica',contextHint:'Escriu una especialitat, tasca o situació clín
