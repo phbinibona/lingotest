@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1267d6">
+  <title>LingoTotal · Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
+    *{box-sizing:border-box}html{scroll-padding-top:78px}body{margin:0;background:linear-gradient(180deg,#e9f3ff 0,#f7f9fc 280px,#f2f5f9 100%);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}button,input{font:inherit}
+    .topbar{position:sticky;top:0;z-index:50;min-height:72px;padding:10px clamp(12px,3vw,32px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;background:linear-gradient(135deg,#084ca8,#1267d6 62%,#25b7d3);box-shadow:0 3px 15px rgba(8,76,168,.28);color:#fff}
+    .logo,.home{color:inherit;text-decoration:none}.logo{display:flex;align-items:center;gap:10px;justify-self:start}.logo-mark{width:42px;height:42px;display:grid;place-items:center;background:#fff;color:var(--blue);font-weight:900;border-radius:10px}.logo-word{font-weight:900;letter-spacing:.08em}.activity-name{font-family:"Libre Franklin",Inter,sans-serif;font-weight:800;text-align:center;font-size:1.05rem}.right-tools{justify-self:end;display:flex;align-items:center;gap:8px}.pair{padding:7px 10px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);border-radius:8px;font-size:.73rem;font-weight:800}.home{width:38px;height:38px;display:grid;place-items:center;border-radius:9px;background:#fff;color:var(--blue-dark);font-size:1.08rem}
+    main{width:min(900px,calc(100% - 24px));margin:18px auto 42px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(18px,3vw,30px);margin-bottom:16px}.hero{position:relative;overflow:hidden;background:linear-gradient(100deg,rgba(4,45,99,.98),rgba(18,103,214,.9)),radial-gradient(circle at 88% 12%,#52d0df,transparent 42%);color:#fff;border:0}.hero:after{content:"+";position:absolute;right:25px;top:-34px;font-size:11rem;font-weight:900;line-height:1;color:rgba(255,255,255,.09)}h1{position:relative;margin:0 0 9px;font-family:"Libre Franklin",Inter,sans-serif;font-size:clamp(2rem,5vw,3.7rem);line-height:1}.hero p{position:relative;max-width:680px;margin:0;color:#e9f3ff}.safety{margin-top:14px;font-size:.77rem;color:#dbeaff}
+    .section-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}.step{width:36px;height:36px;display:grid;place-items:center;flex:0 0 36px;border-radius:10px;background:var(--blue);color:#fff;font-weight:900}.section-title{font-size:1.18rem;font-weight:900}.lead{margin:-6px 0 15px;color:var(--muted)}.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{width:100%;padding:15px;text-align:left;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}.choice:hover,.choice.selected{border-color:var(--blue);background:var(--blue-soft)}.choice strong{display:block;margin-bottom:3px}.choice small{color:var(--muted)}
+    .theme-block{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}label{display:block;font-weight:800;margin-bottom:7px}.hint{margin:0 0 10px;color:var(--muted);font-size:.88rem}input{width:100%;min-height:49px;padding:11px 13px;border:2px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,103,214,.12)}.examples{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.example{border:1px solid var(--line);border-radius:999px;background:var(--soft);padding:7px 10px;color:#526174;font-size:.76rem;cursor:pointer}
+    .primary,.secondary,.action{border:0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.primary{width:100%;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff}.primary:disabled{opacity:.55;cursor:not-allowed}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}.generator{padding:16px 20px}.status{text-align:center;color:var(--muted);font-size:.9rem;margin-top:11px}.hidden{display:none!important}
+    .progress{display:flex;gap:7px;justify-content:center;margin-bottom:17px}.dot{width:37px;height:37px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--muted);font-weight:800;cursor:pointer}.dot.current{border-color:var(--blue);background:var(--blue);color:#fff}.dot.done{border-color:#91cbb0;background:#eaf8f1;color:#12643d}
+    .scenario-kicker{color:var(--blue);font-size:.73rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.scenario-title{margin:5px 0 7px;font-size:clamp(1.35rem,3vw,1.85rem)}.scenario-text{margin:0 0 18px;color:var(--muted)}.task-title{font-weight:900;margin-bottom:9px}
+    .intention-block{margin-bottom:16px;border:1px solid var(--line);border-radius:12px;padding:14px;background:#fbfdff}
+    .intention-block .label{font-weight:900;color:var(--blue-dark);margin-bottom:9px;font-size:1rem}
+    .phrase-card{padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:9px}
+    .phrase-target{font-size:1.06rem;font-weight:900}
+    .phrase-meaning{margin-top:4px;color:var(--muted);font-size:.88rem}
+    .phrase-note{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:#526174;font-size:.8rem}
+    .phrase-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .action{padding:8px 10px;border:1px solid var(--line);background:var(--soft);color:var(--blue-dark);font-size:.78rem}
+    .action.saved{background:#eaf8f1;color:#12643d;border-color:#91cbb0}
+    .nav-row{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.nav-row button{width:auto}
+    .collection-toggle{display:flex;justify-content:flex-end;margin-bottom:10px}.collection{margin-bottom:16px}
+    .saved-list{display:grid;gap:9px}.saved-item{padding:12px;border:1px solid var(--line);border-radius:10px;background:#fff}.saved-item strong{display:block}.saved-item small{color:var(--muted)}.empty{text-align:center;color:var(--muted)}
+    .toast{position:fixed;right:18px;top:88px;z-index:100;max-width:min(360px,calc(100% - 36px));padding:11px 14px;border-radius:9px;background:var(--blue);color:#fff;font-weight:700;box-shadow:var(--shadow);transform:translateX(130%);transition:.25s}.toast.show{transform:translateX(0)}.footer{text-align:center;color:#77818e;font-size:.7rem;padding:8px 12px 24px}
+    .practice-type-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+    .practice-type{min-height:54px;padding:10px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-weight:800;cursor:pointer}
+    .practice-type:hover,.practice-type.selected{border-color:var(--blue);background:var(--blue-soft);color:var(--blue-dark)}
+    .exercise{margin-top:16px;padding:17px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}
+    .prompt{margin-bottom:14px;font-size:1.05rem;font-weight:800}
+    .wordbank{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+    .word{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);cursor:pointer;font-weight:700}
+    .word:hover{border-color:var(--blue);background:var(--blue-soft)}
+    .answer-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-height:58px;margin:10px 0 14px;padding:10px;border:1px dashed var(--line);background:#fff;border-radius:10px}
+    .answer-line .word{border-color:#3c5270;background:var(--blue-soft);color:var(--blue-dark)}
+    .answer-placeholder,.jumble-label{color:var(--muted);font-size:.8rem}.jumble-label{margin-top:10px;font-weight:800}
+    .jumble-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .options{display:grid;gap:8px}
+    .option{width:100%;padding:11px;text-align:left;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;font-weight:700}
+    .option:hover{border-color:var(--blue);background:var(--blue-soft)}
+    .option.correct{border-color:var(--green);background:#eaf8f1}.option.wrong{border-color:var(--red);background:#fdecee}
+    .feedback{margin-top:12px;font-weight:800}.feedback.good{color:#12643d}.feedback.bad{color:#a5303c}
+    [dir="rtl"] .choice,[dir="rtl"] .phrase-card,[dir="rtl"] .intention-block{text-align:right}
+    @media(max-width:650px){html{scroll-padding-top:60px}.topbar{min-height:58px;padding:7px 10px;gap:7px}.logo-mark{width:34px;height:34px;border-radius:8px}.logo-word{display:none}.activity-name{font-size:.83rem}.pair{max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:6px;font-size:.59rem}.home{width:34px;height:34px}main{width:100%;margin:0}.card{border-radius:0;border-left:0;border-right:0;margin:0;border-top:0;padding:18px 16px}.hero{padding:28px 18px}.hero:after{font-size:8rem}.generator{padding:13px 16px}.level-grid{grid-template-columns:1fr}.choice{padding:12px}.nav-row{position:sticky;bottom:0;background:rgba(255,255,255,.95);padding:9px 0}.collection-toggle{padding:10px 12px 0;margin:0}.practice-type-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:360px){.practice-type-grid{grid-template-columns:1fr}}
+  </style>
+  <style id="lingototal-newlook-style">
+    :root{--blue:#3277e8;--blue-dark:#1f5fc7;--blue-soft:#202f45;--ink:#f7f7f5;--muted:#b8bdc5;--paper:#202020;--soft:#292929;--line:#383838;--green:#3eae78;--red:#e25c68;--shadow:0 16px 40px rgba(0,0,0,.22)}
+    html{background:#171717;scroll-padding-top:72px}body{background:#171717;color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.48}
+    .topbar{min-height:72px;padding:10px clamp(14px,4vw,56px);gap:18px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),linear-gradient(120deg,#24344c,#15191f 62%);border-bottom:1px solid #343b45;box-shadow:0 5px 20px rgba(0,0,0,.28)}
+    .logo{gap:9px}.logo-mark{width:40px;height:40px;border-radius:0;background:#3277e8;color:#fff;box-shadow:none;font-size:.82rem;font-weight:900}.logo-word{font-size:.9rem;font-weight:900;letter-spacing:.16em}.activity-name{font-family:Georgia,'Times New Roman',serif;font-size:1.15rem;letter-spacing:.015em}
+    .right-tools{gap:8px}.pair{padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:0;background:rgba(0,0,0,.25);font-size:.68rem;white-space:nowrap}.home{width:36px;height:36px;border:1px solid rgba(255,255,255,.3);border-radius:0;background:#f4f4f2;color:#182033;font-size:1rem}.home:hover{background:#dfeaff;color:#153f82}
+    main{width:min(900px,calc(100% - 28px));margin:18px auto 44px}
+    .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:0;box-shadow:0 10px 28px rgba(0,0,0,.16);padding:64px clamp(17px,3vw,27px) 24px;margin-bottom:12px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)) 0 0/100% 42px no-repeat,radial-gradient(circle at 72% 20px,rgba(126,175,255,.55),transparent 27%) 0 0/100% 42px no-repeat,linear-gradient(120deg,#24344c,#15191f 62%) 0 0/100% 42px no-repeat,#202020}
+    .hero{min-height:265px;padding:54px clamp(24px,5vw,48px);display:flex;flex-direction:column;justify-content:center;border:0;border-left:5px solid var(--blue);background:linear-gradient(90deg,rgba(16,16,16,.97),rgba(16,16,16,.72)),radial-gradient(circle at 78% 35%,#315f9c 0,transparent 34%),linear-gradient(135deg,#121212 0%,#18253a 57%,#0d0d0d 100%)}
+    .hero:after{right:32px;top:-45px;color:rgba(112,163,244,.17);font-size:13rem}
+    h1{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.8rem,6.2vw,5.4rem);font-weight:700;line-height:.92;letter-spacing:-.052em;margin:0 0 17px}
+    .hero p{max-width:690px;color:#d3d7dd;font-size:.98rem;line-height:1.6}.safety{color:#9ebbe5;font-size:.72rem;letter-spacing:.02em}
+    .collection-toggle{margin:0 0 10px}.collection-toggle .secondary{border:1px solid #3b4657;border-radius:0;padding:9px 13px;background:#202936;color:#9ec2ff;box-shadow:none;font-size:.76rem}
+    .section-head{gap:11px;margin-bottom:15px}.step{width:34px;height:34px;flex-basis:34px;border-radius:0;background:var(--blue);font-size:.78rem;font-weight:900}.section-title{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:1.42rem;font-weight:700;letter-spacing:-.02em}.lead,.hint{color:var(--muted);font-weight:500}
+    .theme-block{border-top-color:#3a3a3a}.choice,.intent{border:1px solid #414141;border-radius:0;background:#252525;color:#f5f5f3;box-shadow:none}.choice:hover,.choice.selected,.intent:hover,.intent.selected{border-color:#6699ec;background:#202f45;color:#fff}.choice small{color:#afb5be}
+    label,.task-title,.scenario-title,.phrase-target,.saved-item strong{color:#fff}.example{border:1px solid #3b3b3b;border-radius:0;background:#242424;color:#aeb5bf}.example:hover{border-color:#6699ec;background:#202f45;color:#fff}
+    input{min-height:48px;border:1px solid #4c4c4c;border-radius:0;background:#151515;color:#fff;caret-color:#8bb7ff}input::placeholder{color:#858b94}input:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
+    .primary,.secondary,.action{border-radius:0;letter-spacing:.025em}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue-dark)}.secondary{background:#292929;border-color:#454545;color:#fff}
+    .generator{padding:16px clamp(17px,3vw,27px) 19px;background:#202020}.generator .primary{min-height:50px}.status{color:#aeb6c1}
+    .progress{margin-bottom:19px}.dot{border:1px solid #454545;border-radius:0;background:#292929;color:#c3c8cf}.dot.current{border-color:var(--blue);background:var(--blue);color:#fff}.dot.done{border-color:#47765f;background:#233a30;color:#a5e4c3}
+    .scenario-kicker{color:#8cbaff}.scenario-text{color:#b8bdc5}
+    .intention-block{border:1px solid #3e3e3e;border-radius:0;background:#1d1d1d;padding:14px;margin-bottom:14px}
+    .intention-block .label{color:#8bb7ff;font-weight:900;margin-bottom:10px;font-size:.95rem}
+    .phrase-card,.saved-item{border:1px solid #3e3e3e;border-radius:0;background:#242424}.phrase-meaning,.phrase-note,.saved-item small{color:#adb4bd}.phrase-note{border-top-color:#3c3c3c}.action{border:1px solid #465164;background:#202936;color:#bcd4ff}.action:hover{border-color:#6699ec;background:#263b5b;color:#fff}.action.saved{background:#21382d;color:#a5e4c3;border-color:#47765f}
+    .nav-row{border-top:1px solid #363636;padding-top:14px}.empty{color:#aab0b8}.toast{top:86px;border-radius:0}.footer{color:#7f858d}
+    .practice-type{border:1px solid #414141;border-radius:0;background:#1b1b1b;color:#f5f5f3}.practice-type:hover,.practice-type.selected{border-color:#6699ec;background:#202f45;color:#fff}
+    .exercise{border:1px solid #3e3e3e;border-left:4px solid var(--blue);border-radius:0;background:#242424}
+    .prompt{color:#fff}
+    .word{border:1px solid #454545;border-radius:0;background:#1b1b1b;color:#fff}.word:hover{border-color:#6699ec;background:#202f45}
+    .answer-line{border:1px dashed #65717f;background:#151515;border-radius:0}
+    .answer-line .word{border-color:#3c5270;background:#202f45;color:#bcd5ff}
+    .jumble-label{color:#b8bdc5}
+    .option{border:1px solid #454545;border-radius:0;background:#1b1b1b;color:#f5f5f3}.option:hover{border-color:#6699ec;background:#202f45}.option.correct{border-color:#3eae78;background:#19372a}.option.wrong{border-color:#e25c68;background:#3b2024}
+    .feedback.good{color:#a7e1c0}.feedback.bad{color:#ffb8c0}
+    @media(max-width:650px){html{scroll-padding-top:58px}.topbar{min-height:58px;padding:8px 11px;gap:7px}.logo-mark{width:34px;height:34px}.logo-word{display:none}.activity-name{font-size:.9rem}.pair{max-width:92px;padding:6px;font-size:.59rem}.home{width:34px;height:34px}main{width:100%;margin:0}.card{border-left:0;border-right:0;margin:0;padding:58px 16px 18px}.hero{min-height:218px;padding:34px 20px;border-left:0;border-bottom:4px solid var(--blue)}h1{font-size:clamp(2.6rem,14vw,4.4rem)}.hero:after{font-size:9rem;right:10px}.generator{padding:13px 16px}.collection-toggle{padding:10px 12px 0;margin:0;background:#171717}.nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a aria-label='LingoTotal home' class='logo' href='/'><span class="logo-mark">LT</span><span class="logo-word">LingoTotal</span></a>
+    <div class="activity-name" data-t="activity">Architecture</div>
+    <div class="right-tools"><span class="pair" id="pair">EN → ES</span><a aria-label='Home' class='home' href='/'>⌂</a></div>
+  </header>
+
+  <main>
+    <section class="card hero">
+      <h1 data-t="title">Architecture</h1>
+      <p data-t="subtitle">Practise the language used by architecture students in the studio, on site and with clients.</p>
+      <div class="safety" data-t="safety">Develop the language needed for architectural study and professional practice.</div>
+    </section>
+
+    <div class="collection-toggle"><button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button></div>
+    <section class="card collection hidden" id="collectionPanel">
+      <div class="section-head"><span class="step">★</span><div class="section-title" data-t="saved">Saved phrases</div></div>
+      <div class="saved-list" id="savedList"></div>
+    </section>
+
+    <section class="card" id="setup">
+      <div class="section-head"><span class="step">1</span><div class="section-title" data-t="chooseLevel">Choose your level</div></div>
+      <p class="lead" data-t="levelLead">Select a level before entering your context.</p>
+      <div class="level-grid">
+        <button class="choice level" type="button" data-level="basics"><strong data-t="basics">Revising the basics</strong><small data-t="basicsNote">Clear, useful language for straightforward architectural situations.</small></button>
+        <button class="choice level" type="button" data-level="confidence"><strong data-t="confidence">Gaining confidence</strong><small data-t="confidenceNote">More natural, precise language for demanding academic and professional situations.</small></button>
+      </div>
+      <div class="theme-block">
+        <label for="theme" data-t="context">Architectural topic or situation</label>
+        <p class="hint" data-t="contextHint">Type any project, design task or professional situation. You can write in any language.</p>
+        <input id="theme" type="text" maxlength="180" data-ph="placeholder" placeholder="For example: presenting a design proposal">
+        <div class="examples" aria-label="Examples">
+          <button class="example" type="button" data-example="Presenting a design proposal">Presenting a design proposal</button>
+          <button class="example" type="button" data-example="Discussing plans and sections">Discussing plans and sections</button>
+          <button class="example" type="button" data-example="Taking part in a studio critique">Taking part in a studio critique</button>
+          <button class="example" type="button" data-example="Explaining a project to a client">Explaining a project to a client</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card generator" id="generator">
+      <button class="primary" id="generateBtn" type="button" data-t="create">Create my practice</button>
+      <div class="status hidden" id="status" role="status" data-t="creating">Creating three architecture situations…</div>
+    </section>
+
+    <section class="card hidden" id="activity">
+      <div class="progress" id="progress"></div>
+      <div class="scenario-kicker" id="scenarioKicker"></div>
+      <h2 class="scenario-title" id="scenarioTitle"></h2>
+      <p class="scenario-text" id="scenarioText"></p>
+      <div class="task-title" data-t="choosePurpose">What do you need to communicate?</div>
+      <div id="intentionsWithPhrases"></div>
+      <div class="nav-row">
+        <button class="secondary" id="prevBtn" type="button" data-t="previous">Previous</button>
+        <button class="primary" id="nextBtn" type="button" data-t="next">Next situation</button>
+      </div>
+    </section>
+
+    <section class="card" id="practicePanel">
+      <div class="section-head"><span class="step">2</span><div class="section-title" data-t="practiceTitle">Practise your saved phrases</div></div>
+      <p class="lead" data-t="practiceIntro">Choose a practice type. Only the phrases you have saved on this page are used.</p>
+      <div class="practice-type-grid" id="typeGrid">
+        <button class="practice-type selected" data-type="gap" data-t="gap">Gap fill</button>
+        <button class="practice-type" data-type="jumble" data-t="jumble">Jumbled sentence</button>
+        <button class="practice-type" data-type="listen" data-t="listen">Listen &amp; rebuild</button>
+        <button class="practice-type" data-type="recall" data-t="recall">Recall</button>
+      </div>
+      <div class="actions" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn primary" id="startBtn" style="width:auto" data-t="start">Start practice</button>
+      </div>
+      <div id="exercise" class="exercise hidden"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <footer class="footer">LingoTotal · <span data-t="footer">Personalised language learning</span></footer>
+
+  <script src="tts.js"></script>
+  <script>  (() => {
+    'use strict';
+    const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'}};
+    const I={
+      en:{activity:'Architecture',title:'Architecture',subtitle:'Practise the language used by architecture students in the studio, on site and with clients.',safety:'Develop the language needed for architectural study and professional practice.',saved:'Saved phrases',chooseLevel:'Choose your level',levelLead:'Select a level before entering your context.',basics:'Revising the basics',basicsNote:'Clear, useful language for straightforward architectural situations.',confidence:'Gaining confidence',confidenceNote:'More natural, precise language for demanding academic and professional situations.',context:'Architectural topic or situation',contextHint:'Type any project, design task or professional situation. You can write in any language.',placeholder:'For example: presenting a design proposal',create:'Create my practice',creating:'Creating three architecture situations…',choosePurpose:'What do you need to communicate?',previous:'Previous',next:'Next situation',newChallenge:'Create a new challenge',listen:'Listen',save:'Save phrase',savedDone:'Saved',empty:'No phrases saved yet.',selectLevel:'Please choose your level first.',enterContext:'Please enter an architectural topic or situation.',error:'The practice could not be created. Please try again.',situation:'Situation',footer:'Personalised language learning',removed:'Phrase removed',savedToast:'Phrase saved',practiceTitle:'Practise your saved phrases',practiceIntro:'Choose a practice type. Only the phrases you have saved on this page are used.',gap:'Gap fill',jumble:'Jumbled sentence',recall:'Recall',start:'Start practice',noPhrases:'Save some phrases above first.',correct:'Correct',tryAgain:'Try again',yourAnswer:'Your answer',listenNow:'Listen',typeSentence:'Type the sentence you heard.',recallPrompt:'Try to recall the complete phrase before revealing it.',show:'Show answer',check:'Check',incomplete:'Use all the words before checking.',buildSentence:'Build the sentence',jumbledWords:'Jumbled words',clearSentence:'Clear sentence'},
+      ca:{activity:'Arquitectura',title:'Arquitectura',subtitle:'Practica el llenguatge que fan servir els estudiants d’arquitectura a l’estudi, a l’obra i amb els clients.',safety:'Desenvolupa el llenguatge necessari per als estudis i la pràctica professional de l’arquitectura.',saved:'Frases desades',chooseLevel:'Tria el teu nivell',levelLead:'Tria un nivell abans d’escriure el context.',basics:'Revisar les bases',basicsNote:'Llenguatge clar i útil per a situacions arquitectòniques senzilles.',confidence:'Guanyar confiança',confidenceNote:'Llenguatge més natural i precís per a situacions acadèmiques i professionals exigents.',context:'Tema o situació d’arquitectura',contextHint:'Escriu un projecte, una tasca de disseny o una situació professional en qualsevol llengua.',placeholder:'Per exemple: presentar una proposta de disseny',create:'Crea la pràctica',creating:'Creant tres situacions d’arquitectura…',choosePurpose:'Què necessites comunicar?',previous:'Anterior',next:'Situació següent',newChallenge:'Crea un repte nou',listen:'Escolta',save:'Desa la frase',savedDone:'Desada',empty:'Encara no hi ha frases desades.',selectLevel:'Primer tria el teu nivell.',enterContext:'Escriu un tema o una situació d’arquitectura.',error:'No s’ha pogut crear la pràctica. Torna-ho a provar.',situation:'Situació',footer:'Aprenentatge d’idiomes personalitzat',removed:'Frase eliminada',savedToast:'Frase desada',practiceTitle:'Practica les frases desades',practiceIntro:'Tria un tipus de pràctica. Només s’utilitzen les frases desades en aquesta pàgina.',gap:'Omple buits',jumble:'Frase desordenada',recall:'Recorda',start:'Comença',noPhrases:'Desa algunes frases a dalt primer.',correct:'Correcte',tryAgain:'Torna-ho a provar',yourAnswer:'La teva resposta',listenNow:'Escolta',typeSentence:'Escriu la frase que has sentit.',recallPrompt:'Intenta recordar la frase completa abans de mostrar-la.',show:'Mostra resposta',check:'Comprova',incomplete:'Utilitza totes les paraules abans de comprovar.',buildSentence:'Construeix la frase',jumbledWords:'Paraules desordenades',clearSentence:'Esborra la frase'},
+      es:{activity:'Arquitectura',title:'Arquitectura',subtitle:'Practica el lenguaje que utilizan los estudiantes de arquitectura en el estudio, en la obra y con los clientes.',safety:'Desarrolla el lenguaje necesario para los estudios y la práctica profesional de la arquitectura.',saved:'Frases guardadas',chooseLevel:'Elige tu nivel',levelLead:'Elige un nivel antes de escribir el contexto.',basics:'Repasar lo básico',basicsNote:'Lenguaje claro y útil para situaciones arquitectónicas sencillas.',confidence:'Ganar confianza',confidenceNote:'Lenguaje más natural y preciso para situaciones académicas y profesionales exigentes.',context:'Tema o situación de arquitectura',contextHint:'Escribe un proyecto, una tarea de diseño o una situación profesional en cualquier idioma.',placeholder:'Por ejemplo: presentar una propuesta de diseño',create:'Crear mi práctica',creating:'Creando tres situaciones de arquitectura…',choosePurpose:'¿Qué necesitas comunicar?',previous:'Anterior',next:'Siguiente situación',newChallenge:'Crear un nuevo reto',listen:'Escuchar',save:'Guardar frase',savedDone:'Guardada',empty:'Todavía no hay frases guardadas.',selectLevel:'Primero elige tu nivel.',enterContext:'Escribe un tema o una situación de arquitectura.',error:'No se pudo crear la práctica. Inténtalo de nuevo.',situation:'Situación',footer:'Aprendizaje de idiomas personalizado',removed:'Frase eliminada',savedToast:'Frase guardada',practiceTitle:'Practica tus frases guardadas',practiceIntro:'Elige un tipo de práctica. Solo se usan las frases guardadas en esta página.',gap:'Completar huecos',jumble:'Frase desordenada',recall:'Recordar',start:'Empezar práctica',noPhrases:'Guarda algunas frases arriba primero.',correct:'Correcto',tryAgain:'Inténtalo de nuevo',yourAnswer:'Tu respuesta',listenNow:'Escuchar',typeSentence:'Escribe la frase que has oído.',recallPrompt:'Intenta recordar la frase completa antes de mostrarla.',show:'Mostrar respuesta',check:'Comprobar',incomplete:'Usa todas las palabras antes de comprobar.',buildSentence:'Construye la frase',jumbledWords:'Palabras desordenadas',clearSentence:'Borrar frase'},
+      fr:{activity:'Architecture',title:'Architecture',subtitle:'Pratiquez la langue utilisée par les étudiants en architecture en atelier, sur chantier et avec les clients.',safety:'Développez la langue nécessaire aux études et à la pratique professionnelle de l’architecture.',saved:'Phrases enregistrées',chooseLevel:'Choisissez votre niveau',levelLead:'Choisissez un niveau avant de saisir votre contexte.',basics:'Revoir les bases',basicsNote:'Une langue claire et utile pour des situations architecturales simples.',confidence:'Gagner en confiance',confidenceNote:'Une langue plus naturelle et précise pour des situations académiques et professionnelles exigeantes.',context:'Sujet ou situation d’architecture',contextHint:'Saisissez un projet, une tâche de conception ou une situation professionnelle dans n’importe quelle langue.',placeholder:'Par exemple : présenter une proposition de conception',create:'Créer mon activité',creating:'Création de trois situations d’architecture…',choosePurpose:'Que devez-vous communiquer ?',previous:'Précédent',next:'Situation suivante',newChallenge:'Créer un nouveau défi',listen:'Écouter',save:'Enregistrer',savedDone:'Enregistrée',empty:'Aucune phrase enregistrée.',selectLevel:'Choisissez d’abord votre niveau.',enterContext:'Saisissez un sujet ou une situation d’architecture.',error:'Impossible de créer l’activité. Réessayez.',situation:'Situation',footer:'Apprentissage linguistique personnalisé',removed:'Phrase supprimée',savedToast:'Phrase enregistrée',practiceTitle:'Pratiquez vos phrases enregistrées',practiceIntro:'Choisissez un type d’exercice. Seules les phrases enregistrées sur cette page sont utilisées.',gap:'Texte à trous',jumble:'Phrase mélangée',recall:'Rappel',start:'Commencer',noPhrases:'Enregistrez d’abord des phrases ci-dessus.',correct:'Correct',tryAgain:'Réessayez',yourAnswer:'Votre réponse',listenNow:'Écouter',typeSentence:'Écrivez la phrase entendue.',recallPrompt:'Essayez de rappeler la phrase complète avant de la révéler.',show:'Afficher la réponse',check:'Vérifier',incomplete:'Utilisez tous les mots avant de vérifier.',buildSentence:'Reconstruisez la phrase',jumbledWords:'Mots mélangés',clearSentence:'Effacer la phrase'},
+      de:{activity:'Architektur',title:'Architektur',subtitle:'Übe die Sprache, die Architekturstudierende im Studio, auf der Baustelle und mit Kunden verwenden.',safety:'Entwickle die Sprache für das Architekturstudium und die berufliche Praxis.',saved:'Gespeicherte Sätze',chooseLevel:'Wähle dein Niveau',levelLead:'Wähle zuerst ein Niveau und gib dann deinen Kontext ein.',basics:'Grundlagen wiederholen',basicsNote:'Klare, nützliche Sprache für einfache Architektursituationen.',confidence:'Sicherheit gewinnen',confidenceNote:'Natürlichere, präzisere Sprache für anspruchsvolle akademische und berufliche Situationen.',context:'Architekturthema oder Situation',contextHint:'Gib ein Projekt, eine Entwurfsaufgabe oder berufliche Situation in einer beliebigen Sprache ein.',placeholder:'Zum Beispiel: einen Entwurf präsentieren',create:'Übung erstellen',creating:'Drei Architektursituationen werden erstellt…',choosePurpose:'Was musst du kommunizieren?',previous:'Zurück',next:'Nächste Situation',newChallenge:'Neue Aufgabe erstellen',listen:'Anhören',save:'Satz speichern',savedDone:'Gespeichert',empty:'Noch keine Sätze gespeichert.',selectLevel:'Bitte wähle zuerst dein Niveau.',enterContext:'Gib ein Architekturthema oder eine Situation ein.',error:'Die Übung konnte nicht erstellt werden. Versuche es erneut.',situation:'Situation',footer:'Personalisiertes Sprachenlernen',removed:'Satz entfernt',savedToast:'Satz gespeichert',practiceTitle:'Übe deine gespeicherten Sätze',practiceIntro:'Wähle einen Übungstyp. Nur die auf dieser Seite gespeicherten Sätze werden verwendet.',gap:'Lückentext',jumble:'Satz ordnen',recall:'Abrufen',start:'Übung starten',noPhrases:'Speichere zuerst einige Sätze oben.',correct:'Richtig',tryAgain:'Noch einmal',yourAnswer:'Deine Antwort',listenNow:'Anhören',typeSentence:'Schreibe den gehörten Satz.',recallPrompt:'Versuche, den ganzen Satz abzurufen, bevor du ihn anzeigst.',show:'Antwort zeigen',check:'Prüfen',incomplete:'Benutze alle Wörter, bevor du prüfst.',buildSentence:'Baue den Satz',jumbledWords:'Gemischte Wörter',clearSentence:'Satz löschen'},
+      it:{activity:'Architettura',title:'Architettura',subtitle:'Esercita la lingua usata dagli studenti di architettura in studio, in cantiere e con i clienti.',safety:'Sviluppa il linguaggio necessario per gli studi e la pratica professionale dell’architettura.',saved:'Frasi salvate',chooseLevel:'Scegli il tuo livello',levelLead:'Scegli un livello prima di inserire il contesto.',basics:'Ripassare le basi',basicsNote:'Lingua chiara e utile per situazioni architettoniche semplici.',confidence:'Acquisire sicurezza',confidenceNote:'Lingua più naturale e precisa per situazioni accademiche e professionali impegnative.',context:'Argomento o situazione di architettura',contextHint:'Scrivi un progetto, un compito di progettazione o una situazione professionale in qualsiasi lingua.',placeholder:'Per esempio: presentare una proposta progettuale',create:'Crea la pratica',creating:'Creazione di tre situazioni di architettura…',choosePurpose:'Che cosa devi comunicare?',previous:'Precedente',next:'Situazione successiva',newChallenge:'Crea una nuova sfida',listen:'Ascolta',save:'Salva frase',savedDone:'Salvata',empty:'Non ci sono ancora frasi salvate.',selectLevel:'Scegli prima il tuo livello.',enterContext:'Inserisci un argomento o una situazione di architettura.',error:'Impossibile creare la pratica. Riprova.',situation:'Situazione',footer:'Apprendimento linguistico personalizzato',removed:'Frase rimossa',savedToast:'Frase salvata',practiceTitle:'Esercita le frasi salvate',practiceIntro:'Scegli un tipo di esercizio. Vengono usate solo le frasi salvate su questa pagina.',gap:'Completa gli spazi',jumble:'Frase in disordine',recall:'Richiamo',start:'Inizia esercizio',noPhrases:'Salva prima alcune frasi sopra.',correct:'Corretto',tryAgain:'Riprova',yourAnswer:'La tua risposta',listenNow:'Ascolta',typeSentence:'Scrivi la frase che hai ascoltato.',recallPrompt:'Prova a ricordare la frase completa prima di mostrarla.',show:'Mostra risposta',check:'Controlla',incomplete:'Usa tutte le parole prima di controllare.',buildSentence:'Ricostruisci la frase',jumbledWords:'Parole mescolate',clearSentence:'Cancella frase'},
+      pt:{activity:'Arquitetura',title:'Arquitetura',subtitle:'Pratique a linguagem utilizada por estudantes de arquitetura no estúdio, na obra e com clientes.',safety:'Desenvolva a linguagem necessária para o estudo e a prática profissional da arquitetura.',saved:'Frases guardadas',chooseLevel:'Escolha o seu nível',levelLead:'Escolha um nível antes de indicar o contexto.',basics:'Rever as bases',basicsNote:'Linguagem clara e útil para situações arquitetónicas simples.',confidence:'Ganhar confiança',confidenceNote:'Linguagem mais natural e precisa para situações académicas e profissionais exigentes.',context:'Tema ou situação de arquitetura',contextHint:'Escreva um projeto, uma tarefa de desenho ou uma situação profissional em qualquer idioma.',placeholder:'Por exemplo: apresentar uma proposta de projeto',create:'Criar a prática',creating:'A criar três situações de arquitetura…',choosePurpose:'O que precisa de comunicar?',previous:'Anterior',next:'Situação seguinte',newChallenge:'Criar um novo desafio',listen:'Ouvir',save:'Guardar frase',savedDone:'Guardada',empty:'Ainda não há frases guardadas.',selectLevel:'Escolha primeiro o seu nível.',enterContext:'Introduza um tema ou uma situação de arquitetura.',error:'Não foi possível criar a prática. Tente novamente.',situation:'Situação',footer:'Aprendizagem de línguas personalizada',removed:'Frase removida',savedToast:'Frase guardada',practiceTitle:'Pratique as suas frases guardadas',practiceIntro:'Escolha um tipo de prática. Só são usadas as frases guardadas nesta página.',gap:'Preencher lacunas',jumble:'Frase desordenada',recall:'Recordar',start:'Começar prática',noPhrases:'Guarde primeiro algumas frases acima.',correct:'Correto',tryAgain:'Tente novamente',yourAnswer:'A sua resposta',listenNow:'Ouvir',typeSentence:'Escreva a frase que ouviu.',recallPrompt:'Tente recordar a frase completa antes de a revelar.',show:'Mostrar resposta',check:'Verificar',incomplete:'Use todas as palavras antes de verificar.',buildSentence:'Construa a frase',jumbledWords:'Palavras baralhadas',clearSentence:'Limpar frase'},
+      ar:{activity:'الهندسة المعمارية',title:'الهندسة المعمارية',subtitle:'تدرّب على اللغة التي يستخدمها طلاب الهندسة المعمارية في الاستوديو والموقع ومع العملاء.',safety:'طوّر اللغة اللازمة لدراسة الهندسة المعمارية وممارستها مهنيًا.',saved:'العبارات المحفوظة',chooseLevel:'اختر مستواك',levelLead:'اختر المستوى قبل كتابة السياق.',basics:'مراجعة الأساسيات',basicsNote:'لغة واضحة ومفيدة للمواقف المعمارية المباشرة.',confidence:'اكتساب الثقة',confidenceNote:'لغة أكثر طبيعية ودقة للمواقف الأكاديمية والمهنية الصعبة.',context:'موضوع أو موقف معماري',contextHint:'اكتب مشروعًا أو مهمة تصميم أو موقفًا مهنيًا بأي لغة.',placeholder:'مثال: عرض مقترح تصميم',create:'أنشئ التدريب',creating:'جارٍ إنشاء ثلاثة مواقف معمارية…',choosePurpose:'ما الذي تحتاج إلى توصيله؟',previous:'السابق',next:'الموقف التالي',newChallenge:'أنشئ تحديًا جديدًا',listen:'استمع',save:'احفظ العبارة',savedDone:'محفوظة',empty:'لا توجد عبارات محفوظة بعد.',selectLevel:'اختر مستواك أولًا.',enterContext:'اكتب موضوعًا أو موقفًا معماريًا.',error:'تعذر إنشاء التدريب. حاول مرة أخرى.',situation:'الموقف',footer:'تعلّم لغات مخصص',removed:'حُذفت العبارة',savedToast:'حُفظت العبارة',practiceTitle:'تدرّب على عباراتك المحفوظة',practiceIntro:'اختر نوع التدريب. تُستخدم فقط العبارات المحفوظة في هذه الصفحة.',gap:'ملء الفراغات',jumble:'ترتيب الجملة',recall:'استرجاع',start:'ابدأ التدريب',noPhrases:'احفظ بعض العبارات أعلاه أولاً.',correct:'صحيح',tryAgain:'حاول مرة أخرى',yourAnswer:'إجابتك',listenNow:'استمع',typeSentence:'اكتب الجملة التي سمعتها.',recallPrompt:'حاول تذكّر الجملة كاملة قبل إظهارها.',show:'أظهر الإجابة',check:'تحقق',incomplete:'استخدم جميع الكلمات قبل التحقق.',buildSentence:'أعد بناء الجملة',jumbledWords:'كلمات مبعثرة',clearSentence:'مسح الجملة'},
+      ja:{activity:'建築',title:'建築',subtitle:'建築学生がスタジオ、現場、クライアントとの会話で使う言葉を練習します。',safety:'建築の学習と実務に必要な言語力を身につけます。',saved:'保存した表現',chooseLevel:'レベルを選ぶ',levelLead:'場面を入力する前にレベルを選んでください。',basics:'基礎を復習する',basicsNote:'基本的な建築場面で使う明確で実用的な表現。',confidence:'自信をつける',confidenceNote:'難しい学術・実務場面で使う、より自然で正確な表現。',context:'建築のテーマまたは場面',contextHint:'プロジェクト、設計課題、実務場面をどの言語でも入力できます。',placeholder:'例：設計案を発表する',create:'練習を作る',creating:'3つの建築場面を作成中…',choosePurpose:'何を伝える必要がありますか？',previous:'前へ',next:'次の場面',newChallenge:'新しい課題を作る',listen:'聞く',save:'表現を保存',savedDone:'保存済み',empty:'保存した表現はまだありません。',selectLevel:'先にレベルを選んでください。',enterContext:'建築のテーマまたは場面を入力してください。',error:'練習を作成できませんでした。もう一度お試しください。',situation:'場面',footer:'パーソナライズされた語学学習',removed:'表現を削除しました',savedToast:'表現を保存しました',practiceTitle:'保存した表現を練習',practiceIntro:'練習タイプを選んでください。このページで保存した表現のみが使われます。',gap:'穴埋め',jumble:'語順並べ替え',recall:'思い出す',start:'練習を開始',noPhrases:'先に上の表現を保存してください。',correct:'正解',tryAgain:'もう一度',yourAnswer:'あなたの答え',listenNow:'聞く',typeSentence:'聞こえた文を書いてください。',recallPrompt:'答えを見る前に文全体を思い出してみましょう。',show:'答えを見る',check:'確認',incomplete:'確認する前にすべての語句を使ってください。',buildSentence:'文を組み立てる',jumbledWords:'並べ替える語句',clearSentence:'文をクリア'},
+      eu:{activity:'Arkitektura',title:'Arkitektura',subtitle:'Praktikatu arkitekturako ikasleek estudioan, obran eta bezeroekin erabiltzen duten hizkuntza.',safety:'Garatu arkitektura ikasteko eta profesionalki jarduteko behar den hizkuntza.',saved:'Gordetako esaldiak',chooseLevel:'Aukeratu maila',levelLead:'Aukeratu maila testuingurua idatzi aurretik.',basics:'Oinarriak berrikustea',basicsNote:'Arkitektura-egoera errazetarako hizkuntza argi eta erabilgarria.',confidence:'Konfiantza hartzea',confidenceNote:'Egoera akademiko eta profesional zailetarako hizkuntza naturalagoa eta zehatzagoa.',context:'Arkitekturako gaia edo egoera',contextHint:'Idatzi proiektu, diseinu-lan edo egoera profesional bat edozein hizkuntzatan.',placeholder:'Adibidez: diseinu-proposamen bat aurkeztea',create:'Sortu praktika',creating:'Hiru arkitektura-egoera sortzen…',choosePurpose:'Zer komunikatu behar duzu?',previous:'Aurrekoa',next:'Hurrengo egoera',newChallenge:'Sortu erronka berri bat',listen:'Entzun',save:'Gorde esaldia',savedDone:'Gordeta',empty:'Oraindik ez dago esaldirik gordeta.',selectLevel:'Aukeratu lehenik zure maila.',enterContext:'Idatzi arkitekturako gai edo egoera bat.',error:'Ezin izan da praktika sortu. Saiatu berriro.',situation:'Egoera',footer:'Hizkuntza-ikaskuntza pertsonalizatua',removed:'Esaldia kenduta',savedToast:'Esaldia gordeta',practiceTitle:'Praktikatu gordetako esaldiak',practiceIntro:'Aukeratu praktika mota bat. Orri honetan gordetako esaldiak soilik erabiltzen dira.',gap:'Hutsuneak bete',jumble:'Esaldi nahasia',recall:'Gogoratu',start:'Hasi praktika',noPhrases:'Gorde esaldi batzuk goian lehenik.',correct:'Zuzena',tryAgain:'Saiatu berriro',yourAnswer:'Zure erantzuna',listenNow:'Entzun',typeSentence:'Idatzi entzun duzun esaldia.',recallPrompt:'Saiatu esaldi osoa gogoratzen erakutsi aurretik.',show:'Erakutsi erantzuna',check:'Egiaztatu',incomplete:'Erabili hitz guztiak egiaztatu aurretik.',buildSentence:'Eraiki esaldia',jumbledWords:'Hitz nahasiak',clearSentence:'Garbitu esaldia'}
+    };
+
+    const ARCH_EXAMPLES={
+      en:['Presenting a design proposal','Discussing plans and sections','Taking part in a studio critique','Explaining a project to a client'],
+      ca:['Presentar una proposta de disseny','Comentar plànols i seccions','Participar en una crítica de taller','Explicar un projecte a un client'],
+      es:['Presentar una propuesta de diseño','Comentar planos y secciones','Participar en una crítica de taller','Explicar un proyecto a un cliente'],
+      fr:['Présenter une proposition de conception','Commenter des plans et des coupes','Participer à une critique d’atelier','Expliquer un projet à un client'],
+      de:['Einen Entwurf präsentieren','Pläne und Schnitte besprechen','An einer Studiokritik teilnehmen','Einem Kunden ein Projekt erklären'],
+      it:['Presentare una proposta progettuale','Discutere piante e sezioni','Partecipare a una revisione di progetto','Spiegare un progetto a un cliente'],
+      pt:['Apresentar uma proposta de projeto','Discutir plantas e cortes','Participar numa crítica de estúdio','Explicar um projeto a um cliente'],
+      ar:['عرض مقترح تصميم','مناقشة المخططات والمقاطع','المشاركة في نقد الاستوديو','شرح مشروع لعميل'],
+      ja:['設計案を発表する','平面図と断面図について話す','スタジオ講評に参加する','クライアントにプロジェクトを説明する'],
+      eu:['Diseinu-proposamen bat aurkeztea','Planoak eta sekzioak aztertzea','Estudioko kritika batean parte hartzea','Bezero bati proiektu bat azaltzea']
+    };
+
+    const params=new URLSearchParams(location.search);
+    const readLang=(ps,ks,fb)=>{for(const p of ps){const v=params.get(p);if(v&&LANGS[v.slice(0,2)])return v.slice(0,2);}for(const k of ks){const v=localStorage.getItem(k);if(v&&LANGS[v.slice(0,2)])return v.slice(0,2);}return fb};
+    const ui=readLang(['ui'],['lingototal_ui_language'],'en');
+    const target=readLang(['target'],['lingototal_target_language'],'es');
+    const targetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',ar:'Arabic'};
+    localStorage.setItem('lingototal_ui_language',ui);
+    localStorage.setItem('lingototal_target_language',targetNames[target]);
+    const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+    document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;
+    $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;
+    $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));
+    $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
+    $$('.example').forEach((el,n)=>{el.textContent=ARCH_EXAMPLES[ui][n];el.dataset.example=ARCH_EXAMPLES[ui][n]});
+
+    const STORE_LOCAL='lingototal_architecture_saved_phrases';
+    const STORE_GLOBAL='lingototal_saved_sentences_v2';
+    const loadLocal=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_LOCAL)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
+    const saveLocal=x=>localStorage.setItem(STORE_LOCAL,JSON.stringify(x));
+    const loadGlobal=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_GLOBAL)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
+    const saveGlobal=x=>localStorage.setItem(STORE_GLOBAL,JSON.stringify(x));
+    const samePhrase=(a,b)=>String(a.text||a.sentence||'').trim().toLowerCase()===String(b).trim().toLowerCase();
+
+    const toast=msg=>{const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2400)};
+    async function speak(text){if(!text)return;try{if(window.LingoTTS&&typeof window.LingoTTS.speak==='function'){await window.LingoTTS.speak(text,LANGS[target].locale);return}}catch(e){}if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=LANGS[target].locale;speechSynthesis.speak(u)}}
+
+    function renderSaved(){const items=loadLocal();$('#savedCount').textContent=items.length;const box=$('#savedList');box.innerHTML='';if(!items.length){box.innerHTML=`<div class="empty">${tr('empty')}</div>`;return}items.slice().reverse().forEach(item=>{const row=document.createElement('div');row.className='saved-item';const text=item.text||'';row.innerHTML=`<strong></strong><small></small><div class="phrase-actions"><button class="action listen" type="button">🔊 ${tr('listen')}</button><button class="action remove" type="button">×</button></div>`;row.querySelector('strong').textContent=text;row.querySelector('small').textContent=item.translation||'';row.querySelector('.listen').onclick=()=>speak(text);row.querySelector('.remove').onclick=()=>{const all=loadLocal();const n=all.findIndex(x=>samePhrase(x,text));if(n>-1)all.splice(n,1);saveLocal(all);renderSaved();toast(tr('removed'))};box.appendChild(row)})}
+
+    let level='',situations=[],index=0;
+    $$('.level').forEach(btn=>btn.onclick=()=>{$$('.level').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');level=btn.dataset.level;$('#theme').focus()});
+    $$('.example').forEach(btn=>btn.onclick=()=>{$('#theme').value=btn.dataset.example;$('#theme').focus()});
+    $('#collectionBtn').onclick=()=>{$('#collectionPanel').classList.toggle('hidden');renderSaved()};
+
+    const unwrap=data=>data?.text||data?.content||data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
+    const parseJson=text=>{const c=String(text).replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();const a=c.indexOf('{'),b=c.lastIndexOf('}');return JSON.parse(a>=0&&b>a?c.slice(a,b+1):c)};
+    async function callAI(prompt){const r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,model:'gemini-2.5-flash',temperature:.65})});let d;try{d=await r.json()}catch{throw Error('Invalid response')}if(!r.ok)throw Error(d?.error||'Server error');const t=unwrap(d);if(!t)throw Error('Empty');return t}
+
+    function validate(data){
+      const arr=data.situations||data.scenarios;
+      if(!Array.isArray(arr)||arr.length<3)throw Error('Invalid situations');
+      return arr.slice(0,3).map((s,n)=>{
+        const title=String(s.title||`${tr('situation')} ${n+1}`);
+        const context=String(s.context||s.situation||'');
+        const intents=Array.isArray(s.intentions)?s.intentions:[];
+        if(intents.length<3)throw Error('Not enough intentions');
+        const normalised=intents.slice(0,3).map(x=>{
+          if(typeof x==='string')return {label:x,phrases:[]};
+          const label=String(x.label||x.text||'');
+          const phrases=Array.isArray(x.phrases)?x.phrases:(Array.isArray(x.suggestions)?x.suggestions:[]);
+          if(phrases.length<3)throw Error('Not enough phrases per intention');
+          return {label,phrases:phrases.slice(0,3).map(p=>({text:String(p.text||p.phrase||''),translation:String(p.translation||p.meaning||''),note:String(p.note||p.usage||'')}))};
+        });
+        return {title,context,intentions:normalised};
+      });
+    }
+
+    function buildPrompt(theme){
+      const lvl=level==='basics'?'Revising the basics: concise, accessible language with short sentences.':'Gaining confidence: natural, precise language using confident academic and professional phrasing.';
+      return `You are creating a language-learning activity for a university student of architecture.
+Interface language: ${LANGS[ui].name}.
+Language being learned: ${LANGS[target].name}.
+Level: ${lvl}
+Learner's requested topic or situation: ${theme}
+
+Create exactly 3 varied, realistic architectural communication situations related closely to the requested topic. Include communication with clients, tutors, fellow students, consultants, contractors or members of the public as appropriate. Concentrate on clear design communication, clarification, collaboration, studio critiques, presentations, client meetings, site visits, sustainability discussions or project handovers. Use accurate but accessible architectural language; do not invent regulations, dimensions or safety approvals.
+
+For each situation provide:
+- title in the interface language
+- context in the interface language
+- exactly 3 short communication intentions in the interface language
+- for EACH intention, exactly 3 useful phrases in ${LANGS[target].name}
+- for each phrase, a natural translation in ${LANGS[ui].name} and a brief usage note in ${LANGS[ui].name}
+
+Return only valid JSON, with no markdown, using this exact shape:
+{"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[...]},{"label":"","phrases":[...]}]}]}`;
+    }
+
+    async function generate(){
+      const theme=$('#theme').value.trim();
+      if(!level){toast(tr('selectLevel'));return}
+      if(!theme){toast(tr('enterContext'));$('#theme').focus();return}
+      $('#generateBtn').disabled=true;$('#status').classList.remove('hidden');$('#activity').classList.add('hidden');
+      try{
+        const raw=await callAI(buildPrompt(theme));
+        situations=validate(parseJson(raw));
+        index=0;renderActivity();
+        $('#activity').classList.remove('hidden');
+        $('#activity').scrollIntoView({behavior:'smooth',block:'start'});
+      }catch(err){console.error(err);toast(tr('error'))}
+      finally{$('#generateBtn').disabled=false;$('#status').classList.add('hidden')}
+    }
+
+    function renderActivity(){
+      const s=situations[index];
+      $('#progress').innerHTML='';
+      situations.forEach((_,n)=>{const b=document.createElement('button');b.type='button';b.className='dot'+(n===index?' current':n<index?' done':'');b.textContent=n+1;b.onclick=()=>{index=n;renderActivity()};$('#progress').appendChild(b)});
+      $('#scenarioKicker').textContent=`${tr('situation')} ${index+1} / ${situations.length}`;
+      $('#scenarioTitle').textContent=s.title;
+      $('#scenarioText').textContent=s.context;
+      const box=$('#intentionsWithPhrases');box.innerHTML='';
+      s.intentions.forEach(intent=>{
+        const block=document.createElement('div');block.className='intention-block';
+        const label=document.createElement('div');label.className='label';label.textContent=intent.label;
+        block.appendChild(label);
+        intent.phrases.forEach(p=>{
+          const card=document.createElement('article');card.className='phrase-card';
+          card.innerHTML='<div class="phrase-target"></div><div class="phrase-meaning"></div><div class="phrase-note"></div><div class="phrase-actions"><button class="action audio" type="button"></button><button class="action save" type="button"></button><button class="action practise" type="button"></button></div>';
+          card.querySelector('.phrase-target').textContent=p.text;
+          card.querySelector('.phrase-meaning').textContent=p.translation;
+          card.querySelector('.phrase-note').textContent=p.note;
+          const audio=card.querySelector('.audio');audio.textContent=`🔊 ${tr('listen')}`;audio.onclick=()=>speak(p.text);
+          const save=card.querySelector('.save');
+          const refresh=()=>{const yes=loadLocal().some(x=>samePhrase(x,p.text));save.textContent=yes?`✓ ${tr('savedDone')}`:`★ ${tr('save')}`;save.classList.toggle('saved',yes)};
+          save.onclick=()=>{
+            const loc=loadLocal();
+            if(!loc.some(x=>samePhrase(x,p.text))){
+              loc.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Architecture',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});
+              saveLocal(loc);
+              const glob=loadGlobal();
+              if(!glob.some(x=>samePhrase(x,p.text))){
+                glob.unshift({sentence:p.text,targetLanguage:targetNames[target],targetName:targetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Architecture',savedAt:new Date().toISOString()});
+                saveGlobal(glob);
+              }
+              toast(tr('savedToast'));
+            }
+            refresh();renderSaved();
+          };
+          const practise=card.querySelector('.practise');practise.textContent='🎯 Practise';
+          practise.onclick=()=>{
+            const loc=loadLocal();
+            if(!loc.some(x=>samePhrase(x,p.text))){
+              loc.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Architecture',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});
+              saveLocal(loc);
+              const glob=loadGlobal();
+              if(!glob.some(x=>samePhrase(x,p.text))){
+                glob.unshift({sentence:p.text,targetLanguage:targetNames[target],targetName:targetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Architecture',savedAt:new Date().toISOString()});
+                saveGlobal(glob);
+              }
+              renderSaved();
+            }
+            $('#practicePanel').scrollIntoView({behavior:'smooth',block:'start'});
+          };
+          refresh();block.appendChild(card);
+        });
+        box.appendChild(block);
+      });
+      $('#prevBtn').disabled=index===0;
+      $('#nextBtn').textContent=index===situations.length-1?tr('newChallenge'):tr('next');
+    }
+
+    $('#generateBtn').onclick=generate;
+    $('#theme').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
+    $('#prevBtn').onclick=()=>{if(index>0){index--;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}};
+    $('#nextBtn').onclick=()=>{
+      if(index<situations.length-1){index++;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}
+      else{situations=[];index=0;$('#activity').classList.add('hidden');$('#theme').value='';$$('.level').forEach(b=>b.classList.remove('selected'));level='';$('#setup').scrollIntoView({behavior:'smooth'});$('#theme').focus()}
+    };
+
+    let type='gap',session=[],pos=0;
+    $$('.practice-type').forEach(b=>b.onclick=()=>{$$('.practice-type').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');type=b.dataset.type});
+    function chooseSession(){return loadLocal().slice().sort(()=>Math.random()-.5).slice(0,10)}
+    function words(s){return s.match(/[\p{L}\p{N}''-]+|[^\s]/gu)||s.split(/\s+/)}
+    function normal(s){return s.toLocaleLowerCase().replace(/[\p{P}\p{S}]/gu,'').replace(/\s+/g,' ').trim()}
+    function nav(){return `<div class="actions"><button class="btn secondary" id="showBtn">${tr('show')}</button><button class="btn primary" id="nextBtn">${tr('next')}</button></div><div id="feedback" class="feedback"></div>`}
+    function renderExercise(){
+      const box=$('#exercise');
+      if(!session.length){box.classList.remove('hidden');box.innerHTML=`<p>${tr('noPhrases')}</p>`;return}
+      const item=session[pos%session.length];
+      box.classList.remove('hidden');
+      let html='';
+      if(type==='gap'){
+        const w=words(item.text||'');
+        const eligible=w.map((x,i)=>({x,i})).filter(o=>/[\p{L}\p{N}]/u.test(o.x)&&o.x.length>3);
+        const hide=eligible.slice().sort(()=>Math.random()-.5).slice(0,Math.min(2,eligible.length)).map(o=>o.i);
+        const prompt=w.map((x,i)=>hide.includes(i)?'______':x).join(' ').replace(/\s+([,.!?;:])/g,'$1');
+        html=`<div class="prompt">${prompt}</div><input id="textAnswer" style="width:100%;padding:11px" placeholder="${tr('yourAnswer')}">${nav()}`;
+        box.innerHTML=html;
+        $('#showBtn').onclick=()=>$('#feedback').textContent=item.text;
+      } else if(type==='jumble'){
+        const tokens=words(item.text||'');
+        const bank=tokens.map((word,orig)=>({word,orig})).sort(()=>Math.random()-.5);
+        const chosen=[];
+        html=`<div class="prompt">${tr('buildSentence')}</div><div class="jumble-label">${tr('yourAnswer')}</div><div class="answer-line" id="answerLine"></div><div class="jumble-label">${tr('jumbledWords')}</div><div class="wordbank" id="jumbleBank"></div><div class="jumble-actions"><button class="btn secondary" id="clearJumbleBtn">${tr('clearSentence')}</button><button class="btn primary" id="checkJumbleBtn">${tr('check')}</button><button class="btn primary hidden" id="nextBtn">${tr('next')}</button></div><div id="feedback" class="feedback"></div>`;
+        box.innerHTML=html;
+        function built(){return chosen.map(x=>x.word).join(' ').replace(/\s+([,.!?;:])/g,'$1').trim()}
+        function draw(){const ans=$('#answerLine'),b=$('#jumbleBank');ans.innerHTML='';b.innerHTML='';const used=new Set(chosen.map(x=>x.orig));bank.forEach(tok=>{if(used.has(tok.orig))return;const bt=document.createElement('button');bt.type='button';bt.className='word';bt.textContent=tok.word;bt.onclick=()=>{chosen.push(tok);draw()};b.appendChild(bt)});if(!chosen.length){const ph=document.createElement('span');ph.className='answer-placeholder';ph.textContent=tr('yourAnswer');ans.appendChild(ph)}else chosen.forEach((tok,i)=>{const bt=document.createElement('button');bt.type='button';bt.className='word';bt.textContent=tok.word;bt.onclick=()=>{chosen.splice(i,1);draw()};ans.appendChild(bt)})}
+        draw();
+        $('#clearJumbleBtn').onclick=()=>{chosen.length=0;$('#feedback').textContent='';$('#feedback').className='feedback';draw()};
+        $('#checkJumbleBtn').onclick=()=>{const fb=$('#feedback');if(chosen.length!==bank.length){fb.textContent=tr('incomplete');fb.className='feedback bad';return}const ok=normal(built())===normal(item.text||'');fb.textContent=ok?tr('correct'):tr('tryAgain');fb.className='feedback '+(ok?'good':'bad');if(ok){$('#checkJumbleBtn').classList.add('hidden');$('#clearJumbleBtn').classList.add('hidden');$('#nextBtn').classList.remove('hidden')}};
+      } else if(type==='listen'){
+        html=`<div class="prompt">${tr('typeSentence')}</div><div class="actions"><button class="btn secondary" id="listenBtn">🔊 ${tr('listenNow')}</button></div><input id="textAnswer" style="width:100%;margin-top:10px;padding:11px" placeholder="${tr('yourAnswer')}">${nav()}`;
+        box.innerHTML=html;
+        $('#listenBtn').onclick=()=>speak(item.text||'');
+        $('#showBtn').onclick=()=>$('#feedback').textContent=item.text||'';
+      } else {
+        html=`<div class="prompt">${tr('recallPrompt')}</div><p>${item.translation||''}</p>${nav()}`;
+        box.innerHTML=html;
+        $('#showBtn').onclick=()=>$('#feedback').textContent=item.text||'';
+      }
+      const next=document.getElementById('nextBtn');
+      if(next)next.onclick=()=>{pos++;renderExercise()};
+    }
+    $('#startBtn').onclick=()=>{session=chooseSession();pos=0;renderExercise();$('#exercise').scrollIntoView({behavior:'smooth',block:'start'})};
+
+    renderSaved();
+  })();
+  </script>
+</body>
+</html>
