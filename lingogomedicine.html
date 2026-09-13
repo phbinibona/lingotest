@@ -41,6 +41,7 @@ input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,103,
 .secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}
 .generator{padding:16px 20px}
 .status{display:flex;align-items:center;justify-content:center;gap:11px;text-align:center;color:var(--muted);font-size:.9rem;margin-top:13px}
+.generation-error{margin-top:13px;padding:11px 13px;border:1px solid var(--red);background:#fdecee;color:#a5303c;font-weight:800;text-align:center}
 .generation-wheel{width:25px;height:25px;flex:0 0 25px;border:3px solid rgba(50,119,232,.25);border-top-color:var(--blue);border-radius:50%;animation:generation-spin .8s linear infinite}
 .section-divider{height:5px;margin:24px 0;background:linear-gradient(90deg,transparent 0,var(--blue) 8%,#70a7ff 50%,var(--blue) 92%,transparent 100%);box-shadow:0 0 14px rgba(50,119,232,.38)}
 @keyframes generation-spin{to{transform:rotate(360deg)}}
@@ -171,6 +172,7 @@ input:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
      .generator{padding:16px clamp(17px,3vw,27px) 19px;background:#202020}
 .generator .primary{min-height:50px}
 .status{color:#aeb6c1}
+.generation-error{background:#321d21;color:#ffb2ba;border-color:#7b3941}
      .progress{margin-bottom:19px}
 .dot{border:1px solid #454545;border-radius:0;background:#292929;color:#c3c8cf}
 .dot.current{border-color:var(--blue);background:var(--blue);color:#fff}
@@ -239,7 +241,7 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
 <span class="generation-wheel" aria-hidden="true">
 </span>
 <span data-t="creating">Creating three medical situations…</span>
-</div>     </section>      <section class="card hidden" id="activity">       <div class="progress" id="progress">
+</div><div class="generation-error hidden" id="generationError" role="alert"></div>     </section>      <section class="card hidden" id="activity">       <div class="progress" id="progress">
 </div>       <div class="scenario-kicker" id="scenarioKicker">
 </div>       <h2 class="scenario-title" id="scenarioTitle">
 </h2>       <p class="scenario-text" id="scenarioText">
@@ -501,7 +503,7 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
     // ---------- AI CALL ----------
     const unwrap=data=>data?.text||data?.response||data?.output||data?.result||data?.content||data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||data?.body||'';
            const parseJson=value=>{if(value&&typeof value==='object')return value;const c=String(value).replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();const a=c.indexOf('{'),b=c.lastIndexOf('}');return JSON.parse(a>=0&&b>a?c.slice(a,b+1):c)};
-           async function callAI(prompt){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),45000);let r;try{r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt}),signal:controller.signal})}catch(error){if(error.name==='AbortError')throw Error('The generation request timed out');throw error}finally{clearTimeout(timeout)}const responseText=await r.text();let d;try{d=JSON.parse(responseText)}catch{d=responseText}if(!r.ok){const reason=typeof d==='string'?d:(d?.error?.message||d?.error||d?.message);throw Error(reason||`Server error (${r.status})`)}if(typeof d==='string'){if(!d.trim())throw Error('The API returned no activity');return d}if(d?.situations||d?.scenarios)return d;const t=unwrap(d);if(!t)throw Error('The API returned no activity');return t}
+           async function callAI(prompt){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),75000);let r;try{r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt}),signal:controller.signal})}catch(error){if(error.name==='AbortError')throw Error('The generation request timed out');throw error}finally{clearTimeout(timeout)}const responseText=await r.text();let d;try{d=JSON.parse(responseText)}catch{d=responseText}if(!r.ok){const reason=typeof d==='string'?d:(d?.error?.message||d?.error||d?.message);throw Error(reason||`Server error (${r.status})`)}if(typeof d==='string'){if(!d.trim())throw Error('The API returned no activity');return d}if(d?.situations||d?.scenarios)return d;const t=unwrap(d);if(!t)throw Error('The API returned no activity');return t}
     // ---------- VALIDATE ----------
     function validate(data){       const arr=data.situations||data.scenarios;
            if(!Array.isArray(arr)||arr.length<3)throw Error('Invalid situations');
@@ -518,17 +520,17 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
            });
            }
     // ---------- PROMPT ----------
-    function buildPrompt(theme){       return `You are creating a language-learning activity for a university student of medicine. Interface language: ${LANGS[ui].name}. Language being learned: ${LANGS[target].name}. Use one balanced level: accessible, natural and useful language with concise sentences and polite clinical phrasing. Learner's requested topic or situation: ${theme}  Create exactly 3 varied, realistic clinical communication situations related closely to the requested topic. Include communication with patients, relatives or healthcare colleagues as appropriate. Concentrate on respectful communication, consent, clarification, empathy, history-taking, examination explanations, case presentation or handover. Do not diagnose, prescribe, calculate doses or give medical advice.  For each situation provide: - title in the interface language - context in the interface language - exactly 3 short communication intentions in the interface language - for EACH intention, exactly 2 useful phrases in ${LANGS[target].name} - for each phrase, a natural translation in ${LANGS[ui].name} and a brief usage note in ${LANGS[ui].name}  Return only valid JSON, with no markdown, using this exact shape: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[...]},{"label":"","phrases":[...]}]}]}`;
+    function buildPrompt(theme){       return `Create a concise language-learning activity for a university medical student. Interface language: ${LANGS[ui].name}. Target language: ${LANGS[target].name}. Topic: ${theme}. Create exactly 3 varied clinical communication situations closely related to the topic. Do not diagnose, prescribe, calculate doses or give medical advice. For each situation provide a short title and context in the interface language, followed by exactly 2 communication intentions in the interface language. For each intention provide exactly 2 useful, natural phrases in the target language, each with a translation and a brief usage note in the interface language. Return only valid JSON with this structure: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]}]}]}`;
            }
     // ---------- GENERATE ----------
     async function generate(){       const theme=$('#theme').value.trim();
-           if(!theme){toast(tr('enterContext'));$('#theme').focus();return}       const button=$('#generateBtn'),status=$('#status');button.disabled=true;button.setAttribute('aria-busy','true');status.classList.remove('hidden');$('#activity').classList.add('hidden');
+           if(!theme){toast(tr('enterContext'));$('#theme').focus();return}       const button=$('#generateBtn'),status=$('#status'),errorBox=$('#generationError');button.disabled=true;button.setAttribute('aria-busy','true');status.classList.remove('hidden');errorBox.classList.add('hidden');errorBox.textContent='';$('#activity').classList.add('hidden');
            try{         const raw=await callAI(buildPrompt(theme));
            situations=validate(parseJson(raw));
            index=0;renderActivity();
            $('#activity').classList.remove('hidden');
            $('#activity').scrollIntoView({behavior:'smooth',block:'start'});
-           }catch(err){console.error('Generation failed:',err);toast(`${tr('error')} ${err.message||''}`.trim())}       finally{button.disabled=false;button.removeAttribute('aria-busy');status.classList.add('hidden')}     }
+           }catch(err){console.error('Generation failed:',err);errorBox.textContent=tr('error');errorBox.classList.remove('hidden');toast(tr('error'))}       finally{button.disabled=false;button.removeAttribute('aria-busy');status.classList.add('hidden')}     }
     // ---------- RENDER ACTIVITY ----------
     function renderActivity(){       const s=situations[index];
            $('#progress').innerHTML='';
