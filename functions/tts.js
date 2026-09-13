@@ -1,179 +1,273 @@
-const crypto = require("node:crypto");
+const crypto = require('crypto');
 
-const TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
-const TOKEN_URL = "https://oauth2.googleapis.com/token";
-const SCOPE = "https://www.googleapis.com/auth/cloud-platform";
+const TOKEN_URL = 'https://oauth2.googleapis.com/token';
+const TTS_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';
+const SCOPE = 'https://www.googleapis.com/auth/cloud-platform';
 
-let cachedToken = "";
+const ALLOWED_LOCALES = new Set([
+  'en-GB',
+  'ca-ES',
+  'es-ES',
+  'fr-FR',
+  'de-DE',
+  'it-IT',
+  'pt-PT',
+  'ar-SA',
+  'ja-JP',
+  'eu-ES'
+]);
+
+let cachedToken = '';
 let cachedTokenExpiry = 0;
 
-const LANGUAGE_LOCALES = {
-  english:"en-GB", en:"en-GB", "en-gb":"en-GB",
-  catalan:"ca-ES", catala:"ca-ES", ca:"ca-ES", "ca-es":"ca-ES",
-  spanish:"es-ES", espanol:"es-ES", es:"es-ES", "es-es":"es-ES",
-  french:"fr-FR", francais:"fr-FR", fr:"fr-FR", "fr-fr":"fr-FR",
-  german:"de-DE", deutsch:"de-DE", de:"de-DE", "de-de":"de-DE",
-  italian:"it-IT", italiano:"it-IT", it:"it-IT", "it-it":"it-IT",
-  portuguese:"pt-PT", portugues:"pt-PT", pt:"pt-PT", "pt-pt":"pt-PT",
-  basque:"eu-ES", euskara:"eu-ES", eu:"eu-ES", "eu-es":"eu-ES",
-  japanese:"ja-JP", ja:"ja-JP", "ja-jp":"ja-JP",
-  arabic:"ar-XA", ar:"ar-XA", "ar-xa":"ar-XA", "ar-sa":"ar-XA"
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Cache-Control': 'no-store',
+  'Content-Type': 'application/json; charset=utf-8'
 };
 
-function normaliseLanguageCode(value){
-  const raw = String(value || "").trim();
-  if(!raw) return "en-GB";
-  const key = raw.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  return LANGUAGE_LOCALES[key] || raw;
+function response(statusCode, body) {
+  return {
+    statusCode,
+    headers,
+    body: JSON.stringify(body)
+  };
 }
 
-function b64url(value){
-  return Buffer.from(value)
-    .toString("base64")
-    .replace(/\+/g,"-")
-    .replace(/\//g,"_")
-    .replace(/=+$/g,"");
+function base64url(value) {
+  const input = Buffer.isBuffer(value)
+    ? value
+    : Buffer.from(value);
+
+  return input.toString('base64url');
 }
 
-async function serviceAccountToken(){
-  if(cachedToken && Date.now() < cachedTokenExpiry - 60000) return cachedToken;
-
+function readCredentials() {
   const raw = process.env.GOOGLE_TTS_CREDENTIALS;
-  if(!raw) throw new Error("No Google TTS credentials configured.");
 
-  const credentials = JSON.parse(raw);
-  if(!credentials.client_email || !credentials.private_key){
-    throw new Error("GOOGLE_TTS_CREDENTIALS is incomplete.");
+  if (!raw) {
+    throw new Error(
+      'GOOGLE_TTS_CREDENTIALS is not configured'
+    );
   }
 
-  const now = Math.floor(Date.now()/1000);
-  const header = b64url(JSON.stringify({alg:"RS256",typ:"JWT"}));
-  const claim = b64url(JSON.stringify({
-    iss: credentials.client_email,
-    scope: SCOPE,
-    aud: TOKEN_URL,
-    iat: now,
-    exp: now + 3600
-  }));
+  let credentials;
 
-  const unsigned = `${header}.${claim}`;
-  const signature = crypto.createSign("RSA-SHA256")
-    .update(unsigned)
-    .end()
-    .sign(credentials.private_key,"base64")
-    .replace(/\+/g,"-")
-    .replace(/\//g,"_")
-    .replace(/=+$/g,"");
+  try {
+    credentials = JSON.parse(raw);
 
-  const jwt = `${unsigned}.${signature}`;
+    if (typeof credentials === 'string') {
+      credentials = JSON.parse(credentials);
+    }
+  } catch {
+    throw new Error(
+      'GOOGLE_TTS_CREDENTIALS is not valid JSON'
+    );
+  }
 
-  const response = await fetch(TOKEN_URL,{
-    method:"POST",
-    headers:{"Content-Type":"application/x-www-form-urlencoded"},
-    body:new URLSearchParams({
-      grant_type:"urn:ietf:params:oauth2:grant-type:jwt-bearer",
-      assertion:jwt
+  if (
+    credentials.type !== 'service_account' ||
+    !credentials.client_email ||
+    !credentials.private_key
+  ) {
+    throw new Error(
+      'GOOGLE_TTS_CREDENTIALS must contain a complete service-account JSON key'
+    );
+  }
+
+  credentials.private_key =
+    credentials.private_key.replace(/\\n/g, '\n');
+
+  return credentials;
+}
+
+async function getAccessToken() {
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  if (
+    cachedToken &&
+    Date.now() < cachedTokenExpiry - 60000
+  ) {
+    return cachedToken;
+  }
+
+  const credentials = readCredentials();
+
+  const jwtHeader = base64url(
+    JSON.stringify({
+      alg: 'RS256',
+      typ: 'JWT'
+    })
+  );
+
+  const jwtClaims = base64url(
+    JSON.stringify({
+      iss: credentials.client_email,
+      scope: SCOPE,
+      aud: TOKEN_URL,
+      iat: nowSeconds,
+      exp: nowSeconds + 3600
+    })
+  );
+
+  const unsignedJwt = `${jwtHeader}.${jwtClaims}`;
+
+  const signer = crypto.createSign('RSA-SHA256');
+  signer.update(unsignedJwt);
+  signer.end();
+
+  const signature = base64url(
+    signer.sign(credentials.private_key)
+  );
+
+  const assertion =
+    `${unsignedJwt}.${signature}`;
+
+  const tokenResponse = await fetch(TOKEN_URL, {
+    method: 'POST',
+
+    headers: {
+      'Content-Type':
+        'application/x-www-form-urlencoded'
+    },
+
+    body: new URLSearchParams({
+      grant_type:
+        'urn:ietf:params:oauth:grant-type:jwt-bearer',
+
+      assertion
     })
   });
 
-  const data = await response.json();
-  if(!response.ok || !data.access_token){
-    throw new Error(data?.error_description || "Could not obtain Google access token.");
+  const tokenData = await tokenResponse.json();
+
+  if (
+    !tokenResponse.ok ||
+    !tokenData.access_token
+  ) {
+    throw new Error(
+      tokenData.error_description ||
+      tokenData.error ||
+      'Google authentication failed'
+    );
   }
 
-  cachedToken = data.access_token;
-  cachedTokenExpiry = Date.now() + Number(data.expires_in || 3600) * 1000;
+  cachedToken = tokenData.access_token;
+
+  cachedTokenExpiry =
+    Date.now() +
+    Number(tokenData.expires_in || 3600) * 1000;
+
   return cachedToken;
 }
 
-async function synthesize(text, languageCode, speakingRate){
-  const apiKey = process.env.GOOGLE_TTS_API_KEY;
-  let url = TTS_URL;
-  const headers = {"Content-Type":"application/json"};
-
-  if(apiKey){
-    url += `?key=${encodeURIComponent(apiKey)}`;
-  } else {
-    headers.Authorization = `Bearer ${await serviceAccountToken()}`;
+exports.handler = async event => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers,
+      body: ''
+    };
   }
 
-  const response = await fetch(url,{
-    method:"POST",
-    headers,
-    body:JSON.stringify({
-      input:{text},
-      voice:{languageCode},
-      audioConfig:{
-        audioEncoding:"MP3",
-        speakingRate
-      }
-    })
-  });
-
-  const data = await response.json();
-
-  if(!response.ok || !data.audioContent){
-    throw new Error(data?.error?.message || `Google TTS HTTP ${response.status}`);
+  if (event.httpMethod !== 'POST') {
+    return response(405, {
+      error: 'Method not allowed'
+    });
   }
 
-  return data.audioContent;
-}
+  try {
+    const request =
+      JSON.parse(event.body || '{}');
 
+    const text =
+      String(request.text || '').trim();
 
-exports.handler = async function(event){
-  const headers = {
-    "Content-Type":"application/json",
-    "Cache-Control":"no-store",
-    "Access-Control-Allow-Origin":"*",
-    "Access-Control-Allow-Headers":"Content-Type",
-    "Access-Control-Allow-Methods":"POST, OPTIONS"
-  };
-
-  if(event.httpMethod === "OPTIONS"){
-    return {statusCode:204, headers, body:""};
-  }
-
-  if(event.httpMethod !== "POST"){
-    return {statusCode:405, headers, body:JSON.stringify({error:"Method not allowed"})};
-  }
-
-  try{
-    const body = JSON.parse(event.body || "{}");
-    const text = String(body.text || "").trim();
-    const languageCode = normaliseLanguageCode(
-      body.languageCode || body.language || body.targetLanguage || "en-GB"
+    const requestedLocale = String(
+      request.languageCode ||
+      request.locale ||
+      request.lang ||
+      'en-GB'
     );
 
-    const requestedRate = Number(body.speakingRate);
-    const speakingRate = Number.isFinite(requestedRate)
-      ? Math.min(1.2, Math.max(0.75, requestedRate))
-      : 0.92;
+    const locale =
+      ALLOWED_LOCALES.has(requestedLocale)
+        ? requestedLocale
+        : 'en-GB';
 
-    if(!text){
-      return {statusCode:400, headers, body:JSON.stringify({error:"No text supplied."})};
+    if (!text) {
+      return response(400, {
+        error: 'Text is required'
+      });
     }
 
-    const audioContent = await synthesize(text,languageCode,speakingRate);
+    if (text.length > 5000) {
+      return response(400, {
+        error: 'Text is too long'
+      });
+    }
 
-    return {
-      statusCode:200,
-      headers:{
-        ...headers,
-        "X-LingoTotal-Language":languageCode
-      },
-      body:JSON.stringify({
-        audioContent,
-        mimeType:"audio/mpeg",
-        languageCode
-      })
-    };
+    const accessToken =
+      await getAccessToken();
 
-  }catch(error){
-    console.error("tts error:",error);
-    return {
-      statusCode:500,
-      headers,
-      body:JSON.stringify({error:error?.message || "TTS error"})
-    };
+    const googleResponse =
+      await fetch(TTS_URL, {
+        method: 'POST',
+
+        headers: {
+          Authorization:
+            `Bearer ${accessToken}`,
+
+          'Content-Type':
+            'application/json; charset=utf-8'
+        },
+
+        body: JSON.stringify({
+          input: {
+            text
+          },
+
+          voice: {
+            languageCode: locale
+          },
+
+          audioConfig: {
+            audioEncoding: 'MP3',
+            speakingRate: 0.92,
+            pitch: 0
+          }
+        })
+      });
+
+    const audio =
+      await googleResponse.json();
+
+    if (
+      !googleResponse.ok ||
+      !audio.audioContent
+    ) {
+      throw new Error(
+        audio?.error?.message ||
+        'Google Text-to-Speech returned no audio'
+      );
+    }
+
+    return response(200, {
+      audioContent: audio.audioContent,
+      mimeType: 'audio/mpeg',
+      provider:
+        'google-cloud-text-to-speech'
+    });
+  } catch (error) {
+    console.error(
+      'TTS function error:',
+      error.message
+    );
+
+    return response(500, {
+      error: error.message
+    });
   }
 };
