@@ -1,4 +1,4 @@
-<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · Medicine</title> <meta name="lingototal-build" content="medicine-tts-direct-2026-09-13">   <link rel="preconnect" href="https://fonts.googleapis.com">   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
+<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · Medicine</title> <meta name="lingototal-build" content="medicine-tts-direct-2026-09-13">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
      *{box-sizing:border-box}
 html{scroll-padding-top:78px}
 body{margin:0;background:linear-gradient(180deg,#e9f3ff 0,#f7f9fc 280px,#f2f5f9 100%);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}
@@ -96,6 +96,17 @@ input:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 4px rgba(18,103,
      .feedback{margin-top:12px;font-weight:800}
 .feedback.good{color:#12643d}
 .feedback.bad{color:#a5303c}
+     .practice-phrase-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+     .practice-phrase{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);text-align:left;cursor:pointer}
+     .practice-phrase:hover,.practice-phrase.selected{border-color:var(--blue);background:var(--blue-soft)}
+     .practice-phrase strong,.practice-phrase small{display:block}
+     .practice-phrase small{margin-top:4px;color:var(--muted)}
+     .selected-phrase{margin:14px 0;padding:15px;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:11px;background:var(--soft)}
+     .selected-phrase-target{font-size:1.08rem;font-weight:900}
+     .selected-phrase-meaning{margin-top:4px;color:var(--muted)}
+     .practice-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px;flex-wrap:wrap}
+     .practice-toolbar .secondary{width:auto}
+     .phrase-position{color:var(--muted);font-size:.82rem;font-weight:800}
      [dir="rtl"] .choice,[dir="rtl"] .phrase-card,[dir="rtl"] .intention-block{text-align:right}
      @media(max-width:650px){html{scroll-padding-top:60px}
 .topbar{min-height:58px;padding:7px 10px;gap:7px}
@@ -114,6 +125,7 @@ main{width:100%;margin:0}
 .nav-row{position:sticky;bottom:0;background:rgba(255,255,255,.95);padding:9px 0}
 .collection-toggle{padding:10px 12px 0;margin:0}
 .practice-type-grid{grid-template-columns:1fr 1fr}
+.practice-phrase-list{grid-template-columns:1fr}
 }
      @media(max-width:360px){.practice-type-grid{grid-template-columns:1fr}
 }
@@ -216,26 +228,40 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
 <a aria-label='Home' class='home' href='/'>⌂</a>
 </div>   </header>    <main>     <section class="card hero">       <h1 data-t="title">Medicine</h1>       <p data-t="subtitle">Practise the language used by medical students with patients and healthcare colleagues.</p>       <div class="safety" data-t="safety">For language practice only. This activity does not provide medical advice.</div>     </section>      <div class="collection-toggle">
 <button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button>
-</div>     <section class="card collection hidden" id="collectionPanel">       <div class="section-head">
-<span class="step">★</span>
-<div class="section-title" data-t="saved">Saved phrases</div>
-</div>       <div class="saved-list" id="savedList">
-</div>     </section>      <section class="card" id="setup">
+</div>     <section class="card" id="setup">
 <div class="section-head">
 <span class="step">1</span>
 <div class="section-title" data-t="context">Medical topic or situation</div>
 </div>
 <div class="theme-block" style="margin-top:0;padding-top:0;border-top:0">
 <label for="theme" data-t="contextHint">Type any speciality, task or clinical situation. You can write in any language.</label>
-<input id="theme" type="text" maxlength="180" data-ph="placeholder" placeholder="For example: taking a patient history">         <div class="examples" aria-label="Examples">           <button class="example" type="button" data-example="Taking a patient history">Taking a patient history</button>           <button class="example" type="button" data-example="Explaining an examination">Explaining an examination</button>           <button class="example" type="button" data-example="Presenting a case">Presenting a case</button>           <button class="example" type="button" data-example="Reassuring a worried patient">Reassuring a worried patient</button>         </div>       </div>     </section>      <section class="card generator" id="generator">       <button class="primary" id="generateBtn" type="button" data-t="create">Generate situations</button>       <div class="status hidden" id="status" role="status" aria-live="polite"><span class="generation-wheel" aria-hidden="true"></span><span data-t="creating">Creating three medical situations…</span></div>     </section>      <section class="card hidden" id="activity">       <div class="progress" id="progress">
+<input id="theme" type="text" maxlength="180" data-ph="placeholder" placeholder="For example: taking a patient history">         <div class="examples" aria-label="Examples">           <button class="example" type="button" data-example="Taking a patient history">Taking a patient history</button>           <button class="example" type="button" data-example="Explaining an examination">Explaining an examination</button>           <button class="example" type="button" data-example="Presenting a case">Presenting a case</button>           <button class="example" type="button" data-example="Reassuring a worried patient">Reassuring a worried patient</button>         </div>       </div>     </section>      <section class="card generator" id="generator">       <button class="primary" id="generateBtn" type="button" data-t="create">Generate situations</button>       <div class="status hidden" id="status" role="status" aria-live="polite">
+<span class="generation-wheel" aria-hidden="true">
+</span>
+<span data-t="creating">Creating three medical situations…</span>
+</div>     </section>      <section class="card hidden" id="activity">       <div class="progress" id="progress">
 </div>       <div class="scenario-kicker" id="scenarioKicker">
 </div>       <h2 class="scenario-title" id="scenarioTitle">
 </h2>       <p class="scenario-text" id="scenarioText">
 </p>       <div class="task-title" data-t="choosePurpose">What do you need to communicate?</div>       <div id="intentionsWithPhrases">
-</div>       <div class="nav-row">         <button class="secondary" id="prevBtn" type="button" data-t="previous">Previous</button>         <button class="primary" id="nextBtn" type="button" data-t="next">Next situation</button>       </div>     </section>      <div class="section-divider" role="separator" aria-label="Situations and practice"></div>      <section class="card" id="practicePanel">       <div class="section-head">
+</div>       <div class="nav-row">         <button class="secondary" id="prevBtn" type="button" data-t="previous">Previous</button>         <button class="primary" id="nextBtn" type="button" data-t="next">Next situation</button>       </div>     </section>      <div class="section-divider" role="separator" aria-label="Situations and practice">
+</div>      <section class="card" id="practicePanel">       <div class="section-head">
 <span class="step">2</span>
 <div class="section-title" data-t="practiceTitle">Practise your saved phrases</div>
-</div>       <p class="lead" data-t="practiceIntro">Choose a practice type. Only the phrases you have saved on this page are used.</p>       <div class="practice-type-grid" id="typeGrid">         <button class="practice-type selected" data-type="gap" data-t="gap">Gap fill</button>         <button class="practice-type" data-type="jumble" data-t="jumble">Jumbled sentence</button>         <button class="practice-type" data-type="listen" data-t="listen">Listen &amp; rebuild</button>         <button class="practice-type" data-type="recall" data-t="recall">Recall</button>       </div>       <div class="actions" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">         <button class="btn primary" id="startBtn" style="width:auto" data-t="start">Start practice</button>       </div>       <div id="exercise" class="exercise hidden">
+</div>       <p class="lead" data-t="practiceIntro">Choose any saved phrase. You can change the phrase or exercise at any time.</p>
+      <div class="practice-phrase-list" id="practicePhraseList"></div>
+      <div class="selected-phrase hidden" id="selectedPhrase">
+        <div class="selected-phrase-target" id="selectedPhraseTarget"></div>
+        <div class="selected-phrase-meaning" id="selectedPhraseMeaning"></div>
+        <div class="practice-toolbar">
+          <button class="secondary" id="practicePrevBtn" type="button" data-t="previousPhrase">Previous phrase</button>
+          <span class="phrase-position" id="phrasePosition"></span>
+          <button class="secondary" id="practiceListenBtn" type="button">🔊 <span data-t="listen">Listen</span></button>
+          <button class="secondary" id="practiceNextBtn" type="button" data-t="nextPhrase">Next phrase</button>
+        </div>
+      </div>
+      <div class="practice-type-grid" id="typeGrid">         <button class="practice-type selected" data-type="gap" data-t="gap">Gap fill</button>         <button class="practice-type" data-type="jumble" data-t="jumble">Jumbled sentence</button>         <button class="practice-type" data-type="listen" data-t="listenExercise">Listen &amp; rebuild</button>         <button class="practice-type" data-type="recall" data-t="recall">Recall</button>       </div>
+      <div id="exercise" class="exercise hidden">
 </div>     </section>   </main>    <div class="toast" id="toast" role="status">
 </div>   <footer class="footer">LingoTotal · <span data-t="footer">Personalised language learning</span>
 </footer>
@@ -247,8 +273,12 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
     I.en.create='Generate situations';
     I.ca.create='Genera situacions';
     I.es.create='Generar situaciones';
+    Object.assign(I.en,{practiceIntro:'Choose any saved phrase. You can change the phrase or exercise at any time.',previousPhrase:'Previous phrase',nextPhrase:'Next phrase',listenExercise:'Listen & rebuild',phraseOf:'Phrase',practiseNow:'Practise'});
+    Object.assign(I.ca,{practiceIntro:'Tria qualsevol frase desada. Pots canviar de frase o exercici en qualsevol moment.',previousPhrase:'Frase anterior',nextPhrase:'Frase següent',listenExercise:'Escolta i reconstrueix',phraseOf:'Frase',practiseNow:'Practica'});
+    Object.assign(I.es,{practiceIntro:'Elige cualquier frase guardada. Puedes cambiar de frase o ejercicio en cualquier momento.',previousPhrase:'Frase anterior',nextPhrase:'Frase siguiente',listenExercise:'Escuchar y reconstruir',phraseOf:'Frase',practiseNow:'Practicar'});
     // ---------- LANGUAGE INIT ----------
-    const params=new URLSearchParams(location.search);     const languageAliases={
+    const params=new URLSearchParams(location.search);
+           const languageAliases={
       en:['en','english'],ca:['ca','catalan','català'],es:['es','spanish','español'],
       fr:['fr','french','français'],de:['de','german','deutsch'],it:['it','italian','italiano'],
       pt:['pt','portuguese','português'],eu:['eu','basque','euskara'],
@@ -265,9 +295,25 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
       for(const p of list){const code=normaliseLang(params.get(p));if(code)return code;}
       for(const k of keys){const code=normaliseLang(localStorage.getItem(k));if(code)return code;}
       return fb;
-    };     const ui=readLang(['ui','interface'],['lingototal_ui_language'],'en');     const target=readLang(['target'],['lingototal_target_language'],'es');     const indexTargetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',ar:'Arabic'};     localStorage.setItem('lingototal_ui_language',ui);     localStorage.setItem('lingototal_target_language',indexTargetNames[target]);     const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];     document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;     $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;     $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));     $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
+    };
+           const ui=readLang(['ui','interface'],['lingototal_ui_language'],'en');
+           const target=readLang(['target'],['lingototal_target_language'],'es');
+           const indexTargetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',ar:'Arabic'};
+           localStorage.setItem('lingototal_ui_language',ui);
+           localStorage.setItem('lingototal_target_language',indexTargetNames[target]);
+           const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+           document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;
+           $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;
+           $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));
+           $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
     // ---------- STORAGE ----------
-    const STORE_MED='lingototal_medicine_saved_phrases';     const STORE_GLOBAL='lingototal_saved_sentences_v2';     const loadMed=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_MED)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};     const saveMed=x=>localStorage.setItem(STORE_MED,JSON.stringify(x));     const loadGlobal=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_GLOBAL)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};     const saveGlobal=x=>localStorage.setItem(STORE_GLOBAL,JSON.stringify(x));     const samePhrase=(a,b)=>String(a.text||a.sentence||'').trim().toLowerCase()===String(b).trim().toLowerCase();
+    const STORE_MED='lingototal_medicine_saved_phrases';
+           const STORE_GLOBAL='lingototal_saved_sentences_v2';
+           const loadMed=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_MED)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
+           const saveMed=x=>localStorage.setItem(STORE_MED,JSON.stringify(x));
+           const loadGlobal=()=>{try{const x=JSON.parse(localStorage.getItem(STORE_GLOBAL)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
+           const saveGlobal=x=>localStorage.setItem(STORE_GLOBAL,JSON.stringify(x));
+           const samePhrase=(a,b)=>String(a.text||a.sentence||'').trim().toLowerCase()===String(b).trim().toLowerCase();
     // ---------- TOAST ----------
     const toast=msg=>{const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2400)};
     // ---------- RELIABLE TTS ----------
@@ -384,22 +430,208 @@ h1{font-size:clamp(2.6rem,14vw,4.4rem)}
       }
     }
     // ---------- SAVED LIST ----------
-    function renderSaved(){const items=loadMed();$('#savedCount').textContent=items.length;const box=$('#savedList');box.innerHTML='';if(!items.length){box.innerHTML=`<div class="empty">${tr('empty')}</div>`;return}items.slice().reverse().forEach(item=>{const row=document.createElement('div');row.className='saved-item';const text=item.text||'';row.innerHTML=`<strong></strong><small></small><div class="phrase-actions"><button class="action listen" type="button">🔊 ${tr('listen')}</button><button class="action remove" type="button">×</button></div>`;row.querySelector('strong').textContent=text;row.querySelector('small').textContent=item.translation||'';row.querySelector('.listen').onclick=()=>speak(text);row.querySelector('.remove').onclick=()=>{const all=loadMed();const n=all.findIndex(x=>samePhrase(x,text));if(n>-1)all.splice(n,1);saveMed(all);renderSaved();toast(tr('removed'))};box.appendChild(row)})}
+    let practiceItems=[],practicePos=0,selectedPracticeText='';
+    function savedForCurrentLanguage(){
+      return loadMed().filter(item=>!item.language||item.language===target);
+    }
+    function renderSaved(){
+      practiceItems=savedForCurrentLanguage();
+      $('#savedCount').textContent=practiceItems.length;
+      const box=$('#practicePhraseList');
+      box.innerHTML='';
+      if(!practiceItems.length){
+        selectedPracticeText='';
+        $('#selectedPhrase').classList.add('hidden');
+        $('#exercise').classList.remove('hidden');
+        $('#exercise').innerHTML=`<p>${tr('noPhrases')}</p>`;
+        return;
+      }
+      const remembered=practiceItems.findIndex(item=>samePhrase(item,selectedPracticeText));
+      practicePos=remembered>-1?remembered:Math.min(practicePos,practiceItems.length-1);
+      selectedPracticeText=practiceItems[practicePos].text||practiceItems[practicePos].sentence||'';
+      practiceItems.forEach((item,n)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='practice-phrase'+(n===practicePos?' selected':'');
+        const phrase=document.createElement('strong');
+        phrase.textContent=item.text||item.sentence||'';
+        const meaning=document.createElement('small');
+        meaning.textContent=item.translation||'';
+        button.append(phrase,meaning);
+        button.onclick=()=>{practicePos=n;selectedPracticeText=item.text||item.sentence||'';renderSaved();renderExercise()};
+        box.appendChild(button);
+      });
+      const item=practiceItems[practicePos];
+      $('#selectedPhrase').classList.remove('hidden');
+      $('#selectedPhraseTarget').textContent=item.text||item.sentence||'';
+      $('#selectedPhraseMeaning').textContent=item.translation||'';
+      $('#phrasePosition').textContent=`${tr('phraseOf')} ${practicePos+1} / ${practiceItems.length}`;
+      $('#practiceListenBtn').onclick=()=>speak(item.text||item.sentence||'');
+    }
+    function selectPracticePhrase(text){
+      selectedPracticeText=text;
+      renderSaved();
+      renderExercise();
+    }
+    function movePractice(amount){
+      if(!practiceItems.length)return;
+      practicePos=(practicePos+amount+practiceItems.length)%practiceItems.length;
+      selectedPracticeText=practiceItems[practicePos].text||practiceItems[practicePos].sentence||'';
+      renderSaved();
+      renderExercise();
+    }
     // ---------- SETUP ----------
-    let situations=[],index=0;     $$('.example').forEach(btn=>btn.onclick=()=>{$('#theme').value=btn.dataset.example;$('#theme').focus()});     $('#collectionBtn').onclick=()=>{$('#collectionPanel').classList.toggle('hidden');renderSaved()};
+    let situations=[],index=0;
+           $$('.example').forEach(btn=>btn.onclick=()=>{$('#theme').value=btn.dataset.example;$('#theme').focus()});
+    $('#collectionBtn').onclick=()=>{renderSaved();$('#practicePanel').scrollIntoView({behavior:'smooth',block:'start'})};
+    $('#practicePrevBtn').onclick=()=>movePractice(-1);
+    $('#practiceNextBtn').onclick=()=>movePractice(1);
     // ---------- AI CALL ----------
-    const unwrap=data=>data?.text||data?.response||data?.output||data?.result||data?.content||data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||data?.body||'';     const parseJson=value=>{if(value&&typeof value==='object')return value;const c=String(value).replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();const a=c.indexOf('{'),b=c.lastIndexOf('}');return JSON.parse(a>=0&&b>a?c.slice(a,b+1):c)};     async function callAI(prompt){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),45000);let r;try{r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt}),signal:controller.signal})}catch(error){if(error.name==='AbortError')throw Error('The generation request timed out');throw error}finally{clearTimeout(timeout)}const responseText=await r.text();let d;try{d=JSON.parse(responseText)}catch{d=responseText}if(!r.ok){const reason=typeof d==='string'?d:(d?.error?.message||d?.error||d?.message);throw Error(reason||`Server error (${r.status})`)}if(typeof d==='string'){if(!d.trim())throw Error('The API returned no activity');return d}if(d?.situations||d?.scenarios)return d;const t=unwrap(d);if(!t)throw Error('The API returned no activity');return t}
+    const unwrap=data=>data?.text||data?.response||data?.output||data?.result||data?.content||data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||data?.body||'';
+           const parseJson=value=>{if(value&&typeof value==='object')return value;const c=String(value).replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();const a=c.indexOf('{'),b=c.lastIndexOf('}');return JSON.parse(a>=0&&b>a?c.slice(a,b+1):c)};
+           async function callAI(prompt){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),45000);let r;try{r=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt}),signal:controller.signal})}catch(error){if(error.name==='AbortError')throw Error('The generation request timed out');throw error}finally{clearTimeout(timeout)}const responseText=await r.text();let d;try{d=JSON.parse(responseText)}catch{d=responseText}if(!r.ok){const reason=typeof d==='string'?d:(d?.error?.message||d?.error||d?.message);throw Error(reason||`Server error (${r.status})`)}if(typeof d==='string'){if(!d.trim())throw Error('The API returned no activity');return d}if(d?.situations||d?.scenarios)return d;const t=unwrap(d);if(!t)throw Error('The API returned no activity');return t}
     // ---------- VALIDATE ----------
-    function validate(data){       const arr=data.situations||data.scenarios;       if(!Array.isArray(arr)||arr.length<3)throw Error('Invalid situations');       return arr.slice(0,3).map((s,n)=>{         const title=String(s.title||`${tr('situation')} ${n+1}`);         const context=String(s.context||s.situation||'');         const intents=Array.isArray(s.intentions)?s.intentions:[];         if(intents.length<2)throw Error('Not enough intentions');         const normalised=intents.slice(0,3).map(x=>{           if(typeof x==='string')return {label:x,phrases:[]};           const label=String(x.label||x.text||'');           const phrases=Array.isArray(x.phrases)?x.phrases:(Array.isArray(x.suggestions)?x.suggestions:[]);           return {label,phrases:phrases.slice(0,3).map(p=>({text:String(p.text||p.phrase||''),translation:String(p.translation||p.meaning||''),note:String(p.note||p.usage||'')}))};         });         return {title,context,intentions:normalised};       });     }
+    function validate(data){       const arr=data.situations||data.scenarios;
+           if(!Array.isArray(arr)||arr.length<3)throw Error('Invalid situations');
+           return arr.slice(0,3).map((s,n)=>{         const title=String(s.title||`${tr('situation')} ${n+1}`);
+           const context=String(s.context||s.situation||'');
+           const intents=Array.isArray(s.intentions)?s.intentions:[];
+           if(intents.length<2)throw Error('Not enough intentions');
+           const normalised=intents.slice(0,3).map(x=>{           if(typeof x==='string')return {label:x,phrases:[]};
+           const label=String(x.label||x.text||'');
+           const phrases=Array.isArray(x.phrases)?x.phrases:(Array.isArray(x.suggestions)?x.suggestions:[]);
+           return {label,phrases:phrases.slice(0,3).map(p=>({text:String(p.text||p.phrase||''),translation:String(p.translation||p.meaning||''),note:String(p.note||p.usage||'')}))};
+           });
+           return {title,context,intentions:normalised};
+           });
+           }
     // ---------- PROMPT ----------
-    function buildPrompt(theme){       return `You are creating a language-learning activity for a university student of medicine. Interface language: ${LANGS[ui].name}. Language being learned: ${LANGS[target].name}. Use one balanced level: accessible, natural and useful language with concise sentences and polite clinical phrasing. Learner's requested topic or situation: ${theme}  Create exactly 3 varied, realistic clinical communication situations related closely to the requested topic. Include communication with patients, relatives or healthcare colleagues as appropriate. Concentrate on respectful communication, consent, clarification, empathy, history-taking, examination explanations, case presentation or handover. Do not diagnose, prescribe, calculate doses or give medical advice.  For each situation provide: - title in the interface language - context in the interface language - exactly 3 short communication intentions in the interface language - for EACH intention, exactly 2 useful phrases in ${LANGS[target].name} - for each phrase, a natural translation in ${LANGS[ui].name} and a brief usage note in ${LANGS[ui].name}  Return only valid JSON, with no markdown, using this exact shape: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[...]},{"label":"","phrases":[...]}]}]}`;     }
+    function buildPrompt(theme){       return `You are creating a language-learning activity for a university student of medicine. Interface language: ${LANGS[ui].name}. Language being learned: ${LANGS[target].name}. Use one balanced level: accessible, natural and useful language with concise sentences and polite clinical phrasing. Learner's requested topic or situation: ${theme}  Create exactly 3 varied, realistic clinical communication situations related closely to the requested topic. Include communication with patients, relatives or healthcare colleagues as appropriate. Concentrate on respectful communication, consent, clarification, empathy, history-taking, examination explanations, case presentation or handover. Do not diagnose, prescribe, calculate doses or give medical advice.  For each situation provide: - title in the interface language - context in the interface language - exactly 3 short communication intentions in the interface language - for EACH intention, exactly 2 useful phrases in ${LANGS[target].name} - for each phrase, a natural translation in ${LANGS[ui].name} and a brief usage note in ${LANGS[ui].name}  Return only valid JSON, with no markdown, using this exact shape: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[...]},{"label":"","phrases":[...]}]}]}`;
+           }
     // ---------- GENERATE ----------
-    async function generate(){       const theme=$('#theme').value.trim();       if(!theme){toast(tr('enterContext'));$('#theme').focus();return}       const button=$('#generateBtn'),status=$('#status');button.disabled=true;button.setAttribute('aria-busy','true');status.classList.remove('hidden');$('#activity').classList.add('hidden');       try{         const raw=await callAI(buildPrompt(theme));         situations=validate(parseJson(raw));         index=0;renderActivity();         $('#activity').classList.remove('hidden');         $('#activity').scrollIntoView({behavior:'smooth',block:'start'});       }catch(err){console.error('Generation failed:',err);toast(`${tr('error')} ${err.message||''}`.trim())}       finally{button.disabled=false;button.removeAttribute('aria-busy');status.classList.add('hidden')}     }
+    async function generate(){       const theme=$('#theme').value.trim();
+           if(!theme){toast(tr('enterContext'));$('#theme').focus();return}       const button=$('#generateBtn'),status=$('#status');button.disabled=true;button.setAttribute('aria-busy','true');status.classList.remove('hidden');$('#activity').classList.add('hidden');
+           try{         const raw=await callAI(buildPrompt(theme));
+           situations=validate(parseJson(raw));
+           index=0;renderActivity();
+           $('#activity').classList.remove('hidden');
+           $('#activity').scrollIntoView({behavior:'smooth',block:'start'});
+           }catch(err){console.error('Generation failed:',err);toast(`${tr('error')} ${err.message||''}`.trim())}       finally{button.disabled=false;button.removeAttribute('aria-busy');status.classList.add('hidden')}     }
     // ---------- RENDER ACTIVITY ----------
-    function renderActivity(){       const s=situations[index];       $('#progress').innerHTML='';       situations.forEach((_,n)=>{const b=document.createElement('button');b.type='button';b.className='dot'+(n===index?' current':n<index?' done':'');b.textContent=n+1;b.onclick=()=>{index=n;renderActivity()};$('#progress').appendChild(b)});       $('#scenarioKicker').textContent=`${tr('situation')} ${index+1} / ${situations.length}`;       $('#scenarioTitle').textContent=s.title;       $('#scenarioText').textContent=s.context;       const box=$('#intentionsWithPhrases');box.innerHTML='';       s.intentions.forEach(intent=>{         const block=document.createElement('div');block.className='intention-block';         const label=document.createElement('div');label.className='label';label.textContent=intent.label;         block.appendChild(label);         intent.phrases.forEach(p=>{           const card=document.createElement('article');card.className='phrase-card';           card.innerHTML='<div class="phrase-target"></div><div class="phrase-meaning"></div><div class="phrase-note"></div><div class="phrase-actions"><button class="action audio" type="button"></button><button class="action save" type="button"></button><button class="action practise" type="button"></button></div>';           card.querySelector('.phrase-target').textContent=p.text;           card.querySelector('.phrase-meaning').textContent=p.translation;           card.querySelector('.phrase-note').textContent=p.note;           const audio=card.querySelector('.audio');audio.textContent=`🔊 ${tr('listen')}`;audio.onclick=()=>speak(p.text);           const save=card.querySelector('.save');           const refresh=()=>{const yes=loadMed().some(x=>samePhrase(x,p.text));save.textContent=yes?`✓ ${tr('savedDone')}`:`★ ${tr('save')}`;save.classList.toggle('saved',yes)};           save.onclick=()=>{const med=loadMed();if(!med.some(x=>samePhrase(x,p.text))){med.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Medicine',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});saveMed(med);const glob=loadGlobal();if(!glob.some(x=>samePhrase(x,p.text))){glob.unshift({sentence:p.text,targetLanguage:indexTargetNames[target],targetName:indexTargetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Medicine',savedAt:new Date().toISOString()});saveGlobal(glob)}toast(tr('savedToast'))}refresh();renderSaved()};           const practise=card.querySelector('.practise');practise.textContent='🎯 Practise';practise.onclick=()=>{const med=loadMed();if(!med.some(x=>samePhrase(x,p.text))){med.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Medicine',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});saveMed(med);const glob=loadGlobal();if(!glob.some(x=>samePhrase(x,p.text))){glob.unshift({sentence:p.text,targetLanguage:indexTargetNames[target],targetName:indexTargetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Medicine',savedAt:new Date().toISOString()});saveGlobal(glob)}renderSaved()}$('#practicePanel').scrollIntoView({behavior:'smooth',block:'start'})};           refresh();block.appendChild(card);         });         box.appendChild(block);       });       $('#prevBtn').disabled=index===0;       $('#nextBtn').textContent=index===situations.length-1?tr('newChallenge'):tr('next');     }
+    function renderActivity(){       const s=situations[index];
+           $('#progress').innerHTML='';
+           situations.forEach((_,n)=>{const b=document.createElement('button');b.type='button';b.className='dot'+(n===index?' current':n<index?' done':'');b.textContent=n+1;b.onclick=()=>{index=n;renderActivity()};$('#progress').appendChild(b)});
+           $('#scenarioKicker').textContent=`${tr('situation')} ${index+1} / ${situations.length}`;
+           $('#scenarioTitle').textContent=s.title;
+           $('#scenarioText').textContent=s.context;
+           const box=$('#intentionsWithPhrases');box.innerHTML='';
+           s.intentions.forEach(intent=>{         const block=document.createElement('div');block.className='intention-block';
+           const label=document.createElement('div');label.className='label';label.textContent=intent.label;
+           block.appendChild(label);
+           intent.phrases.forEach(p=>{           const card=document.createElement('article');card.className='phrase-card';
+           card.innerHTML=`<div class="phrase-target">
+</div>
+<div class="phrase-meaning">
+</div>
+<div class="phrase-note">
+</div>
+<div class="phrase-actions">
+<button class="action audio" type="button">
+</button>
+<button class="action save" type="button">
+</button>
+<button class="action practise" type="button">
+</button>
+</div>`;
+           card.querySelector('.phrase-target').textContent=p.text;
+           card.querySelector('.phrase-meaning').textContent=p.translation;
+           card.querySelector('.phrase-note').textContent=p.note;
+           const audio=card.querySelector('.audio');audio.textContent=`🔊 ${tr('listen')}`;audio.onclick=()=>speak(p.text);
+           const save=card.querySelector('.save');
+           const refresh=()=>{const yes=loadMed().some(x=>samePhrase(x,p.text));save.textContent=yes?`✓ ${tr('savedDone')}`:`★ ${tr('save')}`;save.classList.toggle('saved',yes)};
+           save.onclick=()=>{const med=loadMed();if(!med.some(x=>samePhrase(x,p.text))){med.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Medicine',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});saveMed(med);const glob=loadGlobal();if(!glob.some(x=>samePhrase(x,p.text))){glob.unshift({sentence:p.text,targetLanguage:indexTargetNames[target],targetName:indexTargetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Medicine',savedAt:new Date().toISOString()});saveGlobal(glob)}toast(tr('savedToast'))}refresh();renderSaved()};
+           const practise=card.querySelector('.practise');practise.textContent=`🎯 ${tr('practiseNow')}`;practise.onclick=()=>{const med=loadMed();if(!med.some(x=>samePhrase(x,p.text))){med.push({id:Date.now()+Math.random(),text:p.text,translation:p.translation,note:p.note,language:target,source:'LingoGo Medicine',theme:$('#theme').value.trim(),createdAt:new Date().toISOString()});saveMed(med);const glob=loadGlobal();if(!glob.some(x=>samePhrase(x,p.text))){glob.unshift({sentence:p.text,targetLanguage:indexTargetNames[target],targetName:indexTargetNames[target],theme:$('#theme').value.trim(),expression:p.text,source:'LingoGo Medicine',savedAt:new Date().toISOString()});saveGlobal(glob)}}selectPracticePhrase(p.text);$('#practicePanel').scrollIntoView({behavior:'smooth',block:'start'})};
+           refresh();block.appendChild(card);
+           });
+           box.appendChild(block);
+           });
+           $('#prevBtn').disabled=index===0;
+           $('#nextBtn').textContent=index===situations.length-1?tr('newChallenge'):tr('next');
+           }
     // ---------- NAV ----------
-    $('#generateBtn').onclick=generate;     $('#theme').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});     $('#prevBtn').onclick=()=>{if(index>0){index--;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}};     $('#nextBtn').onclick=()=>{       if(index<situations.length-1){index++;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}       else{situations=[];index=0;$('#activity').classList.add('hidden');$('#theme').value='';$('#setup').scrollIntoView({behavior:'smooth'});$('#theme').focus()}     };
+    $('#generateBtn').onclick=generate;
+           $('#theme').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
+           $('#prevBtn').onclick=()=>{if(index>0){index--;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}};
+           $('#nextBtn').onclick=()=>{       if(index<situations.length-1){index++;renderActivity();$('#activity').scrollIntoView({behavior:'smooth'})}       else{situations=[];index=0;$('#activity').classList.add('hidden');$('#theme').value='';$('#setup').scrollIntoView({behavior:'smooth'});$('#theme').focus()}     };
     // ---------- PRACTICE ENGINE ----------
-    let type='gap',session=[],pos=0;     $$('.practice-type').forEach(b=>b.onclick=()=>{$$('.practice-type').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');type=b.dataset.type});     function chooseSession(){const items=loadMed();return items.slice().sort(()=>Math.random()-.5).slice(0,10)}     function words(s){return s.match(/[\p{L}\p{N}''-]+|[^\s]/gu)||s.split(/\s+/)}     function normal(s){return s.toLocaleLowerCase().replace(/[\p{P}\p{S}]/gu,'').replace(/\s+/g,' ').trim()}     function nav(){return `<div class="actions"><button class="btn secondary" id="showBtn">${tr('show')}</button><button class="btn primary" id="nextBtn">${tr('next')}</button></div><div id="feedback" class="feedback"></div>`}     function renderExercise(){       const box=$('#exercise');       if(!session.length){box.classList.remove('hidden');box.innerHTML=`<p>${tr('noPhrases')}</p>`;return}       const item=session[pos%session.length];       box.classList.remove('hidden');       let html='';       if(type==='gap'){         const w=words(item.text||item.sentence||'');         const eligible=w.map((x,i)=>({x,i})).filter(o=>/[\p{L}\p{N}]/u.test(o.x)&&o.x.length>3);         const hide=eligible.slice().sort(()=>Math.random()-.5).slice(0,Math.min(2,eligible.length)).map(o=>o.i);         const prompt=w.map((x,i)=>hide.includes(i)?'______':x).join(' ').replace(/\s+([,.!?;:])/g,'$1');         html=`<div class="prompt">${prompt}</div><input id="textAnswer" style="width:100%;padding:11px" placeholder="${tr('yourAnswer')}">${nav()}`;         box.innerHTML=html;         const expected=hide.map(i=>w[i]).join(' ');         $('#showBtn').onclick=()=>$('#feedback').textContent=item.text;         $('#textAnswer').dataset.expected=expected;       } else if(type==='jumble'){         const tokens=words(item.text||item.sentence||'');         const bank=tokens.map((word,orig)=>({word,orig})).sort(()=>Math.random()-.5);         const chosen=[];         html=`<div class="prompt">${tr('buildSentence')}</div><div class="jumble-label">${tr('yourAnswer')}</div><div class="answer-line" id="answerLine"></div><div class="jumble-label">${tr('jumbledWords')}</div><div class="wordbank" id="jumbleBank"></div><div class="jumble-actions"><button class="btn secondary" id="clearJumbleBtn">${tr('clearSentence')}</button><button class="btn primary" id="checkJumbleBtn">${tr('check')}</button><button class="btn primary hidden" id="nextBtn">${tr('next')}</button></div><div id="feedback" class="feedback"></div>`;         box.innerHTML=html;         function built(){return chosen.map(x=>x.word).join(' ').replace(/\s+([,.!?;:])/g,'$1').trim()}         function draw(){const ans=$('#answerLine'),b=$('#jumbleBank');ans.innerHTML='';b.innerHTML='';const used=new Set(chosen.map(x=>x.orig));bank.forEach(tok=>{if(used.has(tok.orig))return;const bt=document.createElement('button');bt.type='button';bt.className='word';bt.textContent=tok.word;bt.onclick=()=>{chosen.push(tok);draw()};b.appendChild(bt)});if(!chosen.length){const ph=document.createElement('span');ph.className='answer-placeholder';ph.textContent=tr('yourAnswer');ans.appendChild(ph)}else chosen.forEach((tok,i)=>{const bt=document.createElement('button');bt.type='button';bt.className='word';bt.textContent=tok.word;bt.onclick=()=>{chosen.splice(i,1);draw()};ans.appendChild(bt)})}         draw();         $('#clearJumbleBtn').onclick=()=>{chosen.length=0;$('#feedback').textContent='';$('#feedback').className='feedback';draw()};         $('#checkJumbleBtn').onclick=()=>{const fb=$('#feedback');if(chosen.length!==bank.length){fb.textContent=tr('incomplete');fb.className='feedback bad';return}const ok=normal(built())===normal(item.text||item.sentence||'');fb.textContent=ok?tr('correct'):tr('tryAgain');fb.className='feedback '+(ok?'good':'bad');if(ok){$('#checkJumbleBtn').classList.add('hidden');$('#clearJumbleBtn').classList.add('hidden');$('#nextBtn').classList.remove('hidden')}};       } else if(type==='listen'){         html=`<div class="prompt">${tr('typeSentence')}</div><div class="actions"><button class="btn secondary" id="listenBtn">🔊 ${tr('listenNow')}</button></div><input id="textAnswer" style="width:100%;margin-top:10px;padding:11px" placeholder="${tr('yourAnswer')}">${nav()}`;         box.innerHTML=html;         $('#listenBtn').onclick=()=>speak(item.text||item.sentence||'');         $('#showBtn').onclick=()=>$('#feedback').textContent=item.text||item.sentence||'';       } else {         html=`<div class="prompt">${tr('recallPrompt')}</div><p>${item.translation||''}</p>${nav()}`;         box.innerHTML=html;         $('#showBtn').onclick=()=>$('#feedback').textContent=item.text||item.sentence||'';       }       const next=document.getElementById('nextBtn');       if(next)next.onclick=()=>{pos++;renderExercise()};     }     $('#startBtn').onclick=()=>{session=chooseSession();pos=0;renderExercise();$('#exercise').scrollIntoView({behavior:'smooth',block:'start'})};
+    let type='gap';
+    function words(s){return s.match(/[\p{L}\p{N}'’-]+|[^\s]/gu)||s.split(/\s+/)}
+    function normal(s){return String(s||'').toLocaleLowerCase().replace(/[\p{P}\p{S}]/gu,'').replace(/\s+/g,' ').trim()}
+    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function answerNav(includeCheck=true){
+      return `<div class="actions"><button class="btn secondary" id="practiceShowBtn">${tr('show')}</button>${includeCheck?`<button class="btn primary" id="practiceCheckBtn">${tr('check')}</button>`:''}<button class="btn primary" id="practiceExerciseNextBtn">${tr('nextPhrase')}</button></div><div id="practiceFeedback" class="feedback"></div>`;
+    }
+    function setFeedback(message,good){
+      const feedback=$('#practiceFeedback');
+      if(!feedback)return;
+      feedback.textContent=message;
+      feedback.className='feedback'+(good===true?' good':good===false?' bad':'');
+    }
+    function renderExercise(){
+      const box=$('#exercise');
+      if(!practiceItems.length){box.classList.remove('hidden');box.innerHTML=`<p>${tr('noPhrases')}</p>`;return}
+      const item=practiceItems[practicePos];
+      const answer=item.text||item.sentence||'';
+      box.classList.remove('hidden');
+      if(type==='gap'){
+        const tokens=words(answer);
+        let eligible=tokens.map((word,i)=>({word,i})).filter(x=>/[\p{L}\p{N}]/u.test(x.word)&&x.word.length>3);
+        if(!eligible.length)eligible=tokens.map((word,i)=>({word,i})).filter(x=>/[\p{L}\p{N}]/u.test(x.word));
+        const hidden=eligible.slice().sort(()=>Math.random()-.5).slice(0,Math.min(2,eligible.length));
+        const hiddenIndexes=new Set(hidden.map(x=>x.i));
+        const prompt=tokens.map((word,i)=>hiddenIndexes.has(i)?'______':word).join(' ').replace(/\s+([,.!?;:])/g,'$1');
+        const expected=hidden.map(x=>x.word).join(' ');
+        box.innerHTML=`<div class="prompt">${escapeHtml(prompt)}</div><input id="practiceTextAnswer" style="width:100%;padding:11px" placeholder="${tr('yourAnswer')}">${answerNav(true)}`;
+        $('#practiceShowBtn').onclick=()=>setFeedback(answer);
+        $('#practiceCheckBtn').onclick=()=>{const ok=normal($('#practiceTextAnswer').value)===normal(expected);setFeedback(ok?tr('correct'):tr('tryAgain'),ok);if(ok)speak(answer)};
+      }else if(type==='jumble'){
+        const tokens=words(answer);
+        const bank=tokens.map((word,original)=>({word,original})).sort(()=>Math.random()-.5);
+        const chosen=[];
+        box.innerHTML=`<div class="prompt">${tr('buildSentence')}</div><div class="jumble-label">${tr('yourAnswer')}</div><div class="answer-line" id="answerLine"></div><div class="jumble-label">${tr('jumbledWords')}</div><div class="wordbank" id="jumbleBank"></div><div class="jumble-actions"><button class="btn secondary" id="clearJumbleBtn">${tr('clearSentence')}</button><button class="btn primary" id="checkJumbleBtn">${tr('check')}</button><button class="btn primary" id="practiceExerciseNextBtn">${tr('nextPhrase')}</button></div><div id="practiceFeedback" class="feedback"></div>`;
+        function built(){return chosen.map(x=>x.word).join(' ').replace(/\s+([,.!?;:])/g,'$1').trim()}
+        function draw(){
+          const answerLine=$('#answerLine'),wordBank=$('#jumbleBank');answerLine.innerHTML='';wordBank.innerHTML='';
+          const used=new Set(chosen.map(x=>x.original));
+          bank.forEach(token=>{if(used.has(token.original))return;const button=document.createElement('button');button.type='button';button.className='word';button.textContent=token.word;button.onclick=()=>{chosen.push(token);draw()};wordBank.appendChild(button)});
+          if(!chosen.length){const hint=document.createElement('span');hint.className='answer-placeholder';hint.textContent=tr('yourAnswer');answerLine.appendChild(hint)}
+          else chosen.forEach((token,i)=>{const button=document.createElement('button');button.type='button';button.className='word';button.textContent=token.word;button.onclick=()=>{chosen.splice(i,1);draw()};answerLine.appendChild(button)});
+        }
+        draw();
+        $('#clearJumbleBtn').onclick=()=>{chosen.length=0;setFeedback('');draw()};
+        $('#checkJumbleBtn').onclick=()=>{if(chosen.length!==bank.length){setFeedback(tr('incomplete'),false);return}const ok=normal(built())===normal(answer);setFeedback(ok?tr('correct'):tr('tryAgain'),ok);if(ok)speak(answer)};
+      }else if(type==='listen'){
+        box.innerHTML=`<div class="prompt">${tr('typeSentence')}</div><div class="actions"><button class="btn secondary" id="practiceListenExerciseBtn">🔊 ${tr('listenNow')}</button></div><input id="practiceTextAnswer" style="width:100%;margin-top:10px;padding:11px" placeholder="${tr('yourAnswer')}">${answerNav(true)}`;
+        $('#practiceListenExerciseBtn').onclick=()=>speak(answer);
+        $('#practiceShowBtn').onclick=()=>setFeedback(answer);
+        $('#practiceCheckBtn').onclick=()=>{const ok=normal($('#practiceTextAnswer').value)===normal(answer);setFeedback(ok?tr('correct'):tr('tryAgain'),ok);if(ok)speak(answer)};
+      }else{
+        box.innerHTML=`<div class="prompt">${tr('recallPrompt')}</div><p>${escapeHtml(item.translation||'')}</p>${answerNav(false)}`;
+        $('#practiceShowBtn').onclick=()=>{setFeedback(answer);speak(answer)};
+      }
+      const next=$('#practiceExerciseNextBtn');
+      if(next)next.onclick=()=>movePractice(1);
+    }
+    $$('.practice-type').forEach(button=>button.onclick=()=>{
+      $$('.practice-type').forEach(x=>x.classList.remove('selected'));
+      button.classList.add('selected');
+      type=button.dataset.type;
+      renderExercise();
+    });
     // ---------- INIT ----------
-    renderSaved();   })();   </script> </body> </html>
+    renderSaved();
+    renderExercise();
+  })();
+  </script>
+</body>
+</html>
