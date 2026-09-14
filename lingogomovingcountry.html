@@ -338,7 +338,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
            document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;
            $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;
            const indexUrl=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(indexTargetNames[target])}`;
-           $('.index-link').forEach(link=>link.href=indexUrl);
+           $$('.index-link').forEach(link=>link.href=indexUrl);
            $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));
            $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
     // ---------- STORAGE ----------
