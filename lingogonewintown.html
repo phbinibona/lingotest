@@ -223,12 +223,12 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 .collection-toggle{padding:10px 12px 0;margin:0;background:#171717}
 .nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}
 }
-   </style> </head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo' href='[/](https://lingototal.com/)'>
+   </style> </head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo index-link' href='index.html'>
 <span class="logo-mark">LT</span>
 <span class="logo-word">LingoTotal</span>
 </a>     <div class="activity-name" data-t="activity">New in Town</div>     <div class="right-tools">
 <span class="pair" id="pair">EN → ES</span>
-<a aria-label='Home' class='home' href='[/](https://lingototal.com/)'>⌂</a>
+<a aria-label='Home' class='home index-link' href='index.html'>⌂</a>
 </div>   </header>    <main>     <section class="card hero">       <h1 data-t="title">New in Town</h1>       <p data-t="subtitle">Practise the language you need to settle in, meet people and take part in everyday life in a new town or city.</p>       <div class="safety" data-t="safety">For young people arriving somewhere new and wanting to become part of everyday local life.</div>     </section>      <div class="collection-toggle">
 <button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button>
 </div>     <section class="card" id="setup">
@@ -337,6 +337,8 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
            const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
            document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;
            $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;
+           const indexUrl=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(indexTargetNames[target])}`;
+           $('.index-link').forEach(link=>link.href=indexUrl);
            $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));
            $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
     // ---------- STORAGE ----------
