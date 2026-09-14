@@ -1,4 +1,4 @@
-<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · LingoGo Tourism</title> <meta name="lingototal-build" content="tourism-medicine-template-2026-09-14">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
+<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · LingoGo Tourism</title> <meta name="lingototal-build" content="tourism-generation-fix-2026-09-14">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
      *{box-sizing:border-box}
 html{scroll-padding-top:78px}
 body{margin:0;background:linear-gradient(180deg,#e9f3ff 0,#f7f9fc 280px,#f2f5f9 100%);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}
@@ -224,26 +224,14 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 .nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}
 }
    
-.tourism-kicker{position:relative;margin-bottom:12px;color:#8cbaff;font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-.tourism-links{position:relative;display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 0}
-.tourism-link{padding:7px 9px;border:1px solid rgba(255,255,255,.34);background:rgba(0,0,0,.28);color:#fff;text-decoration:none;font-size:.68rem;font-weight:900;letter-spacing:.055em}
-.tourism-link:hover,.tourism-link:focus{border-color:#8cbaff;background:#244b7f;outline:none}
 </style> </head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo' href='index.html'>
 <span class="logo-mark">LT</span>
 <span class="logo-word">LingoTotal</span>
 </a>     <div class="activity-name" data-t="activity">LingoGo Tourism</div>     <div class="right-tools">
 <span class="pair" id="pair">EN → ES</span>
 <a aria-label='Home' class='home' href='index.html'>⌂</a>
-</div>   </header>    <main>     <section class="card hero">       <div class="tourism-kicker" data-t="kicker">LINGOGO / TOURISM · WORK ANYWHERE</div>
-      <nav class="tourism-links" aria-label="Tourism topics">
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipApplications">APPLICATIONS</a>
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipInterviews">INTERVIEWS</a>
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipGuests">GUESTS</a>
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipTeamwork">TEAMWORK</a>
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipAbroad">WORK ABROAD</a>
-        <a class="tourism-link" href="#setup" data-tourism-chip data-t="chipSkills">TRANSFERABLE SKILLS</a>
-      </nav>
-      <h1 data-t="title">LingoGo Tourism</h1>       <p data-t="subtitle">Practise the language you need to work in tourism or hospitality and communicate confidently with employers, colleagues and international visitors.</p>       </section>      <div class="collection-toggle">
+</div>   </header>    <main>     <section class="card hero">
+<h1 data-t="title">LingoGo Tourism</h1>       <p data-t="subtitle">Practise the language you need to work in tourism or hospitality and communicate confidently with employers, colleagues and international visitors.</p>       </section>      <div class="collection-toggle">
 <button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button>
 </div>     <section class="card" id="setup">
 <div class="section-head">
@@ -535,7 +523,6 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
     $('#practicePrevBtn').onclick=()=>movePractice(-1);
     $('#practiceNextBtn').onclick=()=>movePractice(1);
 
-    $('[data-tourism-chip]').forEach(link=>{link.addEventListener('click',()=>{const input=$('#theme');input.value=link.textContent.trim();setTimeout(()=>input.focus(),250)})});
     // ---------- AI CALL ----------
     const unwrap=data=>data?.text||data?.response||data?.output||data?.result||data?.content||data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||data?.body||'';
            const parseJson=value=>{if(value&&typeof value==='object')return value;const c=String(value).replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim();const a=c.indexOf('{'),b=c.lastIndexOf('}');return JSON.parse(a>=0&&b>a?c.slice(a,b+1):c)};
@@ -557,7 +544,22 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
            }
     // ---------- PROMPT ----------
     function buildPrompt(theme){
-      return `Create a LingoGo Tourism activity for a young person seeking work in tourism or hospitality at home or abroad. Interface language: ${LANGS[ui].name}. Target language: ${LANGS[target].name}. Learner's job, need or situation: ${theme}. Create exactly 3 realistic situations involving a tourism or hospitality job application, interview, guest service or workplace communication. For each situation provide a short title and context in the interface language, followed by exactly 3 clearly different communication intentions in the interface language. For each intention provide exactly 2 short, natural phrases in the target language, each with a brief translation and usage note in the interface language. Include relevant contexts such as hotels, reception, resorts, visitor attractions, tour companies, seasonal work, international guests, teamwork, problem-solving and working abroad. Help the learner express transferable strengths such as communication, reliability, organisation, cultural awareness, teamwork, flexibility, language skills and professional service. Do not invent experience the learner has not supplied. Prefer natural, widely understood spoken workplace language over textbook language or obscure slang. Return only valid JSON with this structure: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]}]}]}`;
+      return `Create a short LingoGo Tourism language activity.
+Interface language: ${LANGS[ui].name}.
+Target language: ${LANGS[target].name}.
+Topic or situation: ${theme}.
+
+Create exactly 3 realistic tourism or hospitality situations.
+For each situation provide:
+- a short title and context in the interface language;
+- exactly 2 different communication intentions in the interface language;
+- exactly 2 short, natural phrases for each intention in the target language;
+- a short translation and usage note for each phrase in the interface language.
+
+Use practical language for tourism jobs, interviews, hotels, guests, tours, teamwork or working abroad. Do not invent experience the learner has not provided. Use widely understood spoken language.
+
+Return only valid JSON:
+{"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]},{"label":"","phrases":[{"text":"","translation":"","note":""},{"text":"","translation":"","note":""}]}]}]}`;
     }
     // ---------- GENERATE ----------
     async function generate(){       const theme=$('#theme').value.trim();
