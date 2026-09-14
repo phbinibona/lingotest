@@ -293,9 +293,10 @@ input[type=text]:focus,textarea:focus{outline:0!important;border-color:var(--pri
     <div id="repairPrompt" class="feedback"></div>
     <textarea id="repairText" style="min-height:90px" data-i18n-placeholder="answerPlaceholder" placeholder="Write your answer..."></textarea>
     <div class="actions">
-      <button class="primary" onclick="checkRepair()" data-i18n="check">Check my version</button>
+      <button class="primary" id="repairCheckBtn" onclick="checkRepair()" data-i18n="check">Check my version</button>
       <button class="hint" onclick="showHint()" data-i18n="clue">Give me a clue</button>
       <button class="secondary" onclick="showAnswer()" data-i18n="showAnswer">Show answer</button>
+      <button class="primary hidden" id="continueStepBtn" onclick="goToStep4()" data-i18n="continueStep">Continue to Step 4</button>
     </div>
     <div id="repairFeedback" class="feedback hidden"></div>
   </section>
@@ -326,6 +327,7 @@ Object.assign(T,{
 cy:{...T.en,brand:"LINGOTOTAL · Dysgu oddi wrthyf",tagline:"Defnyddiwch eich iaith eich hun i greu eich gwers.",home:"Gweithgareddau / newid ieithoedd",heroTitle:"Mae eich geiriau’n dod yn wers.",heroText:"Ysgrifennwch rywbeth go iawn. Bydd LingoTotal yn dewis un gwelliant defnyddiol ac yn creu gweithgaredd byr.",step1:"CAM 1 · DYWEDWCH RYWBETH",talkTitle:"Am beth hoffech chi siarad?",talkHelp:"Dewiswch syniad neu ysgrifennwch yn yr iaith rydych yn ei dysgu.",promptYesterday:"🕒 Beth wnaethoch chi ddoe?",promptWeekend:"🌤️ Beth ydych chi’n ei wneud y penwythnos hwn?",promptTown:"🏘️ Dywedwch wrthyf am eich tref.",promptAnnoying:"😤 Beth sy’n eich cythruddo?",writePlaceholder:"Ysgrifennwch 2–4 brawddeg yma…",build:"Creu fy ngwers fer",restart:"Dechrau eto",loading:"Mae LingoTotal yn creu eich gwers…",step2:"CAM 2 · SYLWI",noticeTitle:"Beth ydych chi’n sylwi arno?",step3:"CAM 3 · CEISIWCH ETO",useTitle:"Defnyddiwch y syniad eich hun.",answerPlaceholder:"Ysgrifennwch eich ateb…",check:"Gwirio fy fersiwn",clue:"Rhowch gliw i mi",showAnswer:"Dangos yr ateb",step4:"CAM 4 · PARHAU",continueTitle:"Mae’r sgwrs yn parhau.",followPlaceholder:"Atebwch yn yr iaith rydych yn ei dysgu…",nextLesson:"Creu’r wers fer nesaf",footer:"LingoTotal · Dysgu addasol",errWrite:"Ysgrifennwch 2–4 brawddeg yn gyntaf.",errGenerate:"Ni ellid creu’r wers.",errAnswer:"Ysgrifennwch ateb yn gyntaf.",errFollow:"Ysgrifennwch eich ateb dilynol.",model:"Model",fallbackCorrect:"Yn union.",fallbackWrong:"Ceisiwch eto.",fallbackTry:"Ceisiwch unwaith eto.",fallbackHint:"Edrychwch eto ar y model.",defaultTitle:"Eich gwers fer",defaultFocus:"Un gwelliant defnyddiol",prompts:{yesterday:"Dywedwch beth wnaethoch chi ddoe.",weekend:"Dywedwch beth rydych yn ei wneud y penwythnos hwn.",town:"Dywedwch am eich tref.",annoying:"Dywedwch am rywbeth sy’n eich cythruddo."}},
 gd:{...T.en,brand:"LINGOTOTAL · Ionnsaich bhuam",tagline:"Cleachd do chànan fhèin gus do leasan a chruthachadh.",home:"Gnìomhan / atharraich cànanan",heroTitle:"Bidh na faclan agad nan leasan.",heroText:"Sgrìobh rudeigin fìor. Taghaidh LingoTotal aon leasachadh feumail agus cruthaichidh e gnìomh goirid.",step1:"CEUM 1 · INNIS DHOMH RUD",talkTitle:"Dè bu toil leat bruidhinn mu dheidhinn?",talkHelp:"Tagh beachd no sgrìobh sa chànan a tha thu ag ionnsachadh.",promptYesterday:"🕒 Dè rinn thu an-dè?",promptWeekend:"🌤️ Dè tha thu a’ dèanamh an deireadh-sheachdain seo?",promptTown:"🏘️ Inns dhomh mun bhaile agad.",promptAnnoying:"😤 Dè tha a’ cur dragh ort?",writePlaceholder:"Sgrìobh 2–4 seantansan an seo…",build:"Cruthaich mo mhion-leasan",restart:"Tòisich a-rithist",loading:"Tha LingoTotal a’ cruthachadh do leasain…",step2:"CEUM 2 · MOTHACHADH",noticeTitle:"Dè tha thu a’ mothachadh?",step3:"CEUM 3 · FEUCH A-RITHIST",useTitle:"Cleachd am beachd thu fhèin.",answerPlaceholder:"Sgrìobh do fhreagairt…",check:"Thoir sùil air mo dhreach",clue:"Thoir boillsgeadh dhomh",showAnswer:"Seall am freagairt",step4:"CEUM 4 · CÙM ORT",continueTitle:"Tha an còmhradh a’ leantainn.",followPlaceholder:"Freagair sa chànan a tha thu ag ionnsachadh…",nextLesson:"Cruthaich an ath mhion-leasan",footer:"LingoTotal · Ionnsachadh freagarrach",errWrite:"Sgrìobh 2–4 seantansan an toiseach.",errGenerate:"Cha b’ urrainn dhuinn an leasan a chruthachadh.",errAnswer:"Sgrìobh freagairt an toiseach.",errFollow:"Sgrìobh do fhreagairt leantainneach.",model:"Modail",fallbackCorrect:"Ceart fhèin.",fallbackWrong:"Feuch a-rithist.",fallbackTry:"Feuch aon turas eile.",fallbackHint:"Coimhead air a’ mhodail a-rithist.",defaultTitle:"Do mhion-leasan",defaultFocus:"Aon leasachadh feumail",prompts:{yesterday:"Innis dhomh dè rinn thu an-dè.",weekend:"Innis dhomh mun deireadh-sheachdain seo.",town:"Innis dhomh mun bhaile agad.",annoying:"Innis dhomh mu rudeigin a tha a’ cur dragh ort."}}
 });
+const step3Labels={"en":{"continueStep":"Continue to Step 4","checking":"Checking your translation…","suggestedAnswer":"Natural version","feedbackUnavailable":"Detailed feedback is temporarily unavailable. Compare your answer with the model."},"ca":{"continueStep":"Continua al pas 4","checking":"Comprovant la traducció…","suggestedAnswer":"Versió natural","feedbackUnavailable":"Ara mateix no hi ha comentaris detallats. Compara la resposta amb el model."},"es":{"continueStep":"Continuar al paso 4","checking":"Comprobando la traducción…","suggestedAnswer":"Versión natural","feedbackUnavailable":"Los comentarios detallados no están disponibles ahora. Compara tu respuesta con el modelo."},"fr":{"continueStep":"Continuer à l’étape 4","checking":"Vérification de la traduction…","suggestedAnswer":"Version naturelle","feedbackUnavailable":"Le retour détaillé est momentanément indisponible. Comparez votre réponse au modèle."},"de":{"continueStep":"Weiter zu Schritt 4","checking":"Übersetzung wird geprüft…","suggestedAnswer":"Natürliche Formulierung","feedbackUnavailable":"Detailliertes Feedback ist momentan nicht verfügbar. Vergleichen Sie mit dem Modell."},"it":{"continueStep":"Continua al passaggio 4","checking":"Controllo della traduzione…","suggestedAnswer":"Versione naturale","feedbackUnavailable":"Il feedback dettagliato non è disponibile. Confronta la risposta con il modello."},"pt":{"continueStep":"Continuar para o passo 4","checking":"A verificar a tradução…","suggestedAnswer":"Versão natural","feedbackUnavailable":"O feedback detalhado está temporariamente indisponível. Compare com o modelo."},"eu":{"continueStep":"Jarraitu 4. urratsera","checking":"Itzulpena egiaztatzen…","suggestedAnswer":"Bertsio naturala","feedbackUnavailable":"Iruzkin zehatzak ez daude erabilgarri. Alderatu ereduarekin."},"cy":{"continueStep":"Parhau i gam 4","checking":"Yn gwirio eich cyfieithiad…","suggestedAnswer":"Fersiwn naturiol","feedbackUnavailable":"Nid yw adborth manwl ar gael dros dro. Cymharwch â’r model."},"gd":{"continueStep":"Lean air adhart gu ceum 4","checking":"A’ sgrùdadh an eadar-theangachaidh…","suggestedAnswer":"Dreach nàdarra","feedbackUnavailable":"Chan eil fios-air-ais mionaideach ri fhaighinn. Dèan coimeas ris a’ mhodail."},"ja":{"continueStep":"ステップ4へ進む","checking":"翻訳を確認しています…","suggestedAnswer":"自然な表現","feedbackUnavailable":"詳しいフィードバックは一時的に利用できません。模範解答と比較してください。"},"ar":{"continueStep":"المتابعة إلى الخطوة 4","checking":"جارٍ التحقق من الترجمة…","suggestedAnswer":"صياغة طبيعية","feedbackUnavailable":"التعليقات التفصيلية غير متاحة مؤقتًا. قارن إجابتك بالنموذج."}};Object.entries(step3Labels).forEach(([code,copy])=>Object.assign(T[code],copy));
 const LANG_DISPLAY={
   en:{English:"English",Catalan:"Catalan",Spanish:"Spanish",French:"French",German:"German",Italian:"Italian",Portuguese:"Portuguese",Basque:"Basque",Japanese:"Japanese",Arabic:"Arabic"},
   ca:{English:"anglès",Catalan:"català",Spanish:"castellà",French:"francès",German:"alemany",Italian:"italià",Portuguese:"portuguès",Basque:"basc",Japanese:"japonès",Arabic:"àrab"},
@@ -415,9 +417,14 @@ PEDAGOGY:
 - Encourage noticing before explanation.
 - Let the learner try before seeing the answer.
 - Treat partial knowledge positively.
+- Step 3 must be a translation task: create one short, unambiguous sentence in the INTERFACE LANGUAGE for the learner to translate into the TARGET LANGUAGE.
+- Set repair_instruction in the INTERFACE LANGUAGE and explicitly say to translate into ${S.target}.
+- Set translation_prompt ONLY in the INTERFACE LANGUAGE.
+- Set model_answer ONLY in the TARGET LANGUAGE.
+- The translation sentence must practise the single language point highlighted in Step 2.
 - Connect the follow-up question to the learner's original content.
 Return ONLY valid JSON, no Markdown:
-{"title":"","meaning_feedback":"","focus_label":"","focus_explanation":"","tags":["","",""],"notice_question":"","notice_options":[{"text":"","correct":false},{"text":"","correct":true},{"text":"","correct":false}],"correct_feedback":"","incorrect_feedback":"","repair_instruction":"","repair_prompt":"","repair_keywords":[""],"hint":"","model_answer":"","follow_up_question":""}`;
+{"title":"","meaning_feedback":"","focus_label":"","focus_explanation":"","tags":["","",""],"notice_question":"","notice_options":[{"text":"","correct":false},{"text":"","correct":true},{"text":"","correct":false}],"correct_feedback":"","incorrect_feedback":"","repair_instruction":"","translation_prompt":"","hint":"","model_answer":"","follow_up_question":""}`;
   try{lesson=extractJSON(await callGemini(prompt));renderLesson(lesson)}
   catch(e){console.error(e);showError(tr("errGenerate"))}
   finally{setLoading(false)}
@@ -432,10 +439,10 @@ function renderLesson(d){
   const row=document.getElementById("optionRow");row.innerHTML="";
   (d.notice_options||[]).forEach(o=>{const b=document.createElement("button");b.className="option";b.textContent=o.text;b.onclick=()=>chooseNoticeOption(b,!!o.correct);row.appendChild(b)});
   document.getElementById("repairInstruction").textContent=d.repair_instruction||"";
-  document.getElementById("repairPrompt").textContent=d.repair_prompt||"";
+  document.getElementById("repairPrompt").textContent=d.translation_prompt||d.repair_prompt||"";
   document.getElementById("followUpQuestion").innerHTML=`<strong>${esc(d.follow_up_question||"")}</strong>`;
   document.getElementById("lessonCard").classList.remove("hidden");
-  ["repairCard","continueCard","optionFeedback","repairFeedback"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  ["repairCard","continueCard","optionFeedback","repairFeedback","continueStepBtn"].forEach(id=>document.getElementById(id).classList.add("hidden"));
   document.getElementById("repairText").value="";document.getElementById("followUpText").value="";
   document.getElementById("lessonCard").scrollIntoView({behavior:"smooth"});
 }
@@ -445,16 +452,32 @@ function chooseNoticeOption(btn,correct){
   if(correct){box.className="feedback good";box.textContent=lesson.correct_feedback||tr("fallbackCorrect");document.getElementById("repairCard").classList.remove("hidden");setTimeout(()=>document.getElementById("repairCard").scrollIntoView({behavior:"smooth"}),250)}
   else{box.className="feedback notice";box.textContent=lesson.incorrect_feedback||tr("fallbackWrong")}
 }
-function checkRepair(){
-  const answer=document.getElementById("repairText").value.trim();const box=document.getElementById("repairFeedback");
+function revealContinue(){document.getElementById("continueStepBtn").classList.remove("hidden")}
+async function checkRepair(){
+  const answer=document.getElementById("repairText").value.trim(),box=document.getElementById("repairFeedback"),button=document.getElementById("repairCheckBtn");
   if(!answer){box.className="feedback notice";box.textContent=tr("errAnswer");box.classList.remove("hidden");return}
-  const keys=(lesson?.repair_keywords||[]).map(x=>String(x).toLowerCase()).filter(Boolean),low=answer.toLowerCase();
-  const ok=keys.length?keys.every(k=>low.includes(k)):answer.length>5;box.classList.remove("hidden");
-  if(ok){box.className="feedback good";box.textContent=lesson.correct_feedback||tr("fallbackCorrect");document.getElementById("continueCard").classList.remove("hidden");setTimeout(()=>document.getElementById("continueCard").scrollIntoView({behavior:"smooth"}),250)}
-  else{box.className="feedback notice";box.textContent=lesson.incorrect_feedback||tr("fallbackTry")}
+  box.className="feedback notice";box.textContent=tr("checking");box.classList.remove("hidden");button.disabled=true;
+  const source=lesson?.translation_prompt||lesson?.repair_prompt||"",model=lesson?.model_answer||"";
+  const evaluationPrompt=`Evaluate one learner translation.
+INTERFACE LANGUAGE: ${UI_NAMES[S.ui]}
+TARGET LANGUAGE: ${S.target}
+SOURCE SENTENCE IN THE INTERFACE LANGUAGE: """${source}"""
+LEARNER TRANSLATION IN THE TARGET LANGUAGE: """${answer}"""
+REFERENCE ANSWER IN THE TARGET LANGUAGE: """${model}"""
+Judge meaning, grammar and naturalness. Accept valid alternatives; do not require exact wording. The feedback must be 2–3 short, encouraging sentences ONLY in ${UI_NAMES[S.ui]}. Say specifically what works and identify at most one important correction. improved_answer must be a natural sentence ONLY in ${S.target}. Return only JSON: {"correct":true,"feedback":"","improved_answer":""}`;
+  try{
+    const result=extractJSON(await callGemini(evaluationPrompt)),ok=result.correct===true||String(result.correct).toLowerCase()==="true";
+    box.className="feedback "+(ok?"good":"notice");
+    box.innerHTML=`<strong>${esc(result.feedback||tr(ok?"fallbackCorrect":"fallbackTry"))}</strong>${result.improved_answer?`<br><span class="small">${esc(tr("suggestedAnswer"))}: ${esc(result.improved_answer)}</span>`:""}`;
+  }catch(error){
+    console.error("Translation feedback failed:",error);
+    box.className="feedback notice";
+    box.innerHTML=`${esc(tr("feedbackUnavailable"))}<br><strong>${esc(tr("model"))}:</strong> ${esc(model)}`;
+  }finally{button.disabled=false;revealContinue()}
 }
 function showHint(){const b=document.getElementById("repairFeedback");b.className="feedback notice";b.textContent=lesson?.hint||tr("fallbackHint");b.classList.remove("hidden")}
-function showAnswer(){const b=document.getElementById("repairFeedback");b.className="feedback";b.innerHTML=`<strong>${esc(tr("model"))}:</strong> ${esc(lesson?.model_answer||"")}`;b.classList.remove("hidden");document.getElementById("continueCard").classList.remove("hidden")}
+function showAnswer(){const b=document.getElementById("repairFeedback");b.className="feedback";b.innerHTML=`<strong>${esc(tr("model"))}:</strong> ${esc(lesson?.model_answer||"")}`;b.classList.remove("hidden");revealContinue()}
+function goToStep4(){document.getElementById("continueCard").classList.remove("hidden");setTimeout(()=>document.getElementById("continueCard").scrollIntoView({behavior:"smooth",block:"start"}),120)}
 async function buildFollowUp(){
   const text=document.getElementById("followUpText").value.trim();if(!text){showError(tr("errFollow"));return}
   document.getElementById("learnerText").value=text;selectedPrompt=lesson?.follow_up_question||"";
