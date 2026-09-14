@@ -299,7 +299,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
            localStorage.setItem('lingototal_target_language',indexTargetNames[target]);
            const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
            document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=`LingoTotal · ${tr('title')}`;
-           $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;$('#pair').dataset.short=$('#pair').textContent;const homeUrl=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(indexTargetNames[target])}`;$('.index-link').forEach(a=>a.href=homeUrl);
+           $('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;$('#pair').dataset.short=$('#pair').textContent;const homeUrl=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(indexTargetNames[target])}`;$$('.index-link').forEach(a=>a.href=homeUrl);
            $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));
            $$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
     // ---------- STORAGE ----------
