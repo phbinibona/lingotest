@@ -389,9 +389,12 @@ async function callGemini(prompt){
   return d.text||d.response||d.output||d.result||d.candidates?.[0]?.content?.parts?.[0]?.text||"";
 }
 function extractJSON(text){
-  let s=String(text||"").trim().replace(/^```json\s*/i,"").replace(/^```\s*/,"").replace(/```$/,"").trim();
-  const a=s.indexOf("{"),b=s.lastIndexOf("}"); if(a>=0&&b>a)s=s.slice(a,b+1);
-  return JSON.parse(s);
+  let value=String(text||"").trim().replace(/^```json\s*/i,"").replace(/^```\s*/,"").replace(/```$/,"").trim();
+  const first=value.indexOf("{"),last=value.lastIndexOf("}");if(first>=0&&last>first)value=value.slice(first,last+1);
+  try{return JSON.parse(value)}catch(originalError){
+    const cleaned=value.replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/,\s*([}\]])/g,"$1").replace(/^\s*\/\/.*$/gm,"");
+    try{return JSON.parse(cleaned)}catch{throw originalError}
+  }
 }
 async function buildLesson(){
   const learnerText=document.getElementById("learnerText").value.trim();
@@ -425,8 +428,16 @@ PEDAGOGY:
 - Connect the follow-up question to the learner's original content.
 Return ONLY valid JSON, no Markdown:
 {"title":"","meaning_feedback":"","focus_label":"","focus_explanation":"","tags":["","",""],"notice_question":"","notice_options":[{"text":"","correct":false},{"text":"","correct":true},{"text":"","correct":false}],"correct_feedback":"","incorrect_feedback":"","repair_instruction":"","translation_prompt":"","hint":"","model_answer":"","follow_up_question":""}`;
-  try{lesson=extractJSON(await callGemini(prompt));renderLesson(lesson)}
-  catch(e){console.error(e);showError(tr("errGenerate"))}
+  try{
+    const firstResponse=await callGemini(prompt);
+    try{lesson=extractJSON(firstResponse)}
+    catch(formatError){
+      console.warn("Repairing malformed lesson JSON",formatError);
+      const repaired=await callGemini(`Convert the following response into strictly valid JSON matching the requested schema. Preserve its language and meaning. Return JSON only, with double-quoted property names and no trailing commas. RESPONSE: ${firstResponse}`);
+      lesson=extractJSON(repaired);
+    }
+    renderLesson(lesson);
+  }catch(e){console.error(e);showError(tr("errGenerate"))}
   finally{setLoading(false)}
 }
 function renderLesson(d){
