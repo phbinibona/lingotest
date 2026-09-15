@@ -1,4 +1,4 @@
-<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · Idioms</title> <meta name="lingototal-build" content="idioms-master-2026-09-14">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
+<!doctype html> <html lang="en"> <head>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · Idioms</title> <meta name="lingototal-build" content="idioms-conjugation-2026-09-15">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
      *{box-sizing:border-box}
 html{scroll-padding-top:78px}
 body{margin:0;background:linear-gradient(180deg,#e9f3ff 0,#f7f9fc 280px,#f2f5f9 100%);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.5}
@@ -593,7 +593,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
            const normalised=intents.slice(0,3).map(x=>{           if(typeof x==='string')return {label:x,phrases:[]};
            const label=String(x.label||x.text||'');
            const phrases=Array.isArray(x.phrases)?x.phrases:(Array.isArray(x.suggestions)?x.suggestions:[]);
-           return {label,phrases:phrases.slice(0,3).map(p=>({text:String(p.text||p.phrase||''),translation:String(p.translation||p.meaning||''),note:String(p.note||p.usage||''),example:String(p.example||''),practice:String(p.practice||'')}))};
+           return {label,phrases:phrases.slice(0,3).map(p=>({text:String(p.text||p.phrase||''),translation:String(p.translation||p.meaning||''),note:String(p.note||p.usage||''),example:String(p.example||''),practice:String(p.practice||''),answer:String(p.answer||p.inflectedAnswer||p.text||p.phrase||'')}))};
            });
            return {title,context,intentions:normalised};
            });
@@ -636,14 +636,14 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
     }
     $('#checkIdioms').onclick=()=>{
       $$('#idiomBuild input').forEach(input=>{
-        const answer=idiomPractice[Number(input.dataset.idiomAnswer)]?.text||'';
+        const phrase=idiomPractice[Number(input.dataset.idiomAnswer)];const answer=phrase?.answer||phrase?.text||'';
         input.style.borderColor=normal(input.value)===normal(answer)?'var(--green)':'var(--red)';
       });
     };
     $('#showIdiomAnswers').onclick=()=>{
       const box=$('#idiomAnswerKey');
       if(!box.classList.contains('hidden')){box.classList.add('hidden');$('#showIdiomAnswers').textContent=tr('showAnswers');return}
-      box.innerHTML=idiomPractice.map(phrase=>`<div class="answer-key-item">${escapeHtml((phrase.practice||'___').replace('___',phrase.text))}</div>`).join('');
+      box.innerHTML=idiomPractice.map(phrase=>`<div class="answer-key-item">${escapeHtml((phrase.practice||'___').replace('___',phrase.answer||phrase.text))}</div>`).join('');
       box.classList.remove('hidden');$('#showIdiomAnswers').textContent=tr('hideAnswers');
     };
     $('#freeCheck').onclick=async()=>{
@@ -651,19 +651,67 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
       if(choice===''){toast(tr('freeChoose'));return}if(!sentence){toast(tr('freePlaceholder'));return}
       const expression=idiomPractice[Number(choice)].text,button=$('#freeCheck'),status=$('#freeStatus'),feedback=$('#freeFeedback');
       button.disabled=true;status.style.display='block';feedback.style.display='none';
-      const prompt=`Give brief, supportive language-learning feedback. Target language: ${LANGS[target].name}. Interface language: ${LANGS[ui].name}. Required expression: "${expression}". Learner sentence: "${sentence}". Check whether the expression is used appropriately and naturally. Correct only important grammar, vocabulary, word-order, agreement, spelling or punctuation problems. Write analysis and tip in ${LANGS[ui].name}; keep the suggested full sentence in ${LANGS[target].name}. Return ONLY valid JSON: {"analysis":"1-3 short sentences","corrected":"full sentence","tip":"one short practical tip"}`;
+      const prompt=`Give brief, supportive language-learning feedback. Target language: ${LANGS[target].name}. Interface language: ${LANGS[ui].name}. Required expression: "${expression}". Learner sentence: "${sentence}". Check whether the expression is used appropriately and naturally. Conjugate every verb and verbal locution to match the sentence subject, person, number, tense, aspect and mood; preserve required reflexive pronouns and clitics, and apply gender and number agreement wherever the target language requires it. Never leave a verb in the infinitive unless that exact syntactic construction grammatically requires an infinitive. Correct important grammar, vocabulary, word-order, agreement, spelling or punctuation problems. Write analysis and tip in ${LANGS[ui].name}; keep the suggested full sentence in ${LANGS[target].name}. Return ONLY valid JSON: {"analysis":"1-3 short sentences","corrected":"full sentence","tip":"one short practical tip"}`;
       try{const result=parseJson(await callAI(prompt));feedback.innerHTML=`<p><strong>${escapeHtml(tr('feedbackLabel'))}:</strong> ${escapeHtml(result.analysis||'')}</p><p><strong>${escapeHtml(tr('suggestedLabel'))}:</strong> ${escapeHtml(result.corrected||sentence)}</p><p><strong>${escapeHtml(tr('tipLabel'))}:</strong> ${escapeHtml(result.tip||'')}</p>`;feedback.style.display='block'}
       catch(error){console.error(error);toast(tr('error'))}
       finally{button.disabled=false;status.style.display='none'}
     };
     // ---------- PROMPT ----------
-    function buildPrompt(theme){       return `Create a concise idiomatic-language activity. Interface language: ${LANGS[ui].name}. Target language: ${LANGS[target].name}. Topic or situation: ${theme}. Create exactly 3 varied everyday communication situations closely related to the topic. Use current, natural, frequent idiomatic expressions that native speakers genuinely use; avoid obscure proverbs, dated language, forced literal translations and niche slang. For each situation provide a short title and context in the interface language, followed by exactly 2 communication intentions in the interface language. For each intention provide exactly 2 useful idiomatic phrases in the target language. Every phrase object must contain: text in the target language; translation and a brief usage note in the interface language; example as a natural complete sentence in the target language; and practice as a different natural target-language sentence with the whole idiom replaced by exactly ___. Return only valid JSON with this structure: {"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":"","example":"","practice":"___"},{"text":"","translation":"","note":"","example":"","practice":"___"}]},{"label":"","phrases":[{"text":"","translation":"","note":"","example":"","practice":"___"},{"text":"","translation":"","note":"","example":"","practice":"___"}]}]}]}`;
-           }
+    function buildPrompt(theme){
+      return `Create a concise idiomatic-language activity.
+Interface language: ${LANGS[ui].name}.
+Target language: ${LANGS[target].name}.
+Topic or situation: ${theme}.
+
+Create exactly 3 varied everyday communication situations closely related to the topic. Use current, natural, frequent idiomatic expressions and verbal locutions that native speakers genuinely use; avoid obscure proverbs, dated language, forced literal translations and niche slang.
+
+STRICT GRAMMAR RULES FOR EVERY TARGET-LANGUAGE FIELD:
+1. Every verb, idiom and verbal locution must be fully conjugated or inflected for its sentence: match the subject's person and number and the required tense, aspect and mood.
+2. Apply gender and number agreement to participles, adjectives and other components whenever ${LANGS[target].name} grammar requires it.
+3. Preserve all required reflexive pronouns, particles, auxiliaries, prepositions and clitics in their natural positions.
+4. Never output a dictionary/headword infinitive or bare infinitive as a phrase or exercise answer unless the surrounding syntax grammatically requires that infinitive (for example after a modal, auxiliary, preposition or infinitive-governing construction).
+5. Re-read each completed sentence with the proposed form inserted. If it is not a grammatical, natural sentence, correct it before returning the JSON.
+
+For each situation provide a short title and context in the interface language, followed by exactly 2 communication intentions in the interface language. For each intention provide exactly 2 useful idiomatic phrases in the target language. Every phrase object must contain:
+- text: a natural, ready-to-use target-language phrase with its verbal expression already conjugated in a concrete context, not a dictionary infinitive;
+- translation and a brief usage note in the interface language;
+- example: a natural complete sentence in the target language;
+- practice: a different natural target-language sentence with the entire inflected idiom replaced by exactly ___;
+- answer: the exact fully conjugated/inflected target-language words that replace ___ in practice. The answer may differ from text because the practice sentence can use a different subject, tense, person, number or gender.
+
+Return only valid JSON with this structure:
+{"situations":[{"title":"","context":"","intentions":[{"label":"","phrases":[{"text":"","translation":"","note":"","example":"","practice":"___","answer":""},{"text":"","translation":"","note":"","example":"","practice":"___","answer":""}]},{"label":"","phrases":[{"text":"","translation":"","note":"","example":"","practice":"___","answer":""},{"text":"","translation":"","note":"","example":"","practice":"___","answer":""}]}]}]}`;
+    }
+    function buildGrammarReviewPrompt(activity){
+      return `You are the final grammar editor for a language-learning activity.
+Target language: ${LANGS[target].name}.
+Interface language: ${LANGS[ui].name}.
+
+Review the JSON below and return the same JSON structure, with exactly the same number and order of situations, intentions and phrases. Do not add commentary.
+
+For every target-language value in text, example and answer:
+- fully conjugate every verb, idiom and verbal locution to agree with its subject in person and number and with the sentence in tense, aspect and mood;
+- enforce gender and number agreement wherever ${LANGS[target].name} requires it;
+- preserve required auxiliaries, particles, prepositions, reflexive pronouns and clitics;
+- never leave a verb in a dictionary/headword infinitive or bare infinitive unless the surrounding syntax specifically requires an infinitive.
+
+For every practice/answer pair, mentally replace the single ___ in practice with answer. The resulting sentence must be natural and grammatically complete. Rewrite answer—and practice only when necessary—until it is. Keep title, context, label, translation and note in ${LANGS[ui].name}; keep text, example, practice and answer in ${LANGS[target].name}. Return ONLY valid JSON.
+
+JSON to review:
+${JSON.stringify(activity)}`;
+    }
     // ---------- GENERATE ----------
     async function generate(){       const theme=$('#theme').value.trim();
            if(!theme){toast(tr('enterContext'));$('#theme').focus();return}       const button=$('#generateBtn'),status=$('#status'),errorBox=$('#generationError');button.disabled=true;button.setAttribute('aria-busy','true');status.classList.remove('hidden');errorBox.classList.add('hidden');errorBox.textContent='';$('#activity').classList.add('hidden');
            try{         const raw=await callAI(buildPrompt(theme));
-           situations=validate(parseJson(raw));
+           const generated=validate(parseJson(raw));
+           try{
+             const reviewedRaw=await callAI(buildGrammarReviewPrompt({situations:generated}));
+             situations=validate(parseJson(reviewedRaw));
+           }catch(reviewError){
+             console.warn('Grammar review failed; using validated generation:',reviewError);
+             situations=generated;
+           }
            index=0;renderActivity();renderOriginalSections();
            $('#activity').classList.remove('hidden');
            $('#activity').scrollIntoView({behavior:'smooth',block:'start'});
