@@ -223,13 +223,22 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 .collection-toggle{padding:10px 12px 0;margin:0;background:#171717}
 .nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}
 }
-   </style> </head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo' href='index.html'>
+   
+.hero:after{content:none!important;display:none!important}
+.hero h1,.hero p{max-width:60%;z-index:2}
+.hero-journey{position:absolute;right:24px;top:50%;z-index:1;width:min(330px,36%);height:auto;transform:translateY(-50%);filter:drop-shadow(0 8px 18px rgba(0,0,0,.24))}
+@media(max-width:650px){
+.hero{display:flex;flex-direction:column;justify-content:center}
+.hero h1,.hero p{max-width:100%}
+.hero-journey{position:relative;right:auto;top:auto;order:-1;width:min(360px,88%);margin:0 auto 20px;transform:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.2))}
+}
+</style> </head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo' href='index.html'>
 <span class="logo-mark">LT</span>
 <span class="logo-word">LingoTotal</span>
 </a>     <div class="activity-name" data-t="activity">LingoGo First Job</div>     <div class="right-tools">
 <span class="pair" id="pair">EN → ES</span>
 <a aria-label='Home' class='home' href='index.html'>⌂</a>
-</div>   </header>    <main>     <section class="card hero">       <h1 data-t="title">LingoGo First Job</h1>       <p data-t="subtitle">Practise the language you need to find, apply for and start your first job with confidence.</p>       </section>      <div class="collection-toggle">
+</div>   </header>    <main>     <section class="card hero">       <img class="hero-journey" src="lingototal-horizontal-logo-transparent.png" alt="LingoTotal — a journey of discovery">       <h1 data-t="title">LingoGo First Job</h1>       <p data-t="subtitle">Practise the language you need to find, apply for and start your first job with confidence.</p>       </section>      <div class="collection-toggle">
 <button class="secondary" id="collectionBtn" type="button">★ <span data-t="saved">Saved phrases</span> (<span id="savedCount">0</span>)</button>
 </div>     <section class="card" id="setup">
 <div class="section-head">
