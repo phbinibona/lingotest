@@ -2594,79 +2594,6 @@
         }
       }
     </style>
-    <style id="lingototal-horizontal-identity">
-      /* New hero identity. The rest of the index and all existing behaviour stay unchanged. */
-      .hero {
-        padding: 28px 42px 18px !important;
-        background:
-          radial-gradient(circle at 50% 35%, rgba(23, 72, 145, 0.22), transparent 48%),
-          #06172f !important;
-        border-bottom-color: #18375d !important;
-      }
-      .hero::after {
-        display: none !important;
-      }
-      .hero .brand-row {
-        display: none !important;
-      }
-      .hero-main {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 10px !important;
-        margin-top: 0 !important;
-      }
-      .hero-copy-block {
-        width: 100% !important;
-        max-width: none !important;
-      }
-      .hero-title {
-        color: #ffffff !important;
-        font-size: clamp(1.35rem, 2.7vw, 2.35rem) !important;
-        line-height: 1.08 !important;
-        letter-spacing: -0.035em !important;
-        text-align: center !important;
-      }
-      .language-panel {
-        width: min(820px, 100%) !important;
-        max-width: none !important;
-        margin: 20px auto 0 !important;
-      }
-      .hero-logo-image {
-        display: block;
-        width: min(1080px, 100%);
-        height: auto;
-        margin: -28px auto -34px;
-      }
-      @media (max-width: 760px) {
-        .hero {
-          padding: 22px 18px 14px !important;
-        }
-        .hero-title {
-          font-size: 1.42rem !important;
-        }
-        .hero-logo-image {
-          width: 100%;
-          margin: -8px auto -14px;
-        }
-      }
-      @media (max-width: 460px) {
-        .hero {
-          padding-inline: 13px !important;
-        }
-        .hero-title {
-          font-size: 1.18rem !important;
-        }
-        .language-panel {
-          margin-top: 14px !important;
-        }
-        .hero-logo-image {
-          width: 118%;
-          max-width: none;
-          margin: 0 -9% -4px;
-        }
-      }
-    </style>
   </head>
   <body id="top">
     <header class="banner index-banner" aria-label="LingoTotal navigation">
@@ -2749,11 +2676,9 @@
               </div>
             </div>
           </div>
-          <img
-            class="hero-logo-image"
-            src="lingototal-horizontal-logo.png"
-            alt="LingoTotal — a journey of discovery"
-          />
+          <div aria-label="LINGO TOTAL" class="hero-logo">
+            <span>LINGO</span> <span>TOTAL</span>
+          </div>
         </div>
       </section>
       <section class="section" id="personal">
