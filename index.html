@@ -2628,9 +2628,9 @@
         text-align: center !important;
       }
       .language-panel {
-        width: 100% !important;
+        width: calc(100% - 28px) !important;
         max-width: none !important;
-        margin: 20px 0 0 !important;
+        margin: 20px 0 0 28px !important;
       }
       .hero-logo-image {
         display: block;
@@ -2649,6 +2649,10 @@
         }
         .hero-title {
           font-size: 1.42rem !important;
+        }
+        .language-panel {
+          width: 100% !important;
+          margin: 20px 0 0 !important;
         }
         .hero-logo-image {
           width: min(430px, 82%);
