@@ -131,7 +131,7 @@ main{width:100%;margin:0}
 }
      @media(max-width:360px){.practice-type-grid{grid-template-columns:1fr}
 }
-   
+
 .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.match-list{display:grid;gap:9px}.match-column h3,.complete-section h3,.correct-phrases h3{margin:0 0 10px}.match-item{width:100%;min-height:58px;padding:13px 14px;border:2px solid #454545;border-radius:12px;background:#1b1b1b;color:#f7f7f5;text-align:left;cursor:pointer}.match-item:hover,.match-item.selected{border-color:#6699ec;background:#202f45;color:#fff}.match-item.matched{border-color:#47765f;background:#233a30;color:#a5e4c3}.match-item:disabled{opacity:1;color:#a5e4c3}.match-message{margin-top:14px;padding:11px 13px;border-radius:10px;font-weight:800}.match-message.bad{background:#fdecee;color:#a5303c}.match-message.good{background:#eaf8f0;color:#12643e}.correct-phrases{margin-top:22px}.correct-phrases .phrase-card{margin-top:10px}.complete-section{margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}.gap-card{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--soft);margin:10px 0}.gap-prompt{font-weight:800;margin-bottom:10px}.gap-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.match-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.match-actions .primary{width:auto}@media(max-width:700px){.match-grid,.gap-inputs{grid-template-columns:1fr}.logo-word{display:none}}
 </style>   <style id="lingototal-newlook-style">     :root{--blue:#3277e8;--blue-dark:#1f5fc7;--blue-soft:#202f45;--ink:#f7f7f5;--muted:#b8bdc5;--paper:#202020;--soft:#292929;--line:#383838;--green:#3eae78;--red:#e25c68;--shadow:0 16px 40px rgba(0,0,0,.22)}
      html{background:#171717;scroll-padding-top:72px;font-size:15px}
@@ -226,6 +226,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 .nav-row{background:rgba(32,32,32,.97);padding:10px 0 0}
 }
    </style>   <link rel="stylesheet" href="lingototal-shared-polish.css">
+<script src="lingototal-audio.js"></script>
 </head><body><header class="topbar"><a class="logo index-link" href="index.html" aria-label="LingoTotal home"><span class="logo-mark">LT</span><span class="logo-word">LingoTotal</span></a><div class="activity-name" data-t="activity">Matching</div><div class="right-tools"><span class="pair" id="pair">EN → ES</span><a class="home index-link" href="index.html" aria-label="Home">⌂</a></div></header><main>
 <section class="card hero">
 <img class="hero-journey" src="lingototal-horizontal-logo-transparent.png" alt="LingoTotal — a journey of discovery"><h1 data-t="title">Match and complete sentences</h1><p data-t="subtitle">Match sentence beginnings and endings, complete key words, and save useful phrases.</p></section>
@@ -323,6 +324,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
     function stopSpeech(){
       if(activeRequest){activeRequest.abort();activeRequest=null;}
       if(activeAudio){activeAudio.pause();activeAudio.currentTime=0;activeAudio=null;}
+      if(window.LingoAudio)LingoAudio.stop();
       if('speechSynthesis' in window)speechSynthesis.cancel();
       activeUtterance=null;
     }
@@ -408,21 +410,12 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
       const button=document.activeElement instanceof HTMLButtonElement?document.activeElement:null;
       if(button){button.disabled=true;button.setAttribute('aria-busy','true');}
       try{
-        if(Date.now()>=apiRetryAfter){
-          try{
-            await apiSpeech(clean,LANGS[target].locale,run);
-            apiRetryAfter=0;
-          }catch(apiError){
-            if(run!==playbackNumber)return;
-            apiRetryAfter=Date.now()+60000;
-            console.warn('Google TTS unavailable; using the browser voice.',apiError);
-            await browserSpeech(clean,LANGS[target].locale,run);
-          }
-        }else{
-          await browserSpeech(clean,LANGS[target].locale,run);
-        }
+        await LingoAudio.play(clean,LANGS[target].locale,.92);
       }catch(error){
-        if(run===playbackNumber){console.error(error);toast('Audio is unavailable on this device.');}
+        if(run!==playbackNumber)return;
+        console.warn('Shared audio failed; using the browser voice.',error);
+        try{await browserSpeech(clean,LANGS[target].locale,run);}
+        catch(fallbackError){console.error(fallbackError);toast('Audio is unavailable on this device.');}
       }finally{
         if(button){button.disabled=false;button.removeAttribute('aria-busy');}
       }
