@@ -1258,7 +1258,7 @@ let uiLanguage=
   ||localStorage.getItem('lingototal_ui_language')
   ||'en';
 let targetLanguage=
-ormalizeTarget(
+  normalizeTarget(
     params.get('target')
     ||localStorage.getItem('lingototal_target_language')
     ||'English'
@@ -1425,7 +1425,7 @@ function stopAudio(){
 }
 function fallbackSpeak(text,language,speakingRate){
   if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
-otice(tr('noSpeech'),'error');
+    notice(tr('noSpeech'),'error');
     return;
   }
   const u=new SpeechSynthesisUtterance(text);
@@ -1449,11 +1449,11 @@ async function speak(text){
   const language=voices[canonicalTarget];
   const speakingRate=.92;
   if(!language){
-otice(tr('noSpeech'),'error');
+    notice(tr('noSpeech'),'error');
     return;
   }
   const cacheKey=`${language}|${speakingRate}|${text}`;
-otice(tr('playing'),'info');
+  notice(tr('playing'),'info');
   try{
     let src=audioCache.get(cacheKey);
     if(!src){
@@ -1587,7 +1587,7 @@ function checkAnswers(){
     let sentenceCorrect=true;
     inputs.forEach(input=>{
       const ok=
-ormalise(input.value)
+        normalise(input.value)
         ===normalise(input.dataset.answer);
       input.classList.toggle('correct',ok);
       input.classList.toggle('wrong',!ok);
@@ -1618,7 +1618,7 @@ ormalise(input.value)
     :tr('scoreSome');
   $('scorePanel').style.display='block';
   if(correctWords===6){
-otice(tr('scorePerfect'),'success');
+    notice(tr('scorePerfect'),'success');
   }
 }
 function retry(){
@@ -1637,11 +1637,11 @@ function retry(){
 async function generate(){
   const theme=$('themeInput').value.trim();
   if(!selectedLevel){
-otice(tr('selectLevel'),'error');
+    notice(tr('selectLevel'),'error');
     return;
   }
   if(!theme){
-otice(tr('enterTopic'),'error');
+    notice(tr('enterTopic'),'error');
     $('themeInput').focus();
     return;
   }
@@ -1655,7 +1655,7 @@ otice(tr('enterTopic'),'error');
   }catch(err){
     console.error(err);
     $('exerciseIntro').textContent=tr('serverError');
-otice(tr('serverError'),'error');
+    notice(tr('serverError'),'error');
   }finally{
     setLoading(false);
   }
@@ -1669,7 +1669,7 @@ document.querySelectorAll('.level').forEach(btn=>{
     document.querySelectorAll('.level').forEach(b=>b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedLevel=btn.dataset.level;
-otice(`${tr('levelSelected')}: ${btn.textContent}`,'info');
+    notice(`${tr('levelSelected')}: ${btn.textContent}`,'info');
   });
 });
 document.querySelectorAll('.example').forEach(btn=>{
