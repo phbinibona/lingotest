@@ -43,9 +43,21 @@
   letter-spacing: -0.035em !important;
 }
 
-.hero > .hero-journey + h1,
-.hero > .hero-journey ~ p,
-.hero > .hero-journey ~ .safety {
+.hero:has(> .hero-journey) {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.hero:has(> .hero-journey)::before,
+.hero:has(> .hero-journey)::after,
+.hero:has(> .hero-journey) .hero-icon {
+  content: none !important;
+  display: none !important;
+}
+
+.hero:has(> .hero-journey) h1,
+.hero:has(> .hero-journey) p,
+.hero:has(> .hero-journey) .safety {
   max-width: 58% !important;
   position: relative;
   z-index: 2;
@@ -71,13 +83,19 @@
 }
 
 @media (max-width: 650px) {
-  .hero > .hero-journey + h1,
-  .hero > .hero-journey ~ p,
-  .hero > .hero-journey ~ .safety {
+  .hero:has(> .hero-journey) {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .hero:has(> .hero-journey) h1,
+  .hero:has(> .hero-journey) p,
+  .hero:has(> .hero-journey) .safety {
     max-width: 100% !important;
   }
 
-  .hero > .hero-journey + h1 {
+  .hero:has(> .hero-journey) h1 {
     width: 100%;
     margin: 0 auto 15px !important;
     text-align: center !important;
