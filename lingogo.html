@@ -135,19 +135,19 @@ main{width:100%;margin:0}
      html{background:#171717;scroll-padding-top:72px;font-size:15px}
 body{background:#171717;color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.48}
      .topbar{min-height:72px;padding:10px clamp(14px,4vw,56px);gap:18px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)),radial-gradient(circle at 72% 40%,rgba(126,175,255,.55),transparent 27%),linear-gradient(120deg,#24344c,#15191f 62%);border-bottom:1px solid #343b45;box-shadow:0 5px 20px rgba(0,0,0,.28)}
-     .logo{gap:9px}
+     .logo{gap:16px}
 .logo-mark{width:40px;height:40px;border-radius:0;background:#3277e8;color:#fff;box-shadow:none;font-size:.82rem;font-weight:900}
 .logo-word{font-size:.9rem;font-weight:900;letter-spacing:.16em}
 .activity-name{font-family:Georgia,'Times New Roman',serif;font-size:1.05rem;letter-spacing:.015em}
      .right-tools{gap:8px}
 .pair{padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:0;background:rgba(0,0,0,.25);font-size:.68rem;white-space:nowrap}
-.home{width:36px;height:36px;border:1px solid rgba(255,255,255,.3);border-radius:0;background:#f4f4f2;color:#182033;font-size:1rem}
-.home:hover{background:#dfeaff;color:#153f82}
+.home{width:36px;height:36px;border:1px solid rgba(255,255,255,.78);border-radius:0;background:transparent;color:#fff;font-size:1rem}
+.home:hover{background:rgba(255,255,255,.1);color:#fff;border-color:#fff}
      main{width:min(900px,calc(100% - 28px));margin:18px auto 44px}
      .card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:0;box-shadow:0 10px 28px rgba(0,0,0,.16);padding:64px clamp(17px,3vw,27px) 24px;margin-bottom:12px;background:linear-gradient(135deg,rgba(50,119,232,.22),rgba(255,255,255,.03)) 0 0/100% 42px no-repeat,radial-gradient(circle at 72% 20px,rgba(126,175,255,.55),transparent 27%) 0 0/100% 42px no-repeat,linear-gradient(120deg,#24344c,#15191f 62%) 0 0/100% 42px no-repeat,#202020}
      .hero{min-height:265px;padding:54px clamp(24px,5vw,48px);display:flex;flex-direction:column;justify-content:center;border:0;border-left:5px solid var(--blue);background:linear-gradient(90deg,rgba(16,16,16,.97),rgba(16,16,16,.72)),radial-gradient(circle at 78% 35%,#315f9c 0,transparent 34%),linear-gradient(135deg,#121212 0%,#18253a 57%,#0d0d0d 100%)}
      .hero:after{right:32px;top:-45px;color:rgba(112,163,244,.17);font-size:13rem}
-     h1{color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.35rem,5.2vw,4.2rem);font-weight:700;line-height:.96;letter-spacing:-.045em;margin:0 0 15px}
+     h1{color:#fff;font-family:Inter,Arial,sans-serif;font-size:clamp(2rem,3.3vw,3rem);font-weight:800;line-height:1.02;letter-spacing:-.035em;margin:0 0 15px}
      .hero p{max-width:690px;color:#d3d7dd;font-size:.92rem;line-height:1.55}
 .safety{color:#9ebbe5;font-size:.72rem;letter-spacing:.02em}
      .collection-toggle{margin:0 0 10px}
@@ -209,6 +209,7 @@ input:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
 .feedback.bad{color:#ffb8c0}
      @media(max-width:650px){html{scroll-padding-top:58px}
 .topbar{min-height:58px;padding:8px 11px;gap:7px}
+.logo{gap:14px}
 .logo-mark{width:34px;height:34px}
 .logo-word{display:none}
 .activity-name{font-size:.9rem}
@@ -217,7 +218,7 @@ input:focus{border-color:#6699ec;box-shadow:0 0 0 3px rgba(50,119,232,.16)}
 main{width:100%;margin:0}
 .card{border-left:0;border-right:0;margin:0;padding:58px 16px 18px}
 .hero{min-height:218px;padding:34px 20px;border-left:0;border-bottom:4px solid var(--blue)}
-h1{font-size:clamp(2.15rem,11vw,3.35rem)}
+h1{font-size:clamp(1.85rem,8.5vw,2.65rem);line-height:1.04}
 .hero:after{font-size:9rem;right:10px}
 .generator{padding:13px 16px}
 .collection-toggle{padding:10px 12px 0;margin:0;background:#171717}
@@ -231,9 +232,9 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 .chosen-responses .phrase-card{margin-top:10px}
 
 .hero:after{content:none!important;display:none!important}
-.hero h1,.hero p,.hero .safety{max-width:60%;z-index:2}
+.hero h1,.hero p,.hero .safety{max-width:58%;z-index:2}
 .hero-journey{position:absolute;right:24px;top:50%;z-index:1;width:min(330px,36%);height:auto;transform:translateY(-50%);filter:drop-shadow(0 8px 18px rgba(0,0,0,.24))}
-(max-width:650px){
+@media(max-width:650px){
 .hero{display:flex;flex-direction:column;justify-content:center}
 .hero h1,.hero p,.hero .safety{max-width:100%}
 .hero-journey{position:relative;right:auto;top:auto;order:-1;width:min(360px,88%);margin:0 auto 20px;transform:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.2))}
