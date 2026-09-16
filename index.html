@@ -2641,6 +2641,9 @@
         margin: 0 0 0 auto;
         justify-self: end;
       }
+      .hero-logo-image-mobile {
+        display: none;
+      }
       @media (max-width: 760px) {
         .hero {
           padding: 22px 18px 14px !important;
@@ -2652,14 +2655,18 @@
         .hero-title {
           font-size: 1.42rem !important;
         }
+        .hero-logo-image {
+          display: none;
+        }
+        .hero-logo-image-mobile {
+          display: block;
+          width: min(430px, 82%);
+          height: auto;
+          margin: 14px auto 0;
+        }
         .language-panel {
           width: 100% !important;
-          margin: 20px 0 0 !important;
-        }
-        .hero-logo-image {
-          width: min(430px, 82%);
-          margin: 0 auto;
-          justify-self: center;
+          margin: 14px 0 0 !important;
         }
       }
       @media (max-width: 460px) {
@@ -2669,14 +2676,10 @@
         .hero-title {
           font-size: 1.18rem !important;
         }
-        .language-panel {
-          margin-top: 14px !important;
-        }
-        .hero-logo-image {
+        .hero-logo-image-mobile {
           width: 88%;
           max-width: 360px;
-          margin: 0 auto;
-          justify-self: center;
+          margin: 12px auto 0;
         }
       }
     </style>
@@ -2720,6 +2723,11 @@
             <h1 class="hero-title" data-i18n="title" data-nav-i18n="title">
               PERSONALISED LANGUAGE LEARNING
             </h1>
+            <img
+              class="hero-logo-image-mobile"
+              src="lingototal-horizontal-logo-transparent.png"
+              alt="LingoTotal — a journey of discovery"
+            />
             <div class="language-panel">
               <p class="language-title" data-i18n="languageChoice">
                 Choose your languages
