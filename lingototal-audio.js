@@ -192,24 +192,79 @@
     return src;
   }
 
-  function playAudioSource(src, token){
+  function waitForAudioReady(audio, timeoutMs=12000){
     return new Promise((resolve,reject)=>{
-      if(token !== runId) return resolve(false);
-
-      const audio = new Audio(src);
-      currentAudio = audio;
-
-      audio.onended = ()=>{
-        if(currentAudio === audio) currentAudio = null;
-        resolve(token === runId);
+      let settled = false;
+      const finish = (error)=>{
+        if(settled) return;
+        settled = true;
+        clearTimeout(timer);
+        audio.removeEventListener('loadedmetadata',ready);
+        audio.removeEventListener('loadeddata',ready);
+        audio.removeEventListener('canplaythrough',ready);
+        audio.removeEventListener('error',failed);
+        if(error) reject(error); else resolve();
       };
-      audio.onerror = ()=>{
-        if(currentAudio === audio) currentAudio = null;
-        reject(new Error('Audio playback error'));
+      const ready = ()=>{
+        if(audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) finish();
       };
+      const failed = ()=>finish(new Error('Audio could not be decoded'));
+      const timer = setTimeout(()=>{
+        if(audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) finish();
+        else finish(new Error('Audio loading timed out'));
+      },timeoutMs);
 
-      audio.play().catch(reject);
+      audio.addEventListener('loadedmetadata',ready);
+      audio.addEventListener('loadeddata',ready);
+      audio.addEventListener('canplaythrough',ready);
+      audio.addEventListener('error',failed);
+      audio.load();
+      ready();
     });
+  }
+
+  async function playAudioSource(src, token){
+    if(token !== runId) return false;
+
+    // A cold browser sometimes begins a newly-created Blob URL near its end.
+    // Waiting for decoding and retrying an implausibly short first play prevents
+    // the familiar "only the last words" symptom.
+    for(let attempt=0;attempt<2;attempt++){
+      if(token !== runId) return false;
+
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = src;
+      currentAudio = audio;
+      await waitForAudioReady(audio);
+      if(token !== runId) return false;
+
+      try{ audio.currentTime = 0; }catch(e){}
+      await new Promise(resolve=>setTimeout(resolve,80));
+      if(token !== runId) return false;
+
+      const startedAt = performance.now();
+      const result = await new Promise((resolve,reject)=>{
+        audio.onended = ()=>resolve({ended:true});
+        audio.onerror = ()=>reject(new Error('Audio playback error'));
+        audio.play().catch(reject);
+      });
+
+      if(currentAudio === audio) currentAudio = null;
+      if(!result.ended || token !== runId) return false;
+
+      const elapsed = (performance.now()-startedAt)/1000;
+      const duration = Number(audio.duration);
+      const endedTooSoon =
+        attempt===0 &&
+        Number.isFinite(duration) &&
+        duration>2.5 &&
+        elapsed<duration*.65;
+
+      if(!endedTooSoon) return true;
+      try{ audio.pause(); audio.currentTime=0; }catch(e){}
+    }
+    return token===runId;
   }
 
   async function play(text, language='en-GB', speakingRate=.92, options={}){
