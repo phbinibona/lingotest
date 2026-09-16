@@ -1091,6 +1091,7 @@ html{background:#171717!important;scroll-padding-top:72px}body{font-family:'Inte
 @media(max-width:360px){.brand-wrap{gap:0!important}.brand-wrap>div{display:none!important}}
 </style>
   <link rel="stylesheet" href="lingototal-shared-polish.css">
+<script src="lingototal-audio.js"></script>
 </head>
 <body>
 <header class="banner">
@@ -2370,6 +2371,7 @@ function sentenceMatches(){
 }
 function stopAudio(){
   audioRequestId++;
+  if(window.LingoAudio)LingoAudio.stop();
   if(currentAudio){
     try{
       currentAudio.pause();
@@ -2402,7 +2404,6 @@ async function playTargetAudio(text){
   text=String(text||'').trim();
   if(!text)return;
   stopAudio();
-  const requestId=audioRequestId;
   const language=voiceLocales[targetLanguage];
   const speakingRate=
     selectedLevel==='beginner' ? .88 :
@@ -2413,46 +2414,11 @@ async function playTargetAudio(text){
     notice(tr('noSpeech'),'error');
     return;
   }
-  const cacheKey=`${language}|${speakingRate}|${text}`;
   notice(tr('playing'),'info');
   try{
-    let src=audioCache.get(cacheKey);
-    if(!src){
-      const response=await fetch('/.netlify/functions/google-tts',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          text,
-          language,
-          speakingRate
-        })
-      });
-      if(!response.ok){
-        let message='Audio could not be generated.';
-        try{
-          const data=await response.json();
-          if(data?.error)message=data.error;
-        }catch(e){}
-        throw new Error(message);
-      }
-      const blob=await response.blob();
-      src=URL.createObjectURL(blob);
-      audioCache.set(cacheKey,src);
-    }
-    // A newer playback request may have been made while this audio was loading.
-    if(requestId!==audioRequestId)return;
-    currentAudio=new Audio(src);
-    currentAudio.preload='auto';
-    currentAudio.onended=()=>{
-      if(requestId===audioRequestId)currentAudio=null;
-    };
-    currentAudio.onerror=()=>{
-      if(requestId===audioRequestId)currentAudio=null;
-    };
-    await currentAudio.play();
+    await LingoAudio.play(text,language,speakingRate);
   }catch(err){
     console.error('Google TTS error:',err);
-    if(requestId!==audioRequestId)return;
     // Only use the device voice if cloud audio genuinely fails.
     fallbackSpeak(text,language,speakingRate);
   }
