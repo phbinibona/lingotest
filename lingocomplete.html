@@ -734,6 +734,7 @@ input[type=text]:focus,textarea:focus{outline:0!important;border-color:var(--pri
 @media(max-width:360px){.brand-wrap{gap:0!important}.brand-wrap>div{display:none!important}}
 </style>
   <link rel="stylesheet" href="lingototal-shared-polish.css">
+<script src="lingototal-audio.js"></script>
 </head>
 <body>
 <header class="banner lt-master-header"><div class="brand-wrap"><a class="brand-mark index-link" href="index.html" aria-label="LingoTotal home" title="LingoTotal home">LT</a><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline">Learn any language your way</div></div></div><div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link index-link" href="index.html" id="homeLink" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.5 11h2.3v9.2h5.1v-5.8h4.2v5.8h5.1V11h2.3L12 3.2Z"/></svg></a></div></header>
@@ -1412,6 +1413,7 @@ const audioCache=new Map();
 let audioRequestId=0;
 function stopAudio(){
   audioRequestId++;
+  if(window.LingoAudio)LingoAudio.stop();
   if(currentAudio){
     try{
       currentAudio.pause();
@@ -1444,7 +1446,6 @@ async function speak(text){
   text=String(text||'').trim();
   if(!text)return;
   stopAudio();
-  const requestId=audioRequestId;
   const canonicalTarget=normalizeTarget(targetLanguage);
   const language=voices[canonicalTarget];
   const speakingRate=.92;
@@ -1452,40 +1453,11 @@ async function speak(text){
     notice(tr('noSpeech'),'error');
     return;
   }
-  const cacheKey=`${language}|${speakingRate}|${text}`;
   notice(tr('playing'),'info');
   try{
-    let src=audioCache.get(cacheKey);
-    if(!src){
-      const response=await fetch('/.netlify/functions/google-tts',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          text,
-          language,
-          speakingRate
-        })
-      });
-      if(!response.ok){
-        let message='Audio could not be generated.';
-        try{
-          const data=await response.json();
-          if(data?.error)message=data.error;
-        }catch(e){}
-        throw new Error(message);
-      }
-      const blob=await response.blob();
-      src=URL.createObjectURL(blob);
-      audioCache.set(cacheKey,src);
-    }
-    if(requestId!==audioRequestId)return;
-    currentAudio=new Audio(src);
-    currentAudio.onended=()=>{currentAudio=null};
-    currentAudio.onerror=()=>{currentAudio=null};
-    await currentAudio.play();
+    await LingoAudio.play(text,language,speakingRate);
   }catch(err){
     console.error('Google TTS error:',err);
-    if(requestId!==audioRequestId)return;
     fallbackSpeak(text,language,speakingRate);
   }
 }
