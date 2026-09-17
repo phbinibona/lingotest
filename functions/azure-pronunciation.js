@@ -173,7 +173,11 @@ exports.handler = async function (event) {
           error:
             azureResponse.status === 401 || azureResponse.status === 403
               ? "Speaking assessment is not configured correctly."
-              : "The recording could not be assessed. Please try again."
+              : "The recording could not be assessed. Please try again.",
+          code:
+            azureResponse.status === 401 || azureResponse.status === 403
+              ? "AZURE_AUTH"
+              : "AZURE_ERROR"
         },
         requestId
       );
@@ -238,7 +242,11 @@ exports.handler = async function (event) {
         error:
           error?.name === "AbortError"
             ? "Speaking assessment took too long. Please try again."
-            : "Speaking assessment is temporarily unavailable."
+            : "Speaking assessment is temporarily unavailable.",
+        code:
+          error?.name === "AbortError"
+            ? "AZURE_TIMEOUT"
+            : "AZURE_UNREACHABLE"
       },
       requestId
     );
