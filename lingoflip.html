@@ -25,6 +25,30 @@
     .answer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:720px;margin:14px auto 0}.again{background:#3b2327;color:#ffbbc2;border:1px solid #78434a}.got{background:#1d382b;color:#a9e5c3;border:1px solid #47765f}.answer-actions button{min-height:55px;font-weight:900}.answer-actions button:disabled{opacity:.4;cursor:not-allowed}.game-tools{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}.keyboard{margin:12px 0 0;text-align:center;color:#7f8791;font-size:.7rem}
     .summary{text-align:center}.trophy{font-size:4rem;line-height:1}.summary h2{margin:10px 0 5px;font-size:2rem}.summary-score{font-size:1.2rem;color:#bcd4ff}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0}.summary-box{padding:15px;border:1px solid #414850;background:#1b1e22}.summary-box strong{display:block;font-size:1.7rem;color:var(--gold)}.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:90}.confetti i{position:absolute;top:-20px;width:10px;height:18px;animation:fall 1.8s linear forwards}@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}.toast{position:fixed;right:18px;top:88px;z-index:100;max-width:min(360px,calc(100% - 36px));padding:11px 14px;background:var(--blue);color:#fff;font-weight:800;transform:translateX(130%);transition:.25s}.toast.show{transform:translateX(0)}footer{text-align:center;padding:8px 12px 26px;color:#7f858d;font-size:.72rem}[dir="rtl"] .face-label{left:auto;right:20px}[dir="rtl"] .speaker-button{right:auto;left:18px}
     @media(max-width:650px){html{scroll-padding-top:58px}.topbar{min-height:58px;padding:8px 11px;gap:7px}.logo{gap:14px}.logo-mark{width:34px;height:34px}.logo-word{display:none}.activity-name{font-size:.88rem}.pair{max-width:92px;padding:6px;font-size:.59rem;overflow:hidden;text-overflow:ellipsis}.home{width:34px;height:34px}main{width:100%;margin:0}.panel{margin:0;padding:58px 16px 20px;border-left:0;border-right:0}.hero{min-height:218px;padding:30px 20px;border-left:0;border-bottom:4px solid var(--blue)}.hero h1,.hero p{max-width:100%}.hero h1{text-align:center}.hero-journey{position:relative;right:auto;top:auto;order:-1;width:min(360px,88%);margin:0 auto 20px}.setup-actions{grid-template-columns:1fr}.flashcard{height:360px}.card-main{font-size:clamp(1.55rem,8vw,2.4rem)}.answer-actions{position:sticky;bottom:0;z-index:5;padding:9px 0;background:rgba(32,32,32,.97)}.summary-grid{grid-template-columns:1fr}}
+    /* Compact cards keep both answer buttons visible without sacrificing readability. */
+    .flash-stage,.answer-actions{max-width:620px}
+    .flashcard{height:300px}
+    .face{padding:40px 46px}
+    .card-main{font-size:clamp(1.45rem,4vw,2.4rem);line-height:1.16}
+    .back .card-main{font-size:clamp(1.2rem,3.2vw,1.8rem)}
+    .example-sentence{margin-top:12px;padding-top:10px;font-size:.9rem;line-height:1.35}
+    .answer-actions{margin-top:8px}
+    .answer-actions button{min-height:54px;font-size:1rem}
+    .got{background:#287a4e;color:#fff;border-color:#58b47f;box-shadow:0 0 0 1px rgba(88,180,127,.22)}
+    .answer-actions button:disabled{opacity:.62}
+    @media(max-width:650px){
+      .flashcard{height:250px}
+      .face{padding:34px 22px 38px}
+      .face-label{top:12px;left:14px}
+      .card-main{font-size:clamp(1.3rem,6.8vw,1.9rem)}
+      .back .card-main{font-size:clamp(1.12rem,5.5vw,1.55rem)}
+      .example-sentence{margin-top:9px;padding-top:8px;font-size:.82rem}
+      .tap-hint{bottom:11px}
+      .speaker-button{top:10px;right:12px;width:38px;height:38px}
+      .save-button{right:12px;bottom:10px;padding:6px 9px;font-size:.78rem}
+      .answer-actions{gap:8px;margin-top:7px;padding:6px 0}
+      .answer-actions button{min-height:50px}
+    }
   </style>
 </head>
 <body>
