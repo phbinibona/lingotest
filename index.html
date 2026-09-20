@@ -2991,6 +2991,19 @@
             </p>
             <span class="arrow">→</span>
           </a>
+          <a
+            class="activity-card"
+            data-page="lingoflip.html"
+            href="lingoflip.html"
+          >
+            <span class="activity-code">Skill</span>
+            <h3 data-i18n="lingoFlip">LingoFlip</h3>
+            <p data-i18n="lingoFlipText">
+              Build personalised flash cards, listen, flip and sort each phrase
+              into “Again” or “Got it”.
+            </p>
+            <span class="arrow">→</span>
+          </a>
         </div>
       </section>
       <section class="section" id="young">
@@ -5351,6 +5364,33 @@
         }
         ui?.addEventListener("change", applyLingoSpeakCopy);
         applyLingoSpeakCopy();
+      });
+    </script>
+    <script id="lingototal-lingoflip-card-translations">
+      document.addEventListener("DOMContentLoaded", () => {
+        const ui = document.getElementById("uiLanguage");
+        const copy = {
+          en: "Build personalised flash cards, listen, flip and sort each phrase into ‘Again’ or ‘Got it’.",
+          ca: "Crea targetes personalitzades, escolta-les, gira-les i classifica cada frase com a ‘Una altra vegada’ o ‘Ja la sé’.",
+          es: "Crea tarjetas personalizadas, escúchalas, gíralas y clasifica cada frase como ‘Otra vez’ o ‘Ya la sé’.",
+          fr: "Créez des cartes personnalisées, écoutez-les, retournez-les et classez chaque phrase dans « Encore » ou « Acquis ».",
+          de: "Erstellen Sie persönliche Lernkarten, hören und wenden Sie sie und sortieren Sie jede Wendung unter „Noch einmal“ oder „Gewusst“ ein.",
+          it: "Crea flashcard personalizzate, ascoltale, girale e classifica ogni frase come ‘Di nuovo’ o ‘La so’.",
+          pt: "Crie cartões personalizados, ouça-os, vire-os e classifique cada frase como ‘Outra vez’ ou ‘Já sei’.",
+          eu: "Sortu txartel pertsonalizatuak, entzun, irauli eta sailkatu esaldi bakoitza ‘Berriro’ edo ‘Badakit’ aukeran.",
+          ja: "自分専用のフラッシュカードを作り、聞いて、めくって、各表現を「もう一度」または「覚えた」に分けます。",
+          ar: "أنشئ بطاقات تعليمية مخصّصة، واستمع إليها واقلبها، ثم صنّف كل عبارة ضمن «مرة أخرى» أو «أتقنتها».",
+          cy: "Crëwch gardiau fflach personol, gwrandewch, trowch a didolwch bob ymadrodd i ‘Eto’ neu ‘Wedi’i gael’.",
+          gd: "Cruthaich cairtean-flash pearsanta, èist, tionndaidh agus seòrsaich gach abairt fo ‘A-rithist’ no ‘Tha e agam’.",
+        };
+        function applyLingoFlipCopy() {
+          const title = document.querySelector('[data-i18n="lingoFlip"]');
+          const text = document.querySelector('[data-i18n="lingoFlipText"]');
+          if (title) title.textContent = "LingoFlip";
+          if (text) text.textContent = copy[ui?.value] || copy.en;
+        }
+        ui?.addEventListener("change", applyLingoFlipCopy);
+        applyLingoFlipCopy();
       });
     </script>
     <script id="lingototal-language-selection-sync">
