@@ -2684,7 +2684,32 @@
       }
     </style>
     <link rel="stylesheet" href="lingototal-shared-polish.css">
-</head>
+    <style id="lingototal-section-one-uniform-grid">
+      /* Let all eight Section 1 cards participate in the same four-column grid. */
+      #personal .lingo-final-pair {
+        display: contents !important;
+      }
+      #personal .activity-card,
+      #personal .saved-practice-feature {
+        grid-column: auto !important;
+        width: 100% !important;
+        min-height: 138px !important;
+        height: 100% !important;
+      }
+      @media (max-width: 760px) {
+        #personal .activity-card,
+        #personal .saved-practice-feature {
+          min-height: 122px !important;
+        }
+      }
+      @media (max-width: 460px) {
+        #personal .activity-card,
+        #personal .saved-practice-feature {
+          min-height: 108px !important;
+        }
+      }
+    </style>
+  </head>
   <body id="top">
     <header class="banner index-banner" aria-label="LingoTotal navigation">
       <div class="brand-wrap" aria-label="LingoTotal">
