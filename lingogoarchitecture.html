@@ -160,6 +160,7 @@
         <div class="practice-toolbar">
           <button class="secondary" id="practicePrevBtn" type="button" data-t="previousPhrase">Previous phrase</button>
           <span class="practice-position" id="practicePosition"></span>
+          <button class="secondary" id="practiceCopyBtn" type="button">📋 <span id="practiceCopyLabel">Copy phrase</span></button>
           <button class="secondary" id="practiceNextBtn" type="button" data-t="nextPhrase">Next phrase</button>
         </div>
         <div id="exercise" class="exercise"></div>
@@ -242,6 +243,27 @@
     $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));$$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
     $$('.example').forEach((el,n)=>{el.textContent=ARCH_EXAMPLES[ui][n];el.dataset.example=ARCH_EXAMPLES[ui][n]});
     const toast=msg=>{const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2400)};
+    const COPY_I={
+      en:{copyPhrase:'Copy phrase',copied:'Phrase copied',copyFailed:'Could not copy. Please try again.'},
+      ca:{copyPhrase:'Copia la frase',copied:'Frase copiada',copyFailed:'No s’ha pogut copiar. Torna-ho a provar.'},
+      es:{copyPhrase:'Copiar frase',copied:'Frase copiada',copyFailed:'No se pudo copiar. Inténtalo de nuevo.'},
+      fr:{copyPhrase:'Copier la phrase',copied:'Phrase copiée',copyFailed:'Impossible de copier. Réessayez.'},
+      de:{copyPhrase:'Satz kopieren',copied:'Satz kopiert',copyFailed:'Kopieren nicht möglich. Versuche es erneut.'},
+      it:{copyPhrase:'Copia frase',copied:'Frase copiata',copyFailed:'Impossibile copiare. Riprova.'},
+      pt:{copyPhrase:'Copiar frase',copied:'Frase copiada',copyFailed:'Não foi possível copiar. Tente novamente.'},
+      eu:{copyPhrase:'Kopiatu esaldia',copied:'Esaldia kopiatuta',copyFailed:'Ezin izan da kopiatu. Saiatu berriro.'},
+      ja:{copyPhrase:'フレーズをコピー',copied:'フレーズをコピーしました',copyFailed:'コピーできませんでした。もう一度お試しください。'},
+      ar:{copyPhrase:'نسخ العبارة',copied:'تم نسخ العبارة',copyFailed:'تعذر النسخ. حاول مرة أخرى.'},
+      cy:{copyPhrase:"Copïo'r ymadrodd",copied:'Ymadrodd wedi’i gopïo',copyFailed:'Methu copïo. Rhowch gynnig arall arni.'},
+      gd:{copyPhrase:'Dèan lethbhreac',copied:'Chaidh lethbhreac a dhèanamh',copyFailed:'Cha b’ urrainn lethbhreac a dhèanamh. Feuch a-rithist.'}
+    };
+    const copyTr=k=>(COPY_I[ui]&&COPY_I[ui][k])||COPY_I.en[k];
+    async function copyPracticePhrase(text){
+      const clean=String(text||'').trim();if(!clean)return;
+      try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(clean);}else{const area=document.createElement('textarea');area.value=clean;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';area.style.pointerEvents='none';document.body.appendChild(area);area.focus();area.select();area.setSelectionRange(0,area.value.length);const copied=document.execCommand('copy');area.remove();if(!copied)throw new Error('Copy command failed');}toast(copyTr('copied'));}catch(error){console.error('Copy failed:',error);toast(copyTr('copyFailed'));}
+    }
+    const practiceCopyButton=$('#practiceCopyBtn');
+    if(practiceCopyButton){$('#practiceCopyLabel').textContent=copyTr('copyPhrase');practiceCopyButton.onclick=()=>{const item=practiceItems()[practiceIndex];copyPracticePhrase(item&&(item.text||item.sentence||''));};}
     const loadSaved=()=>{try{const x=JSON.parse(localStorage.getItem(STORE)||'[]');return Array.isArray(x)?x:[]}catch{return[]}};
     const writeSaved=x=>localStorage.setItem(STORE,JSON.stringify(x));
     const isArchitecturePhrase=item=>String(item.source||item.sourcePage||item.activity||'').toLowerCase().includes('architecture');
