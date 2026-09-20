@@ -114,13 +114,11 @@
  .feedback.good{color:#12643d}
  .feedback.bad{color:#a5303c}
       .practice-phrase-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
-      .practice-phrase-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:stretch}
       .practice-phrase{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);text-align:left;cursor:pointer}
       .practice-phrase:hover,.practice-phrase.selected{border-color:var(--blue);background:var(--blue-soft)}
       .practice-phrase strong,.practice-phrase small{display:block}
       .practice-phrase strong,.selected-phrase-target{-webkit-user-select:text;user-select:text;cursor:text}
       .practice-phrase small{margin-top:4px;color:var(--muted)}
-      .practice-copy{min-width:116px;white-space:nowrap}
       .selected-phrase{margin:14px 0;padding:15px;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:11px;background:var(--soft)}
       .selected-phrase-target{font-size:1.08rem;font-weight:900}
       .selected-phrase-meaning{margin-top:4px;color:var(--muted)}
@@ -146,8 +144,6 @@
  .collection-toggle{padding:10px 12px 0;margin:0}
  .practice-type-grid{grid-template-columns:1fr 1fr}
  .practice-phrase-list{grid-template-columns:1fr}
- .practice-phrase-row{grid-template-columns:1fr}
- .practice-copy{width:100%}
  }
       @media(max-width:360px){.practice-type-grid{grid-template-columns:1fr}
  }
@@ -671,8 +667,6 @@ practicePos=remembered>-1?remembered:Math.min(practicePos,practiceItems.length-1
 selectedPracticeText=practiceItems[practicePos].text||practiceItems[practicePos].sentence||'';
 practiceItems.forEach((item,n)=>{
   const text=item.text||item.sentence||'';
-  const row=document.createElement('div');
-  row.className='practice-phrase-row';
   const button=document.createElement('button');
   button.type='button';
   button.className='practice-phrase'+(n===practicePos?' selected':'');
@@ -682,16 +676,7 @@ practiceItems.forEach((item,n)=>{
   meaning.textContent=item.translation||'';
   button.append(phrase,meaning);
   button.onclick=()=>{practicePos=n;selectedPracticeText=text;renderSaved();renderExercise()};
-
-  const copyButton=document.createElement('button');
-  copyButton.type='button';
-  copyButton.className='secondary practice-copy';
-  copyButton.textContent=`📋 ${copyTr('copyPhrase')}`;
-  copyButton.setAttribute('aria-label',`${copyTr('copyPhrase')}: ${text}`);
-  copyButton.onclick=()=>copyPhrase(text);
-
-  row.append(button,copyButton);
-  box.appendChild(row);
+  box.appendChild(button);
 });
 const item=practiceItems[practicePos];
 $('#selectedPhrase').classList.remove('hidden');
