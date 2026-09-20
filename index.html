@@ -3180,6 +3180,18 @@
           </a>
           <a
             class="activity-card"
+            data-page="lingogoatwork.html"
+            href="lingogoatwork.html"
+          >
+            <span class="activity-code">Special</span>
+            <h3 data-special-i18n="atWork">Lingo at Work</h3>
+            <p data-special-i18n="atWorkText">
+              Practise communication with colleagues, managers and customers in everyday workplace situations.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+          <a
+            class="activity-card"
             data-page="lingopractice.html"
             href="lingopractice.html"
           >
@@ -5277,6 +5289,8 @@
               "تدرّب على التواصل بشأن التصدير والاستيراد والشراء والمصانع والشحن البحري والجوي والجمارك.",
           },
         };
+        const workCopy={"en":{"atWork":"Lingo at Work","atWorkText":"Practise communication with colleagues, managers and customers in everyday workplace situations."},"ca":{"atWork":"Lingo a la feina","atWorkText":"Practica la comunicació amb companys, responsables i clients en situacions laborals quotidianes."},"es":{"atWork":"Lingo en el trabajo","atWorkText":"Practica la comunicación con compañeros, responsables y clientes en situaciones laborales cotidianas."},"fr":{"atWork":"Lingo au travail","atWorkText":"Pratiquez la communication avec les collègues, les responsables et les clients dans les situations professionnelles quotidiennes."},"de":{"atWork":"Lingo am Arbeitsplatz","atWorkText":"Üben Sie die Kommunikation mit Kollegen, Vorgesetzten und Kunden in alltäglichen Arbeitssituationen."},"it":{"atWork":"Lingo al lavoro","atWorkText":"Esercita la comunicazione con colleghi, responsabili e clienti nelle situazioni lavorative quotidiane."},"pt":{"atWork":"Lingo no trabalho","atWorkText":"Pratique a comunicação com colegas, responsáveis e clientes em situações profissionais do dia a dia."},"eu":{"atWork":"Lingo lanean","atWorkText":"Praktikatu lankideekin, arduradunekin eta bezeroekin komunikazioa eguneroko lan-egoeretan."},"ja":{"atWork":"仕事のLingo","atWorkText":"日常の職場場面で、同僚、上司、顧客とのコミュニケーションを練習します。"},"ar":{"atWork":"Lingo في العمل","atWorkText":"تدرّب على التواصل مع الزملاء والمديرين والعملاء في مواقف العمل اليومية."}};
+        Object.entries(workCopy).forEach(([code,values])=>Object.assign(copy[code]||(copy[code]={}),values));
         function applySpecialCopy() {
           const text = copy[ui?.value] || copy.en;
           [
@@ -5286,6 +5300,8 @@
             "architectureText",
             "internationalTrade",
             "internationalTradeText",
+            "atWork",
+            "atWorkText",
           ].forEach((key) => {
             const element =
               document.querySelector(`[data-i18n="${key}"]`) ||
