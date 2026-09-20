@@ -2892,6 +2892,19 @@
         <div class="activity-grid">
           <a
             class="activity-card"
+            data-page="lingospeak.html"
+            href="lingospeak.html"
+          >
+            <span class="activity-code">Skill</span>
+            <h3 data-i18n="lingoSpeak">LingoSpeak</h3>
+            <p data-i18n="lingoSpeakText">
+              Prepare for a real conversation. Listen, practise and record
+              yourself before using the language in real life.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+          <a
+            class="activity-card"
             data-page="lingoreading.html"
             href="lingoreading.html"
           >
@@ -5313,6 +5326,33 @@
         applySpecialCopy();
       });
     </script>
+    <script id="lingototal-lingospeak-card-translations">
+      document.addEventListener("DOMContentLoaded", () => {
+        const ui = document.getElementById("uiLanguage");
+        const copy = {
+          en: "Prepare for a real conversation. Listen, practise and record yourself before using the language in real life.",
+          ca: "Prepara una conversa real. Escolta, practica i grava’t abans d’utilitzar la llengua a la vida real.",
+          es: "Prepara una conversación real. Escucha, practica y grábate antes de usar el idioma en la vida real.",
+          fr: "Préparez une vraie conversation. Écoutez, entraînez-vous et enregistrez-vous avant d’utiliser la langue en situation réelle.",
+          de: "Bereiten Sie sich auf ein echtes Gespräch vor. Hören, üben und nehmen Sie sich auf, bevor Sie die Sprache im Alltag verwenden.",
+          it: "Preparati per una conversazione reale. Ascolta, esercitati e registrati prima di usare la lingua nella vita reale.",
+          pt: "Prepare-se para uma conversa real. Ouça, pratique e grave-se antes de usar a língua na vida real.",
+          eu: "Prestatu benetako elkarrizketa baterako. Entzun, praktikatu eta grabatu zeure burua hizkuntza benetan erabili aurretik.",
+          ja: "実際の会話に備えましょう。実生活で使う前に、お手本を聞き、練習して、自分の声を録音します。",
+          ar: "استعد لمحادثة حقيقية. استمع وتدرّب وسجّل صوتك قبل استخدام اللغة في الحياة الواقعية.",
+          cy: "Paratowch ar gyfer sgwrs go iawn. Gwrandewch, ymarferwch a recordiwch eich hun cyn defnyddio’r iaith mewn bywyd go iawn.",
+          gd: "Dèan ullachadh airson fìor chòmhradh. Èist, cleachd agus clàraich thu fhèin mus cleachd thu an cànan ann am fìor bheatha.",
+        };
+        function applyLingoSpeakCopy() {
+          const title = document.querySelector('[data-i18n="lingoSpeak"]');
+          const text = document.querySelector('[data-i18n="lingoSpeakText"]');
+          if (title) title.textContent = "LingoSpeak";
+          if (text) text.textContent = copy[ui?.value] || copy.en;
+        }
+        ui?.addEventListener("change", applyLingoSpeakCopy);
+        applyLingoSpeakCopy();
+      });
+    </script>
     <script id="lingototal-language-selection-sync">
       document.addEventListener("DOMContentLoaded", () => {
         const ui = document.getElementById("uiLanguage");
@@ -5358,4 +5398,27 @@
                 ui: uiCode,
                 target: targetCode,
               });
-              card.setAttribute("href", `${page}[Truncated]
+              card.setAttribute("href", `${page}?${params.toString()}`);
+            });
+        }
+
+        ui.addEventListener("input", () => {
+          ui.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+        ui.addEventListener("change", saveSelections);
+        target.addEventListener("input", saveSelections);
+        target.addEventListener("change", saveSelections);
+        window.addEventListener("pageshow", saveSelections);
+
+        const tradeLink = document.querySelector(
+          '[data-page="lingogointernationaltrade.html"]',
+        );
+        tradeLink?.addEventListener("pointerdown", saveSelections);
+        tradeLink?.addEventListener("click", saveSelections, true);
+
+        ui.dispatchEvent(new Event("change", { bubbles: true }));
+        saveSelections();
+      });
+    </script>
+  </body>
+</html>
