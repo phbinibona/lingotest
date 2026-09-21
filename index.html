@@ -2956,6 +2956,19 @@
           </a>
           <a
             class="activity-card"
+            data-page="lingodetective.html"
+            href="lingodetective.html"
+          >
+            <span class="activity-code">Skill</span>
+            <h3 data-i18n="lingoDetective">LingoDetective</h3>
+            <p data-i18n="lingoDetectiveText">
+              Speak about your chosen topic, inspect the transcript, locate the
+              clues and repair the sentence.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+          <a
+            class="activity-card"
             data-page="lingoreading.html"
             href="lingoreading.html"
           >
@@ -5362,6 +5375,33 @@
         }
         ui?.addEventListener("change", applySpecialCopy);
         applySpecialCopy();
+      });
+    </script>
+    <script id="lingototal-lingodetective-card-translations">
+      document.addEventListener("DOMContentLoaded", () => {
+        const ui = document.getElementById("uiLanguage");
+        const copy = {
+          en: "Speak about your chosen topic, inspect the transcript, locate the clues and repair the sentence.",
+          ca: "Parla del tema que triïs, examina la transcripció, localitza les pistes i repara la frase.",
+          es: "Habla del tema que elijas, examina la transcripción, localiza las pistas y repara la frase.",
+          fr: "Parlez du sujet choisi, examinez la transcription, repérez les indices et réparez la phrase.",
+          de: "Sprechen Sie über Ihr Thema, prüfen Sie die Transkription, finden Sie die Hinweise und reparieren Sie den Satz.",
+          it: "Parla dell’argomento scelto, esamina la trascrizione, trova gli indizi e ripara la frase.",
+          pt: "Fale sobre o tema escolhido, examine a transcrição, encontre as pistas e repare a frase.",
+          eu: "Hitz egin aukeratutako gaiaz, aztertu transkripzioa, aurkitu arrastoak eta konpondu esaldia.",
+          ja: "選んだ話題について話し、文字起こしを調べ、手がかりを見つけて文を直します。",
+          ar: "تحدث عن الموضوع الذي تختاره، وافحص النص، وحدد الأدلة وأصلح الجملة.",
+          cy: "Siaradwch am eich pwnc, archwiliwch y trawsgrifiad, dewch o hyd i’r cliwiau a thrwsiwch y frawddeg.",
+          gd: "Bruidhinn mun chuspair agad, rannsaich an tar-sgrìobhadh, lorg na sanasan agus càraich an abairt.",
+        };
+        function applyLingoDetectiveCopy() {
+          const title = document.querySelector('[data-i18n="lingoDetective"]');
+          const text = document.querySelector('[data-i18n="lingoDetectiveText"]');
+          if (title) title.textContent = "LingoDetective";
+          if (text) text.textContent = copy[ui?.value] || copy.en;
+        }
+        ui?.addEventListener("change", applyLingoDetectiveCopy);
+        applyLingoDetectiveCopy();
       });
     </script>
     <script id="lingototal-lingospeak-card-translations">
