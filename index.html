@@ -2963,6 +2963,16 @@
           </a>
           <a
             class="activity-card"
+            data-page="lingochat.html"
+            href="lingochat.html"
+          >
+            <span class="activity-code">Skill</span>
+            <h3>LingoChat</h3>
+            <p id="lingoChatCardText">Choose a topic, speak or adapt a reply, correct the transcript, and keep the conversation going.</p>
+            <span class="arrow">→</span>
+          </a>
+          <a
+            class="activity-card"
             data-page="lingodetective.html"
             href="lingodetective.html"
           >
@@ -5533,5 +5543,26 @@
       });
     </script>
 <script id="lingototal-basics-gateway-translations">document.addEventListener('DOMContentLoaded',()=>{const ui=document.getElementById('uiLanguage'),copy={"en":["Build your confidence","Short activities for learners returning to the basics. Choose one when you feel ready."],"ca":["Guanya confiança","Activitats breus per tornar als fonaments. Tria'n una quan vulguis."],"es":["Gana confianza","Actividades breves para retomar las bases. Elige una cuando quieras."],"fr":["Gagnez en confiance","De courtes activités pour reprendre les bases. Choisissez celle qui vous convient."],"de":["Sicherer werden","Kurze Übungen zum Auffrischen der Grundlagen. Wählen Sie eine aus."],"it":["Prendi sicurezza","Attività brevi per riprendere le basi. Scegline una quando vuoi."],"pt":["Ganhe confiança","Atividades curtas para retomar as bases. Escolha uma quando quiser."],"eu":["Hartu konfiantza","Oinarriak berrikusteko jarduera laburrak. Aukeratu bat nahi duzunean."],"cy":["Meithrin hyder","Gweithgareddau byr i ailafael yn y pethau sylfaenol. Dewiswch un."],"gd":["Tog misneachd","Gnìomhan goirid gus na bunaitean ath-thòiseachadh. Tagh aon dhiubh."],"ar":["عزّز ثقتك","أنشطة قصيرة لمراجعة الأساسيات. اختر نشاطًا عندما ترغب."],"ja":["自信をつけよう","基礎を復習する短い練習です。好きな活動を選んでください。"]};function apply(){const value=copy[ui?.value]||copy.en;document.querySelector('[data-i18n="basicsGatewayTitle"]').textContent=value[0];document.querySelector('[data-i18n="basicsGatewayText"]').textContent=value[1]}ui?.addEventListener('change',apply);apply()});</script>
-  </body>
+  <script id="lingototal-lingochat-card-translations">
+document.addEventListener("DOMContentLoaded",()=>{
+const copy={
+en:"Choose a topic, speak or adapt a reply, correct the transcript, and keep the conversation going.",
+ca:"Tria un tema, digues o adapta una resposta, corregeix la transcripció i continua la conversa.",
+es:"Elige un tema, di o adapta una respuesta, corrige la transcripción y continúa la conversación.",
+fr:"Choisissez un sujet, dites ou adaptez une réponse, corrigez la transcription et poursuivez la conversation.",
+de:"Wählen Sie ein Thema, sprechen oder ändern Sie Ihre Antwort, korrigieren Sie das Transkript und setzen Sie das Gespräch fort.",
+it:"Scegli un argomento, pronuncia o adatta una risposta, correggi la trascrizione e continua la conversazione.",
+pt:"Escolha um tema, diga ou adapte uma resposta, corrija a transcrição e continue a conversa.",
+eu:"Aukeratu gai bat, esan edo egokitu erantzuna, zuzendu transkripzioa eta jarraitu elkarrizketan.",
+ja:"話題を選び、返答を話すか調整し、文字起こしを直して会話を続けましょう。",
+ar:"اختر موضوعًا، وقل إجابة أو عدّلها، وصحح النص، وتابع المحادثة.",
+cy:"Dewiswch bwnc, dywedwch neu addaswch ateb, cywirwch y trawsgrifiad a pharhewch â’r sgwrs.",
+gd:"Tagh cuspair, abair no atharraich freagairt, càraich an tar-sgrìobhadh agus lean air leis a’ chòmhradh."
+};
+const ui=document.getElementById("uiLanguage"),text=document.getElementById("lingoChatCardText");
+function apply(){if(text)text.textContent=copy[ui?.value]||copy.en}
+ui?.addEventListener("change",apply);apply()
+});
+</script>
+</body>
 </html>
