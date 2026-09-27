@@ -218,6 +218,7 @@ exports.handler = async event => {
         ? requestedLocale
         : 'en-GB';
     const maleRequested = request.voiceGender === 'MALE';
+    const femaleRequested = request.voiceGender === 'FEMALE';
     if (maleRequested && !ALLOWED_LOCALES.has(requestedLocale)) {
       return response(422, { error: 'No verified male voice is available for this language.' });
     }
@@ -261,7 +262,8 @@ exports.handler = async event => {
 
           voice: {
             languageCode: locale,
-            ...(voiceName ? { name: voiceName, ssmlGender: 'MALE' } : {})
+            ...(voiceName ? { name: voiceName, ssmlGender: 'MALE' } : {}),
+            ...(femaleRequested ? { ssmlGender: 'FEMALE' } : {})
           },
 
           audioConfig: {

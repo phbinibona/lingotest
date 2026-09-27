@@ -112,7 +112,7 @@ async function start() {
     if (activePanel && activePanel.id !== 'setup') {
       move(activePanel.id);
       const currentStatement = document.getElementById('statement')?.textContent?.trim();
-      if (activePanel.id === 'promptPanel' && currentStatement) speak(currentStatement, window.LingoChatTargetLocale || 'en-GB');
+      if (activePanel.id === 'promptPanel' && currentStatement && !document.body.classList.contains('guest-turn')) speak(currentStatement, window.LingoChatTargetLocale || 'en-GB');
       if (activePanel.id === 'retryPanel') {
         const feedback = document.getElementById('firstFeedback')?.textContent?.trim();
         if (feedback) speak(feedback, window.LingoChatInterfaceLocale || 'en-GB');
