@@ -19,6 +19,27 @@ const ALLOWED_LOCALES = new Set([
 
 let cachedToken = '';
 let cachedTokenExpiry = 0;
+const maleVoices = new Map();
+
+async function getMaleVoice(locale, accessToken) {
+  if (!maleVoices.has(locale)) {
+    const lookup = (async () => {
+      const endpoint = 'https://texttospeech.googleapis.com/v1/voices?languageCode=' + encodeURIComponent(locale);
+      const response = await fetch(endpoint, { headers: { Authorization: `Bearer ${accessToken}` } });
+      if (!response.ok) throw new Error('Unable to check available male voices');
+      const data = await response.json();
+      const matches = (data.voices || []).filter(voice =>
+        voice.ssmlGender === 'MALE' && voice.languageCodes?.includes(locale));
+      const priority = voice => /-Standard-/.test(voice.name) ? 0 :
+        /-Wavenet-/.test(voice.name) ? 1 : /-Neural2-/.test(voice.name) ? 2 : 3;
+      matches.sort((a, b) => priority(a) - priority(b));
+      if (!matches.length) throw new Error('No male voice is available for ' + locale);
+      return matches[0].name;
+    })().catch(error => { maleVoices.delete(locale); throw error; });
+    maleVoices.set(locale, lookup);
+  }
+  return maleVoices.get(locale);
+}
 
 const headers = {
   'Access-Control-Allow-Origin': '*',
@@ -196,6 +217,10 @@ exports.handler = async event => {
       ALLOWED_LOCALES.has(requestedLocale)
         ? requestedLocale
         : 'en-GB';
+    const maleRequested = request.voiceGender === 'MALE';
+    if (maleRequested && !ALLOWED_LOCALES.has(requestedLocale)) {
+      return response(422, { error: 'No verified male voice is available for this language.' });
+    }
 
     if (!text) {
       return response(400, {
@@ -211,6 +236,11 @@ exports.handler = async event => {
 
     const accessToken =
       await getAccessToken();
+    let voiceName;
+    if (maleRequested) {
+      try { voiceName = await getMaleVoice(locale, accessToken); }
+      catch (error) { return response(422, { error: error.message }); }
+    }
 
     const googleResponse =
       await fetch(TTS_URL, {
@@ -230,7 +260,8 @@ exports.handler = async event => {
           },
 
           voice: {
-            languageCode: locale
+            languageCode: locale,
+            ...(voiceName ? { name: voiceName, ssmlGender: 'MALE' } : {})
           },
 
           audioConfig: {

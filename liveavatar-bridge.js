@@ -46,6 +46,7 @@ function move(panelId) {
 }
 function cleanup() {
   generation++; active = false;
+  document.body.classList.remove('live-on');
   clearInterval(timer); timer = null;
   if (socket) { socket.close(); socket = null; }
   if (room) { room.disconnect(); room = null; }
@@ -95,7 +96,7 @@ async function start() {
     await room.connect(details.livekitUrl, details.livekitToken);
     socket = new WebSocket(details.wsUrl);
     await connected(socket);
-    active = true; stopButton.hidden = false; setStatus(label[3]);
+    active = true; document.body.classList.add('live-on'); stopButton.hidden = false; setStatus(label[3]);
     socket.addEventListener('message', event => {
       try {
         const message = JSON.parse(event.data);
@@ -153,9 +154,12 @@ async function speak(text, locale) {
   try {
     const response = await fetch('/.netlify/functions/tts', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, languageCode: locale, locale })
+      body: JSON.stringify({ text, languageCode: locale, locale, voiceGender: 'MALE' })
     });
-    if (!response.ok) throw new Error('Speech unavailable');
+    if (!response.ok) {
+      const detail = await response.json().catch(() => ({}));
+      throw new Error(detail.error || 'Speech unavailable');
+    }
     let blob;
     if ((response.headers.get('content-type') || '').startsWith('audio/')) blob = await response.blob();
     else {
@@ -190,7 +194,7 @@ async function speak(text, locale) {
     return true;
   } catch (error) {
     console.warn('Avatar speech failed:', error);
-    setStatus(label[4]); return false;
+    setStatus(`${label[4]} (${error.message})`); return false;
   }
 }
 startButton.addEventListener('click', start);
