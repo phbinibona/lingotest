@@ -10,6 +10,7 @@ const reply = (statusCode, body) => ({
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' });
+  const keySource = process.env.LIVEAVATAR_API_KEY ? 'LIVEAVATAR_API_KEY' : 'LINGOTOTAL';
   const key = process.env.LIVEAVATAR_API_KEY || process.env.LINGOTOTAL;
   if (!key) return reply(503, { error: 'LiveAvatar key is not configured' });
   try {
@@ -25,7 +26,8 @@ exports.handler = async (event) => {
       return reply(502, { error: request.status === 401
         ? 'LiveAvatar rejected the API key. Check the LIVEAVATAR_API_KEY value in Netlify.'
         : 'LiveAvatar could not create a sandbox session',
-        upstreamStatus: request.status, upstreamCode: Number(result.code) || null });
+        upstreamStatus: request.status, upstreamCode: Number(result.code) || null,
+        keySource });
     }
     const started = await fetch('https://api.liveavatar.com/v1/sessions/start', {
       method: 'POST', headers: { Authorization: `Bearer ${result.data.session_token}` },
