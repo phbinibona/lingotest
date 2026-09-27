@@ -26,8 +26,24 @@ const labels = {
   gd: ['Feuch an t-avatar beò', 'Cuir stad air an avatar', 'A’ ceangal…', 'Avatar deiseil', 'Chan eil avatar ri fhaighinn; tha fuaim ri fhaighinn']
 };
 const label = labels[language] || labels.en;
+const soundHelp = {
+  en: 'Click the video once to enable avatar sound.', ca: 'Fes clic al vídeo per activar el so de l’avatar.',
+  es: 'Haz clic en el vídeo para activar el sonido del avatar.', fr: 'Cliquez sur la vidéo pour activer le son.',
+  de: 'Klicken Sie auf das Video, um den Ton zu aktivieren.', it: 'Fai clic sul video per attivare l’audio.',
+  pt: 'Clique no vídeo para ativar o som.', ar: 'انقر على الفيديو لتشغيل الصوت.',
+  ja: '動画をクリックして音声を有効にしてください。', eu: 'Egin klik bideoan soinua aktibatzeko.',
+  cy: 'Cliciwch y fideo i droi’r sain ymlaen.', gd: 'Briog air a’ bhidio gus fuaim a chur air.'
+};
 startButton.textContent = label[0]; stopButton.textContent = label[1];
 const setStatus = message => { status.textContent = message; };
+function move(panelId) {
+  if (!active) return;
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  const host = panel.querySelector('.model-box, .avatar-feedback') || panel;
+  host.prepend(video);
+  video.after(status);
+}
 function cleanup() {
   generation++; active = false;
   clearInterval(timer); timer = null;
@@ -69,13 +85,38 @@ async function start() {
         video.play().catch(() => {});
       } else if (track.kind === 'audio') {
         const audio = track.attach(); audio.className = 'lingo-live-audio';
-        document.body.append(audio); audio.play().catch(() => {});
+        audio.autoplay = true;
+        document.body.append(audio);
+        audio.play().catch(() => {
+          setStatus(soundHelp[language] || soundHelp.en);
+        });
       }
     });
     await room.connect(details.livekitUrl, details.livekitToken);
     socket = new WebSocket(details.wsUrl);
     await connected(socket);
     active = true; stopButton.hidden = false; setStatus(label[3]);
+    socket.addEventListener('message', event => {
+      try {
+        const message = JSON.parse(event.data);
+        if (message.type === 'agent.speak_started') setStatus(`${label[3]} · 🔊`);
+        if (message.type === 'agent.speak_ended') setStatus(label[3]);
+        if (message.type === 'error') {
+          console.warn('LiveAvatar speech:', message.error?.type);
+          setStatus(label[4]);
+        }
+      } catch { /* Ignore unrelated events. */ }
+    });
+    const activePanel = document.querySelector('.step-panel.active:not(.hidden)');
+    if (activePanel && activePanel.id !== 'setup') {
+      move(activePanel.id);
+      const currentStatement = document.getElementById('statement')?.textContent?.trim();
+      if (activePanel.id === 'promptPanel' && currentStatement) speak(currentStatement, window.LingoChatTargetLocale || 'en-GB');
+      if (activePanel.id === 'retryPanel') {
+        const feedback = document.getElementById('firstFeedback')?.textContent?.trim();
+        if (feedback) speak(feedback, window.LingoChatInterfaceLocale || 'en-GB');
+      }
+    }
     timer = setInterval(() => {
       if (socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ type: 'session.keep_alive' }));
     }, 60000);
@@ -126,6 +167,7 @@ async function speak(text, locale) {
     }
     const samples = await pcm24k(blob);
     if (!active || current !== generation) return true;
+    setStatus(`${label[3]} · 🔊`);
     socket.send(JSON.stringify({ type: 'agent.interrupt', event_id: crypto.randomUUID() }));
     const id = crypto.randomUUID(), chunkSize = 24000 * 2;
     for (let offset = 0; offset < samples.length; offset += chunkSize) {
@@ -152,6 +194,11 @@ async function speak(text, locale) {
   }
 }
 startButton.addEventListener('click', start);
+video.addEventListener('click', () => {
+  document.querySelectorAll('.lingo-live-audio').forEach(element => {
+    element.play().then(() => setStatus(label[3])).catch(() => setStatus(label[4]));
+  });
+});
 stopButton.addEventListener('click', () => { cleanup(); setStatus(''); });
 window.addEventListener('pagehide', cleanup);
-window.LingoLiveAvatar = { speak, get active() { return active; } };
+window.LingoLiveAvatar = { speak, move, get active() { return active; } };
