@@ -20,7 +20,11 @@ exports.handler = async (event) => {
       signal: AbortSignal.timeout(12000)
     });
     const result = await request.json();
-    if (!request.ok || !result.data?.session_token) return reply(502, { error: 'LiveAvatar could not create a sandbox session' });
+    if (!request.ok || !result.data?.session_token) {
+      console.error('LiveAvatar token failure', request.status, result.code, result.message);
+      return reply(502, { error: 'LiveAvatar could not create a sandbox session',
+        upstreamStatus: request.status, upstreamCode: Number(result.code) || null });
+    }
     const started = await fetch('https://api.liveavatar.com/v1/sessions/start', {
       method: 'POST', headers: { Authorization: `Bearer ${result.data.session_token}` },
       signal: AbortSignal.timeout(20000)
