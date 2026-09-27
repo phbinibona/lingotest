@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@heygen/liveavatar-web-sdk": "^0.0.19",
+    "esbuild": "^0.28.2"
+  }
+}
