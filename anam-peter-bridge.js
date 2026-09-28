@@ -16,6 +16,17 @@
   async function stop(){active=false;window.LingoOliviaResetWelcome?.();document.body.classList.remove('anam-on');end.hidden=true;button.disabled=false;host.hidden=true;document.querySelector('.hero').append(host);if(client){const old=client;client=null;try{await old.stopStreaming()}catch(error){console.warn('Anam stop:',error)}}}
   function speak(value){if(!active||!client||!String(value||'').trim())return Promise.resolve(false);
     serial=serial.catch(()=>{}).then(async()=>{if(!active||!client)return false;await client.talk(String(value));return true});return serial}
+  function speakSequence(feedback,question){
+    if(!active||!client)return Promise.resolve(false);
+    serial=serial.catch(()=>{}).then(async()=>{
+      if(!active||!client)return false;
+      const stream=client.createTalkMessageStream();
+      await stream.streamMessageChunk(String(feedback),false,crypto.randomUUID());
+      await stream.streamMessageChunk(String(question),true,crypto.randomUUID());
+      return true;
+    });
+    return serial;
+  }
   async function start(){button.disabled=true;setStatus(labels[2]);try{
     const response=await fetch('/.netlify/functions/anam-session',{method:'POST'}),data=await response.json();
     if(!response.ok)throw Error(data.error||'Anam is unavailable.');
@@ -39,5 +50,5 @@
   button.addEventListener('click',start);
   end.addEventListener('click',()=>{stop();setStatus('')});
   window.addEventListener('pagehide',()=>{stop()});
-  window.LingoLiveAvatar={get active(){return active},move,speak,stop};
+  window.LingoLiveAvatar={get active(){return active},move,speak,speakSequence,stop};
 })();
