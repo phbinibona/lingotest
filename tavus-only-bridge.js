@@ -118,11 +118,12 @@
       active = true; document.body.classList.add('tavus-on', 'live-on');
       stopButton.hidden = false;
       setStatus(labels[3]);
+      await window.LingoPeterWelcome?.();
       const panel = document.querySelector('.step-panel.active:not(.hidden)');
       if (panel?.id === 'promptPanel') {
         move('promptPanel');
         const phrase = document.getElementById('statement')?.textContent;
-        if (phrase && !document.body.classList.contains('guest-turn')) speak(phrase);
+        if (phrase) await window.LingoPeterTurn?.();
       } else if (panel?.id === 'retryPanel') move('retryPanel');
     } catch (error) { console.warn('Tavus connection:', error); stop(); setStatus(error.message); }
   }
