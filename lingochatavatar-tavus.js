@@ -59,7 +59,7 @@ function renderFollowUpSuggestions(suggestions){const d={suggestions};$('#sugges
 function choose(i){selected=i;[...$('#suggestions').querySelectorAll('.choice-card')].forEach((b,j)=>{b.classList.toggle('selected',j===i);b.setAttribute('aria-pressed',String(j===i))});$('#firstTranscript').value=caseData.suggestions[i];hide('firstAttempt');$('#firstRecordStatus').textContent=tr(42);finish(caseData.suggestions[i])}
 function stopAudio(){document.querySelectorAll('.guest-portrait.speaking,#suggestions .choice-card.playing').forEach(x=>x.classList.remove('speaking','playing'));if(activeAudio){activeAudio.pause();activeAudio=null}for(const id of ['promptAvatar','responseAvatar'])$('#'+id).classList.remove('speaking');if('speechSynthesis'in window)speechSynthesis.cancel()}
 function stopAvatar(){avatarRun++;if(avatarAudio){avatarAudio.pause();avatarAudio=null}if(avatarUrl){URL.revokeObjectURL(avatarUrl);avatarUrl=''}if('speechSynthesis'in window)speechSynthesis.cancel();$('#firstAvatar').classList.remove('speaking');$('#finalAvatar').classList.remove('speaking')}
-async function sayFeedback(stage,automatic=false){const value=$('#'+stage+'Feedback').textContent.trim();if(!value||avatarMuted)return;stopAvatar();const token=avatarRun,avatar=$('#'+stage+'Avatar');try{const r=await fetch('/.netlify/functions/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:value,languageCode:L[ui][2],locale:L[ui][2],voiceGender:'FEMALE'})});if(!r.ok)throw Error('tts');let src;if((r.headers.get('content-type')||'').startsWith('audio/')){avatarUrl=URL.createObjectURL(await r.blob());src=avatarUrl}else{const d=await r.json();src=d.url||(d.audioContent||d.audio||d.data?'data:audio/mpeg;base64,'+(d.audioContent||d.audio||d.data):'')}if(token!==avatarRun)return;if(!src)throw Error('tts');avatarAudio=new Audio(src);avatarAudio.onplaying=()=>avatar.classList.add('speaking');avatarAudio.onended=()=>{avatar.classList.remove('speaking');avatarAudio=null;if(avatarUrl){URL.revokeObjectURL(avatarUrl);avatarUrl=''}};avatarAudio.onerror=()=>avatar.classList.remove('speaking');await avatarAudio.play()}catch(e){avatar.classList.remove('speaking');if(token!==avatarRun||!('speechSynthesis'in window))return;try{const utterance=new SpeechSynthesisUtterance(value);utterance.lang=L[ui][2];utterance.rate=.92;const voices=speechSynthesis.getVoices();utterance.voice=voices.find(x=>x.lang.toLowerCase()===utterance.lang.toLowerCase())||voices.find(x=>x.lang.split('-')[0]===ui)||null;utterance.onstart=()=>avatar.classList.add('speaking');utterance.onend=utterance.onerror=()=>avatar.classList.remove('speaking');speechSynthesis.speak(utterance)}catch(err){console.warn('Avatar audio unavailable',err)}}}
+async function sayFeedback(stage,automatic=false){const value=$('#'+stage+'Feedback').textContent.trim();if(!value||avatarMuted)return;stopAvatar();const token=avatarRun,avatar=$('#'+stage+'Avatar');try{const r=await fetch('/.netlify/functions/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:value,languageCode:L[ui][2],locale:L[ui][2],voiceGender:'FEMALE'})});if(!r.ok)throw Error('tts');let src;if((r.headers.get('content-type')||'').startsWith('audio/')){avatarUrl=URL.createObjectURL(await r.blob());src=avatarUrl}else{const d=await r.json();src=d.url||(d.audioContent||d.audio||d.data?'data:audio/mpeg;base64,'+(d.audioContent||d.audio||d.data):'')}if(token!==avatarRun)return;if(!src)throw Error('tts');avatarAudio=new Audio(src);avatarAudio.onplaying=()=>avatar.classList.add('speaking');avatarAudio.onended=()=>{avatar.classList.remove('speaking');avatarAudio=null;if(avatarUrl){URL.revokeObjectURL(avatarUrl);avatarUrl=''}};avatarAudio.onerror=()=>avatar.classList.remove('speaking');await avatarAudio.play();await new Promise(done=>{const audio=avatarAudio;if(!audio)return done();const ended=audio.onended,failed=audio.onerror;audio.onended=e=>{ended?.(e);done()};audio.onerror=e=>{failed?.(e);done()};setTimeout(done,20000)})}catch(e){avatar.classList.remove('speaking');if(token!==avatarRun||!('speechSynthesis'in window))return;try{const utterance=new SpeechSynthesisUtterance(value);utterance.lang=L[ui][2];utterance.rate=.92;const voices=speechSynthesis.getVoices();utterance.voice=voices.find(x=>x.lang.toLowerCase()===utterance.lang.toLowerCase())||voices.find(x=>x.lang.split('-')[0]===ui)||null;utterance.onstart=()=>avatar.classList.add('speaking');utterance.onend=utterance.onerror=()=>avatar.classList.remove('speaking');speechSynthesis.speak(utterance);await new Promise(done=>{const ended=utterance.onend,failed=utterance.onerror;utterance.onend=e=>{ended?.(e);done()};utterance.onerror=e=>{failed?.(e);done()};setTimeout(done,20000)})}catch(err){console.warn('Avatar audio unavailable',err)}}}
 const regularFeedback=sayFeedback;
 sayFeedback=async(stage,automatic=false)=>{
  const value=$('#'+stage+'Feedback').textContent.trim();
@@ -163,13 +163,15 @@ async function finish(reply){
   pendingTurn={context:caseData.context,statement:d.followUp,suggestions:d.suggestions,speaker:'teacher'};
   turn.reply=d.followUp;
   // The learner hears feedback in the interface language, followed by the question in the target language.
-  if(window.LingoLiveAvatar?.active){
-   window.LingoLiveAvatar.move('responsePanel');
-   await window.LingoLiveAvatar.speakSequence(d.feedback,d.followUp);
-  }else{
-   await sayFeedback('final',true);
-   if(token===feedbackPending)await speak(d.followUp,'responseAvatar');
-  }
+  try{
+   if(window.LingoLiveAvatar?.active){
+    window.LingoLiveAvatar.move('responsePanel');
+    await window.LingoLiveAvatar.speakSequence(d.feedback,d.followUp);
+   }else{
+    await sayFeedback('final',true);
+    if(token===feedbackPending)await speak(d.followUp,'responseAvatar');
+   }
+  }catch(audioError){console.warn('Olivia could not play this turn:',audioError)}
   if(token===feedbackPending)$('#continue').disabled=false;
  }catch(e){console.error(e);if(token===feedbackPending){$('#partnerResponse').textContent='';$('#finalFeedback').textContent=tr(40);$('#continue').disabled=false}}
 }
