@@ -8,6 +8,11 @@
   const host = document.getElementById('tavusHost');
   const native = window.LingoLiveAvatar;
   let call = null, conversationId = '', active = false, generation = 0;
+  const remoteVideo = document.createElement('video');
+  const remoteAudio = document.createElement('audio');
+  remoteVideo.autoplay = true; remoteVideo.playsInline = true; remoteVideo.muted = true;
+  remoteVideo.setAttribute('aria-label', 'Tavus teacher video');
+  remoteAudio.autoplay = true;
   let pendingSpeech = null;
   const ui = (new URLSearchParams(location.search).get('ui') ||
     localStorage.getItem('lingototal_ui_language') || 'en').slice(0, 2).toLowerCase();
@@ -33,6 +38,8 @@
     if (pendingSpeech) { pendingSpeech(); pendingSpeech = null; }
     if (call) { const old = call; call = null; Promise.resolve(old.leave()).catch(() => {}).finally(() => old.destroy()); }
     conversationId = '';
+    remoteVideo.pause(); remoteVideo.srcObject = null;
+    remoteAudio.pause(); remoteAudio.srcObject = null;
     host.replaceChildren(); host.hidden = true;
     document.body.classList.remove('tavus-on', 'live-on');
     startButton.disabled = false; stopButton.hidden = true;
@@ -41,15 +48,35 @@
     document.querySelector('.live-controls').append(status);
   }
   function loadDaily() {
-    if (window.Daily?.createFrame) return Promise.resolve();
+    if (window.Daily?.createCallObject) return Promise.resolve();
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = 'https://unpkg.com/@daily-co/daily-js'; script.crossOrigin = 'anonymous';
-      script.onload = () => window.Daily?.createFrame ? resolve() : reject(Error('Daily could not load'));
+      script.onload = () => window.Daily?.createCallObject ? resolve() : reject(Error('Daily could not load'));
       script.onerror = () => reject(Error('Video library could not load'));
       document.head.append(script);
     });
   }
+  function attachRemoteMedia() {
+    if (!call) return;
+    const participants = Object.values(call.participants() || {}).filter(participant =>
+      !participant.local && participant.user_id !== 'local');
+    for (const participant of participants) {
+      const videoTrack = participant.tracks?.video?.persistentTrack || participant.tracks?.video?.track;
+      const audioTrack = participant.tracks?.audio?.persistentTrack || participant.tracks?.audio?.track;
+      if (videoTrack && videoTrack.readyState === 'live') {
+        if (remoteVideo.srcObject?.getVideoTracks()[0] !== videoTrack)
+          remoteVideo.srcObject = new MediaStream([videoTrack]);
+        remoteVideo.play().catch(() => {});
+      }
+      if (audioTrack && audioTrack.readyState === 'live') {
+        if (remoteAudio.srcObject?.getAudioTracks()[0] !== audioTrack)
+          remoteAudio.srcObject = new MediaStream([audioTrack]);
+        remoteAudio.play().catch(() => setStatus('Tap the avatar to enable Tavus sound.'));
+      }
+    }
+  }
+  remoteVideo.addEventListener('click', () => remoteAudio.play().catch(() => {}));
   async function speak(text) {
     if (!active || !call || !text?.trim()) return false;
     if (pendingSpeech) { pendingSpeech(); pendingSpeech = null; }
@@ -76,16 +103,20 @@
       await loadDaily();
       if (token !== generation) return;
       conversationId = data.conversationId;
-      call = window.Daily.createFrame({ iframeStyle: { width: '100%', height: '100%', border: '0', borderRadius: '12px' },
-        audioSource: false, videoSource: false, showLeaveButton: false });
+      // A call object renders ONLY the remote face. A Daily iframe opens a
+      // meeting-room camera preview, which is inappropriate for this lesson.
+      call = window.Daily.createCallObject({ audioSource: false, videoSource: false });
+      for (const event of ['participant-joined', 'participant-updated', 'track-started'])
+        call.on(event, attachRemoteMedia);
       call.on('app-message', event => {
         const message = event.data || {};
         if (message.event_type === 'conversation.stopped_speaking' &&
             message.properties?.role === 'pal' && pendingSpeech) pendingSpeech();
       });
-      host.replaceChildren(call.iframe()); host.hidden = false;
+      host.replaceChildren(remoteVideo, remoteAudio); host.hidden = false;
       await call.join({ url: data.conversationUrl });
       if (token !== generation) return;
+      attachRemoteMedia();
       active = true; document.body.classList.add('tavus-on', 'live-on');
       stopButton.hidden = false; document.getElementById('liveStart').disabled = true;
       setStatus(labels[3]);
