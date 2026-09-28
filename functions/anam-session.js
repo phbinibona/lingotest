@@ -11,10 +11,10 @@ exports.handler = async event => {
     let result;
     try { result=await fetch('https://api.anam.ai/v1/auth/session-token',{
       method:'POST',signal:controller.signal,headers:{authorization:'Bearer '+key,'content-type':'application/json'},
-      body:JSON.stringify({personaConfig:{personaId:process.env.ANAM_PETER_PERSONA_ID||PERSONA_ID}})
+      body:JSON.stringify({personaConfig:{personaId:process.env.ANAM_PETER_PERSONA_ID||PERSONA_ID,skipGreeting:true}})
     }); } finally {clearTimeout(timer)}
     const data=await result.json();
-    if(!result.ok || !data.sessionToken) return respond(502,{error:'Anam could not start Peter (HTTP '+result.status+'). Confirm that the ID is a saved persona ID and belongs to the account holding ANAM_API_KEY. '+String(data.message||data.error||'').slice(0,130)});
+    if(!result.ok || !data.sessionToken) return respond(502,{error:'Anam could not start Olivia (HTTP '+result.status+'). Confirm that the ID is a saved persona ID and belongs to the account holding ANAM_API_KEY. '+String(data.message||data.error||'').slice(0,130)});
     return respond(200,{sessionToken:data.sessionToken});
   } catch(error) {console.error('Anam session:',error);return respond(502,{error:'Could not connect to Anam. Please try again.'})}
 };
