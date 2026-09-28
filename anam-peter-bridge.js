@@ -6,12 +6,14 @@
   const video=document.createElement('video');video.id='anamVideo';video.autoplay=true;video.playsInline=true;
   video.setAttribute('aria-label','Olivia, your conversation teacher');
   let client=null,active=false,serial=Promise.resolve();
-  const ui=(new URLSearchParams(location.search).get('ui')||localStorage.getItem('lingototal_ui_language')||'en').slice(0,2);
+  const params=new URLSearchParams(location.search);
+  const interfaceValue=(params.get('ui')||params.get('interface')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('interfaceLanguage')||'en').toLowerCase();
+  const ui=({english:'en',español:'es',spanish:'es',français:'fr',french:'fr',català:'ca',catalan:'ca'})[interfaceValue]||interfaceValue.slice(0,2);
   const labels={en:['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'],es:['Conoce a tu profesora Olivia','Terminar sesión','Conectando con Olivia…','Olivia está lista'],fr:['Rencontrez votre professeure Olivia','Terminer la séance','Connexion à Olivia…','Olivia est prête'],ca:['Coneix la teva professora Olivia','Acaba la sessió','Connectant amb Olivia…','L’Olivia està a punt']}[ui]||['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'];
   button.textContent=labels[0];end.textContent=labels[1];
   const setStatus=value=>{status.textContent=value};
   function move(id){if(!active)return;const panel=$(id);if(!panel)return;(panel.querySelector('.model-box,.avatar-feedback')||panel).prepend(host)}
-  async function stop(){active=false;document.body.classList.remove('anam-on');end.hidden=true;button.disabled=false;host.hidden=true;document.querySelector('.hero').append(host);if(client){const old=client;client=null;try{await old.stopStreaming()}catch(error){console.warn('Anam stop:',error)}}}
+  async function stop(){active=false;window.LingoOliviaResetWelcome?.();document.body.classList.remove('anam-on');end.hidden=true;button.disabled=false;host.hidden=true;document.querySelector('.hero').append(host);if(client){const old=client;client=null;try{await old.stopStreaming()}catch(error){console.warn('Anam stop:',error)}}}
   function speak(value){if(!active||!client||!String(value||'').trim())return Promise.resolve(false);
     serial=serial.catch(()=>{}).then(async()=>{if(!active||!client)return false;await client.talk(String(value));return true});return serial}
   async function start(){button.disabled=true;setStatus(labels[2]);try{
