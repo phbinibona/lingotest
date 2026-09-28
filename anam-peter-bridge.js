@@ -1,13 +1,13 @@
-// Anam renders Peter; Gemini controls his exact words. No camera or Anam microphone input.
+// Anam renders Olivia; Gemini controls her exact words. No camera or Anam microphone input.
 (() => {
   'use strict';
   const $=id=>document.getElementById(id);
   const button=$('anamStart'),end=$('anamStop'),status=$('anamStatus'),host=$('anamHost');
   const video=document.createElement('video');video.id='anamVideo';video.autoplay=true;video.playsInline=true;
-  video.setAttribute('aria-label','Peter, your conversation teacher');
+  video.setAttribute('aria-label','Olivia, your conversation teacher');
   let client=null,active=false,serial=Promise.resolve();
   const ui=(new URLSearchParams(location.search).get('ui')||localStorage.getItem('lingototal_ui_language')||'en').slice(0,2);
-  const labels={en:['Meet your teacher Peter','End session','Connecting to Peter…','Peter is ready'],es:['Conoce a tu profesor Peter','Terminar sesión','Conectando con Peter…','Peter está listo'],fr:['Rencontrez votre professeur Peter','Terminer la séance','Connexion à Peter…','Peter est prêt'],ca:['Coneix el teu professor Peter','Acaba la sessió','Connectant amb Peter…','En Peter està a punt']}[ui]||['Meet your teacher Peter','End session','Connecting to Peter…','Peter is ready'];
+  const labels={en:['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'],es:['Conoce a tu profesora Olivia','Terminar sesión','Conectando con Olivia…','Olivia está lista'],fr:['Rencontrez votre professeure Olivia','Terminer la séance','Connexion à Olivia…','Olivia est prête'],ca:['Coneix la teva professora Olivia','Acaba la sessió','Connectant amb Olivia…','L’Olivia està a punt']}[ui]||['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'];
   button.textContent=labels[0];end.textContent=labels[1];
   const setStatus=value=>{status.textContent=value};
   function move(id){if(!active)return;const panel=$(id);if(!panel)return;(panel.querySelector('.model-box,.avatar-feedback')||panel).prepend(host)}
@@ -24,14 +24,14 @@
     let resolveReady;
     const ready=new Promise(resolve=>{resolveReady=resolve});
     client.addListener(AnamEvent.SESSION_READY,()=>resolveReady());
-    client.addListener(AnamEvent.CONNECTION_CLOSED,()=>{if(active){stop();setStatus('Peter disconnected. You can try again.')}});
+    client.addListener(AnamEvent.CONNECTION_CLOSED,()=>{if(active){stop();setStatus('Olivia disconnected. You can try again.')}});
     host.replaceChildren(video);host.hidden=false;
     await client.streamToVideoElement('anamVideo');
-    await Promise.race([ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Peter did not become ready. Please try again.')),25000))]);
+    await Promise.race([ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Olivia did not become ready. Please try again.')),25000))]);
     active=true;document.body.classList.add('anam-on');end.hidden=false;setStatus(labels[3]);
-    await window.LingoPeterWelcome?.();
+    await window.LingoOliviaWelcome?.();
     const panel=document.querySelector('.step-panel.active:not(.hidden)');
-    if(panel?.id==='promptPanel')await window.LingoPeterTurn?.();
+    if(panel?.id==='promptPanel')await window.LingoOliviaTurn?.();
     else if(panel?.id==='retryPanel')move('retryPanel');
   }catch(error){console.error('Anam:',error);await stop();setStatus(error.message)}}
   button.addEventListener('click',start);
