@@ -1,5 +1,5 @@
 // Exchange the private Anam API key for a short-lived browser session token.
-const PERSONA_ID = 'ecfb2ddb-80ec-4526-88a7-299a4738957c';
+const PERSONA_ID = 'ce49cd17-42c2-4570-830d-d25b871b55b6';
 const respond = (statusCode, data) => ({statusCode, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'},body:JSON.stringify(data)});
 exports.handler = async event => {
   if (event.httpMethod !== 'POST') return respond(405,{error:'Method not allowed'});
