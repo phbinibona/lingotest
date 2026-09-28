@@ -16,11 +16,11 @@
   let pendingSpeech = null;
   const ui = (new URLSearchParams(location.search).get('ui') ||
     localStorage.getItem('lingototal_ui_language') || 'en').slice(0, 2).toLowerCase();
-  const labels = { en: ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'],
-    es: ['Probar avatar Tavus', 'Terminar Tavus', 'Conectando con Tavus…', 'Profesor Tavus preparado'],
-    ca: ['Prova l’avatar Tavus', 'Atura Tavus', 'Connectant amb Tavus…', 'Professor Tavus preparat'],
-    fr: ['Essayer l’avatar Tavus', 'Arrêter Tavus', 'Connexion à Tavus…', 'Professeur Tavus prêt'] }[ui] ||
-    ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'];
+  const labels = { en: ['Meet your teacher Peter', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'],
+    es: ['Conoce a tu profesor Peter', 'Terminar Tavus', 'Conectando con Tavus…', 'Profesor Tavus preparado'],
+    ca: ['Coneix el teu professor Peter', 'Atura Tavus', 'Connectant amb Tavus…', 'Professor Tavus preparat'],
+    fr: ['Rencontrez votre professeur Peter', 'Arrêter Tavus', 'Connexion à Tavus…', 'Professeur Tavus prêt'] }[ui] ||
+    ['Meet your teacher Peter', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'];
   startButton.textContent = labels[0]; stopButton.textContent = labels[1];
   const setStatus = message => { status.textContent = message; };
 
