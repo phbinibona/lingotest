@@ -19,9 +19,15 @@
     if(!response.ok)throw Error(data.error||'Anam is unavailable.');
     const {createClient,AnamEvent}=await import('https://esm.sh/@anam-ai/js-sdk@4.26.0');
     client=createClient(data.sessionToken,{disableInputAudio:true});
+    // streamToVideoElement can resolve before the peer and persona are ready for talk().
+    // Subscribe before streaming because Anam emits startup events during that call.
+    let resolveReady;
+    const ready=new Promise(resolve=>{resolveReady=resolve});
+    client.addListener(AnamEvent.SESSION_READY,()=>resolveReady());
     client.addListener(AnamEvent.CONNECTION_CLOSED,()=>{if(active){stop();setStatus('Peter disconnected. You can try again.')}});
     host.replaceChildren(video);host.hidden=false;
     await client.streamToVideoElement('anamVideo');
+    await Promise.race([ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Peter did not become ready. Please try again.')),25000))]);
     active=true;document.body.classList.add('anam-on');end.hidden=false;setStatus(labels[3]);
     await window.LingoPeterWelcome?.();
     const panel=document.querySelector('.step-panel.active:not(.hidden)');
