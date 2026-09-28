@@ -1,0 +1,109 @@
+// Tavus Echo mode renders LingoChat's existing Gemini text. The learner's
+// microphone and transcript remain in LingoChat, outside the Tavus room.
+(() => {
+  'use strict';
+  const startButton = document.getElementById('tavusStart');
+  const stopButton = document.getElementById('tavusStop');
+  const status = document.getElementById('tavusStatus');
+  const host = document.getElementById('tavusHost');
+  const native = window.LingoLiveAvatar;
+  let call = null, conversationId = '', active = false, generation = 0;
+  let pendingSpeech = null;
+  const ui = (new URLSearchParams(location.search).get('ui') ||
+    localStorage.getItem('lingototal_ui_language') || 'en').slice(0, 2).toLowerCase();
+  const labels = { en: ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'],
+    es: ['Probar avatar Tavus', 'Terminar Tavus', 'Conectando con Tavus…', 'Profesor Tavus preparado'],
+    ca: ['Prova l’avatar Tavus', 'Atura Tavus', 'Connectant amb Tavus…', 'Professor Tavus preparat'],
+    fr: ['Essayer l’avatar Tavus', 'Arrêter Tavus', 'Connexion à Tavus…', 'Professeur Tavus prêt'] }[ui] ||
+    ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'];
+  startButton.textContent = labels[0]; stopButton.textContent = labels[1];
+  const setStatus = message => { status.textContent = message; };
+
+  function move(panelId) {
+    if (!active) return;
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const target = panel.querySelector('.model-box, .avatar-feedback') || panel;
+    target.prepend(host);
+    host.after(status);
+  }
+  function stop() {
+    generation++;
+    active = false;
+    if (pendingSpeech) { pendingSpeech(); pendingSpeech = null; }
+    if (call) { const old = call; call = null; Promise.resolve(old.leave()).catch(() => {}).finally(() => old.destroy()); }
+    conversationId = '';
+    host.replaceChildren(); host.hidden = true;
+    document.body.classList.remove('tavus-on', 'live-on');
+    startButton.disabled = false; stopButton.hidden = true;
+    document.getElementById('liveStart').disabled = false;
+    document.querySelector('.hero').append(host);
+    document.querySelector('.live-controls').append(status);
+  }
+  function loadDaily() {
+    if (window.Daily?.createFrame) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@daily-co/daily-js'; script.crossOrigin = 'anonymous';
+      script.onload = () => window.Daily?.createFrame ? resolve() : reject(Error('Daily could not load'));
+      script.onerror = () => reject(Error('Video library could not load'));
+      document.head.append(script);
+    });
+  }
+  async function speak(text) {
+    if (!active || !call || !text?.trim()) return false;
+    if (pendingSpeech) { pendingSpeech(); pendingSpeech = null; }
+    return new Promise(resolve => {
+      const timer = setTimeout(done, 25000);
+      function done() { clearTimeout(timer); if (pendingSpeech === done) pendingSpeech = null; resolve(true); }
+      pendingSpeech = done;
+      try {
+        call.sendAppMessage({ message_type: 'conversation', event_type: 'conversation.echo',
+          conversation_id: conversationId,
+          properties: { modality: 'text', text: text.trim(), done: true } }, '*');
+        // A speaking event follows when Tavus starts rendering. End is handled below.
+      } catch (error) { console.warn('Tavus echo:', error); done(); resolve(false); }
+    });
+  }
+  async function start() {
+    if (native.active) { setStatus('End the LiveAvatar session before starting Tavus.'); return; }
+    const token = ++generation;
+    startButton.disabled = true; setStatus(labels[2]);
+    try {
+      const response = await fetch('/.netlify/functions/tavus-session', { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok) throw Error(data.error || 'Tavus is unavailable');
+      await loadDaily();
+      if (token !== generation) return;
+      conversationId = data.conversationId;
+      call = window.Daily.createFrame({ iframeStyle: { width: '100%', height: '100%', border: '0', borderRadius: '12px' },
+        audioSource: false, videoSource: false, showLeaveButton: false });
+      call.on('app-message', event => {
+        const message = event.data || {};
+        if (message.event_type === 'conversation.stopped_speaking' &&
+            message.properties?.role === 'pal' && pendingSpeech) pendingSpeech();
+      });
+      host.replaceChildren(call.iframe()); host.hidden = false;
+      await call.join({ url: data.conversationUrl });
+      if (token !== generation) return;
+      active = true; document.body.classList.add('tavus-on', 'live-on');
+      stopButton.hidden = false; document.getElementById('liveStart').disabled = true;
+      setStatus(labels[3]);
+      const panel = document.querySelector('.step-panel.active:not(.hidden)');
+      if (panel?.id === 'promptPanel') {
+        move('promptPanel');
+        const phrase = document.getElementById('statement')?.textContent;
+        if (phrase && !document.body.classList.contains('guest-turn')) speak(phrase);
+      } else if (panel?.id === 'retryPanel') move('retryPanel');
+    } catch (error) { console.warn('Tavus connection:', error); stop(); setStatus(error.message); }
+  }
+  startButton.addEventListener('click', start);
+  stopButton.addEventListener('click', () => { stop(); setStatus(''); });
+  window.addEventListener('pagehide', stop);
+  window.LingoTavusAvatar = { get active() { return active; }, move, speak, stop };
+  window.LingoLiveAvatar = {
+    get active() { return native.active || active; },
+    move(panel) { if (active) move(panel); else native.move(panel); },
+    speak(text, locale) { return active ? speak(text) : native.speak(text, locale); }
+  };
+})();
