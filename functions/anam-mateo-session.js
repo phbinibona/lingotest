@@ -10,7 +10,7 @@ async function lookupPersona(key,signal){
     if(!result.ok)throw Error('Anam could not list the saved share links.');
     const body=await result.json();
     const links=Array.isArray(body.data)?body.data:[];
-    const match=links.find(link=>link.token===SHARE_TOKEN || link.url?.endsWith('/'+SHARE_TOKEN));
+    const match=links.find(link=>link.token===SHARE_TOKEN || link.url?.endsWith('/'+SHARE_TOKEN)) || links.find(link=>/^Mateo - Spanish Tutor$/i.test(link.personaName||''));
     if(match?.personaId){cachedId=match.personaId;cachedUntil=Date.now()+600000;return cachedId}
     if(!body.meta?.next)break;
   }
