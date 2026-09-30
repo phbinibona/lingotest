@@ -127,7 +127,8 @@ exports.handler = async function (event) {
         ],
         generationConfig: {
           temperature: 0,
-          maxOutputTokens: 300
+          maxOutputTokens: 1024,
+          thinkingConfig: { thinkingBudget: 0 }
         }
       })
     });
@@ -148,6 +149,7 @@ exports.handler = async function (event) {
       });
     }
 
+    if(data?.candidates?.[0]?.finishReason === "MAX_TOKENS")return reply(502,{error:"Transcription was cut short. Please retry.",requestId:id});
     const transcript = cleanTranscript(extractText(data));
     if (!transcript || transcript === "[NO_SPEECH]") {
       return reply(422, { error: "No intelligible speech was detected.", requestId: id });
