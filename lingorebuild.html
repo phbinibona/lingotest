@@ -1874,7 +1874,8 @@ let selectedWords=[];
 let currentAudio=null;
 const audioCache=new Map();
 let audioRequestId=0;
-function tr(key){
+const levelPromptCopy={"en": "Choose the option that feels right for you today.", "es": "Elige la opción que te resulte adecuada hoy.", "ca": "Tria l’opció que et vagi bé avui.", "fr": "Choisissez l’option qui vous convient aujourd’hui.", "de": "Wählen Sie die Option, die heute zu Ihnen passt.", "it": "Scegli l’opzione più adatta a te oggi.", "pt": "Escolha a opção mais adequada para si hoje.", "eu": "Aukeratu gaur egokia iruditzen zaizun aukera.", "ja": "今日の自分に合った選択肢を選んでください。", "ar": "اختر الخيار الذي يناسبك اليوم."};
+function tr(key){if(key==="levelPrompt")return levelPromptCopy[uiLanguage]||levelPromptCopy.en;
   return(
     (translations[uiLanguage]||translations.en)[key]
     ||translations.en[key]
@@ -2812,3 +2813,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
