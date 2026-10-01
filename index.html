@@ -2733,6 +2733,29 @@
 <style id="lingototal-special-evaluation-card">
 .evaluation-card summary{list-style:none;cursor:pointer;padding-bottom:16px}.evaluation-card summary::-webkit-details-marker{display:none}.evaluation-card summary:focus-visible{outline:2px solid #8bb7ff;outline-offset:2px}.evaluation-card .evaluation-code-form{display:flex;flex-direction:column;gap:8px;margin-top:8px}.evaluation-card .evaluation-code-form input{width:100%;min-width:0}.evaluation-card .evaluation-access-status{grid-column:auto}.evaluation-card[open] .arrow{display:none}
 </style>
+<style id="lingototal-best-of-edition">
+[hidden]{display:none!important}
+.home-doorways{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px 42px 16px}
+.home-doorway{display:flex;flex-direction:column;padding:0;border:1px solid transparent;border-radius:9px;overflow:hidden;font:inherit;text-align:start;cursor:pointer;transition:transform .16s,box-shadow .16s}
+.home-doorway:hover{transform:translateY(-3px);box-shadow:0 12px 30px #0005}
+.home-doorway:focus-visible,.julien-new-feature:focus-visible{outline:3px solid #f4bd55;outline-offset:4px}
+.home-doorway[aria-expanded="true"]{outline:2px solid #fff;outline-offset:3px}
+.home-doorway img{display:block;width:100%;height:185px;object-fit:cover;object-position:center}
+.home-best{background:#a34224;color:#fff3e2}.home-explore{background:#12587c;color:#f1fbff}
+.home-doorway-copy{display:flex;flex:1;flex-direction:column;gap:9px;padding:19px 21px 20px}
+.home-doorway-copy strong{font-size:1.4rem;line-height:1.15;font-weight:900;letter-spacing:-.025em}
+.home-doorway-copy>span:not(.home-doorway-action){font-size:.86rem;line-height:1.5;opacity:.96}
+.home-doorway-action{margin-top:auto;padding-top:7px;font-weight:800;font-size:.83rem}
+.julien-new-feature.activity-card{display:flex!important;flex-direction:row!important;align-items:center;gap:18px;min-height:0!important;margin:0 42px 24px;padding:17px 20px!important;background:#162b44!important;border:1px solid #4a719d!important;overflow:visible!important}
+.julien-new-feature.activity-card::before{display:none!important}
+.julien-new-badge{display:inline-flex;padding:7px 10px;background:#ffca72;color:#382100;font-size:.68rem;letter-spacing:.08em;font-weight:900;flex-shrink:0}
+.julien-feature-copy{flex:1;min-width:0}.julien-new-feature.activity-card h3{margin:0 0 4px!important;font-size:1.12rem!important}.julien-new-feature.activity-card p{margin:0!important;font-size:.83rem!important;color:#e5eef8!important}
+.julien-feature-arrow{font-size:1.7rem;color:#a8cbff}
+.all-activities-heading{padding:24px 42px 0}.all-activities-heading h2{margin:0;color:#fff;font-size:1.2rem}
+#best-of,#all-activities{scroll-margin-top:16px}
+@media(max-width:900px){.home-doorways{padding:22px 24px 16px;gap:15px}.julien-new-feature.activity-card{margin:0 24px 22px}.all-activities-heading{padding:22px 24px 0}.home-doorway img{height:160px}.home-doorway-copy{padding:16px}.home-doorway-copy strong{font-size:1.2rem}}
+@media(max-width:600px){.home-doorways{grid-template-columns:1fr;padding:18px 16px 14px;gap:14px}.home-doorway img{height:155px}.home-doorway-copy{padding:15px 17px}.home-doorway-copy strong{font-size:1.25rem}.home-doorway-copy>span:not(.home-doorway-action){font-size:.82rem}.julien-new-feature.activity-card{margin:0 16px 20px;padding:14px!important;gap:12px}.julien-new-feature.activity-card h3{font-size:1rem!important}.julien-new-feature.activity-card p{font-size:.76rem!important}.all-activities-heading{padding:20px 16px 0}}
+</style>
 </head>
   <body id="top">
     <header class="banner index-banner" aria-label="LingoTotal navigation">
@@ -2747,13 +2770,7 @@
           </div>
         </div>
       </div>
-      <nav class="index-header-links" aria-label="Activity categories">
-        <a href="#personal" data-nav-i18n="group1Short">START</a>
-        <a href="#skills" data-nav-i18n="group2Short">SKILLS</a>
-        <a href="#young" data-nav-i18n="group3Short">YOUNG</a>
-        <a href="#real-life" data-nav-i18n="group4Short">REAL LIFE</a>
-        <a href="#special" data-nav-i18n="group5Short">SPECIAL</a>
-      </nav>
+      <nav class="index-header-links" aria-label="LingoTotal"><a href="#best-of" data-home-copy="best">Best of LingoTotal</a><a href="#all-activities" data-home-copy="explore">Explore all activities</a></nav>
     </header>
     <main class="page">
       <section class="hero">
@@ -2827,13 +2844,156 @@
           />
         </div>
       </section>
-      <nav class="section-tabs" role="tablist" aria-label="LingoTotal">
+      <section class="home-doorways" id="home-choices" aria-label="LingoTotal">
+<button type="button" class="home-doorway home-best" id="homeBestBtn" aria-controls="best-of" aria-expanded="false">
+<img src="home-best-of-v1.webp" width="900" height="600" alt="" fetchpriority="high">
+<span class="home-doorway-copy"><strong data-home-copy="best">Best of LingoTotal</strong><span data-home-copy="bestIntro">Ten activities to help you speak, listen, read and remember. A good place to start.</span><span class="home-doorway-action" data-home-copy="bestAction">Discover the top ten →</span></span>
+</button>
+<button type="button" class="home-doorway home-explore" id="homeExploreBtn" aria-controls="all-activities" aria-expanded="false">
+<img src="home-explore-v1.webp" width="900" height="600" alt="">
+<span class="home-doorway-copy"><strong data-home-copy="explore">Explore all activities</strong><span data-home-copy="exploreIntro">Find your own route through skills, everyday situations and specialist language.</span><span class="home-doorway-action" data-home-copy="exploreAction">Explore the collection →</span></span>
+</button>
+</section>
+<a class="julien-new-feature activity-card" data-page="lingojulienchat.html" href="lingojulienchat.html" id="julien-new-feature"><span class="julien-new-badge" data-home-copy="new">NEW</span><span class="julien-feature-copy"><h3>Talk with Julien</h3><p data-home-copy="julien">Your French tutor is here to help you.</p></span><span class="julien-feature-arrow" aria-hidden="true">→</span></a>
+<section class="section activity-tab-panel" id="best-of" aria-labelledby="bestOfTitle" tabindex="-1" hidden><div class="section-head"><h2 class="section-title" id="bestOfTitle" data-home-copy="best">Best of LingoTotal</h2></div><div class="activity-grid"><a
+            class="activity-card featured"
+            data-page="lingoreal.html"
+            href="lingoreal.html"
+            >
+            
+            <h3 data-i18n="lingoReal">LingoReal</h3>
+            <p data-i18n="lingoRealText">
+            Discover what people really say, what they mean and how natural
+            language works.
+            </p>
+            <span class="arrow">→</span>
+            </a>
+<a
+            class="activity-card"
+            data-page="lingospeak.html"
+            href="lingospeak.html"
+          >
+            
+            <h3 data-i18n="lingoSpeak">LingoSpeak</h3>
+            <p data-i18n="lingoSpeakText">
+              Prepare for a real conversation. Listen, practise and record
+              yourself before using the language in real life.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+<a
+            class="activity-card"
+            data-page="lingoflip.html"
+            href="lingoflip.html"
+            >
+            
+            <h3 data-i18n="lingoFlip">LingoFlip</h3>
+            <p data-i18n="lingoFlipText">
+            Build personalised flash cards, listen, flip and sort each phrase
+            into “Again” or “Got it”.
+            </p>
+            <span class="arrow">→</span>
+            </a>
+<a
+            class="activity-card saved-practice-feature"
+            data-page="lingopractice.html"
+            href="lingopractice.html"
+            >
+            <span class="activity-code" data-i18n="savedLanguage"
+            >SAVED LANGUAGE</span
+            >
+            <h3 data-i18n="lingoPractice">LingoPractice</h3>
+            <p data-i18n="lingoPracticeText">
+            Revisit the useful phrases you have saved and practise them
+            again until they are easier to remember and use.
+            </p>
+            <span class="saved-practice-badge" data-i18n="revisitSaved"
+            >Revisit saved phrases</span
+            >
+            <span class="arrow">→</span>
+            </a>
+<a
+            class="activity-card"
+            data-page="lingochat.html"
+            href="lingochat.html"
+          >
+            
+            <h3>LingoChat</h3>
+            <p id="bestChatText">Choose a topic, speak or adapt a reply, correct the transcript, and keep the conversation going.</p>
+            <span class="arrow">→</span>
+          </a>
+<a
+            class="activity-card"
+            data-page="lingodetective.html"
+            href="lingodetective.html"
+          >
+            
+            <h3 data-i18n="lingoDetective">LingoDetective</h3>
+            <p data-i18n="lingoDetectiveText">
+              Speak about your chosen topic, inspect the transcript, locate the
+              clues and repair the sentence.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+<a
+            class="activity-card"
+            data-page="lingorebuild.html"
+            href="lingorebuild.html"
+          >
+            
+            <h3 data-i18n="rebuild">Listen &amp; Rebuild</h3>
+            <p data-i18n="rebuildText">
+              Listen to a hidden sentence and rebuild it from jumbled words.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+<a
+            class="activity-card"
+            data-page="lingoreading.html"
+            href="lingoreading.html"
+          >
+            
+            <h3 data-i18n="reading">Reading Challenge</h3>
+            <p data-i18n="readingText">
+              Read a generated text, answer comprehension questions and work out
+              vocabulary from context.
+            </p>
+            <span class="arrow">→</span>
+          </a>
+<a
+            class="activity-card"
+            data-page="lingoquiz.html"
+            href="lingoquiz.html"
+            >
+            
+            <h3 data-i18n="quiz">LingoQuiz</h3>
+            <p data-i18n="quizText">
+            Test your general knowledge while practising the language you are
+            learning.
+            </p>
+            <span class="arrow">→</span>
+            </a>
+<a
+          class="activity-card featured"
+          data-page="lingoeveryday.html"
+          href="lingoeveryday.html"
+          >
+          
+          <h3 data-i18n="everyday">Everyday Language</h3>
+          <p data-i18n="everydayText">
+          Learn natural expressions people really use in everyday
+          situations.
+          </p>
+          <span class="arrow">→</span>
+          </a></div></section>
+<div id="all-activities" hidden><div class="all-activities-heading"><h2 data-home-copy="explore">Explore all activities</h2></div>
+<nav class="section-tabs" role="tablist" aria-label="LingoTotal">
 <button type="button" class="section-tab activity-card" role="tab" id="tab-personal" aria-controls="personal" aria-selected="false" tabindex="0"><h3 data-i18n="s1">Start learning</h3><p data-i18n="s1t">Discover useful everyday language, natural expressions and phrases that matter to you. Save them and return to them until they become language you can use.</p><span class="arrow" aria-hidden="true">→</span></button>
 <button type="button" class="section-tab activity-card" role="tab" id="tab-skills" aria-controls="skills" aria-selected="false" tabindex="-1"><h3 data-i18n="s2">Practise a skill</h3><p data-i18n="s2t">Choose reading, listening, grammar, sentence building or a lighter challenge.</p><span class="arrow" aria-hidden="true">→</span></button>
 <button type="button" class="section-tab activity-card" role="tab" id="tab-young" aria-controls="young" aria-selected="false" tabindex="-1"><h3 data-i18n="s3">Lingo for young people</h3><p data-i18n="s3t">Practical language for study, first jobs, new places and becoming more independent.</p><span class="arrow" aria-hidden="true">→</span></button>
 <button type="button" class="section-tab activity-card" role="tab" id="tab-real-life" aria-controls="real-life" aria-selected="false" tabindex="-1"><h3 data-i18n="s4">Lingo for real life</h3><p data-i18n="s4t">Language for major practical situations and everyday independence.</p><span class="arrow" aria-hidden="true">→</span></button>
 <button type="button" class="section-tab activity-card" role="tab" id="tab-special" aria-controls="special" aria-selected="false" tabindex="-1"><h3 data-i18n="s5">Lingo Special</h3><p data-i18n="s5t">Specialist versions for particular studies and professional situations.</p><span class="arrow" aria-hidden="true">→</span></button>
-</nav>
+</nav></div>
 <section class="section activity-tab-panel" id="personal" role="tabpanel" aria-labelledby="tab-personal" tabindex="0" hidden>
         <div class="section-head">
           <div class="section-number">01</div>
@@ -5461,8 +5621,8 @@
         function applyLingoDetectiveCopy() {
           const title = document.querySelector('[data-i18n="lingoDetective"]');
           const text = document.querySelector('[data-i18n="lingoDetectiveText"]');
-          if (title) title.textContent = "LingoDetective";
-          if (text) text.textContent = copy[ui?.value] || copy.en;
+          document.querySelectorAll('[data-i18n="lingoDetective"]').forEach(element=>element.textContent="LingoDetective");
+          document.querySelectorAll('[data-i18n="lingoDetectiveText"]').forEach(element=>element.textContent=copy[ui?.value]||copy.en);
         }
         ui?.addEventListener("change", applyLingoDetectiveCopy);
         applyLingoDetectiveCopy();
@@ -5488,8 +5648,8 @@
         function applyLingoSpeakCopy() {
           const title = document.querySelector('[data-i18n="lingoSpeak"]');
           const text = document.querySelector('[data-i18n="lingoSpeakText"]');
-          if (title) title.textContent = "LingoSpeak";
-          if (text) text.textContent = copy[ui?.value] || copy.en;
+          document.querySelectorAll('[data-i18n="lingoSpeak"]').forEach(element=>element.textContent="LingoSpeak");
+          document.querySelectorAll('[data-i18n="lingoSpeakText"]').forEach(element=>element.textContent=copy[ui?.value]||copy.en);
         }
         ui?.addEventListener("change", applyLingoSpeakCopy);
         applyLingoSpeakCopy();
@@ -5515,8 +5675,8 @@
         function applyLingoFlipCopy() {
           const title = document.querySelector('[data-i18n="lingoFlip"]');
           const text = document.querySelector('[data-i18n="lingoFlipText"]');
-          if (title) title.textContent = "LingoFlip";
-          if (text) text.textContent = copy[ui?.value] || copy.en;
+          document.querySelectorAll('[data-i18n="lingoFlip"]').forEach(element=>element.textContent="LingoFlip");
+          document.querySelectorAll('[data-i18n="lingoFlipText"]').forEach(element=>element.textContent=copy[ui?.value]||copy.en);
         }
         ui?.addEventListener("change", applyLingoFlipCopy);
         applyLingoFlipCopy();
@@ -5619,7 +5779,7 @@ ui?.addEventListener("change",apply);apply()
 (function(){
 const tabs=Array.from(document.querySelectorAll('.section-tab'));
 const panels=tabs.map(tab=>document.getElementById(tab.getAttribute('aria-controls')));
-function activate(index,focus){tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;panels[i].hidden=i!==index});if(focus)tabs[index].focus()}
+function activate(index,focus){document.getElementById('best-of').hidden=true;document.getElementById('all-activities').hidden=false;document.getElementById('homeBestBtn').setAttribute('aria-expanded','false');document.getElementById('homeExploreBtn').setAttribute('aria-expanded','true');tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;panels[i].hidden=i!==index});if(focus)tabs[index].focus()}
 tabs.forEach((tab,index)=>{
 tab.addEventListener('click',()=>{activate(index,false);requestAnimationFrame(()=>panels[index].scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))});
 tab.addEventListener('keydown',event=>{let next=index;const rtl=document.documentElement.dir==='rtl';if(event.key==='ArrowRight')next=(index+(rtl?-1:1)+tabs.length)%tabs.length;else if(event.key==='ArrowLeft')next=(index+(rtl?1:-1)+tabs.length)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();activate(next,true)})});
@@ -5628,6 +5788,19 @@ window.addEventListener('hashchange',revealHash);revealHash();
 })();
 </script>
 <script id="talk-julien-card-translations">document.addEventListener("DOMContentLoaded",()=>{const copy={"en": "Choose a topic, speak French with Julien and receive feedback on your conversation.", "ca": "Tria un tema, parla francès amb en Julien i rep comentaris sobre la conversa.", "es": "Elige un tema, habla francés con Julien y recibe comentarios sobre tu conversación.", "fr": "Choisissez un sujet, parlez français avec Julien et recevez des conseils sur votre conversation.", "de": "Wählen Sie ein Thema, sprechen Sie Französisch mit Julien und erhalten Sie Rückmeldung zum Gespräch.", "it": "Scegli un argomento, parla francese con Julien e ricevi feedback sulla conversazione.", "pt": "Escolha um tema, fale francês com Julien e receba comentários sobre a conversa.", "eu": "Aukeratu gai bat, hitz egin frantsesez Julienekin eta jaso elkarrizketari buruzko iritzia.", "ja": "話題を選び、Julienとフランス語で話し、会話についてのフィードバックを受けましょう。", "ar": "اختر موضوعًا وتحدث الفرنسية مع جوليان واحصل على ملاحظات حول محادثتك.", "cy": "Dewiswch bwnc, siaradwch Ffrangeg gyda Julien a chael adborth ar eich sgwrs.", "gd": "Tagh cuspair, bruidhinn Fraingis le Julien agus faigh fios air ais mun chòmhradh agad."};const ui=document.getElementById("uiLanguage"),text=document.getElementById("talkJulienCardText");function apply(){text.textContent=copy[ui.value]||copy.en}ui.addEventListener("change",apply);apply()});</script>
+<script id="lingototal-home-edition">
+document.addEventListener('DOMContentLoaded',()=>{
+const copy={"en": ["Best of LingoTotal", "Ten activities to help you speak, listen, read and remember. A good place to start.", "Discover the top ten →", "Explore all activities", "Find your own route through skills, everyday situations and specialist language.", "Explore the collection →", "NEW", "Your French tutor is here to help you."], "es": ["Lo mejor de LingoTotal", "Diez actividades para hablar, escuchar, leer y recordar. Un buen punto de partida.", "Descubre las diez destacadas →", "Explora todas las actividades", "Encuentra tu camino entre destrezas, situaciones cotidianas y lenguaje especializado.", "Explora la colección →", "NUEVO", "Tu tutor de francés está aquí para ayudarte."], "ca": ["El millor de LingoTotal", "Deu activitats per parlar, escoltar, llegir i recordar. Un bon punt de partida.", "Descobreix les deu destacades →", "Explora totes les activitats", "Troba el teu camí entre habilitats, situacions quotidianes i llenguatge especialitzat.", "Explora la col·lecció →", "NOU", "El teu tutor de francès és aquí per ajudar-te."], "fr": ["Le meilleur de LingoTotal", "Dix activités pour parler, écouter, lire et mémoriser. Un bon point de départ.", "Découvrez les dix activités →", "Explorez toutes les activités", "Trouvez votre parcours parmi les compétences, les situations quotidiennes et le langage spécialisé.", "Explorez la collection →", "NOUVEAU", "Votre tuteur de français est là pour vous aider."], "de": ["Das Beste von LingoTotal", "Zehn Aktivitäten zum Sprechen, Hören, Lesen und Merken. Ein guter Einstieg.", "Die zehn Empfehlungen entdecken →", "Alle Aktivitäten entdecken", "Finden Sie Ihren Weg durch Sprachfertigkeiten, Alltagssituationen und Fachsprache.", "Die Sammlung entdecken →", "NEU", "Ihr Französischlehrer ist hier, um Ihnen zu helfen."], "it": ["Il meglio di LingoTotal", "Dieci attività per parlare, ascoltare, leggere e ricordare. Un buon punto di partenza.", "Scopri le dieci attività →", "Esplora tutte le attività", "Trova il tuo percorso tra abilità, situazioni quotidiane e linguaggio specialistico.", "Esplora la raccolta →", "NUOVO", "Il tuo tutor di francese è qui per aiutarti."], "pt": ["O melhor do LingoTotal", "Dez atividades para falar, ouvir, ler e recordar. Um bom ponto de partida.", "Descubra as dez atividades →", "Explore todas as atividades", "Encontre o seu caminho entre competências, situações quotidianas e linguagem especializada.", "Explore a coleção →", "NOVO", "O seu tutor de francês está aqui para ajudar."], "eu": ["LingoTotalen onena", "Hitz egiteko, entzuteko, irakurtzeko eta gogoratzeko hamar jarduera. Hasteko leku egokia.", "Ezagutu hamar jarduerak →", "Arakatu jarduera guztiak", "Aurkitu zure bidea trebetasunen, eguneroko egoeren eta hizkuntza espezializatuaren artean.", "Arakatu bilduma →", "BERRIA", "Zure frantses tutorea hemen dago zuri laguntzeko."], "ja": ["LingoTotalのおすすめ", "話す・聞く・読む・覚えるための10の活動。ここから始めましょう。", "おすすめ10選を見る →", "すべての活動を見る", "言語スキル、日常の場面、専門分野から、自分に合う活動を見つけましょう。", "活動一覧を見る →", "新登場", "フランス語の先生があなたをサポートします。"], "ar": ["أفضل أنشطة LingoTotal", "عشرة أنشطة للتحدث والاستماع والقراءة والتذكر. نقطة بداية مناسبة.", "اكتشف الأنشطة العشرة ←", "استكشف جميع الأنشطة", "اختر مسارك بين المهارات والمواقف اليومية واللغة المتخصصة.", "استكشف المجموعة ←", "جديد", "مدرّسك للفرنسية هنا لمساعدتك."], "cy": ["Gorau LingoTotal", "Deg gweithgaredd i siarad, gwrando, darllen a chofio. Lle da i ddechrau.", "Darganfod y deg uchaf →", "Archwilio pob gweithgaredd", "Dewch o hyd i’ch llwybr trwy sgiliau, sefyllfaoedd bob dydd ac iaith arbenigol.", "Archwilio’r casgliad →", "NEWYDD", "Mae eich tiwtor Ffrangeg yma i’ch helpu."], "gd": ["An rud as fheàrr de LingoTotal", "Deich gnìomhan airson bruidhinn, èisteachd, leughadh agus cuimhneachadh. Deagh àite tòiseachaidh.", "Faic na deich gnìomhan →", "Rannsaich na gnìomhan uile", "Lorg do shlighe tro sgilean, suidheachaidhean làitheil agus cànan sònraichte.", "Rannsaich an cruinneachadh →", "ÙR", "Tha an tidsear Fraingis agad an seo gus do chuideachadh."]},keys=['best','bestIntro','bestAction','explore','exploreIntro','exploreAction','new','julien'];
+const ui=document.getElementById('uiLanguage'),best=document.getElementById('best-of'),all=document.getElementById('all-activities'),bestBtn=document.getElementById('homeBestBtn'),allBtn=document.getElementById('homeExploreBtn');
+function scrollTo(element){requestAnimationFrame(()=>element.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))}
+function openView(mode,scroll=true){document.querySelectorAll('.activity-tab-panel').forEach(p=>p.hidden=true);document.querySelectorAll('.section-tab').forEach((tab,i)=>{tab.setAttribute('aria-selected','false');tab.tabIndex=i===0?0:-1});best.hidden=mode!=='best';all.hidden=mode!=='all';bestBtn.setAttribute('aria-expanded',String(mode==='best'));allBtn.setAttribute('aria-expanded',String(mode==='all'));if(scroll)scrollTo(mode==='best'?best:all)}
+bestBtn.addEventListener('click',()=>openView('best'));allBtn.addEventListener('click',()=>openView('all'));
+function hashView(){if(location.hash==='#best-of')openView('best');else if(location.hash==='#all-activities')openView('all')}
+window.addEventListener('hashchange',hashView);hashView();
+function apply(){const values=copy[ui.value]||copy.en;document.querySelectorAll('[data-home-copy]').forEach(el=>el.textContent=values[keys.indexOf(el.dataset.homeCopy)]);const original=document.getElementById('lingoChatCardText'),clone=document.getElementById('bestChatText');if(original&&clone)clone.textContent=original.textContent}
+ui.addEventListener('change',apply);apply();
+});
+</script>
 </body>
 </html>
 
