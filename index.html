@@ -2720,6 +2720,14 @@
 @media(max-width:600px){.section-tabs{padding:16px;gap:10px}}
 @media(max-width:360px){.section-tabs{grid-template-columns:1fr}}
 </style>
+<style id="lingototal-mobile-selected-section">
+@media(max-width:760px){
+.activity-tab-panel{scroll-margin-top:16px}
+.activity-tab-panel .section-head{display:block!important;margin-bottom:16px!important;padding:12px 0!important;border-bottom:2px solid #3277e8!important}
+.activity-tab-panel .section-title{display:block!important;margin:0!important;color:#fff!important;font-size:1.12rem!important;line-height:1.3!important;letter-spacing:.03em!important}
+.activity-tab-panel .section-intro{margin-top:8px!important}
+}
+</style>
 </head>
   <body id="top">
     <header class="banner index-banner" aria-label="LingoTotal navigation">
@@ -5631,7 +5639,7 @@ const tabs=Array.from(document.querySelectorAll('.section-tab'));
 const panels=tabs.map(tab=>document.getElementById(tab.getAttribute('aria-controls')));
 function activate(index,focus){tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;panels[i].hidden=i!==index});if(focus)tabs[index].focus()}
 tabs.forEach((tab,index)=>{
-tab.addEventListener('click',()=>activate(index,false));
+tab.addEventListener('click',()=>{activate(index,false);if(window.matchMedia('(max-width:760px)').matches){requestAnimationFrame(()=>panels[index].scrollIntoView({behavior:'smooth',block:'start'}))}});
 tab.addEventListener('keydown',event=>{let next=index;const rtl=document.documentElement.dir==='rtl';if(event.key==='ArrowRight')next=(index+(rtl?-1:1)+tabs.length)%tabs.length;else if(event.key==='ArrowLeft')next=(index+(rtl?1:-1)+tabs.length)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();activate(next,true)})});
 function revealHash(){const id=location.hash.slice(1);const element=document.getElementById(id);if(!element)return;const index=panels.findIndex(panel=>panel===element||panel.contains(element));if(index>=0)activate(index,false)}
 window.addEventListener('hashchange',revealHash);revealHash();
