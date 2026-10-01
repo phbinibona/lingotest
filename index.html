@@ -2712,7 +2712,7 @@
     </style>
   <style id="lingototal-section-tabs">
 .activity-tab-panel[hidden]{display:none!important}
-.activity-tab-panel{scroll-margin-top:16px}
+.activity-tab-panel{scroll-margin-top:16px;min-height:calc(100vh - 16px);min-height:calc(100dvh - 16px)}
 .section-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:20px 42px;background:transparent;border-bottom:1px solid var(--line)}
 .section-tab{width:100%;text-align:start;font:inherit;cursor:pointer}
 .section-tab[aria-selected="true"]{outline:2px solid #8bb7ff;outline-offset:2px;background:#222a35!important}
@@ -3034,6 +3034,8 @@
             <p id="lingoJulienCardText">Learn French with Julien. Listen, record a short excerpt and hear feedback.</p><p id="julienLaptopNotice" style="color:#a63b12;font-weight:800">Laptop or desktop only for now.</p>
             <span class="arrow">→</span>
           </a>
+<a class="activity-card" data-page="lingojulienchat.html" href="lingojulienchat.html"><h3>Talk with Julien</h3><p id="talkJulienCardText">Choose a topic, speak French with Julien and receive feedback on your conversation.</p><span class="arrow">→</span></a>
+
           <a
             class="activity-card"
             data-page="lingodetective.html"
@@ -5625,6 +5627,7 @@ function revealHash(){const id=location.hash.slice(1);const element=document.get
 window.addEventListener('hashchange',revealHash);revealHash();
 })();
 </script>
+<script id="talk-julien-card-translations">document.addEventListener("DOMContentLoaded",()=>{const copy={"en": "Choose a topic, speak French with Julien and receive feedback on your conversation.", "ca": "Tria un tema, parla francès amb en Julien i rep comentaris sobre la conversa.", "es": "Elige un tema, habla francés con Julien y recibe comentarios sobre tu conversación.", "fr": "Choisissez un sujet, parlez français avec Julien et recevez des conseils sur votre conversation.", "de": "Wählen Sie ein Thema, sprechen Sie Französisch mit Julien und erhalten Sie Rückmeldung zum Gespräch.", "it": "Scegli un argomento, parla francese con Julien e ricevi feedback sulla conversazione.", "pt": "Escolha um tema, fale francês com Julien e receba comentários sobre a conversa.", "eu": "Aukeratu gai bat, hitz egin frantsesez Julienekin eta jaso elkarrizketari buruzko iritzia.", "ja": "話題を選び、Julienとフランス語で話し、会話についてのフィードバックを受けましょう。", "ar": "اختر موضوعًا وتحدث الفرنسية مع جوليان واحصل على ملاحظات حول محادثتك.", "cy": "Dewiswch bwnc, siaradwch Ffrangeg gyda Julien a chael adborth ar eich sgwrs.", "gd": "Tagh cuspair, bruidhinn Fraingis le Julien agus faigh fios air ais mun chòmhradh agad."};const ui=document.getElementById("uiLanguage"),text=document.getElementById("talkJulienCardText");function apply(){text.textContent=copy[ui.value]||copy.en}ui.addEventListener("change",apply);apply()});</script>
 </body>
 </html>
 
