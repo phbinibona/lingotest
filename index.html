@@ -2756,7 +2756,14 @@
 @media(max-width:900px){.home-doorways{padding:22px 24px 16px;gap:15px}.julien-new-feature.activity-card{margin:0 24px 22px}.all-activities-heading{padding:22px 24px 0}.home-doorway img{height:160px}.home-doorway-copy{padding:16px}.home-doorway-copy strong{font-size:1.2rem}}
 @media(max-width:600px){.home-doorways{grid-template-columns:1fr;padding:18px 16px 14px;gap:14px}.home-doorway img{height:155px}.home-doorway-copy{padding:15px 17px}.home-doorway-copy strong{font-size:1.25rem}.home-doorway-copy>span:not(.home-doorway-action){font-size:.82rem}.julien-new-feature.activity-card{margin:0 16px 20px;padding:14px!important;gap:12px}.julien-new-feature.activity-card h3{font-size:1rem!important}.julien-new-feature.activity-card p{font-size:.76rem!important}.all-activities-heading{padding:20px 16px 0}}
 </style>
-</head>
+<style>
+.home-doorway{flex-direction:row;align-items:flex-start;padding:20px;gap:14px}
+.home-choice-icon{width:32px;height:32px;flex:0 0 32px;margin-top:2px}
+.home-doorway-copy{padding:0}
+.home-julien-portrait{display:block;width:72px;height:88px;object-fit:cover;object-position:center top;border-radius:6px;flex-shrink:0}
+.home-julien-portrait[hidden]{display:none}
+@media(max-width:600px){.home-doorway{padding:17px;gap:12px}.home-doorway-copy{padding:0}.home-julien-portrait{width:54px;height:70px}.julien-new-feature.activity-card{flex-wrap:wrap}.julien-feature-copy{flex-basis:calc(100% - 150px)}}
+</style></head>
   <body id="top">
     <header class="banner index-banner" aria-label="LingoTotal navigation">
       <div class="brand-wrap" aria-label="LingoTotal">
@@ -2846,15 +2853,15 @@
       </section>
       <section class="home-doorways" id="home-choices" aria-label="LingoTotal">
 <button type="button" class="home-doorway home-best" id="homeBestBtn" aria-controls="best-of" aria-expanded="false">
-<img src="home-best-of-v1.webp" width="900" height="600" alt="" fetchpriority="high">
+<svg class="home-choice-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 10l6 5 5-9 5 9 6-5-3 15H8z" fill="#ffd078" stroke="currentColor" stroke-width="1.5"/><path d="M8 28h16" stroke="#ffd078" stroke-width="2.5"/></svg>
 <span class="home-doorway-copy"><strong data-home-copy="best">Best of LingoTotal</strong><span data-home-copy="bestIntro">Ten activities to help you speak, listen, read and remember. A good place to start.</span><span class="home-doorway-action" data-home-copy="bestAction">Discover the top ten →</span></span>
 </button>
 <button type="button" class="home-doorway home-explore" id="homeExploreBtn" aria-controls="all-activities" aria-expanded="false">
-<img src="home-explore-v1.webp" width="900" height="600" alt="">
+<svg class="home-choice-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="16" cy="16" r="13"/><ellipse cx="16" cy="16" rx="6" ry="13"/><path d="M3 16h26M5 9h22M5 23h22"/></svg>
 <span class="home-doorway-copy"><strong data-home-copy="explore">Explore all activities</strong><span data-home-copy="exploreIntro">Find your own route through skills, everyday situations and specialist language.</span><span class="home-doorway-action" data-home-copy="exploreAction">Explore the collection →</span></span>
 </button>
 </section>
-<a class="julien-new-feature activity-card" data-page="lingojulienchat.html" href="lingojulienchat.html" id="julien-new-feature"><span class="julien-new-badge" data-home-copy="new">NEW</span><span class="julien-feature-copy"><h3>Talk with Julien</h3><p data-home-copy="julien">Your French tutor is here to help you.</p></span><span class="julien-feature-arrow" aria-hidden="true">→</span></a>
+<a class="julien-new-feature activity-card" data-page="lingojulienchat.html" href="lingojulienchat.html" id="julien-new-feature"><img id="homeJulienPortrait" class="home-julien-portrait" width="72" height="88" alt="Julien" hidden><span class="julien-new-badge" data-home-copy="new">NEW</span><span class="julien-feature-copy"><h3>Talk with Julien</h3><p data-home-copy="julien">Your French tutor is here to help you.</p></span><span class="julien-feature-arrow" aria-hidden="true">→</span></a>
 <section class="section activity-tab-panel" id="best-of" aria-labelledby="bestOfTitle" tabindex="-1" hidden><div class="section-head"><h2 class="section-title" id="bestOfTitle" data-home-copy="best">Best of LingoTotal</h2></div><div class="activity-grid"><a
             class="activity-card featured"
             data-page="lingoreal.html"
@@ -5801,6 +5808,12 @@ function apply(){const values=copy[ui.value]||copy.en;document.querySelectorAll(
 ui.addEventListener('change',apply);apply();
 });
 </script>
-</body>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+try{const r=await fetch('/.netlify/functions/julien-preview');const d=await r.json();
+if(r.ok&&typeof d.imageUrl==='string'&&d.imageUrl.startsWith('https://')){const img=document.getElementById('homeJulienPortrait');img.onload=()=>{img.hidden=false};img.src=d.imageUrl}
+}catch(e){}
+});
+</script></body>
 </html>
 
