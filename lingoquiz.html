@@ -509,6 +509,7 @@ h2{font-size:1.08rem;color:var(--ink);font-weight:850;letter-spacing:-.02em}
 </main>
 <div class="notice" id="notice"></div>
 <script>
+function auditTargetName(value){const names={"en": "English", "ca": "Catalan", "es": "Spanish", "fr": "French", "de": "German", "it": "Italian", "pt": "Portuguese", "eu": "Basque", "ja": "Japanese", "ar": "Arabic", "cy": "Welsh", "gd": "Gaelic"};const raw=String(value||" ").trim();return names[raw.toLowerCase().split("-")[0]]||Object.values(names).find(x=>x.toLowerCase()===raw.toLowerCase())||raw;}
 const API_ENDPOINT='/.netlify/functions/gemini';
 const LANGUAGE_NAMES={
   en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',
@@ -695,7 +696,7 @@ function tr(key){return T[uiLanguage]?.[key]||T.en[key]||key}
 function readSettings(){
   const params=new URLSearchParams(location.search);
   uiLanguage=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-  targetLanguage=params.get('target')||localStorage.getItem('lingototal_target_language')||'Spanish';
+  targetLanguage=auditTargetName(params.get('target')||localStorage.getItem('lingototal_target_language')||'Spanish');
   if(!T[uiLanguage]) uiLanguage='en';
   if(!TARGET_TO_CODE[targetLanguage]) targetLanguage='Spanish';
   localStorage.setItem('lingototal_ui_language',uiLanguage);
@@ -996,3 +997,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
