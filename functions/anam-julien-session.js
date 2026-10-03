@@ -2,6 +2,7 @@
 const PERSONA_ID='7604c4ea-a3c4-594b-92d6-3b7f8ac636d3';
 const response=(statusCode,data)=>({statusCode,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'},body:JSON.stringify(data)});
 exports.handler=async event=>{
+  if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if(event.httpMethod!=='POST')return response(405,{error:'Method not allowed'});
   const key=process.env.ANAM_JULIEN_API_KEY || process.env.ANAM_MATEO_API_KEY || process.env.ANAM_API_KEY;
   if(!key)return response(503,{error:'Julien needs ANAM_JULIEN_API_KEY in the site configuration.'});
@@ -14,3 +15,4 @@ exports.handler=async event=>{
   }catch(error){console.error('Julien session:',error);return response(502,{error:error.name==='AbortError'?'Julien took too long to connect.':'Could not connect to Julien. Please try again.'})}
   finally{clearTimeout(timer)}
 };
+

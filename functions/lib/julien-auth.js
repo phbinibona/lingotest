@@ -1,0 +1,10 @@
+const crypto=require('crypto');
+const cookieName='julien_access';
+const secret=()=>process.env.JULIEN_ACCESS_CODE||'';
+const equal=(a,b)=>{const x=crypto.createHash('sha256').update(a).digest(),y=crypto.createHash('sha256').update(b).digest();return crypto.timingSafeEqual(x,y)};
+const sign=payload=>crypto.createHmac('sha256',secret()).update(payload).digest('hex');
+exports.configured=()=>Boolean(secret());
+exports.validCode=code=>typeof code==='string'&&Boolean(secret())&&equal(code,secret());
+exports.cookie=()=>{const payload=String(Date.now()+8*60*60*1000);return cookieName+'='+payload+'.'+sign(payload)+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800'};
+exports.authorized=event=>{if(!secret())return false;const headers=event.headers||{};const value=String(headers.cookie||headers.Cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith(cookieName+'='))?.slice(cookieName.length+1)||'';const parts=value.split('.');return parts.length===2&&/^\d+$/.test(parts[0])&&Number(parts[0])>Date.now()&&equal(parts[1],sign(parts[0]))};
+exports.denied=()=>({statusCode:401,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify({error:'Enter your Talk with Julien access code.'})});
