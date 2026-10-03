@@ -109,7 +109,9 @@ exports.handler = async function (event) {
           ],
           generationConfig: {
             temperature,
-            maxOutputTokens
+            maxOutputTokens,
+            ...(input.responseMimeType === 'application/json' ? {responseMimeType:'application/json'} : {}),
+            ...(input.thinkingBudget === 0 ? {thinkingConfig:{thinkingBudget:0}} : {})
           }
         })
       });
