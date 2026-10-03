@@ -9,6 +9,7 @@ const reply = (statusCode, body) => ({
 });
 
 exports.handler = async (event) => {
+ if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' });
   const keySource = process.env.LIVEAVATAR_API_KEY ? 'LIVEAVATAR_API_KEY' : 'LINGOTOTAL';
   const key = process.env.LIVEAVATAR_API_KEY || process.env.LINGOTOTAL;

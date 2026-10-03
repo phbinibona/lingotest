@@ -16,6 +16,7 @@ async function tavus(path, key, body) {
 }
 
 exports.handler = async event => {
+ if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' });
   const key = process.env.TAVUS_API_KEY;
   if (!key) return reply(503, { error: 'Tavus is not connected yet. Add TAVUS_API_KEY to this Netlify site.' });

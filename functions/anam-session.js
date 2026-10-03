@@ -2,6 +2,7 @@
 const PERSONA_ID = 'ce49cd17-42c2-4570-830d-d25b871b55b6';
 const respond = (statusCode, data) => ({statusCode, headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'},body:JSON.stringify(data)});
 exports.handler = async event => {
+ if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if (event.httpMethod !== 'POST') return respond(405,{error:'Method not allowed'});
   const key=process.env.ANAM_API_KEY;
   if (!key) return respond(503,{error:'Anam is not connected yet. Add ANAM_API_KEY in the Netlify environment variables.'});

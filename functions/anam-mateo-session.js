@@ -2,6 +2,7 @@
 const PERSONA_ID='99c55ea3-48ac-4650-87c4-7facbd645a43';
 const response=(statusCode,data)=>({statusCode,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'},body:JSON.stringify(data)});
 exports.handler=async event=>{
+ if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if(event.httpMethod!=='POST')return response(405,{error:'Method not allowed'});
   const key=process.env.ANAM_MATEO_API_KEY || process.env.ANAM_API_KEY;
   if(!key)return response(503,{error:'Mateo needs ANAM_MATEO_API_KEY in the site configuration.'});
