@@ -1,10 +1,14 @@
+import {LANGUAGES,TRANSLATIONS,resolveLanguage,setLanguage} from './julien-languages.js?v=20261004multi';
 (()=>{
-const $=id=>document.getElementById(id),raw=new URLSearchParams(location.search).get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
-const lang=raw.startsWith('ca')?'ca':raw.startsWith('es')?'es':raw.startsWith('fr')?'fr':'en';
-const copy={ca:["Introdueix el codi d’accés que t’han donat.","Codi d’accés","Accedeix a Parla amb en Julien","Comprovant…","El codi no és vàlid. Torna-ho a provar.","L’accés encara no està configurat. Contacta amb el teu tutor.","No s’ha pogut comprovar el codi. Torna-ho a provar."],en:['Enter the access code you have been given.','Access code','Unlock Talk with Julien','Checking…','This code was not accepted. Please try again.','Access has not been configured yet. Please contact your tutor.','Could not check your code. Please try again.'],es:['Introduce el código de acceso que te han dado.','Código de acceso','Acceder a Talk with Julien','Comprobando…','Código no válido. Inténtalo de nuevo.','El acceso todavía no está configurado. Contacta con tu tutor.','No se pudo comprobar el código. Inténtalo de nuevo.'],fr:['Saisis le code d’accès qui t’a été donné.','Code d’accès','Accéder à Talk with Julien','Vérification…','Code non valide. Réessaie.','L’accès n’est pas encore configuré. Contacte ton tuteur.','Impossible de vérifier le code. Réessaie.']}[lang];
+const $=id=>document.getElementById(id),lang=resolveLanguage(new URLSearchParams(location.search),localStorage),dictionary=TRANSLATIONS[lang],copy=dictionary.access;
+document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=dictionary.copy[0];$('accessGate').querySelector('h1').textContent=$('title').textContent=dictionary.copy[0];
+const languageLabel=document.createElement('label');languageLabel.htmlFor='accessLanguage';languageLabel.textContent=dictionary.languageLabel;
+const languageSelect=document.createElement('select');languageSelect.id='accessLanguage';
+for(const [code,info] of Object.entries(LANGUAGES)){const option=document.createElement('option');option.value=code;option.textContent=info[1];languageSelect.append(option)}languageSelect.value=lang;languageSelect.onchange=()=>setLanguage(languageSelect.value);
+$('accessGate').insertBefore(languageLabel,$('accessIntro'));$('accessGate').insertBefore(languageSelect,$('accessIntro'));
 ['accessIntro','accessLabel','accessSubmit'].forEach((id,i)=>$(id).textContent=copy[i]);
 let loaded=false;
-async function unlock(){if(loaded)return;await import('./lingojulienchat.js?v=20261004attempt');loaded=true;$('accessCode').value='';$('accessGate').hidden=true;$('julienActivity').hidden=false}
+async function unlock(){if(loaded)return;await import('./lingojulienchat.js?v=20261004multi');loaded=true;$('accessCode').value='';$('accessGate').hidden=true;$('julienActivity').hidden=false}
 $('accessForm').onsubmit=async event=>{event.preventDefault();$('accessSubmit').disabled=true;$('accessStatus').textContent=copy[3];try{const r=await fetch('/.netlify/functions/verify-julien-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('accessCode').value})});if(r.ok){await unlock()}else{$('accessStatus').textContent=copy[r.status===503?5:4]}}catch{$('accessStatus').textContent=copy[6]}finally{$('accessSubmit').disabled=false}};
 fetch('/.netlify/functions/verify-julien-code').then(r=>r.json()).then(d=>{if(d.authorized)return unlock()}).catch(()=>{});
 })();
