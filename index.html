@@ -3224,7 +3224,8 @@ main{--home-inset:42px}
             </p>
             <span class="arrow">→</span>
           </a>
-          <a
+          <a class="activity-card" data-page="lingovocabulary.html" href="lingovocabulary.html"><h3>LingoVocabulary</h3><p id="lingoVocabularyCardText">Read about your topic, tap words for meanings and audio, and save phrases to practise.</p><span class="arrow">→</span></a>
+<a
             class="activity-card"
             data-page="lingoreading.html"
             href="lingoreading.html"
@@ -5822,6 +5823,6 @@ try{const r=await fetch('/.netlify/functions/julien-preview');const d=await r.js
 if(r.ok&&typeof d.imageUrl==='string'&&d.imageUrl.startsWith('https://')){const img=document.getElementById('homeJulienPortrait');img.onload=()=>{img.hidden=false};img.src=d.imageUrl}
 }catch(e){}
 });
-</script></body>
+</script><script id="lingovocabulary-card-translations">document.addEventListener("DOMContentLoaded",()=>{const descriptions={"en": "Read about your topic, tap words for meanings and audio, and save phrases to practise.", "ca": "Llegeix sobre el teu tema, toca les paraules per veure'n els significats i l'àudio, i desa frases per practicar.", "es": "Lee sobre tu tema, toca las palabras para ver sus significados y escuchar el audio, y guarda frases para practicar.", "fr": "Lisez votre sujet, appuyez sur les mots pour les significations et l'audio, et enregistrez les phrases à pratiquer.", "de": "Lesen Sie über Ihr Thema, tippen Sie auf Wörter für Bedeutungen und Audio und speichern Sie Phrasen zum Üben.", "it": "Leggi il tuo argomento, tocca le parole per i significati e l'audio, e salva le frasi da praticare.", "pt": "Leia sobre o seu tópico, toque nas palavras para ver os significados e ouvir o áudio, e guarde frases para praticar.", "ar": "اقرأ عن موضوعك، اضغط على الكلمات للحصول على المعاني والصوت، واحفظ العبارات للتدرب عليها.", "ja": "トピックを読み、単語をタップして意味と音声を確認し、フレーズを保存して練習しましょう。", "eu": "Irakurri zure gaiaren inguruan, sakatu hitzak esanahiak eta audioa lortzeko, eta gorde esaldiak praktikatzeko.", "cy": "Darllenwch am eich pwnc, tapiwch eiriau am ystyron a sain, ac arbedwch ymadroddion i ymarfer.", "gd": "Leugh mun chuspair agad, tap air faclan airson brìgh agus claisneachd, agus sàbhail abairtean airson cleachdadh."};const selector=document.getElementById("uiLanguage"),text=document.getElementById("lingoVocabularyCardText");function apply(){text.textContent=descriptions[selector?.value]||descriptions.en}selector?.addEventListener("change",apply);apply()});</script></body>
 </html>
 
