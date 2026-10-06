@@ -1,4 +1,5 @@
 <!doctype html> <html lang="en"> <head>
+<script src="detective-full-audio.js?v=20261006complete"></script>
 <script src="greek-support.js?v=20261006greek"></script>   <meta charset="utf-8">   <meta name="viewport" content="width=device-width,initial-scale=1">   <meta name="theme-color" content="#1267d6">   <title>LingoTotal · Lingo First Job</title> <meta name="lingototal-build" content="first-job-medicine-template-2026-09-14">   <link rel="preconnect" href="https://fonts.googleapis.com/">   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Libre+Franklin:wght@700;800&display=swap" rel="stylesheet">   <style>     :root{--blue:#1267d6;--blue-dark:#084ca8;--blue-soft:#e9f2ff;--ink:#172033;--muted:#5f6b7a;--paper:#fff;--soft:#f4f7fb;--line:#d8e2ee;--green:#198754;--red:#c43d4d;--shadow:0 12px 32px rgba(22,58,101,.13)}
      *{box-sizing:border-box}
 html{scroll-padding-top:78px}
@@ -390,6 +391,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
     let playbackNumber=0;
     let apiRetryAfter=0;
     function stopSpeech(){
+      window.LingoDetectiveAudio?.stop();
       if(activeRequest){activeRequest.abort();activeRequest=null;}
       if(activeAudio){activeAudio.pause();activeAudio.currentTime=0;activeAudio=null;}
       if('speechSynthesis' in window)speechSynthesis.cancel();
@@ -430,44 +432,8 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
       if(run===playbackNumber)activeUtterance=null;
     }
     async function apiSpeech(text,locale,run){
-      const controller=new AbortController();
-      activeRequest=controller;
-      const timeout=setTimeout(()=>controller.abort(),12000);
-      let response;
-      try{
-        response=await fetch('/.netlify/functions/tts',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({text,languageCode:locale,locale,lang:locale}),
-          signal:controller.signal
-        });
-      }finally{clearTimeout(timeout);if(activeRequest===controller)activeRequest=null;}
-      if(!response.ok)throw new Error('TTS API '+response.status);
       if(run!==playbackNumber)return;
-      const contentType=response.headers.get('content-type')||'';
-      let source='';
-      if(contentType.startsWith('audio/')){
-        source=URL.createObjectURL(await response.blob());
-      }else{
-        const data=await response.json();
-        if(data.url)source=data.url;
-        else{
-          const base64=data.audioContent||data.audio||data.data;
-          if(!base64)throw new Error('TTS API returned no audio');
-          source='data:audio/mpeg;base64,'+String(base64).replace(/^data:audio\/[^;]+;base64,/, '');
-        }
-      }
-      if(run!==playbackNumber)return;
-      const audio=new Audio(source);
-      activeAudio=audio;
-      await new Promise((resolve,reject)=>{
-        audio.onended=resolve;
-        audio.onerror=()=>reject(new Error('Audio playback failed'));
-        const playPromise=audio.play();
-        if(playPromise)playPromise.catch(reject);
-      });
-      if(run===playbackNumber)activeAudio=null;
-      if(source.startsWith('blob:'))URL.revokeObjectURL(source);
+      await window.LingoDetectiveAudio.play(text,locale);
     }
     async function speak(text){
       const clean=String(text||'').trim();
@@ -483,6 +449,7 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
             apiRetryAfter=0;
           }catch(apiError){
             if(run!==playbackNumber)return;
+            if(target==='el')throw apiError;
             apiRetryAfter=Date.now()+60000;
             console.warn('Google TTS unavailable; using the browser voice.',apiError);
             await browserSpeech(clean,LANGS[target].locale,run);
