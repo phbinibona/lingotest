@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="greek-support.js?v=20261006greek"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LingoTotal · Listen &amp; Complete</title>
@@ -734,7 +735,7 @@ input[type=text]:focus,textarea:focus{outline:0!important;border-color:var(--pri
 @media(max-width:360px){.brand-wrap{gap:0!important}.brand-wrap>div{display:none!important}}
 </style>
   <link rel="stylesheet" href="lingototal-shared-polish.css">
-<script src="lingototal-audio.js"></script>
+<script src="lingototal-audio.js?v=20261006greek"></script>
 </head>
 <body>
 <header class="banner lt-master-header"><div class="brand-wrap"><a class="brand-mark index-link" href="index.html" aria-label="LingoTotal home" title="LingoTotal home">LT</a><div><div class="brand">LINGOTOTAL</div><div class="tagline" data-i18n="tagline">Learn any language your way</div></div></div><div class="header-tools"><div class="language-pair" id="languagePair"></div><a class="home-link index-link" href="index.html" id="homeLink" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.5 11h2.3v9.2h5.1v-5.8h4.2v5.8h5.1V11h2.3L12 3.2Z"/></svg></a></div></header>
@@ -1209,7 +1210,7 @@ de:'Deutsch',
 it:'Italiano',
 pt:'Português',
 eu:'Euskara',
-ja:'日本語',
+ja:'日本語',el:'Ελληνικά',
 ar:'العربية'
 };
 const targetNames={
@@ -1221,7 +1222,7 @@ German:'Deutsch',
 Italian:'Italiano',
 Portuguese:'Português',
 Basque:'Euskara',
-Japanese:'日本語',
+Japanese:'日本語',Greek:'Ελληνικά',
 Arabic:'العربية'
 };
 const voices={
@@ -1233,7 +1234,7 @@ German:'de-DE',
 Italian:'it-IT',
 Portuguese:'pt-PT',
 Basque:'eu-ES',
-Japanese:'ja-JP',
+Japanese:'ja-JP',Greek:'el-GR',
 Arabic:'ar-SA'
 };
 const targetAliases={
@@ -1245,7 +1246,7 @@ const targetAliases={
   it:'Italian',italian:'Italian',italiano:'Italian',
   pt:'Portuguese',portuguese:'Portuguese',português:'Portuguese',
   eu:'Basque',basque:'Basque',euskara:'Basque',
-  ja:'Japanese',japanese:'Japanese','日本語':'Japanese',
+  ja:'Japanese',el:'Greek',japanese:'Japanese',greek:'Greek','日本語':'Japanese','Ελληνικά':'Greek',
   ar:'Arabic',arabic:'Arabic','العربية':'Arabic'
 };
 function normalizeTarget(value){
@@ -1745,7 +1746,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Arabic:'AR'};
+  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Greek:'EL',Arabic:'AR'};
   const pair=document.getElementById('languagePair');
   if(pair)pair.dataset.short=ui.toUpperCase()+' → '+(targetCodes[target]||target.slice(0,2).toUpperCase());
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
@@ -1754,3 +1755,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+

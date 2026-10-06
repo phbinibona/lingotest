@@ -1,7 +1,8 @@
 
 <!doctype html> 
 <html lang="en"> 
-<head>   
+<head>
+<script src="greek-support.js?v=20261006greek"></script>   
 <meta charset="utf-8">   
 <meta name="viewport" content="width=device-width,initial-scale=1">   
 <meta name="theme-color" content="#1267d6">   
@@ -354,7 +355,7 @@
 <script>  (() => {
 'use strict';
 // ---------- LANGUAGES ----------
-const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}};
+const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},el:{name:'Ελληνικά',code:'EL',locale:'el-GR'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}};
 // ---------- TRANSLATIONS (abbreviated: en/ca/es; extend if needed) ----------
 const I={
   en:{activity:'Lingo Medicine',title:'Lingo Medicine',subtitle:'Practise the language used by medical students with patients and healthcare colleagues.',safety:'For language practice only. This activity does not provide medical advice.',saved:'Saved phrases',chooseLevel:'Choose your level',levelLead:'Select a level before entering your context.',basics:'Revising the basics',basicsNote:'Clear, useful language for straightforward clinical encounters.',confidence:'Gaining confidence',confidenceNote:'More natural, precise language for demanding situations.',context:'Medical topic or situation',contextHint:'Type any speciality, task or clinical situation. You can write in any language.',placeholder:'For example: taking a patient history',create:'Create my practice',creating:'Creating three medical situations…',choosePurpose:'What do you need to communicate?',previous:'Previous',next:'Next situation',newChallenge:'Create a new challenge',listen:'Listen',save:'Save phrase',savedDone:'Saved',empty:'No phrases saved yet.',selectLevel:'Please choose your level first.',enterContext:'Please enter a medical topic or situation.',error:'The practice could not be created. Please try again.',situation:'Situation',footer:'Personalised language learning',removed:'Phrase removed',savedToast:'Phrase saved',practiceTitle:'Practise your saved phrases',practiceIntro:'Choose a practice type. Only the phrases you have saved on this page are used.',gap:'Gap fill',jumble:'Jumbled sentence',recall:'Recall',start:'Start practice',noPhrases:'Save some phrases above first.',correct:'Correct',tryAgain:'Try again',yourAnswer:'Your answer',listenNow:'Listen',typeSentence:'Type the sentence you heard.',recallPrompt:'Try to recall the complete phrase before revealing it.',show:'Show answer',check:'Check',incomplete:'Use all the words before checking.',buildSentence:'Build the sentence',jumbledWords:'Jumbled words',clearSentence:'Clear sentence'},
@@ -415,7 +416,7 @@ const params=new URLSearchParams(location.search);
   en:['en','english'],ca:['ca','catalan','català'],es:['es','spanish','español'],
   fr:['fr','french','français'],de:['de','german','deutsch'],it:['it','italian','italiano'],
   pt:['pt','portuguese','português'],eu:['eu','basque','euskara'],
-  ja:['ja','japanese','日本語'],ar:['ar','arabic','العربية'],
+  ja:['ja','japanese','日本語'],el:['el','greek','Ελληνικά'],ar:['ar','arabic','العربية'],
   cy:['cy','welsh','cymraeg'],gd:['gd','gaelic','scottish gaelic','gàidhlig']
 };
 const normaliseLang=value=>{
@@ -435,7 +436,7 @@ const readLang=(list,keys,fb)=>{
 
   const target=readLang(['target'],['lingototal_target_language'],'es');
 
-  const indexTargetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',ar:'Arabic',cy:'Welsh',gd:'Gaelic'};
+  const indexTargetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',el:'Greek',ar:'Arabic',cy:'Welsh',gd:'Gaelic'};
 
   localStorage.setItem('lingototal_ui_language',ui);
 
@@ -892,3 +893,4 @@ renderSaved();     renderExercise();   })();
 </script> 
 </body> 
 </html>   
+

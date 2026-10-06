@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const L={en:['English','EN','en-GB'],es:['Spanish','ES','es-ES'],fr:['French','FR','fr-FR'],ca:['Catalan','CA','ca-ES']};
-const aliases={english:'en',catalan:'ca','català':'ca',spanish:'es','español':'es',french:'fr','français':'fr',german:'de',deutsch:'de',italian:'it',italiano:'it',portuguese:'pt','português':'pt',arabic:'ar',japanese:'ja',basque:'eu',welsh:'cy',gaelic:'gd'};
+const L={el:['Greek','EL','el-GR'],en:['English','EN','en-GB'],es:['Spanish','ES','es-ES'],fr:['French','FR','fr-FR'],ca:['Catalan','CA','ca-ES']};
+const aliases={english:'en',catalan:'ca','català':'ca',spanish:'es','español':'es',french:'fr','français':'fr',german:'de',deutsch:'de',italian:'it',italiano:'it',portuguese:'pt','português':'pt',arabic:'ar',japanese:'ja',greek:'el',basque:'eu',welsh:'cy',gaelic:'gd'};
 function lang(x,f){const s=String(x||'').toLowerCase().trim();return L[s]?s:L[aliases[s]]?aliases[s]:L[s.split('-')[0]]?s.split('-')[0]:f}
 const params=new URLSearchParams(location.search),ui=lang(params.get('ui')||params.get('interface')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('interfaceLanguage'),'en'),target=lang(params.get('target')||localStorage.getItem('lingototal_target_language')||localStorage.getItem('targetLanguage'),'es');
 window.LingoChatTargetLocale=L[target][2];
@@ -179,3 +179,4 @@ $('#generate').onclick=create;$('#topic').onkeydown=e=>{if(e.key==='Enter'){e.pr
 $('#savePhrase').onclick=()=>{if(!confirmedReply)return;try{const key='lingototal_saved_sentences_v2',items=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(items))throw Error('collection');if(items.some(x=>(x.sentence||x.text)===confirmedReply&&(x.targetLanguage===L[target][0]||x.language===target))){$('#saveStatus').textContent=ex(3);return}items.unshift({sentence:confirmedReply,targetLanguage:L[target][0],targetName:L[target][0],language:target,source:'LingoChat',theme:$('#topic').value.trim(),savedAt:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(items));$('#saveStatus').textContent=ex(2);$('#savePhrase').disabled=true}catch(e){$('#saveStatus').textContent=ex(4)}};
 $('#continue').onclick=()=>{if($('#continue').disabled)return;if(!pendingTurn){show('setup');step('setup');create();return}const next=pendingTurn;clean();caseData=next;$('#context').textContent=next.context;$('#statement').textContent=next.statement;$('#speakerLabel').textContent=(TEACHER[ui]||TEACHER.en)[2];renderFollowUpSuggestions(next.suggestions);show('promptPanel');step('promptPanel')};$('#newConversation').onclick=()=>{history=[];clean();$('#topic').value='';$('#details').value='';show('setup');step('setup');$('#topic').focus()};window.addEventListener('beforeunload',()=>{stopAudio();stopAvatar();clean()});
 })();
+

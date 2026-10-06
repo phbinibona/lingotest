@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="greek-support.js?v=20261006greek"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#3277e8">
@@ -119,7 +120,7 @@
   (()=>{
     'use strict';
     const LANGS={
-      en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}
+      en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},el:{name:'Ελληνικά',code:'EL',locale:'el-GR'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}
     };
     const EN={title:'LingoSpeak',subtitle:'Prepare for a real conversation. Listen, practise, speak and receive supportive feedback before you use the language in real life.',savedPhrases:'Saved phrases',prepareTitle:'Prepare your conversation',prepareLead:'Describe a conversation you genuinely expect to have. You can write in any language.',situationLabel:'What is the situation?',situationPlaceholder:'For example: explaining a problem to my landlord',goalLabel:'What do you need to achieve?',goalPlaceholder:'Explain what you need to say, ask or resolve, and who you will speak to.',exDoctor:'Speaking to a doctor',exMeeting:'Taking part in a meeting',exComplaint:'Making a complaint',exInterview:'A job interview',generate:'Create my rehearsal',generating:'Creating six useful phrases…',languageTitle:'Your conversation language',newConversation:'Prepare another conversation',rehearseTitle:'Listen and speak',rehearseLead:'Choose any phrase above, listen to the model, then record yourself. Your recording stays in this browser unless you choose assessment.',chosenPhrase:'Chosen phrase',listenModel:'Listen to model',copy:'Copy',save:'Save phrase',saved:'Saved',previous:'Previous',next:'Next',ready:'Ready to practise.',record:'Record',stop:'Stop',playRecording:'Play recording',assess:'Assess my speaking',privacy:'Microphone permission is used only when you press Record. Assessment sends this recording securely to the configured speech service.',accuracy:'Accuracy',fluency:'Fluency',completeness:'Completeness',assessmentNote:'Speaking assessment requires the Azure speech function to be configured on Netlify. Recording and playback still work without it.',footer:'Personalised language learning',empty:'No phrases saved here yet.',listen:'Listen',remove:'Remove',practise:'Practise speaking',enterSituation:'Please describe the conversation.',enterGoal:'Please explain what you need to achieve.',generationError:'The conversation could not be created. Please try again.',phraseSaved:'Phrase saved.',phraseRemoved:'Phrase removed.',copied:'Phrase copied.',copyError:'Copying is unavailable on this device.',micError:'The microphone could not be started. Check browser permission.',getReady:'Get ready… recording has started.',speakNow:'Speak now.',recordingComplete:'Recording complete. Listen back or request assessment.',noRecording:'Make a recording first.',assessing:'Assessing your speaking…',assessmentUnavailable:'Speaking assessment is temporarily unavailable. You can still listen to your recording and practise again.',assessmentGood:'Clear and understandable. Try it once more for greater confidence.',assessmentTry:'Keep practising. Listen to the model, then try the complete phrase again.',audioUnavailable:'Audio is unavailable on this device.',partner:'Other speaker',you:'You'};
     const T={
@@ -139,13 +140,13 @@
 
     const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     const params=new URLSearchParams(location.search);
-    const aliases={en:['en','english'],ca:['ca','catalan','català'],es:['es','spanish','español'],fr:['fr','french','français'],de:['de','german','deutsch'],it:['it','italian','italiano'],pt:['pt','portuguese','português'],ar:['ar','arabic','العربية'],ja:['ja','japanese','日本語'],eu:['eu','basque','euskara'],cy:['cy','welsh','cymraeg'],gd:['gd','gaelic','gàidhlig']};
+    const aliases={en:['en','english'],ca:['ca','catalan','català'],es:['es','spanish','español'],fr:['fr','french','français'],de:['de','german','deutsch'],it:['it','italian','italiano'],pt:['pt','portuguese','português'],ar:['ar','arabic','العربية'],ja:['ja','japanese','日本語'],el:['el','greek','Ελληνικά'],eu:['eu','basque','euskara'],cy:['cy','welsh','cymraeg'],gd:['gd','gaelic','gàidhlig']};
     function normalise(value){const x=String(value||'').trim().toLocaleLowerCase().replace('_','-');if(LANGS[x])return x;const base=x.split('-')[0];if(LANGS[base])return base;return Object.keys(aliases).find(k=>aliases[k].includes(x))||''}
     function readLang(queryKeys,storageKeys,fallback){for(const key of queryKeys){const v=normalise(params.get(key));if(v)return v}for(const key of storageKeys){const v=normalise(localStorage.getItem(key));if(v)return v}return fallback}
     const ui=readLang(['ui','interface'],['lingototal_ui_language'],'en');
     const target=readLang(['target'],['lingototal_target_language'],'es');
     const tr=k=>(T[ui]&&T[ui][k])||EN[k]||k;
-    const targetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',ar:'Arabic',ja:'Japanese',eu:'Basque',cy:'Welsh',gd:'Scottish Gaelic'};
+    const targetNames={en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',it:'Italian',pt:'Portuguese',ar:'Arabic',ja:'Japanese',el:'Greek',eu:'Basque',cy:'Welsh',gd:'Scottish Gaelic'};
     localStorage.setItem('lingototal_ui_language',ui);localStorage.setItem('lingototal_target_language',targetNames[target]);
     document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';$('#pair').textContent=`${LANGS[ui].code} → ${LANGS[target].code}`;
     $$('[data-t]').forEach(el=>el.textContent=tr(el.dataset.t));$$('[data-ph]').forEach(el=>el.placeholder=tr(el.dataset.ph));
@@ -211,3 +212,4 @@
   </script>
 </body>
 </html>
+

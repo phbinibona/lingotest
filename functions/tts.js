@@ -13,7 +13,7 @@ const ALLOWED_LOCALES = new Set([
   'it-IT',
   'pt-PT',
   'ar-SA',
-  'ja-JP',
+  'ja-JP','el-GR',
   'eu-ES'
 ]);
 
@@ -304,3 +304,4 @@ exports.handler = async event => {
     });
   }
 };
+

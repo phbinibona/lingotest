@@ -7,7 +7,7 @@ const SCOPE = "https://www.googleapis.com/auth/cloud-platform";
 let cachedToken = "";
 let cachedTokenExpiry = 0;
 
-const LANGUAGE_LOCALES = {
+const LANGUAGE_LOCALES = {greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',
   english:"en-GB", en:"en-GB", "en-gb":"en-GB",
   catalan:"ca-ES", catala:"ca-ES", ca:"ca-ES", "ca-es":"ca-ES",
   spanish:"es-ES", espanol:"es-ES", es:"es-ES", "es-es":"es-ES",
@@ -16,7 +16,7 @@ const LANGUAGE_LOCALES = {
   italian:"it-IT", italiano:"it-IT", it:"it-IT", "it-it":"it-IT",
   portuguese:"pt-PT", portugues:"pt-PT", pt:"pt-PT", "pt-pt":"pt-PT",
   basque:"eu-ES", euskara:"eu-ES", eu:"eu-ES", "eu-es":"eu-ES",
-  japanese:"ja-JP", ja:"ja-JP", "ja-jp":"ja-JP",
+  japanese:"ja-JP",greek:"el-GR", ja:"ja-JP",el:"el-GR", "ja-jp":"ja-JP",
   arabic:"ar-XA", ar:"ar-XA", "ar-xa":"ar-XA", "ar-sa":"ar-XA"
 };
 
@@ -174,3 +174,4 @@ exports.handler = async function(event){
     };
   }
 };
+

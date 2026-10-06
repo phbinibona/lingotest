@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="greek-support.js?v=20261006greek"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LingoQuiz · LingoTotal</title>
@@ -509,19 +510,19 @@ h2{font-size:1.08rem;color:var(--ink);font-weight:850;letter-spacing:-.02em}
 </main>
 <div class="notice" id="notice"></div>
 <script>
-function auditTargetName(value){const names={"en": "English", "ca": "Catalan", "es": "Spanish", "fr": "French", "de": "German", "it": "Italian", "pt": "Portuguese", "eu": "Basque", "ja": "Japanese", "ar": "Arabic", "cy": "Welsh", "gd": "Gaelic"};const raw=String(value||" ").trim();return names[raw.toLowerCase().split("-")[0]]||Object.values(names).find(x=>x.toLowerCase()===raw.toLowerCase())||raw;}
+function auditTargetName(value){const names={"en": "English", "ca": "Catalan", "es": "Spanish", "fr": "French", "de": "German", "it": "Italian", "pt": "Portuguese", "eu": "Basque", "ja": "Japanese","el":"Greek", "ar": "Arabic", "cy": "Welsh", "gd": "Gaelic"};const raw=String(value||" ").trim();return names[raw.toLowerCase().split("-")[0]]||Object.values(names).find(x=>x.toLowerCase()===raw.toLowerCase())||raw;}
 const API_ENDPOINT='/.netlify/functions/gemini';
 const LANGUAGE_NAMES={
   en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',
-  it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',ar:'Arabic'
+  it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',el:'Greek',ar:'Arabic'
 };
 const TARGET_TO_CODE={
   English:'en',Catalan:'ca',Spanish:'es',French:'fr',German:'de',
-  Italian:'it',Portuguese:'pt',Basque:'eu',Japanese:'ja',Arabic:'ar'
+  Italian:'it',Portuguese:'pt',Basque:'eu',Japanese:'ja',Greek:'el',Arabic:'ar'
 };
 const VOICE_LOCALES={
   English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',
-  Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Arabic:'ar-SA'
+  Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Greek:'el-GR',Arabic:'ar-SA'
 };
 const TARGET_FEEDBACK={
   English:{correct:'Correct!',incorrect:'Not quite.',correctAnswer:'Correct answer:'},
@@ -542,16 +543,16 @@ let feedbackTextToSpeak='';
 const feedbackAudioCache=new Map();
 let feedbackAudio=null;
 const DISPLAY_NAMES={
-  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Arabic:'Arabic'},
-  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Arabic:'àrab'},
-  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Arabic:'árabe'},
-  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Arabic:'arabe'},
-  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Arabic:'Arabisch'},
-  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Arabic:'arabo'},
-  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Arabic:'árabe'},
-  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Arabic:'arabiera'},
-  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Arabic:'アラビア語'},
-  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Arabic:'العربية'}
+  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Greek:'Greek',Arabic:'Arabic'},
+  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Greek:'Greek',Arabic:'àrab'},
+  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Greek:'Greek',Arabic:'árabe'},
+  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Greek:'Greek',Arabic:'arabe'},
+  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Greek:'Greek',Arabic:'Arabisch'},
+  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Greek:'Greek',Arabic:'arabo'},
+  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Greek:'Greek',Arabic:'árabe'},
+  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Greek:'Greek',Arabic:'arabiera'},
+  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Greek:'Ελληνικά',Arabic:'アラビア語'},el:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Greek:'Ελληνικά',Arabic:'アラビア語'},
+  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Greek:'Greek',Arabic:'العربية'}
 };
 const T={
 en:{
@@ -988,7 +989,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'Spanish';
-  const codes={English:'EN',en:'EN',Catalan:'CA','Català':'CA',ca:'CA',Spanish:'ES','Español':'ES',es:'ES',French:'FR','Français':'FR',fr:'FR',German:'DE',Deutsch:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',ja:'JA',Arabic:'AR',ar:'AR'};
+  const codes={English:'EN',en:'EN',Catalan:'CA','Català':'CA',ca:'CA',Spanish:'ES','Español':'ES',es:'ES',French:'FR','Français':'FR',fr:'FR',German:'DE',Deutsch:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',Greek:'EL',ja:'JA',el:'EL',Arabic:'AR',ar:'AR'};
   const pair=document.getElementById('languagePair');
   if(pair)pair.dataset.short=(codes[ui]||String(ui).slice(0,2).toUpperCase())+' → '+(codes[target]||String(target).slice(0,2).toUpperCase());
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
@@ -997,4 +998,5 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
 

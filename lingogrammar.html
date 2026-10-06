@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="greek-support.js?v=20261006greek"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LingoTotal · Grammar Masterclass</title>
@@ -191,13 +192,13 @@ select,input,textarea{border:1px solid #4c4c4c!important;border-radius:0!importa
 <strong>${T.model}:</strong>
 <br>${escapeHtml(model)}</div>` : ""); }  $("nextBtn").addEventListener("click",() => {   if (current < stages.length - 1) {     current++;     renderStage();   } else {     finishLesson();   } });  $("showAnswerBtn").addEventListener("click",() => {   const s=stages[current], state=stageState[current]; if(!s||!state) return; const answer=s.modelAnswer||s.answer||((s.options||[])[Number(s.correctIndex)]||""); state.revealed=!state.revealed;   if(state.revealed){ state.answered=true; answered=true; $("feedback").className="feedback show neutral"; $("feedback").innerHTML=answer?`<div class="model-answer">
 <strong>${T.model}:</strong>
-<br>${escapeHtml(answer)}</div>`:""; $("showAnswerBtn").textContent=T.hide; $("nextBtn").disabled=false; } else { $("feedback").className="feedback"; $("feedback").innerHTML=""; $("showAnswerBtn").textContent=T.show; }   updateListenButton(); });  $("listenBtn").addEventListener("click",() => {   const s=stages[current], state=stageState[current]; if(!s||!state||(!state.answered&&!state.revealed)) return; const text=correctAudioText(s); if(!text) return;   if("speechSynthesis" in window){ speechSynthesis.cancel(); const utterance=new SpeechSynthesisUtterance(text); const languageMap={English:"en",Spanish:"es",Español:"es",Catalan:"ca","Català":"ca",French:"fr",Français:"fr",German:"de",Deutsch:"de",Italian:"it",Portuguese:"pt",Japanese:"ja"}; utterance.lang=languageMap[TARGET]||"en"; speechSynthesis.speak(utterance); } });  function finishLesson() {   const pct = scored ? Math.round((score/scored)*100) : 100;   $("workspace").classList.remove("active");   $("results").classList.add("show");   $("finalScore").textContent = pct + "%";   $("scoreRing").style.setProperty("--score",pct + "%");   $("resultMessage").textContent = `${T.score}: ${score}/${scored}`;   $("results").scrollIntoView({behavior:"smooth",block:"start"}); }  function resetLesson() {   stages = [];   stageState = [];   current = 0;   score = 0;   scored = 0;   $("workspace").classList.remove("active");   $("results").classList.remove("show");   window.scrollTo({top:0,behavior:"smooth"}); }  $("newLessonBtn").addEventListener("click",resetLesson); $("restartBtn").addEventListener("click",resetLesson);  })(); </script>
+<br>${escapeHtml(answer)}</div>`:""; $("showAnswerBtn").textContent=T.hide; $("nextBtn").disabled=false; } else { $("feedback").className="feedback"; $("feedback").innerHTML=""; $("showAnswerBtn").textContent=T.show; }   updateListenButton(); });  $("listenBtn").addEventListener("click",() => {   const s=stages[current], state=stageState[current]; if(!s||!state||(!state.answered&&!state.revealed)) return; const text=correctAudioText(s); if(!text) return;   if("speechSynthesis" in window){ speechSynthesis.cancel(); const utterance=new SpeechSynthesisUtterance(text); const languageMap={English:"en",Spanish:"es",Español:"es",Catalan:"ca","Català":"ca",French:"fr",Français:"fr",German:"de",Deutsch:"de",Italian:"it",Portuguese:"pt",Japanese:"ja",Greek:"el"}; utterance.lang=languageMap[TARGET]||"en"; speechSynthesis.speak(utterance); } });  function finishLesson() {   const pct = scored ? Math.round((score/scored)*100) : 100;   $("workspace").classList.remove("active");   $("results").classList.add("show");   $("finalScore").textContent = pct + "%";   $("scoreRing").style.setProperty("--score",pct + "%");   $("resultMessage").textContent = `${T.score}: ${score}/${scored}`;   $("results").scrollIntoView({behavior:"smooth",block:"start"}); }  function resetLesson() {   stages = [];   stageState = [];   current = 0;   score = 0;   scored = 0;   $("workspace").classList.remove("active");   $("results").classList.remove("show");   window.scrollTo({top:0,behavior:"smooth"}); }  $("newLessonBtn").addEventListener("click",resetLesson); $("restartBtn").addEventListener("click",resetLesson);  })(); </script>
 <script id="lingototal-standard-header-links">
 document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||params.get('interface')||localStorage.getItem('lingototal_ui_language')||'English';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  const codes={English:'EN',en:'EN','Català':'CA',Catalan:'CA',ca:'CA','Español':'ES',Spanish:'ES',es:'ES','Français':'FR',French:'FR',fr:'FR',Deutsch:'DE',German:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',ja:'JA',Arabic:'AR',ar:'AR'};
+  const codes={English:'EN',en:'EN','Català':'CA',Catalan:'CA',ca:'CA','Español':'ES',Spanish:'ES',es:'ES','Français':'FR',French:'FR',fr:'FR',Deutsch:'DE',German:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',Greek:'EL',ja:'JA',el:'EL',Arabic:'AR',ar:'AR'};
   const pair=document.getElementById('languagePair');
   if(pair){pair.textContent=ui+' → '+target;pair.dataset.short=(codes[ui]||String(ui).slice(0,2).toUpperCase())+' → '+(codes[target]||String(target).slice(0,2).toUpperCase());}
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;
@@ -206,3 +207,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+

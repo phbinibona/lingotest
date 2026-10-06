@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const L={en:['English','EN','en-GB'],ca:['Catalan','CA','ca-ES'],es:['Spanish','ES','es-ES'],fr:['French','FR','fr-FR'],de:['German','DE','de-DE'],it:['Italian','IT','it-IT'],pt:['Portuguese','PT','pt-PT'],ar:['Arabic','AR','ar-SA'],ja:['Japanese','JA','ja-JP'],eu:['Basque','EU','eu-ES'],cy:['Welsh','CY','cy-GB'],gd:['Scottish Gaelic','GD','gd-GB']};
-const aliases={english:'en',catalan:'ca','català':'ca',spanish:'es','español':'es',french:'fr','français':'fr',german:'de',deutsch:'de',italian:'it',italiano:'it',portuguese:'pt','português':'pt',arabic:'ar',japanese:'ja',basque:'eu',welsh:'cy',gaelic:'gd'};
+const L={en:['English','EN','en-GB'],ca:['Catalan','CA','ca-ES'],es:['Spanish','ES','es-ES'],fr:['French','FR','fr-FR'],de:['German','DE','de-DE'],it:['Italian','IT','it-IT'],pt:['Portuguese','PT','pt-PT'],ar:['Arabic','AR','ar-SA'],ja:['Japanese','JA','ja-JP'],el:['Greek','EL','el-GR'],eu:['Basque','EU','eu-ES'],cy:['Welsh','CY','cy-GB'],gd:['Scottish Gaelic','GD','gd-GB']};
+const aliases={english:'en',catalan:'ca','català':'ca',spanish:'es','español':'es',french:'fr','français':'fr',german:'de',deutsch:'de',italian:'it',italiano:'it',portuguese:'pt','português':'pt',arabic:'ar',japanese:'ja',greek:'el',basque:'eu',welsh:'cy',gaelic:'gd'};
 function lang(x,f){const s=String(x||'').toLowerCase().trim();return L[s]?s:aliases[s]||L[s.split('-')[0]]&&s.split('-')[0]||f}
 const params=new URLSearchParams(location.search),ui=lang(params.get('ui')||params.get('interface')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('interfaceLanguage'),'en'),target=lang(params.get('target')||localStorage.getItem('lingototal_target_language')||localStorage.getItem('targetLanguage'),'es');
 const $=s=>document.querySelector(s);

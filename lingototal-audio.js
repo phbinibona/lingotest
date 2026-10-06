@@ -10,7 +10,7 @@
   let runId = 0;
   let paused = false;
 
-  const LANGUAGE_LOCALES = {
+  const LANGUAGE_LOCALES = {greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',ελληνικά:'el-GR',
     english:'en-GB', en:'en-GB', 'en-gb':'en-GB',
     catalan:'ca-ES', catala:'ca-ES', català:'ca-ES', ca:'ca-ES', 'ca-es':'ca-ES',
     spanish:'es-ES', espanol:'es-ES', español:'es-ES', es:'es-ES', 'es-es':'es-ES',
@@ -19,7 +19,7 @@
     italian:'it-IT', italiano:'it-IT', it:'it-IT', 'it-it':'it-IT',
     portuguese:'pt-PT', portugues:'pt-PT', português:'pt-PT', pt:'pt-PT', 'pt-pt':'pt-PT',
     basque:'eu-ES', euskara:'eu-ES', eu:'eu-ES', 'eu-es':'eu-ES',
-    japanese:'ja-JP', ja:'ja-JP', 'ja-jp':'ja-JP',
+    japanese:'ja-JP',greek:'el-GR', ja:'ja-JP',el:'el-GR', 'ja-jp':'ja-JP',
     arabic:'ar-SA', ar:'ar-SA', 'ar-sa':'ar-SA', 'ar-xa':'ar-SA'
   };
 
@@ -329,3 +329,4 @@
     pauseToggle
   };
 })();
+

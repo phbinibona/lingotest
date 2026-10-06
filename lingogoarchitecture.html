@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script src="greek-support.js?v=20261006greek"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#1267d6">
@@ -175,7 +176,7 @@
   <script>
   (() => {
     'use strict';
-    const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}};
+    const LANGS={en:{name:'English',code:'EN',locale:'en-GB'},ca:{name:'Català',code:'CA',locale:'ca-ES'},es:{name:'Español',code:'ES',locale:'es-ES'},fr:{name:'Français',code:'FR',locale:'fr-FR'},de:{name:'Deutsch',code:'DE',locale:'de-DE'},it:{name:'Italiano',code:'IT',locale:'it-IT'},pt:{name:'Português',code:'PT',locale:'pt-PT'},ar:{name:'العربية',code:'AR',locale:'ar-SA'},ja:{name:'日本語',code:'JA',locale:'ja-JP'},el:{name:'Ελληνικά',code:'EL',locale:'el-GR'},eu:{name:'Euskara',code:'EU',locale:'eu-ES'},cy:{name:'Cymraeg',code:'CY',locale:'cy-GB'},gd:{name:'Gàidhlig',code:'GD',locale:'gd-GB'}};
     const I={
       en:{activity:'Lingo Medicine',title:'Lingo Medicine',subtitle:'Practise the language used by architecture students in the studio, on site and with clients.',safety:'Develop the language needed for architectural study and professional practice.',saved:'Saved phrases',context:'Architectural topic or situation',contextHint:'Type any project, design task or professional situation. You can write in any language.',placeholder:'For example: presenting a design proposal',create:'Create my practice',creating:'Creating three architecture situations…',choosePurpose:'What do you need to communicate?',previous:'Previous',next:'Next situation',newChallenge:'Create a new challenge',listen:'Listen',save:'Save phrase',savedDone:'Saved',empty:'No phrases saved yet.',enterContext:'Please enter a architectural topic or situation.',error:'The practice could not be created. Please try again.',situation:'Situation',footer:'Personalised language learning',removed:'Phrase removed',savedToast:'Phrase saved'},
       ca:{activity:'Lingo Medicina',title:'Lingo Medicina',subtitle:'Practica el llenguatge que fan servir els estudiants de medicina amb pacients i professionals sanitaris.',safety:'Només per practicar idiomes. Aquesta activitat no ofereix consell mèdic.',saved:'Frases desades',context:'Tema o situació mèdica',contextHint:'Escriu una especialitat, tasca o situació clínica en qualsevol llengua.',placeholder:'Per exemple: fer l’anamnesi',create:'Crea la pràctica',creating:'Creant tres situacions mèdiques…',choosePurpose:'Què necessites comunicar?',previous:'Anterior',next:'Situació següent',newChallenge:'Crea un repte nou',listen:'Escolta',save:'Desa la frase',savedDone:'Desada',empty:'Encara no hi ha frases desades.',enterContext:'Escriu un tema o una situació mèdica.',error:'No s’ha pogut crear la pràctica. Torna-ho a provar.',situation:'Situació',footer:'Aprenentatge d’idiomes personalitzat',removed:'Frase eliminada',savedToast:'Frase desada'},
@@ -233,8 +234,8 @@
       cy:['Cyflwyno cynnig dylunio','Trafod cynlluniau a thoriadau','Cymryd rhan mewn beirniadaeth stiwdio','Esbonio prosiect i gleient'],
       gd:['A’ taisbeanadh moladh dealbhaidh','A’ bruidhinn air planaichean agus earrannan','A’ gabhail pàirt ann an lèirmheas stiùidio','A’ mìneachadh pròiseact do neach-dèiligidh']
     };
-    const aliases={english:'en',català:'ca',catalan:'ca',español:'es',spanish:'es',français:'fr',french:'fr',deutsch:'de',german:'de',italiano:'it',italian:'it',português:'pt',portuguese:'pt',arabic:'ar','العربية':'ar',japanese:'ja','日本語':'ja',basque:'eu',euskara:'eu',welsh:'cy',cymraeg:'cy',gaelic:'gd','gàidhlig':'gd'};
-    const readSetting=(keys,fallback)=>{for(const k of keys){const v=localStorage.getItem(k);if(v)return aliases[v.toLowerCase()]||v.toLowerCase().slice(0,2)}return fallback};
+    const aliases={greek:'el','ελληνικά':'el',english:'en',català:'ca',catalan:'ca',español:'es',spanish:'es',français:'fr',french:'fr',deutsch:'de',german:'de',italiano:'it',italian:'it',português:'pt',portuguese:'pt',arabic:'ar','العربية':'ar',japanese:'ja',greek:'el','日本語':'ja','Ελληνικά':'el',basque:'eu',euskara:'eu',welsh:'cy',cymraeg:'cy',gaelic:'gd','gàidhlig':'gd'};
+    const readSetting=(keys,fallback)=>{const requested=new URLSearchParams(location.search).get(keys.includes('targetLang')?'target':'ui');if(requested)return aliases[requested.toLowerCase()]||requested.toLowerCase().slice(0,2);for(const k of keys){const v=localStorage.getItem(k);if(v)return aliases[v.toLowerCase()]||v.toLowerCase().slice(0,2)}return fallback};
     const ui=LANGS[readSetting(['interfaceLanguage','interfaceLang','lingototal_interface_language','uiLanguage'],'en')]?readSetting(['interfaceLanguage','interfaceLang','lingototal_interface_language','uiLanguage'],'en'):'en';
     const target=LANGS[readSetting(['targetLanguage','targetLang','lingototal_target_language','learnLanguage'],'es')]?readSetting(['targetLanguage','targetLang','lingototal_target_language','learnLanguage'],'es'):'es';
     const tr=k=>(I[ui]&&I[ui][k])||I.en[k]||k, $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -331,3 +332,4 @@
   </script>
 </body>
 </html>
+
