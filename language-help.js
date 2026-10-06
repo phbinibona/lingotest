@@ -44,7 +44,8 @@ const unwrap=data=>data?.text||data?.response||data?.output||data?.result||data?
         const response=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt}),signal:helpController.signal});
         const data=await response.json();
         if(!response.ok)throw Error('Help service unavailable');
-        const answer=typeof data==='string'?data:unwrap(data);
+        let answer=typeof data==='string'?data:unwrap(data);
+        if(typeof answer==='string'){try{const parsed=JSON.parse(answer.trim().replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,''));if(typeof parsed.answer==='string')answer=parsed.answer;else if(typeof parsed.explanation==='string')answer=parsed.explanation;}catch{}}
         if(typeof answer!=='string'||!answer.trim())throw Error('Empty answer');
         if(run===helpSequence){$('#languageHelpAnswer').textContent=answer.trim();$('#languageHelpStatus').textContent='';}
       }catch(error){if(run===helpSequence)$('#languageHelpStatus').textContent=hl[7];}
