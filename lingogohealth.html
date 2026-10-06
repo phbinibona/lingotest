@@ -243,14 +243,25 @@ h1{font-size:clamp(2.15rem,11vw,3.35rem)}
 #languageHelpDialog textarea{box-sizing:border-box;width:100%;font:inherit;font-size:1rem;padding:10px;border:1px solid #8097ab;border-radius:8px;resize:vertical}
 .help-examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.help-examples button{font:inherit;font-size:.9rem;padding:8px;border:1px solid #9cb4c9;border-radius:8px;background:#eef6fc;color:#16324f;cursor:pointer}
 #languageHelpAnswer{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}#languageHelpStatus{min-height:1.5em}
+
+.topbar #languageHelpOpen{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.7);padding:9px 12px;font-size:.9rem;line-height:1.25;max-width:190px;white-space:normal}
+.topbar #languageHelpOpen:hover{background:rgba(255,255,255,.15)}
+.topbar #languageHelpOpen:focus-visible{outline:3px solid #ffd18a;outline-offset:2px}
+@media(max-width:650px){
+.topbar{grid-template-columns:auto minmax(0,1fr) auto;gap:7px}
+.topbar .right-tools{display:grid;grid-template-columns:1fr auto;gap:5px;max-width:150px}
+.topbar #languageHelpOpen{grid-column:1/-1;padding:6px 8px;font-size:.875rem}
+.topbar .pair{text-align:center}.topbar .activity-name{overflow-wrap:anywhere}
+html{scroll-padding-top:110px}
+}
 </style></head> <body>   <header class="topbar">     <a aria-label='LingoTotal home' class='logo index-link' href='index.html'>
 <span class="logo-mark">LT</span>
 <span class="logo-word">LingoTotal</span>
 </a>     <div class="activity-name" data-t="activity">Lingo Health</div>     <div class="right-tools">
+<button class="secondary" id="languageHelpOpen" type="button" aria-haspopup="dialog"></button>
 <span class="pair" id="pair">EN → ES</span>
 <a aria-label='Home' class='home index-link' href='index.html'>⌂</a>
 </div>   </header>
-<div class="collection-toggle"><button class="secondary" id="languageHelpOpen" type="button" aria-haspopup="dialog"></button></div>
 <dialog id="languageHelpDialog" aria-labelledby="languageHelpTitle">
 <form id="languageHelpForm">
 <div class="help-heading"><h2 id="languageHelpTitle"></h2><button class="secondary" id="languageHelpClose" type="button"></button></div>
