@@ -41,11 +41,12 @@
   }
   return originalFetch(input,options);
  };
+ const isGreekInterface=()=>{const q=new URLSearchParams(location.search);return isGreek(q.get('ui')||q.get('interface')||localStorage.getItem('lingototal_ui_language'));};
  function init(){
-  let enabled=new URLSearchParams(location.search).get('transliteration')!=='native'&&localStorage.getItem('lingototal_latin_transliteration')!=='false';
+  let enabled=!isGreekInterface()&&new URLSearchParams(location.search).get('transliteration')!=='native'&&localStorage.getItem('lingototal_latin_transliteration')!=='false';
   const style=document.createElement('style');style.textContent='body.lt-greek-latin [data-lt-latin]::after{content:attr(data-lt-latin);display:block;font-size:.82em;font-weight:400;line-height:1.5;opacity:.8;direction:ltr;white-space:pre-wrap;margin-top:.2em}.lt-greek-control{padding:.65rem 1rem;margin:.5rem auto;max-width:1100px;font:inherit}.lt-greek-control input{margin-right:.5rem}';document.head.append(style);
   const labels={en:'Show Greek in Latin letters',ca:'Mostra el grec amb lletres llatines',es:'Mostrar el griego con letras latinas',fr:'Afficher le grec en lettres latines',de:'Griechisch mit lateinischen Buchstaben anzeigen',it:'Mostra il greco in lettere latine',pt:'Mostrar grego em letras latinas'};
-  if(isGreekTarget()){
+  if(isGreekTarget()&&!isGreekInterface()){
    const panel=document.createElement('div');panel.className='lt-greek-control';const label=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=enabled;label.append(check,document.createTextNode(labels[new URLSearchParams(location.search).get('ui')]||labels.en));panel.append(label);(document.querySelector('main')||document.body).prepend(panel);
    check.addEventListener('change',()=>{enabled=check.checked;localStorage.setItem('lingototal_latin_transliteration',String(enabled));document.body.classList.toggle('lt-greek-latin',enabled);});
   }
