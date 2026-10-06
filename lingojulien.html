@@ -76,4 +76,5 @@ const readingNote=audioUrl?t('You recorded the highlighted excerpt. Replay your 
 $('feedback').textContent=t('Reading aloud: ')+readingNote+'\n\n'+lines.join('\n\n')+'\n\n'+t('Score: ')+correctCount+t(' out of ')+questions.length+'.';$('feedback').classList.remove('hide');feedbackSpeech=(spanishUI?'Has acertado ':'You got ')+correctCount+(spanishUI?' de ':' out of ')+questions.length+'. '+readingNote+' '+spoken.join(' ');$('hearFeedback').classList.remove('hide');$('quizStatus').textContent='';if(julienEnabled)await playSpeech(feedbackSpeech,'feedback')};
 $('hearFeedback').onclick=()=>playSpeech(feedbackSpeech,'feedback');
 $('newText').onclick=()=>{if(recorder?.state==='recording')recorder.stop();$('lesson').classList.add('hide');$('topic').focus()};
-</script><script src="avatar-access.js?v=20261004"></script></body></html>
+</script><script src="avatar-access.js?v=20261004"></script><script src="language-help.js?v=20261007all"></script>
+</body></html>

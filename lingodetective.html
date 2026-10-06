@@ -138,6 +138,7 @@
     $$('.example').forEach(b=>b.onclick=()=>{$('#topic').value=b.dataset.example;$('#topic').focus()});$('#generateBtn').onclick=generate;$('#topic').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});$('#newTopicBtn').onclick=()=>{$('#casesPanel').classList.add('hidden');$('#practicePanel').classList.add('hidden');$('#setupPanel').scrollIntoView({behavior:'smooth'});$('#topic').focus()};$('#listenBtn').onclick=()=>speak(phrases[currentIndex]?.text||'');$('#saveBtn').onclick=savePhrase;$('#speakBtn').onclick=startAttempt;$('#stopBtn').onclick=stopCapture;$('#checkBtn').onclick=()=>checkClues('clues');$('#correctBtn').onclick=()=>checkClues('correct');$('#misheardBtn').onclick=misunderstood;$('#revealBtn').onclick=revealEvidence;$('#repairBtn').onclick=checkRepair;$('#repeatBtn').onclick=startAttempt;$('#manualBtn').onclick=manual;$('#backCasesBtn').onclick=backToCases;window.addEventListener('beforeunload',()=>{stopAudio();resetAttempt()});updateScore();
   })();
   </script>
+<script src="language-help.js?v=20261007all"></script>
 </body>
 </html>
 

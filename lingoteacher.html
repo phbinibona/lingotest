@@ -70,4 +70,5 @@ const readingNote=audioUrl?t('You recorded the highlighted excerpt. Replay your 
 $('feedback').textContent=t('Reading aloud: ')+readingNote+'\n\n'+lines.join('\n\n')+'\n\n'+t('Score: ')+correctCount+t(' out of ')+questions.length+'.';$('feedback').classList.remove('hide');feedbackSpeech=t('Here is your feedback. ')+readingNote+t(' You answered ')+correctCount+t(' out of ')+questions.length+t(' questions correctly. ')+spoken.join(' ');$('hearFeedback').classList.remove('hide');$('quizStatus').textContent=client?t('Mateo is giving your full feedback…'):t('Your answers are shown. Press Start Mateo to hear feedback.');if(client){await speak(feedbackSpeech);$('quizStatus').textContent=t('Mateo has finished the feedback.')}};
 $('hearFeedback').onclick=()=>speak(feedbackSpeech);
 $('newText').onclick=()=>{if(recorder?.state==='recording')recorder.stop();$('lesson').classList.add('hide');$('topic').focus()};
-</script><script src="avatar-access.js?v=20261004"></script></body></html>
+</script><script src="avatar-access.js?v=20261004"></script><script src="language-help.js?v=20261007all"></script>
+</body></html>
