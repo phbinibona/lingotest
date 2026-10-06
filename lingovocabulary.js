@@ -20,8 +20,52 @@ async function generate(event){event.preventDefault();const value=$('topic').val
 async function listen(text){audio?.pause();speechSynthesis?.cancel();try{if(['cy','gd'].includes(target))throw Error();const r=await fetch('/.netlify/functions/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,locale:LANGS[target][1],languageCode:LANGS[target][1]})});const data=await r.json();if(!r.ok||!data.audioContent)throw Error();audio=new Audio('data:audio/mpeg;base64,'+data.audioContent);await audio.play()}catch{const voice=speechSynthesis?.getVoices().find(v=>v.lang.toLowerCase().split('-')[0]===target);if(voice){const utterance=new SpeechSynthesisUtterance(text);utterance.lang=LANGS[target][1];utterance.voice=voice;speechSynthesis.speak(utterance)}else $('actionStatus').textContent=tr('audioError')}}
 function collection(){const items=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(items))throw Error();return items}
 function relevant(items){return items.filter(x=>x&&typeof (x.sentence||x.text)==='string'&&(x.language===target||normalize(x.targetLanguage,'')===target))}
-function saveActive(){if(!active)return;try{const items=collection(),exists=relevant(items).some(x=>(x.sentence||x.text)===active.phrase);if(!exists){items.unshift({sentence:active.phrase,translation:active.phraseMeaning,word:active.text,wordMeaning:active.meaning,targetLanguage:LANGS[target][0],language:target,interfaceLanguage:ui,source:'LingoVocabulary',theme:topic,savedAt:new Date().toISOString()});localStorage.setItem(KEY,JSON.stringify(items))}$('actionStatus').textContent=tr(exists?'already':'savedDone');closePopup(true);renderCollection()}catch{$('actionStatus').textContent=tr('storageError')}}
+function saveActive(){if(!active)return;try{const items=collection(),exists=relevant(items).some(x=>(x.sentence||x.text)===active.phrase);if(!exists){items.unshift({sentence:active.phrase,translation:active.phraseMeaning,word:active.text,wordMeaning:active.meaning,targetLanguage:LANGS[target][0],language:target,interfaceLanguage:ui,source:'LingoVocabulary',theme:topic,savedAt:new Date().toISOString()});localStorage.setItem(KEY,JSON.stringify(items))}$('actionStatus').textContent=tr(exists?'already':'savedDone');closePopup(true);renderCollection();updateLearningRoute()}catch{$('actionStatus').textContent=tr('storageError')}}
 function renderCollection(){try{practiceItems=relevant(collection());$('savedCount').textContent=practiceItems.length;$('savedList').replaceChildren();$('phraseChoice').replaceChildren();if(!practiceItems.length)$('savedList').textContent=tr('empty');for(const [index,item] of practiceItems.entries()){const sentence=item.sentence||item.text,row=document.createElement('div');row.className='saving';const text=document.createElement('p');text.textContent=sentence;text.lang=target;const hear=document.createElement('button');hear.textContent=tr('listen');hear.onclick=()=>listen(sentence);const remove=document.createElement('button');remove.className='secondary';remove.textContent=tr('remove');remove.onclick=()=>{try{const items=collection();const i=items.findIndex(x=>(x.sentence||x.text)===sentence&&(x.language===target||normalize(x.targetLanguage,'')===target));if(i>=0){items.splice(i,1);localStorage.setItem(KEY,JSON.stringify(items))}renderCollection()}catch{$('actionStatus').textContent=tr('storageError')}};row.append(text,hear,remove);$('savedList').append(row);const option=document.createElement('option');option.value=index;option.textContent=item.word||tr('saved')+' '+(index+1);$('phraseChoice').append(option)}for(const id of ['phraseChoice','answer','check','show'])$(id).disabled=!practiceItems.length;setPractice()}catch{$('savedList').textContent=tr('storageError')}}
 function setPractice(){const item=practiceItems[Number($('phraseChoice').value)||0];$('answer').value='';$('answer').lang=target;$('practiceAnswer').hidden=true;$('practiceStatus').textContent='';$('practiceMeaning').textContent=item?.interfaceLanguage===ui&&item.translation?item.translation:tr('practiceIntro');$('practiceAnswer').textContent=item?.sentence||item?.text||'';$('practiceAnswer').lang=target}
 const comparable=text=>text.normalize('NFKC').toLocaleLowerCase(LANGS[target][1]).replace(/[\p{P}\p{Z}\s]+/gu,'');
 $('topicForm').onsubmit=generate;$('popup-close').onclick=()=>closePopup(true);$('popup-audio').onclick=()=>listen(active.text);$('btn-know').onclick=()=>{wordButton.classList.add('known');closePopup(true)};$('btn-learn').onclick=saveActive;$('hearReading').onclick=()=>listen(segments.map(x=>x.text).join(''));$('savedJump').onclick=()=>{$('collection').scrollIntoView({behavior:'smooth',block:'start'})};$('phraseChoice').onchange=setPractice;$('check').onclick=()=>{$('practiceStatus').textContent=tr(comparable($('answer').value)===comparable($('practiceAnswer').textContent)?'correct':'retry')};$('show').onclick=()=>{$('practiceAnswer').hidden=false};document.addEventListener('click',e=>{if(!popup.contains(e.target)&&e.target!==wordButton)closePopup()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup(true)});window.addEventListener('resize',positionPopup);window.addEventListener('scroll',()=>closePopup(),{passive:true});window.addEventListener('storage',e=>{if(e.key===KEY)renderCollection()});window.addEventListener('pagehide',()=>{request?.abort();wordRequest?.abort();audio?.pause();speechSynthesis?.cancel()});renderCollection();
+
+// Guided recall uses the existing collection; no generation is needed.
+const routeCopy={"en":["Practise these phrases","Next phrase","Word hint","Question","Recalled independently","Choose another topic"],"ca":["Practica aquestes frases","Frase següent","Pista de paraules","Pregunta","Recordades sense ajuda","Tria un altre tema"],"es":["Practicar estas frases","Siguiente frase","Pista de palabras","Pregunta","Recordadas sin ayuda","Elegir otro tema"],"fr":["Pratiquer ces expressions","Expression suivante","Indice de mots","Question","Retrouvées sans aide","Choisir un autre sujet"],"de":["Diese Sätze üben","Nächster Satz","Worthilfe","Frage","Ohne Hilfe erinnert","Anderes Thema wählen"],"it":["Pratica queste frasi","Frase successiva","Suggerimento di parole","Domanda","Ricordate senza aiuto","Scegli un altro argomento"],"pt":["Praticar estas frases","Frase seguinte","Pista de palavras","Pergunta","Recordadas sem ajuda","Escolher outro tema"],"ar":["تدرب على هذه العبارات","العبارة التالية","تلميح الكلمات","سؤال","تذكرتها دون مساعدة","اختر موضوعًا آخر"],"ja":["これらの表現を練習","次の表現","単語のヒント","問題","ヒントなしで思い出せた数","別のトピックを選ぶ"],"eu":["Praktikatu esaldi hauek","Hurrengo esaldia","Hitzen pista","Galdera","Laguntzarik gabe gogoratuak","Aukeratu beste gai bat"],"cy":["Ymarfer yr ymadroddion hyn","Ymadrodd nesaf","Awgrym geiriau","Cwestiwn","Wedi cofio heb gymorth","Dewis pwnc arall"],"gd":["Cleachd na h-abairtean seo","An ath abairt","Cuideachadh le faclan","Ceist","Air an cuimhneachadh gun chuideachadh","Tagh cuspair eile"]}[ui];
+const routeButton=(id,label,parent,handler)=>{const b=document.createElement('button');b.id=id;b.type='button';b.textContent=label;b.onclick=handler;parent.append(b);return b};
+let session=[],sessionIndex=0,recalled=0,assisted=false,settled=false;
+const progress=document.createElement('p');progress.id='recallProgress';progress.setAttribute('role','status');progress.setAttribute('aria-live','polite');$('practice').insertBefore(progress,$('practiceMeaning'));
+const hint=document.createElement('p');hint.lang=target;hint.dir=target==='ar'?'rtl':'ltr';$('practice').append(hint);
+const start=routeButton('startRecall',routeCopy[0],$('readingSection'),startRecall);
+const returnPractice=routeButton('returnPractice',tr('practice'),$('setup'),startRecall);
+const wordHint=routeButton('wordHint',routeCopy[2],$('practice'),()=>{const item=practiceItems[Number($('phraseChoice').value)||0];if(!item)return;assisted=true;const words=wordParts(item.sentence||item.text).filter(x=>x.word).map(x=>x.text);for(let i=words.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[words[i],words[j]]=[words[j],words[i]]}hint.textContent=words.join(' · ')});
+const next=routeButton('nextRecall',routeCopy[1],$('practice'),advanceRecall);next.hidden=true;
+routeButton('anotherTopic',routeCopy[5],$('practice'),()=>{$('setup').scrollIntoView({behavior:'smooth'});$('topic').focus()});
+const originalSetPractice=setPractice;
+function updateLearningRoute(){start.disabled=returnPractice.disabled=wordHint.disabled=!practiceItems.length}
+function startRecall(){
+ session=practiceItems.slice(0,6);sessionIndex=0;recalled=0;session.length&&loadRecall();
+ $('practice').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function loadRecall(){
+ const i=practiceItems.indexOf(session[sessionIndex]);if(i<0){session=[];renderCollection();return}
+ $('phraseChoice').value=i;originalSetPractice();assisted=false;settled=false;hint.textContent='';next.hidden=true;
+ progress.textContent=routeCopy[3]+' '+(sessionIndex+1)+' / '+session.length;
+ $('answer').focus();
+}
+function advanceRecall(){
+ if(!session.length)return;
+ if(++sessionIndex<session.length){loadRecall();return}
+ progress.textContent=routeCopy[4]+': '+recalled+' / '+session.length;
+ session=[];next.hidden=true;
+}
+$('check').onclick=()=>{
+ if(!$('answer').value.trim()){$('answer').focus();return}
+ const correct=comparable($('answer').value)===comparable($('practiceAnswer').textContent);
+ $('practiceStatus').textContent=tr(correct?'correct':'retry');
+ if(session.length&&correct&&!settled){if(!assisted)recalled++;settled=true;next.hidden=false}
+ if(!correct)assisted=true;
+};
+$('show').onclick=()=>{assisted=true;$('practiceAnswer').hidden=false;if(session.length){settled=true;next.hidden=false}};
+$('phraseChoice').onchange=()=>{session=[];next.hidden=true;progress.textContent='';hint.textContent='';originalSetPractice()};
+$('answer').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('check').click()}});
+$('practiceLink').href='#practice';$('practiceLink').onclick=e=>{e.preventDefault();startRecall()};
+const collectionObserver=new MutationObserver(()=>{if(session.length){session=[];next.hidden=true;progress.textContent='';hint.textContent=''}updateLearningRoute()});
+collectionObserver.observe($('savedList'),{childList:true});
+updateLearningRoute();
