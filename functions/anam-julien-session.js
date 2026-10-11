@@ -12,7 +12,14 @@ exports.handler=async event=>{
   if(!key)return response(503,{error:'Julien needs ANAM_JULIEN_API_KEY in the site configuration.'});
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),18000);
   try{
-    const result=await fetch('https://api.anam.ai/v1/auth/session-token',{method:'POST',signal:controller.signal,headers:{authorization:'Bearer '+key,'content-type':'application/json'},body:JSON.stringify({personaConfig:{personaId:PERSONA_ID,skipGreeting:true,llmId:'CUSTOMER_CLIENT_V1',languageCode:language}})});
+    // Saved persona IDs ignore per-session overrides. Reuse only Julien's
+    // appearance and voice, with a client-controlled (silent) speech session.
+    const lookup=await fetch('https://api.anam.ai/v1/personas/'+PERSONA_ID,{signal:controller.signal,headers:{authorization:'Bearer '+key}});
+    const persona=await lookup.json();
+    if(!lookup.ok||!persona.avatar?.id||!persona.voice?.id)return response(502,{error:'Julien’s avatar and voice could not load.'});
+    const personaConfig={name:'Julien',avatarId:persona.avatar.id,voiceId:persona.voice.id,llmId:'CUSTOMER_CLIENT_V1',skipGreeting:true,languageCode:language};
+    if(persona.avatarModel)personaConfig.avatarModel=persona.avatarModel;
+    const result=await fetch('https://api.anam.ai/v1/auth/session-token',{method:'POST',signal:controller.signal,headers:{authorization:'Bearer '+key,'content-type':'application/json'},body:JSON.stringify({personaConfig})});
     const data=await result.json();
     if(!result.ok||!data.sessionToken){console.error('Julien session status:',result.status,data.error||data.message);return response(502,{error:result.status===400 && /persona not found or unavailable/i.test(String(data.message||data.error))?'Julien is unavailable to this Anam API key. Set ANAM_JULIEN_API_KEY from the account that owns Julien, then redeploy.':'Anam could not start Julien (HTTP '+result.status+'): '+String(data.message||data.error||'Invalid persona configuration').slice(0,160)})}
     return response(200,{sessionToken:data.sessionToken});
