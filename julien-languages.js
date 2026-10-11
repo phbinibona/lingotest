@@ -6,3 +6,12 @@ export function resolveLanguage(params,storage){
 }
 export function setLanguage(code){const url=new URL(location.href);url.searchParams.set('ui',code);url.searchParams.set('target',code);location.assign(url.href)}
 
+
+// Talk with Julien uses the interface language for the whole conversation.
+export function resolveInterfaceLanguage(params,storage){
+ const selected=new URLSearchParams();
+ const explicit=params.get('ui')||storage?.getItem('lingototal_ui_language');
+ if(explicit)selected.set('ui',explicit);
+ else if(params.get('target'))selected.set('ui',params.get('target'));
+ return resolveLanguage(selected,storage);
+}
