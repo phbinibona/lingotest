@@ -8,7 +8,7 @@ for(const [code,info] of Object.entries(LANGUAGES)){if(['cy','gd'].includes(code
 $('accessGate').insertBefore(languageLabel,$('accessIntro'));$('accessGate').insertBefore(languageSelect,$('accessIntro'));
 ['accessIntro','accessLabel','accessSubmit'].forEach((id,i)=>$(id).textContent=copy[i]);
 let loaded=false;
-async function unlock(){if(loaded)return;await import('./julien-conversation.js?v=20261013layout2');loaded=true;$('accessCode').value='';$('accessGate').hidden=true;$('julienActivity').hidden=false}
+async function unlock(){if(loaded)return;await import('./julien-conversation.js?v=20261013spoken');loaded=true;$('accessCode').value='';$('accessGate').hidden=true;$('julienActivity').hidden=false}
 $('accessForm').onsubmit=async event=>{event.preventDefault();$('accessSubmit').disabled=true;$('accessStatus').textContent=copy[3];try{const r=await fetch('/.netlify/functions/verify-julien-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('accessCode').value})});if(r.ok){await unlock()}else{$('accessStatus').textContent=copy[r.status===503?5:4]}}catch{$('accessStatus').textContent=copy[6]}finally{$('accessSubmit').disabled=false}};
 fetch('/.netlify/functions/verify-julien-code').then(r=>r.json()).then(d=>{if(d.authorized)return unlock()}).catch(()=>{});
 })();
