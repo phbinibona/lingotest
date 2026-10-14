@@ -84,7 +84,7 @@ async function ai(prompt,validate){
  for(let n=0;n<2;n++){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),65000);
   try{
-   const response=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt+(n?' Return valid JSON with every required field.':''),temperature:.4,maxOutputTokens:4096}),signal:controller.signal});
+   const response=await fetch('/.netlify/functions/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt+(n?' Return valid JSON with every required field.':''),temperature:.4,maxOutputTokens:4096,responseMimeType:'application/json',thinkingBudget:0}),signal:controller.signal});
    const body=await response.text();let data;
    try{data=JSON.parse(body)}catch{const e=Error(message('The server returned an unreadable response.','El servidor devolvió una respuesta ilegible.','Le serveur a renvoyé une réponse illisible.')+' (HTTP '+response.status+')');e.status=response.status;throw e}
    if(!response.ok){const e=Error(data.error||'HTTP '+response.status);e.status=response.status;if(data.requestId)e.message+=' ['+data.requestId+']';throw e}
