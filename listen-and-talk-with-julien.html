@@ -61,7 +61,7 @@ async function hearAudio(text){
  connecting=true;audioController=new AbortController();const timeout=setTimeout(()=>audioController?.abort(),20000);
  setStatus(message('Connecting…','Conectando…','Connexion…'));
  try{
- const r=await fetch(target==='el'?'/.netlify/functions/google-tts':'/.netlify/functions/julien-service?action=tts',{method:'POST',signal:audioController.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({text,languageCode:locale,locale})});
+ const r=await fetch('/.netlify/functions/julien-service?action=tts',{method:'POST',signal:audioController.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({text,languageCode:target==='ar'?'ar-XA':locale,locale, ...(!['ca','eu'].includes(target)?{voiceGender:'MALE'}:{})})});
  if(!r.ok)throw Error();const d=await r.json();if(!d.audioContent)throw Error();if(request!==audioRequest)return false;
  const player=$('julienAudio');player.src='data:audio/mpeg;base64,'+d.audioContent;player.hidden=false;player.setAttribute('aria-label',listenCopy[ui]||listenCopy.en);activeAudio=player;
  setStatus('');connecting=false;
