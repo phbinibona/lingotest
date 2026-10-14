@@ -12,7 +12,7 @@ const ALLOWED_LOCALES = new Set([
   'de-DE',
   'it-IT',
   'pt-PT',
-  'ar-SA',
+  'ar-SA', 'ar-XA',
   'ja-JP','el-GR',
   'eu-ES'
 ]);
@@ -268,8 +268,7 @@ exports.handler = async event => {
 
           audioConfig: {
             audioEncoding: 'MP3',
-            speakingRate: 0.92,
-            pitch: 0
+            ...(!voiceName?.includes('-Chirp') ? { speakingRate: 0.92, pitch: 0 } : {})
           }
         })
       });
