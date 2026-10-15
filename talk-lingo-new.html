@@ -35,8 +35,7 @@ for(const [code,title] of Object.entries(AUDIO_PAGE_TITLES))TRANSLATIONS[code].c
 function initializeConversation(){
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search);
 const ui=resolveInterfaceLanguage(params,localStorage),target=ui,targetName=LANGUAGES[ui][0],locale=LANGUAGES[ui][2],spanishUI=ui==='es';
-const femaleVoice=['ca','eu'].includes(target);const portraitImage=$('lingoPortrait');portraitImage.src=femaleVoice?'/lingochat-guest.jpg':'/lingochat-presenter.jpg';
-if(!femaleVoice)fetch('/.netlify/functions/julien-preview').then(r=>r.ok?r.json():null).then(d=>{if(d?.imageUrl){const test=new Image();test.onload=()=>{portraitImage.src=d.imageUrl};test.src=d.imageUrl}}).catch(()=>{});
+const femaleVoice=['ca','eu'].includes(target);const portraitImage=$('lingoPortrait');portraitImage.src='/lingochat-presenter.jpg';
 const dictionary=TRANSLATIONS[ui],tr=i=>target==='el'&&[1,48].includes(i)?dictionary.copy[i].replace(/English/g,'Greek'):dictionary.copy[i],extra=i=>dictionary.extra[i];
 const languageURL=new URL(location.href);languageURL.searchParams.set('ui',ui);languageURL.searchParams.set('target',target);window.history.replaceState(null,'',languageURL.href);
 document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=tr(0);
@@ -62,6 +61,22 @@ function buttonState(){ $('connect').textContent=listenCopy[ui]||listenCopy.en }
 function stopAudio(){++audioRequest;audioController?.abort();audioController=null;if(activeAudio){activeAudio.pause();activeAudio.currentTime=0;activeAudio=null}connecting=false;buttonState()}
 async function disconnect(){stopAudio()}
 async function playSpeech(text,section){if(!text||recordState)return false;lastSpeech=text;activeSection=section;return hearAudio(text)}
+// Decode the complete speech and prepend silence so output devices wake before the first word.
+async function bufferedSpeechUrl(base64){
+ const bytes=Uint8Array.from(atob(base64),c=>c.charCodeAt(0));
+ const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+ if(!Offline)return URL.createObjectURL(new Blob([bytes],{type:'audio/mpeg'}));
+ const decoder=new Offline(1,1,24000);
+ const decoded=await decoder.decodeAudioData(bytes.buffer);
+ const channels=decoded.numberOfChannels,rate=decoded.sampleRate,padding=Math.ceil(rate*.7),frames=decoded.length+padding;
+ const output=new ArrayBuffer(44+frames*channels*2),view=new DataView(output);
+ const write=(offset,text)=>{for(let i=0;i<text.length;i++)view.setUint8(offset+i,text.charCodeAt(i))};
+ write(0,'RIFF');view.setUint32(4,output.byteLength-8,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,channels,true);view.setUint32(24,rate,true);view.setUint32(28,rate*channels*2,true);view.setUint16(32,channels*2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,frames*channels*2,true);
+ const samples=Array.from({length:channels},(_,i)=>decoded.getChannelData(i));
+ for(let frame=0;frame<decoded.length;frame++)for(let ch=0;ch<channels;ch++){const value=Math.max(-1,Math.min(1,samples[ch][frame]));view.setInt16(44+((frame+padding)*channels+ch)*2,value<0?value*32768:value*32767,true)}
+ return URL.createObjectURL(new Blob([output],{type:'audio/wav'}));
+}
+function waitForSpeech(player){return new Promise((resolve,reject)=>{let timer;const clean=()=>{clearTimeout(timer);player.removeEventListener('canplaythrough',ready);player.removeEventListener('error',failed)};const ready=()=>{clean();resolve()};const failed=()=>{clean();reject(Error('Audio could not load'))};player.addEventListener('canplaythrough',ready,{once:true});player.addEventListener('error',failed,{once:true});timer=setTimeout(failed,15000);player.load();if(player.readyState>=4)ready()})}
 async function hearAudio(text){
  if(!text||recordState)return false;stopAudio();audioElements.forEach(a=>a.pause());const request=audioRequest;
  connecting=true;audioController=new AbortController();const timeout=setTimeout(()=>audioController?.abort(),20000);
@@ -69,8 +84,8 @@ async function hearAudio(text){
  try{
  const r=await fetch('/.netlify/functions/tts',{method:'POST',signal:audioController.signal,headers:{'Content-Type':'application/json'},body:JSON.stringify({text,languageCode:target==='ar'?'ar-XA':locale,locale, voiceGender:femaleVoice?'FEMALE':'MALE'})});
  if(!r.ok)throw Error();const d=await r.json();if(!d.audioContent)throw Error();if(request!==audioRequest)return false;
- const player=$('julienAudio');player.src='data:audio/mpeg;base64,'+d.audioContent;applyPlaybackSpeed();player.hidden=false;player.setAttribute('aria-label',listenCopy[ui]||listenCopy.en);activeAudio=player;
- setStatus('');connecting=false;
+ const speechUrl=await bufferedSpeechUrl(d.audioContent);if(request!==audioRequest){URL.revokeObjectURL(speechUrl);return false}urls.push(speechUrl);const player=$('julienAudio');player.preload='auto';player.src=speechUrl;applyPlaybackSpeed();player.hidden=false;player.setAttribute('aria-label',listenCopy[ui]||listenCopy.en);activeAudio=player;
+ await waitForSpeech(player);if(request!==audioRequest)return false;player.currentTime=0;setStatus('');connecting=false;
  // Playback stays under learner control; blocked autoplay leaves the player ready.
  try{await player.play()}catch{}return true;
  }catch(e){if(request===audioRequest)setStatus(dictionary.audioUnavailable);return false}
