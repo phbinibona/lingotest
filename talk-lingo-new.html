@@ -35,7 +35,7 @@ for(const [code,title] of Object.entries(AUDIO_PAGE_TITLES))TRANSLATIONS[code].c
 function initializeConversation(){
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search);
 const ui=resolveInterfaceLanguage(params,localStorage),target=ui,targetName=LANGUAGES[ui][0],locale=LANGUAGES[ui][2],spanishUI=ui==='es';
-const femaleVoice=['ca','eu'].includes(target);const portraitImage=$('lingoPortrait');portraitImage.src='/lingochat-presenter.jpg';
+const femaleVoice=['ca','eu'].includes(target);const portraitImage=$('lingoPortrait');portraitImage.src=femaleVoice?'/lingochat-guest.jpg':'/lingochat-presenter.jpg';
 const dictionary=TRANSLATIONS[ui],tr=i=>target==='el'&&[1,48].includes(i)?dictionary.copy[i].replace(/English/g,'Greek'):dictionary.copy[i],extra=i=>dictionary.extra[i];
 const languageURL=new URL(location.href);languageURL.searchParams.set('ui',ui);languageURL.searchParams.set('target',target);window.history.replaceState(null,'',languageURL.href);
 document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';document.title=tr(0);
