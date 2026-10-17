@@ -1,15 +1,16 @@
-const crypto = require('node:crypto');
+import crypto from 'node:crypto';
+import {getStore} from '@netlify/blobs';
 const headers = {'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'};
 const reply=(statusCode,body)=>({statusCode,headers,body:JSON.stringify(body)});
 const fail=(status,message)=>Object.assign(new Error(message),{status});
 const hash=s=>crypto.createHash('sha256').update(String(s)).digest('hex');
 const text=(s,n=120)=>String(s||'').replace(/[\u0000-\u001f<>]/g,' ').trim().slice(0,n);
 function input(event,max=6_000_000){if(event.httpMethod!=='POST')throw fail(405,'Please use POST.');if((event.body||'').length>max)throw fail(413,'That recording is too large. Please make a shorter recording.');try{return JSON.parse(event.body||'{}')}catch{throw fail(400,'The request could not be read.')}}
-function storeFor(event){const {getStore,connectLambda}=require('@netlify/blobs');if(event.blobs)connectLambda(event);return getStore({name:'versestage-pilot-v1',consistency:'strong'});}
+function storeFor(){return getStore({name:'versestage-pilot-v1',consistency:'strong'});}
 async function load(store,code){if(!/^[a-f0-9]{12}$/.test(code||''))throw fail(404,'That group code was not found.');const entry=await store.getWithMetadata('group/'+code,{type:'json'});if(!entry||entry.data.deleted)throw fail(404,'That group is no longer available.');if(entry.data.expires<Date.now())throw fail(410,'This pilot group has expired. Ask your teacher to create a new group.');return entry;}
 function auth(group,token,teacherOnly=false){if(!token)throw fail(403,'Join the group or use your teacher key first.');if(hash(token)===group.teacherHash)return {teacher:true};if(teacherOnly)throw fail(403,'Your teacher key is required.');const player=group.players.find(p=>p.tokenHash===hash(token));if(!player)throw fail(403,'Please rejoin your group.');return {teacher:false,player};}
 async function mutate(store,code,fn){for(let i=0;i<6;i++){const entry=await load(store,code);const result=await fn(entry.data);const update=await store.setJSON('group/'+code,entry.data,{onlyIfMatch:entry.etag});if(update.modified)return result;}throw fail(409,'Your group is busy. Please try again.');}
 function visible(group){return {code:group.code,name:group.name,expires:group.expires,closed:!!group.closed,poemKey:group.poemKey||'',poem:group.poem||null,players:group.players.map(p=>({id:p.id,alias:p.alias,best:p.best??null,first:p.first??null,improvement:p.best==null?null:Math.round((p.best-p.first)*10)/10,attempts:p.attempts||0,poem:p.poem||'',teacherAdjusted:!!p.teacherAdjusted,clarity:p.clarity??null,rhythm:p.rhythm??null,expression:p.expression??null,accuracy:p.accuracy??null})).sort((a,b)=>(b.best??-1)-(a.best??-1)||a.alias.localeCompare(b.alias))};}
 function validAssessment(d){if(!d||typeof d.scorable!=='boolean')return false;if(!d.scorable)return typeof d.reason==='string'&&d.reason.trim().length>0;return ['clarity','rhythm','expression','accuracy'].every((k,i)=>Number.isFinite(d[k])&&d[k]>=0&&d[k]<=(i===3?1:3)&&Math.abs(d[k]*2-Math.round(d[k]*2))<.001)&&['strength','nextStep','interpretation','heard'].every(k=>typeof d[k]==='string'&&d[k].length>0&&d[k].length<1600);}
 function total(d){return Math.round((d.clarity+d.rhythm+d.expression+d.accuracy)*10)/10;}
-module.exports={reply,fail,hash,text,input,storeFor,load,auth,mutate,visible,validAssessment,total,crypto};
+export default {reply,fail,hash,text,input,storeFor,load,auth,mutate,visible,validAssessment,total,crypto};

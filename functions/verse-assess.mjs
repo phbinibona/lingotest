@@ -1,4 +1,4 @@
-import c from './verse-lib/core.js';
+import c from './verse-lib/core.mjs';
 const mimeTypes=new Set(['audio/webm','audio/ogg','audio/mp4','audio/wav','audio/x-wav','audio/mpeg','audio/aac']);
 async function handle(event){let timer;try{const b=c.input(event),key=process.env.GEMINI_API_KEY;if(!key)throw c.fail(503,'Audio feedback is not configured yet. You can still record and listen.');
 const lines=(Array.isArray(b.lines)?b.lines.join('\n'):String(b.lines||'')).split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(lines.length!==8||lines.join('\n').length>4000)throw c.fail(400,'Choose exactly eight lines for this challenge.');const title=c.text(b.title,140),poet=c.text(b.poet,100);if(!title||!poet)throw c.fail(400,'Enter the poem title and poet.');const mime=String(b.mimeType||'').split(';')[0].toLowerCase(),audio=String(b.audioBase64||'');if(!mimeTypes.has(mime)||!audio||!/^[A-Za-z0-9+/]+={0,2}$/.test(audio))throw c.fail(400,'Please record your reading first.');if(audio.length>5_300_000||audio.length<800)throw c.fail(413,'Please record a short eight-line performance (up to 90 seconds).');
