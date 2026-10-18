@@ -1,2 +1,46 @@
 [functions]
   directory = "functions"
+
+# WizPoem uses the existing deployment and group store with its own entry page.
+# Keep LingoTotal as the project's primary domain; add both WizPoem domains as aliases.
+[[redirects]]
+  from = "http://www.wizpoem.com/*"
+  to = "https://wizpoem.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.wizpoem.com/*"
+  to = "https://wizpoem.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://wizpoem.com/*"
+  to = "https://wizpoem.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://wizpoem.com/"
+  to = "/wizpoem-home.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://wizpoem.com/index.html"
+  to = "/wizpoem-home.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://wizpoem.com/index"
+  to = "/wizpoem-home.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://wizpoem.com/index/"
+  to = "/wizpoem-home.html"
+  status = 200
+  force = true
