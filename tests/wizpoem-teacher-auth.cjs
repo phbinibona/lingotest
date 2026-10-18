@@ -1,0 +1,52 @@
+process.chdir(require('path').resolve(__dirname,'..'));
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),crypto=require('node:crypto'),path=require('path');
+const data=new Map();let etag=0;const clone=x=>JSON.parse(JSON.stringify(x));
+const store={async getWithMetadata(k){const r=data.get(k);return r?clone(r):null;},async setJSON(k,v,o={}){const old=data.get(k);if(o.onlyIfNew&&old||o.onlyIfMatch&&(!old||old.etag!==o.onlyIfMatch))return {modified:false};data.set(k,{data:clone(v),etag:String(++etag)});return {modified:true};},async delete(k){data.delete(k);}};
+const context=vm.createContext({Buffer,console,process:{env:{}},Response,Request,setTimeout,clearTimeout,Date,URL});const modules={};
+async function load(p){p=path.resolve(p);if(modules[p])return modules[p];const m=new vm.SourceTextModule(fs.readFileSync(p,'utf8'),{context,identifier:p});modules[p]=m;await m.link(async(spec,ref)=>{if(spec==='node:crypto'){const m=new vm.SyntheticModule(['default'],function(){this.setExport('default',crypto);},{context});await m.link(()=>{});return m;}if(spec==='@netlify/blobs'){const m=new vm.SyntheticModule(['getStore'],function(){this.setExport('getStore',()=>store);},{context});await m.link(()=>{});return m;}return load(path.resolve(path.dirname(ref.identifier),spec));});return m;}
+(async()=>{
+ const m=await load('functions/verse-teachers.mjs');await m.evaluate();const fn=m.namespace.default;
+ async function call(b,status=200){const r=await fn(new Request('https://wizpoem.com/.netlify/functions/verse-teachers',{method:'POST',body:JSON.stringify(b)}),{ip:'127.0.0.1'});const d=await r.json();assert.equal(r.status,status,JSON.stringify(d));return d;}
+ const poem={title:'Test reading',poet:'Test author',lines:['First line','Second line','Third line']};
+ await call({action:'list'},401);
+ await call({action:'register',username:'teacher1',password:'short'},400);
+ const a=await call({action:'register',username:'teacher1',password:'Private testing password 1'});assert(a.recovery&&a.session);
+ await call({action:'register',username:'teacher1',password:'Another testing password'},409);
+ const b=await call({action:'register',username:'teacher2',password:'Private testing password 2'});
+ await call({action:'login',username:'teacher1',password:'wrong'},403);
+ const login=await call({action:'login',username:'teacher1',password:'Private testing password 1'});
+ const g=(await call({action:'create',session:a.session,name:'My class',language:'es',poem})).group;
+ assert.equal(g.language,'es');assert.equal(g.poem.title,poem.title);
+ await call({action:'read',session:b.session,code:g.code},403);
+ await call({action:'delete',session:b.session,code:g.code},403);
+ assert.equal((await call({action:'list',session:b.session})).groups.length,0);
+ assert.equal((await call({action:'list',session:a.session})).groups.length,1);
+ // Add a simulated learner and verify task privacy and score-reset protection.
+ const raw=data.get('group/'+g.code).data;raw.players=[{id:'learner',alias:'Reader',tokenHash:crypto.createHash('sha256').update('learner-token').digest('hex'),first:5,best:6,attempts:2}];
+ const task={...poem,lines:['First line']};
+ await call({action:'assign',session:a.session,code:g.code,playerId:'learner',poem:task},409);
+ const assigned=(await call({action:'assign',session:a.session,code:g.code,playerId:'learner',poem:task,confirmReset:true})).group;
+ assert.equal(assigned.players[0].attempts,0);assert.deepEqual(assigned.players[0].assignment.lines,['First line']);
+ await call({action:'password',session:a.session,currentPassword:'wrong',newPassword:'Changed testing password 1'},403);
+ const changed=await call({action:'password',session:a.session,currentPassword:'Private testing password 1',newPassword:'Changed testing password 1'});
+ await call({action:'list',session:a.session},401);await call({action:'list',session:login.session},401);
+ await call({action:'login',username:'teacher1',password:'Private testing password 1'},403);
+ assert.equal((await call({action:'list',session:changed.session})).groups.length,1);
+ await call({action:'recover',username:'teacher1',recovery:'bad',password:'Recovered testing password'},403);
+ const recovered=await call({action:'recover',username:'teacher1',recovery:a.recovery,password:'Recovered testing password'});assert.notEqual(recovered.recovery,a.recovery);
+ await call({action:'list',session:changed.session},401);
+ await call({action:'recover',username:'teacher1',recovery:a.recovery,password:'Recovered testing password'},403);
+ const legacy={...clone(raw),code:'abcdef123456',ownerTeacherId:undefined,teacherHash:crypto.createHash('sha256').update('old-private-key').digest('hex')};data.set('group/'+legacy.code,{data:legacy,etag:String(++etag)});
+ await call({action:'claim',session:recovered.session,code:legacy.code,teacherKey:'wrong'},403);
+ await call({action:'claim',session:recovered.session,code:legacy.code,teacherKey:'old-private-key'});
+ await call({action:'claim',session:b.session,code:legacy.code,teacherKey:'old-private-key'},403);
+ await call({action:'logout',session:recovered.session});await call({action:'list',session:recovered.session},401);
+ const groups=await load('functions/verse-groups.mjs');await groups.evaluate();const gf=groups.namespace.default;
+ const gr=async body=>{const r=await gf(new Request('https://wizpoem.com/.netlify/functions/verse-groups',{method:'POST',body:JSON.stringify(body)}));return {status:r.status,data:await r.json()};};
+ assert.equal((await gr({action:'create',name:'Attempted bypass',poem})).status,403);
+ const join=await gr({action:'join',code:g.code,alias:'New learner',language:'es'});assert.equal(join.status,200);assert.equal(join.data.group.myAssignment.title,poem.title);assert.equal(join.data.group.players[0].assignment,undefined);
+ const read=await gr({action:'read',code:g.code,token:join.data.token,language:'es'});assert.equal(read.status,200);assert.equal(read.data.teacher,false);
+ assert.equal((await gr({action:'adjust',code:g.code,token:join.data.token,score:10,playerId:'learner',language:'es'})).status,403);
+ for(const [k,v] of data)if(k.startsWith('teacher/account/'))assert(!JSON.stringify(v).includes('testing password'));
+ console.log('PASS: registration/login; hashed passwords; own-group isolation; no anonymous creation; learner join/read; task privacy; reset confirmation; password change and recovery revoke old sessions; recovery rotation; legacy migration; sign out.');
+})().catch(e=>{console.error(e);process.exit(1)});
