@@ -4,11 +4,11 @@
   const playback = document.getElementById('playback');
   if (!feedback || !playback) return;
   const copy = {
-    en: ['Download my recording', 'Keep this reading on your device. Download it before recording again or closing this page.'],
-    ca: ['Descarrega la meva gravació', 'Desa aquesta lectura al teu dispositiu. Descarrega-la abans de tornar a gravar o de tancar la pàgina.'],
-    es: ['Descargar mi grabación', 'Guarda esta lectura en tu dispositivo. Descárgala antes de volver a grabar o cerrar la página.'],
-    fr: ['Télécharger mon enregistrement', 'Garde cette lecture sur ton appareil. Télécharge-la avant de recommencer un enregistrement ou de fermer la page.'],
-    de: ['Meine Aufnahme herunterladen', 'Speichere diese Lesung auf deinem Gerät. Lade sie herunter, bevor du erneut aufnimmst oder die Seite schließt.']
+    en: ['Download my recording', 'Like this recording? You can download it to keep and listen to yourself. It’s entirely optional—you can record as many times as you like without downloading.'],
+    ca: ['Descarrega la meva gravació', 'T’agrada aquesta gravació? Si vols, la pots descarregar per conservar-la i escoltar-te. És totalment opcional: pots gravar tantes vegades com vulguis sense descarregar res.'],
+    es: ['Descargar mi grabación', '¿Te gusta esta grabación? Si quieres, puedes descargarla para guardarla y escucharte. Es totalmente opcional: puedes grabar tantas veces como quieras sin descargar nada.'],
+    fr: ['Télécharger mon enregistrement', 'Cet enregistrement te plaît ? Si tu le souhaites, tu peux le télécharger pour le garder et t’écouter. C’est entièrement facultatif : tu peux t’enregistrer autant de fois que tu le souhaites sans rien télécharger.'],
+    de: ['Meine Aufnahme herunterladen', 'Gefällt dir diese Aufnahme? Wenn du möchtest, kannst du sie herunterladen, behalten und dir selbst zuhören. Das ist ganz freiwillig: Du kannst so oft aufnehmen, wie du möchtest, ohne etwas herunterzuladen.']
   };
   const [label, hint] = copy[document.documentElement.lang.split('-')[0]] || copy.en;
   const box = document.createElement('div');
