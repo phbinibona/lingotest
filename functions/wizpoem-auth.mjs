@@ -17,7 +17,7 @@ export default async function(request,context={}){
  if(b.action!=='login')return reply(400,{ok:false});
  const ip=context.ip||'unknown',now=Date.now();let count=attempts.get(ip);if(!count||count.until<now)count={n:0,until:now+300000};if(count.n>=10)return reply(429,{ok:false});
  count.n++;attempts.set(ip,count);if(attempts.size>1000)for(const [k,v]of attempts)if(v.until<now)attempts.delete(k);
- const supplied=String(b.password||'');if(supplied.length>128)return reply(401,{ok:false});
+ const supplied=String(b.password||'').toUpperCase();if(supplied.length>128)return reply(401,{ok:false});
  const hash=await new Promise((resolve,reject)=>crypto.scrypt(supplied,SALT,64,(e,k)=>e?reject(e):resolve(k)));
  if(!crypto.timingSafeEqual(hash,Buffer.from(PASSWORD_HASH,'hex')))return reply(401,{ok:false});
  try{const data=Buffer.from(JSON.stringify({scope:'wizpoem-site',expires:now+HOURS*3600000,nonce:crypto.randomBytes(16).toString('hex')})).toString('base64url');const token=data+'.'+sign(data);attempts.delete(ip);return reply(200,{ok:true},{'Set-Cookie':COOKIE+'='+token+'; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age='+HOURS*3600})}catch{return reply(503,{ok:false})}
