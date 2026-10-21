@@ -28,7 +28,7 @@ if(!teacher){
  const code=new URLSearchParams(location.search).get('group');if(code){$('groupCode').value=code;$('joinForm').requestSubmit();}return;
 }
 const library=window.WIZ_ENGLISH_LIBRARY||[];
-$('libraryChoice').replaceChildren(...library.map((p,i)=>{const o=el('option',(p.genre==='drama'?'Theatre':'Poetry')+' · '+p.title+' — '+p.poet);o.value=String(i);return o;}));
+$('libraryChoice').replaceChildren(...library.map((p,i)=>{const o=el('option',(p.genre==='drama'?'Theatre':'Poetry')+(p.year?' · '+p.year:'')+' · '+p.title+' — '+p.poet);o.value=String(i);return o;}));
 function fill(p){editingId=p.id||'';$('readingGenre').value=p.genre||'poetry';$('readingTitle').value=p.title||'';$('readingAuthor').value=p.poet||'';$('readingText').value=(p.lines||[]).join('\n');$('readingGuidance').value=(p.guidance||p.tip||'').slice(0,400);$('editorHeading').textContent=editingId?'Edit reading':'Add a reading';$('readingPreview').hidden=true;$('readingTitle').focus();}
 function clearEditor(){fill({});editingId='';}
 $('useLibrary').onclick=()=>{const p=library[Number($('libraryChoice').value)];if(p)fill({...p,id:''});};$('cancelEdit').onclick=clearEditor;
