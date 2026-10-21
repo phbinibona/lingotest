@@ -1,8 +1,7 @@
 [functions]
   directory = "functions"
 
-# WizPoem uses the existing deployment and group store with its own entry page.
-# Keep LingoTotal as the project's primary domain; add both WizPoem domains as aliases.
+# WizPoem pages use wizpoem.com; the edge router keeps page navigation on its own domain.
 [[redirects]]
   from = "http://www.wizpoem.com/*"
   to = "https://wizpoem.com/:splat"

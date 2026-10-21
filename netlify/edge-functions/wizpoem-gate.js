@@ -14,7 +14,17 @@ function page(message='',next='/'){
 }
 async function auth(request,action,password){const response=await fetch(new URL(AUTH,request.url),{method:'POST',headers:{'Content-Type':'application/json',Cookie:request.headers.get('cookie')||''},body:JSON.stringify({action,password}),redirect:'error'});return response}
 export default async function(request,context){
- const url=new URL(request.url);if(url.pathname===AUTH)return context.next();
+ const url=new URL(request.url);
+ const host=url.hostname.toLowerCase(),path=url.pathname;
+ const wizPath=/^\/(?:wizpoem|wizdrama|versestage)(?:[-./]|$)/i.test(path);
+ const documentPath=!/\.[^/]+$/.test(path)||/\.html\/?$/i.test(path);
+ // Canonicalise old page links without moving LingoTotal's own pages.
+ if(['lingototal.com','www.lingototal.com'].includes(host)&&wizPath&&documentPath){const target=new URL('https://wizpoem.com');target.pathname=path;target.search=url.search;return Response.redirect(target.href,request.method==='GET'||request.method==='HEAD'?302:307);}
+ // A shared deployment must not serve LingoTotal documents on the WizPoem domain.
+ const wizHost=host==='wizpoem.com'||host==='www.wizpoem.com';
+ const homePath=/^\/(?:index(?:\.html)?\/?)?$/i.test(path);
+ if(wizHost&&documentPath&&!wizPath&&!homePath&&!path.startsWith('/.netlify/'))return new Response('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WizPoem · Page not found</title><body style="font-family:system-ui;background:#101019;color:#f5f1fb;padding:40px"><h1>WizPoem</h1><p>This page is not part of WizPoem.</p><a href="https://wizpoem.com/" style="color:#d3fc7c">Return to WizPoem →</a></body></html>',{status:404,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow'}});
+ if(url.pathname===AUTH)return context.next();
  if(url.pathname===LOGIN){if(request.method==='POST'){const raw=await request.text();if(raw.length>4096)return page('Please try again.');const form=new URLSearchParams(raw);const next=safeNext(form.get('next'));try{const r=await auth(request,'login',form.get('password'));if(r.ok&&r.headers.get('set-cookie'))return new Response(null,{status:303,headers:{Location:next,'Set-Cookie':r.headers.get('set-cookie'),'Cache-Control':'no-store'}});return page(r.status===429?'Too many attempts. Please wait five minutes.':'Password not recognised. Please try again.',next)}catch{return page('Access is temporarily unavailable. Please try again.',next)}}return page('',safeNext(url.searchParams.get('next')))}
  if(!protectedRequest(url))return context.next();
  try{const hasSession=(request.headers.get('cookie')||'').includes('__Host-wizpoem_session=');if(hasSession){const r=await auth(request,'check');if(r.ok){const response=await context.next();const secured=new Response(response.body,response);secured.headers.set('Cache-Control','private, no-store');secured.headers.set('X-Robots-Tag','noindex, nofollow');return secured}}}catch{}
