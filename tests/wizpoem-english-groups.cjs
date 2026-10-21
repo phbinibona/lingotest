@@ -31,5 +31,5 @@ const vm=require('vm'),fs=require('fs'),assert=require('assert'),crypto=require(
  console.log('PASS English groups: session gate, create/return, teacher-only edits, learner reads, group isolation, invalid text, stale revisions, update/remove, rename/pause/reopen/delete.');
  // The English pages retain feedback scripts, have no route to other language editions, and link back to their own entrance.
  for(const kind of ['poetry','theatre']){const html=fs.readFileSync('wizpoem-english-'+kind+'.html','utf8');assert(html.includes('wizpoem-feedback.js'));assert(html.includes('wizpoem-english-'+kind+'.js'));assert(html.includes('wizpoem-english-reading.js'));assert(html.includes('href="/wizpoem-english.html"'));assert(!/href="\/Wiz(?:Poem|Drama)/.test(html));}
- assert(fs.readFileSync('wizpoem-home.html','utf8').includes('href="/wizpoem-english.html"'));console.log('PASS English-only routes and homepage discovery.');
+ assert(!fs.readFileSync('wizpoem-home.html','utf8').includes('href="/wizpoem-english.html"'));console.log('PASS English-only routes remain available directly; homepage English-only entrance removed.');
 })().catch(e=>{console.error(e);process.exit(1)});

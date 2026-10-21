@@ -1,7 +1,12 @@
 const AUTH='/.netlify/functions/wizpoem-auth';
 const LOGIN='/wizpoem-login';
 const safeNext=value=>{try{const s=String(value||'/');if(!s.startsWith('/')||s.startsWith('//')||s.includes('\\')||/[\r\n]/.test(s)||s.startsWith(LOGIN))return '/';return s}catch{return '/'}};
-export function protectedRequest(url){let path;try{path=decodeURIComponent(url.pathname)}catch{return true}return /(^|\.)wizpoem\.com$/i.test(url.hostname)||/^\/(?:wizpoem|wizdrama|versestage)(?:[-./]|$)/i.test(path)}
+export function protectedRequest(url){let path;try{path=decodeURIComponent(url.pathname)}catch{return true}
+ // Visitors can browse the homepage before choosing a protected activity.
+ const wizHost=/(^|\.)wizpoem\.com$/i.test(url.hostname);
+ if(/^\/wizpoem-home(?:\.html)?\/?$/i.test(path)||(wizHost&&/^\/(?:index(?:\.html)?\/?)?$/i.test(path)))return false;
+ return wizHost||/^\/(?:wizpoem|wizdrama|versestage)(?:[-./]|$)/i.test(path);
+}
 function page(message='',next='/'){
  const nonce=crypto.randomUUID(),english=safeNext(next).startsWith('/wizpoem-english');
  const escape=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
