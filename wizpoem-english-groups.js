@@ -18,7 +18,7 @@ function render(){
  box.append(actions);holder.append(box);
  }
  if(!teacher){$('groupContent').hidden=false;return;}
- $('teacherEntry').hidden=true;$('dashboard').hidden=false;$('shareCode').textContent=group.code;$('shareLink').value=learnerURL(group);$('learnerLink').href=learnerURL(group);$('keyValue').textContent=teacherKey;$('renameGroup').value=group.name;$('closeGroup').textContent=group.closed?'Reopen learner access':'Pause learner access';$('availability').textContent=(group.closed?'Learner access is paused.':'Learner access is open.')+' Readings available until '+new Date(group.expires).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+'.';remember();
+ $('teacherEntry').hidden=true;$('dashboard').hidden=false;$('shareCode').textContent=group.code;$('shareLink').value=learnerURL(group);$('learnerLink').href=learnerURL(group);$('keyValue').textContent=teacherKey.length===8?teacherKey.slice(0,4)+'-'+teacherKey.slice(4):teacherKey;$('renameGroup').value=group.name;$('closeGroup').textContent=group.closed?'Reopen learner access':'Pause learner access';$('availability').textContent=(group.closed?'Learner access is paused.':'Learner access is open.')+' Readings available until '+new Date(group.expires).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+'.';remember();
 }
 function credentials(){return {code:group.code,teacherKey,revision:group.revision};}
 async function refresh(){const d=await api(teacher?{action:'read',code:group.code,teacherKey}:{action:'read',code:group.code});group=d.group;render();status('Group refreshed.');}

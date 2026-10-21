@@ -2,6 +2,9 @@ import c from './verse-lib/core.mjs';
 import access from './wizpoem-auth.mjs';
 import {getStore} from '@netlify/blobs';
 const fail=c.fail;
+const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const shortCode=n=>Array.from({length:n},()=>alphabet[c.crypto.randomInt(alphabet.length)]).join('');
+const cleanCode=value=>String(value||'').replace(/[\s-]/g,'');
 function reading(p){
  if(!p||!Array.isArray(p.lines)||!['poetry','drama'].includes(p.genre))throw fail(400,'Choose poetry or theatre and enter the reading.');
  const lines=p.lines.map(x=>typeof x==='string'?x.trim():'').filter(Boolean);
@@ -16,15 +19,19 @@ export default async function(request){try{
  const b=c.input({httpMethod:request.method,body:await request.text()},10000),store=getStore({name:'wizpoem-english-materials-v1',consistency:'strong'});
  if(b.action==='create'){
   const name=c.text(b.name,60);if(!name)throw fail(400,'Enter a group name.');
-  const teacherKey=c.crypto.randomBytes(24).toString('hex'),code=c.crypto.randomBytes(6).toString('hex');
-  const g={code,name,teacherHash:c.hash(teacherKey),readings:[],closed:false,revision:1,expires:Date.now()+180*86400000};
-  const result=await store.setJSON('group/'+code,g,{onlyIfNew:true});if(!result.modified)throw fail(409,'Please try creating the group again.');
-  return Response.json({group:visible(g),teacherKey},{headers:{'Cache-Control':'no-store'}});
+  const teacherKey=shortCode(8);
+  for(let attempt=0;attempt<5;attempt++){
+   const code=shortCode(6),g={code,name,keyFormat:'short-v1',teacherHash:c.hash(teacherKey),readings:[],closed:false,revision:1,expires:Date.now()+180*86400000};
+   const result=await store.setJSON('group/'+code,g,{onlyIfNew:true});
+   if(result.modified)return Response.json({group:visible(g),teacherKey},{headers:{'Cache-Control':'no-store'}});
+  }
+  throw fail(409,'Please try creating the group again.');
  }
- const code=String(b.code||'').trim().toLowerCase();if(!/^[a-f0-9]{12}$/.test(code))throw fail(404,'Check the group code and try again.');
+ const supplied=cleanCode(b.code),code=supplied.length===6?supplied.toUpperCase():supplied.toLowerCase();if(!/^(?:[A-HJ-NP-Z2-9]{6}|[a-f0-9]{12})$/.test(code))throw fail(404,'Check the group code and try again.');
  const entry=await store.getWithMetadata('group/'+code,{type:'json'}),g=entry?.data;
  if(!g||g.deleted)throw fail(404,'This group is no longer available.');if(g.expires<Date.now())throw fail(410,'This group has expired. Ask your teacher for a new group.');
- const teacher=!!b.teacherKey&&c.hash(b.teacherKey)===g.teacherHash;
+ const key=cleanCode(b.teacherKey),normalKey=g.keyFormat==='short-v1'?key.toUpperCase():key.toLowerCase();
+ const teacher=!!key&&c.hash(normalKey)===g.teacherHash;
  if(b.action==='read'){
   if(b.teacherKey&&!teacher)throw fail(403,'The teacher key was not recognised.');
   if(g.closed&&!teacher)throw fail(403,'Your teacher has paused access to this group.');
