@@ -5,7 +5,7 @@ exports.handler=async event=>{
   if(!require('./lib/julien-auth').authorized(event))return require('./lib/julien-auth').denied();
   if(event.httpMethod!=='POST')return response(405,{error:'Method not allowed'});
   let body;try{body=JSON.parse(event.body||'{}')}catch{return response(400,{error:'Invalid request'})}
-  const languages=['en','ca','es','fr','de','it','pt','ar','ja','el','eu','cy','gd'];
+  const languages=['sv','en','ca','es','fr','de','it','pt','ar','ja','el','eu','cy','gd'];
   const language=String(body.language||'en').toLowerCase().split('-')[0];
   if(!languages.includes(language))return response(400,{error:'Unsupported language'});
   const key=process.env.ANAM_JULIEN_API_KEY || process.env.ANAM_MATEO_API_KEY || process.env.ANAM_API_KEY;

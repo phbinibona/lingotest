@@ -1788,7 +1788,7 @@ sentencesForReference:'الجمل الثلاث المكتملة',
 firstTryRule:'تُحتسب نقطة فقط إذا كانت الجملة صحيحة عند التحقق الأول.',
 levelSelected:'تم اختيار المستوى'
 }
-};
+,"sv":{"tagline":"Lär dig vilket språk som helst på ditt sätt","changeLanguages":"Aktiviteter / byt språk","title":"Lyssna och bygg om meningen","intro":"Välj din nivå och ditt ämne. Lyssna på en kort mening och bygg sedan om den från de blandade orden.","choose":"Välj nivå och ämne","ownTopic":"Skriv ditt eget ämne","topicPlaceholder":"Till exempel: resor, teknik, natur, mat...","beginner":"Nybörjare (A1–A2)","intermediate":"Medel (B1–B2)","advanced":"Avancerad (C1–C2)","inspiration":"Behöver du inspiration?","travel":"Resor","technology":"Teknik","nature":"Natur","food":"Mat","generateTitle":"Lyssna och bygg om","generate":"Generera 3 ljudmeningar","generating":"Genererar dina tre meningar…","waiting":"Din övning kommer att visas här.","audioOnly":"Lyssna noga. Den ursprungliga meningen förblir dold.","listen":"🔊 Lyssna på meningen","jumbledWords":"Omkastade ord","yourSentence":"Din mening","answerEmpty":"Välj ord ovan för att bygga meningen.","correct":"Rätt!","wrong":"Försök igen.","check":"Kontrollera meningen","clearSentence":"Rensa mening","next":"Nästa mening","sentence":"Mening","of":"av","needHelp":"Behöver du hjälp?","revealReady":"Du kan nu visa den korrekta meningen.","showSentence":"Visa korrekt mening","correctSentence":"Korrekt mening","finished":"Övning klar","newSet":"Generera en ny uppsättning meningar","restartTitle":"Starta om","clear":"Rensa allt","selectLevel":"Välj en nivå först.","enterTopic":"Skriv ett ämne eller välj ett exempel.","serverError":"Övningen kunde inte genereras.","playing":"Spelar upp mening…","noSpeech":"Taluppspelning är inte tillgänglig i den här webbläsaren.","incomplete":"Använd alla ord innan du kontrollerar.","score3":"Utmärkt lyssnande. Du fick alla tre rätt på första försöket.","score2":"Mycket bra. Du fick två meningar rätt på första försöket.","score1":"Bra övning. Du fick en mening rätt på första försöket.","score0":"Fortsätt öva. Spela upp meningarna så ofta du behöver.","sentencesForReference":"Dina tre slutförda meningar","firstTryRule":"En poäng tilldelas endast när en mening är korrekt vid första kontrollen.","levelSelected":"Nivå vald"}};
 const uiNames={
 en:'English',
 ca:'Català',
@@ -1800,7 +1800,7 @@ pt:'Português',
 eu:'Euskara',
 ja:'日本語',el:'Ελληνικά',
 ar:'العربية'
-};
+,"sv":"Swedish"};
 const targetNames={
 English:'English',
 Catalan:'Català',
@@ -1812,7 +1812,7 @@ Portuguese:'Português',
 Basque:'Euskara',
 Japanese:'日本語',Greek:'Ελληνικά',
 Arabic:'العربية'
-};
+,"Swedish":"Swedish"};
 const voiceLocales={
 English:'en-GB',
 Catalan:'ca-ES',
@@ -1824,7 +1824,7 @@ Portuguese:'pt-PT',
 Basque:'eu-ES',
 Japanese:'ja-JP',Greek:'el-GR',
 Arabic:'ar-SA'
-};
+,"Swedish":"sv-SE"};
 const params=new URLSearchParams(window.location.search);
 let uiLanguage=
   params.get('ui')
@@ -1841,7 +1841,7 @@ const targetAliases={
   eu:'Basque',basque:'Basque',euskara:'Basque',
   ja:'Japanese',el:'Greek',japanese:'Japanese',greek:'Greek','日本語':'Japanese','Ελληνικά':'Greek',
   ar:'Arabic',arabic:'Arabic','العربية':'Arabic'
-};
+,"sv":"Swedish","swedish":"Swedish","svenska":"Swedish","sv-se":"Swedish"};
 function normalizeTarget(value){
   const raw=String(value||'').trim();
   if(Object.keys(targetNames).includes(raw))return raw;
@@ -1875,7 +1875,7 @@ let selectedWords=[];
 let currentAudio=null;
 const audioCache=new Map();
 let audioRequestId=0;
-const levelPromptCopy={"en": "Choose the option that feels right for you today.", "es": "Elige la opción que te resulte adecuada hoy.", "ca": "Tria l’opció que et vagi bé avui.", "fr": "Choisissez l’option qui vous convient aujourd’hui.", "de": "Wählen Sie die Option, die heute zu Ihnen passt.", "it": "Scegli l’opzione più adatta a te oggi.", "pt": "Escolha a opção mais adequada para si hoje.", "eu": "Aukeratu gaur egokia iruditzen zaizun aukera.", "ja": "今日の自分に合った選択肢を選んでください。", "ar": "اختر الخيار الذي يناسبك اليوم."};
+const levelPromptCopy={"en": "Choose the option that feels right for you today.", "es": "Elige la opción que te resulte adecuada hoy.", "ca": "Tria l’opció que et vagi bé avui.", "fr": "Choisissez l’option qui vous convient aujourd’hui.", "de": "Wählen Sie die Option, die heute zu Ihnen passt.", "it": "Scegli l’opzione più adatta a te oggi.", "pt": "Escolha a opção mais adequada para si hoje.", "eu": "Aukeratu gaur egokia iruditzen zaizun aukera.", "ja": "今日の自分に合った選択肢を選んでください。", "ar": "اختر الخيار الذي يناسبك اليوم.","sv":"Välj det alternativ som känns rätt för dig idag."};
 function tr(key){if(key==="levelPrompt")return levelPromptCopy[uiLanguage]||levelPromptCopy.en;
   return(
     (translations[uiLanguage]||translations.en)[key]
@@ -2777,7 +2777,7 @@ applyLanguage();
     eu:{one:"Oinarriak berrikusten",oneNote:"Hizkuntza argia eta erabilgarria egoera ezagunetarako",two:"Konfiantza hartzen",twoNote:"Hizkuntza naturalagoa egoera gehiagotarako",topic:"Aukeratu gaia"},
     ja:{one:"基礎を復習する",oneNote:"身近な場面で使える、分かりやすく実用的な表現",two:"自信をつける",twoNote:"より幅広い場面で使える自然な表現",topic:"テーマを選んでください"},
     ar:{one:"مراجعة الأساسيات",oneNote:"لغة واضحة ومفيدة للمواقف المألوفة",two:"بناء الثقة",twoNote:"لغة أكثر طبيعية لمجموعة أوسع من المواقف",topic:"اختر موضوعك"}
-  };
+  ,"sv":{"one":"Repetera grunderna","oneNote":"Tydligt, användbart språk för välkända situationer","two":"Bygga upp självförtroende","twoNote":"Mer naturligt språk för ett bredare spektrum av situationer","topic":"Välj ditt ämne"}};
   function ui(){
     const q=new URLSearchParams(location.search);
     const raw=(q.get('ui')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('uiLanguage')||'en').toLowerCase();
@@ -2805,7 +2805,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Greek:'EL',Arabic:'AR'};
+  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Greek:'EL',Arabic:'AR',"Swedish":"SV"};
   const pair=document.getElementById('languagePair');
   if(pair)pair.dataset.short=ui.toUpperCase()+' → '+(targetCodes[target]||target.slice(0,2).toUpperCase());
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;

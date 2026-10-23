@@ -1,5 +1,5 @@
 import {COPY} from './lingovocabulary-copy.js?v=20261004hover';
-const LANGS={en:['English','en-GB'],ca:['Catalan','ca-ES'],es:['Spanish','es-ES'],fr:['French','fr-FR'],de:['German','de-DE'],it:['Italian','it-IT'],pt:['Portuguese','pt-PT'],ar:['Arabic','ar-SA'],ja:['Japanese','ja-JP'],el:['Greek','el-GR'],eu:['Basque','eu-ES'],cy:['Welsh','cy-GB'],gd:['Scottish Gaelic','gd-GB']};
+const LANGS={en:['English','en-GB'],ca:['Catalan','ca-ES'],es:['Spanish','es-ES'],fr:['French','fr-FR'],de:['German','de-DE'],it:['Italian','it-IT'],pt:['Portuguese','pt-PT'],ar:['Arabic','ar-SA'],ja:['Japanese','ja-JP'],el:['Greek','el-GR'],eu:['Basque','eu-ES'],cy:['Welsh','cy-GB'],gd:['Scottish Gaelic','gd-GB'],"sv":["Swedish","sv-SE"]};
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search);
 function normalize(value,fallback){const raw=String(value||'').toLowerCase(),code=raw.split('-')[0];return LANGS[code]?code:Object.keys(LANGS).find(k=>LANGS[k][0].toLowerCase()===raw)||(raw==='gaelic'?'gd':fallback)}
 const ui=normalize(params.get('ui')||localStorage.getItem('lingototal_ui_language'),'en'),target=normalize(params.get('target')||localStorage.getItem('lingototal_target_language'),'es'),copy=COPY[ui],tr=k=>copy[k];

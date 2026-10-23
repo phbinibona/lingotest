@@ -8,8 +8,8 @@
   let client=null,active=false,serial=Promise.resolve();
   const params=new URLSearchParams(location.search);
   const interfaceValue=(params.get('ui')||params.get('interface')||localStorage.getItem('lingototal_ui_language')||localStorage.getItem('interfaceLanguage')||'en').toLowerCase();
-  const ui=({english:'en',español:'es',spanish:'es',français:'fr',french:'fr',català:'ca',catalan:'ca'})[interfaceValue]||interfaceValue.slice(0,2);
-  const labels={en:['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'],es:['Conoce a tu profesora Olivia','Terminar sesión','Conectando con Olivia…','Olivia está lista'],fr:['Rencontrez votre professeure Olivia','Terminer la séance','Connexion à Olivia…','Olivia est prête'],ca:['Coneix la teva professora Olivia','Acaba la sessió','Connectant amb Olivia…','L’Olivia està a punt']}[ui]||['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'];
+  const ui=({english:'en',español:'es',spanish:'es',français:'fr',french:'fr',català:'ca',catalan:'ca',"swedish":"sv","svenska":"sv","sv-se":"sv"})[interfaceValue]||interfaceValue.slice(0,2);
+  const labels={en:['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'],es:['Conoce a tu profesora Olivia','Terminar sesión','Conectando con Olivia…','Olivia está lista'],fr:['Rencontrez votre professeure Olivia','Terminer la séance','Connexion à Olivia…','Olivia est prête'],ca:['Coneix la teva professora Olivia','Acaba la sessió','Connectant amb Olivia…','L’Olivia està a punt'],"sv":["Träffa din lärare Olivia","Avsluta session","Ansluter till Olivia…","Olivia är redo"]}[ui]||['Meet your teacher Olivia','End session','Connecting to Olivia…','Olivia is ready'];
   button.textContent=labels[0];end.textContent=labels[1];
   const setStatus=value=>{status.textContent=value};
   function move(id){if(!active)return;const panel=$(id);if(!panel)return;(panel.querySelector('.model-box,.avatar-feedback')||panel).prepend(host)}

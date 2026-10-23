@@ -1,4 +1,5 @@
 const LOCALES = {
+  Swedish: "sv-SE", Svenska: "sv-SE", sv: "sv-SE", "sv-SE": "sv-SE",
   English: "en-GB",
   Catalan: "ca-ES",
   Spanish: "es-ES",

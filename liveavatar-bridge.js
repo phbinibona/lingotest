@@ -24,7 +24,7 @@ const labels = {
   eu: ['Probatu zuzeneko avatarra', 'Gelditu avatarra', 'Konektatzen…', 'Avatarra prest', 'Avatarra ez dago erabilgarri; audioa erabil dezakezu'],
   cy: ['Profi’r avatar byw', 'Stopio’r avatar', 'Wrthi’n cysylltu…', 'Avatar yn barod', 'Avatar ddim ar gael; mae sain ar gael'],
   gd: ['Feuch an t-avatar beò', 'Cuir stad air an avatar', 'A’ ceangal…', 'Avatar deiseil', 'Chan eil avatar ri fhaighinn; tha fuaim ri fhaighinn']
-};
+,"sv":["Prova live-avatar","Avsluta avatar","Ansluter…","Live-avatar redo","Avatar är inte tillgänglig; vanligt ljud är fortfarande tillgängligt"]};
 const label = labels[language] || labels.en;
 const soundHelp = {
   en: 'Click the video once to enable avatar sound.', ca: 'Fes clic al vídeo per activar el so de l’avatar.',
@@ -33,7 +33,7 @@ const soundHelp = {
   pt: 'Clique no vídeo para ativar o som.', ar: 'انقر على الفيديو لتشغيل الصوت.',
   ja: '動画をクリックして音声を有効にしてください。', eu: 'Egin klik bideoan soinua aktibatzeko.',
   cy: 'Cliciwch y fideo i droi’r sain ymlaen.', gd: 'Briog air a’ bhidio gus fuaim a chur air.'
-};
+,"sv":"Klicka på videon en gång för att aktivera avatarljud."};
 startButton.textContent = label[0]; stopButton.textContent = label[1];
 const setStatus = message => { status.textContent = message; };
 function move(panelId) {

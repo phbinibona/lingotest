@@ -10,7 +10,7 @@
   let runId = 0;
   let paused = false;
 
-  const LANGUAGE_LOCALES = {greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',ελληνικά:'el-GR',
+  const LANGUAGE_LOCALES = {swedish:'sv-SE',svenska:'sv-SE',sv:'sv-SE','sv-se':'sv-SE',greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',ελληνικά:'el-GR',
     english:'en-GB', en:'en-GB', 'en-gb':'en-GB',
     catalan:'ca-ES', catala:'ca-ES', català:'ca-ES', ca:'ca-ES', 'ca-es':'ca-ES',
     spanish:'es-ES', espanol:'es-ES', español:'es-ES', es:'es-ES', 'es-es':'es-ES',
@@ -21,7 +21,7 @@
     basque:'eu-ES', euskara:'eu-ES', eu:'eu-ES', 'eu-es':'eu-ES',
     japanese:'ja-JP',greek:'el-GR', ja:'ja-JP',el:'el-GR', 'ja-jp':'ja-JP',
     arabic:'ar-SA', ar:'ar-SA', 'ar-sa':'ar-SA', 'ar-xa':'ar-SA'
-  };
+  ,"sv":"sv-SE"};
 
   function normaliseLanguage(value){
     const raw=String(value||'').trim();

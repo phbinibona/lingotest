@@ -510,20 +510,20 @@ h2{font-size:1.08rem;color:var(--ink);font-weight:850;letter-spacing:-.02em}
 </main>
 <div class="notice" id="notice"></div>
 <script>
-function auditTargetName(value){const names={"en": "English", "ca": "Catalan", "es": "Spanish", "fr": "French", "de": "German", "it": "Italian", "pt": "Portuguese", "eu": "Basque", "ja": "Japanese","el":"Greek", "ar": "Arabic", "cy": "Welsh", "gd": "Gaelic"};const raw=String(value||" ").trim();return names[raw.toLowerCase().split("-")[0]]||Object.values(names).find(x=>x.toLowerCase()===raw.toLowerCase())||raw;}
+function auditTargetName(value){const names={"en": "English", "ca": "Catalan", "es": "Spanish", "fr": "French", "de": "German", "it": "Italian", "pt": "Portuguese", "eu": "Basque", "ja": "Japanese","el":"Greek", "ar": "Arabic", "cy": "Welsh", "gd": "Gaelic","sv":"Swedish"};const raw=String(value||" ").trim();return names[raw.toLowerCase().split("-")[0]]||Object.values(names).find(x=>x.toLowerCase()===raw.toLowerCase())||raw;}
 const API_ENDPOINT='/.netlify/functions/gemini';
 const LANGUAGE_NAMES={
   en:'English',ca:'Catalan',es:'Spanish',fr:'French',de:'German',
   it:'Italian',pt:'Portuguese',eu:'Basque',ja:'Japanese',el:'Greek',ar:'Arabic'
-};
+,"sv":"Swedish"};
 const TARGET_TO_CODE={
   English:'en',Catalan:'ca',Spanish:'es',French:'fr',German:'de',
   Italian:'it',Portuguese:'pt',Basque:'eu',Japanese:'ja',Greek:'el',Arabic:'ar'
-};
+,"Swedish":"sv"};
 const VOICE_LOCALES={
   English:'en-GB',Catalan:'ca-ES',Spanish:'es-ES',French:'fr-FR',German:'de-DE',
   Italian:'it-IT',Portuguese:'pt-PT',Basque:'eu-ES',Japanese:'ja-JP',Greek:'el-GR',Arabic:'ar-SA'
-};
+,"Swedish":"sv-SE"};
 const TARGET_FEEDBACK={
   English:{correct:'Correct!',incorrect:'Not quite.',correctAnswer:'Correct answer:'},
   Catalan:{correct:'Correcte!',incorrect:'No ben bé.',correctAnswer:'Resposta correcta:'},
@@ -535,7 +535,7 @@ const TARGET_FEEDBACK={
   Basque:{correct:'Zuzena!',incorrect:'Ez guztiz.',correctAnswer:'Erantzun zuzena:'},
   Japanese:{correct:'正解です！',incorrect:'もう少しです。',correctAnswer:'正解：'},
   Arabic:{correct:'إجابة صحيحة!',incorrect:'ليست صحيحة تمامًا.',correctAnswer:'الإجابة الصحيحة:'}
-};
+,"Swedish":{"correct":"Correct!","incorrect":"Not quite.","correctAnswer":"Correct answer:"}};
 function targetFeedback(){
   return TARGET_FEEDBACK[targetLanguage]||TARGET_FEEDBACK.English;
 }
@@ -543,17 +543,17 @@ let feedbackTextToSpeak='';
 const feedbackAudioCache=new Map();
 let feedbackAudio=null;
 const DISPLAY_NAMES={
-  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Greek:'Greek',Arabic:'Arabic'},
-  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Greek:'Greek',Arabic:'àrab'},
-  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Greek:'Greek',Arabic:'árabe'},
-  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Greek:'Greek',Arabic:'arabe'},
-  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Greek:'Greek',Arabic:'Arabisch'},
-  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Greek:'Greek',Arabic:'arabo'},
-  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Greek:'Greek',Arabic:'árabe'},
-  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Greek:'Greek',Arabic:'arabiera'},
-  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Greek:'Ελληνικά',Arabic:'アラビア語'},el:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Greek:'Ελληνικά',Arabic:'アラビア語'},
-  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Greek:'Greek',Arabic:'العربية'}
-};
+  en:{English:'English',Catalan:'Catalan',Spanish:'Spanish',French:'French',German:'German',Italian:'Italian',Portuguese:'Portuguese',Basque:'Basque',Japanese:'Japanese',Greek:'Greek',Arabic:'Arabic',"Swedish":"Swedish"},
+  ca:{English:'anglès',Catalan:'català',Spanish:'castellà',French:'francès',German:'alemany',Italian:'italià',Portuguese:'portuguès',Basque:'basc',Japanese:'japonès',Greek:'Greek',Arabic:'àrab',"Swedish":"anglès"},
+  es:{English:'inglés',Catalan:'catalán',Spanish:'español',French:'francés',German:'alemán',Italian:'italiano',Portuguese:'portugués',Basque:'euskera',Japanese:'japonés',Greek:'Greek',Arabic:'árabe',"Swedish":"inglés"},
+  fr:{English:'anglais',Catalan:'catalan',Spanish:'espagnol',French:'français',German:'allemand',Italian:'italien',Portuguese:'portugais',Basque:'basque',Japanese:'japonais',Greek:'Greek',Arabic:'arabe',"Swedish":"anglais"},
+  de:{English:'Englisch',Catalan:'Katalanisch',Spanish:'Spanisch',French:'Französisch',German:'Deutsch',Italian:'Italienisch',Portuguese:'Portugiesisch',Basque:'Baskisch',Japanese:'Japanisch',Greek:'Greek',Arabic:'Arabisch',"Swedish":"Englisch"},
+  it:{English:'inglese',Catalan:'catalano',Spanish:'spagnolo',French:'francese',German:'tedesco',Italian:'italiano',Portuguese:'portoghese',Basque:'basco',Japanese:'giapponese',Greek:'Greek',Arabic:'arabo',"Swedish":"inglese"},
+  pt:{English:'inglês',Catalan:'catalão',Spanish:'espanhol',French:'francês',German:'alemão',Italian:'italiano',Portuguese:'português',Basque:'basco',Japanese:'japonês',Greek:'Greek',Arabic:'árabe',"Swedish":"inglês"},
+  eu:{English:'ingelesa',Catalan:'katalana',Spanish:'gaztelania',French:'frantsesa',German:'alemana',Italian:'italiera',Portuguese:'portugesa',Basque:'euskara',Japanese:'japoniera',Greek:'Greek',Arabic:'arabiera',"Swedish":"ingelesa"},
+  ja:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Japanese:'日本語',Greek:'Ελληνικά',Arabic:'アラビア語',"Swedish":"英語"},el:{English:'英語',Catalan:'カタルーニャ語',Spanish:'スペイン語',French:'フランス語',German:'ドイツ語',Italian:'イタリア語',Portuguese:'ポルトガル語',Basque:'バスク語',Greek:'Ελληνικά',Arabic:'アラビア語',"Swedish":"英語"},
+  ar:{English:'الإنجليزية',Catalan:'الكتالانية',Spanish:'الإسبانية',French:'الفرنسية',German:'الألمانية',Italian:'الإيطالية',Portuguese:'البرتغالية',Basque:'الباسكية',Japanese:'اليابانية',Greek:'Greek',Arabic:'العربية',"Swedish":"الإنجليزية"}
+,"sv":{"English":"Swedish","Catalan":"Katalanska","Spanish":"Spanska","French":"Franska","German":"Tyska","Italian":"Italienska","Portuguese":"Portugisiska","Basque":"Baskiska","Japanese":"Japanska","Greek":"Grekiska","Arabic":"Arabiska","Swedish":"Swedish"}};
 const T={
 en:{
   tagline:'Learn any language your way',changeLanguages:'Change activities and language',eyebrow:'General knowledge · language practice',
@@ -685,7 +685,7 @@ ar:{
   correct:'صحيح!',incorrect:'ليس تمامًا.',correctAnswer:'الإجابة الصحيحة:',typeAnswer:'اكتب إجابة أولًا.',error:'حدثت مشكلة. حاول مرة أخرى.',
   basicBadge:'أساسي · Build Confidence',intermediateBadge:'متوسط · Go Further'
 }
-};
+,"sv":{"tagline":"Lär dig vilket språk som helst på ditt sätt","changeLanguages":"Ändra aktiviteter och språk","eyebrow":"Allmänbildning · språkpraktik","intro":"Testa din allmänbildning medan du arbetar på språket du lär dig. Välj en nivå och kategori, skriv sedan ditt svar.","chooseLevel":"Välj din nivå","levelHelp":"Välj nivån efter hur svår du vill att allmänbildningsfrågan ska vara. Grundläggande frågor använder allmänt kända fakta; Mellannivåfrågor är mer utmanande men aldrig obskyra.","basic":"Grundläggande","basicDesc":"Enklare allmänbildning · välkända fakta · tydlig formulering","intermediate":"Medel","intermediateDesc":"Mer utmanande allmänbildning · bredare fakta · fortfarande rättvis och tillgänglig","chooseCategory":"Välj en kategori","categoryHelp":"Välj vilken typ av allmänbildningsfråga du vill ha.","geography":"Geografi","history":"Historia","arts":"Konst & Litteratur","science":"Vetenskap & Natur","sports":"Sport & Fritid","entertainment":"Underhållning","generate":"Generera fråga","generating":"Skapar din fråga…","questionTitle":"Fråga","yourAnswer":"Ditt svar","answerPlaceholder":"Skriv ditt svar här…","hint":"Tips 💡","check":"Kontrollera svar ✓","reveal":"Visa svar","hearFeedback":"Hör feedback","nextQuestion":"Nästa fråga →","changeCategory":"Ändra kategori","selectLevel":"Välj Grundläggande eller Medel först.","selectCategory":"Välj en kategori först.","questionReady":"Din fråga är redo.","correct":"Rätt!","incorrect":"Inte riktigt.","correctAnswer":"Rätt svar:","typeAnswer":"Skriv ett svar först.","error":"Något gick fel. Försök igen.","basicBadge":"Grundläggande · Bygg självförtroende","intermediateBadge":"Medel · Gå vidare"}};
 const $=id=>document.getElementById(id);
 let uiLanguage='en';
 let targetLanguage='Spanish';
@@ -989,7 +989,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'Spanish';
-  const codes={English:'EN',en:'EN',Catalan:'CA','Català':'CA',ca:'CA',Spanish:'ES','Español':'ES',es:'ES',French:'FR','Français':'FR',fr:'FR',German:'DE',Deutsch:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',Greek:'EL',ja:'JA',el:'EL',Arabic:'AR',ar:'AR'};
+  const codes={English:'EN',en:'EN',Catalan:'CA','Català':'CA',ca:'CA',Spanish:'ES','Español':'ES',es:'ES',French:'FR','Français':'FR',fr:'FR',German:'DE',Deutsch:'DE',de:'DE',Italian:'IT',it:'IT',Portuguese:'PT',pt:'PT',Basque:'EU',eu:'EU',Welsh:'CY',cy:'CY',Gaelic:'GD','Scottish Gaelic':'GD',gd:'GD',Japanese:'JA',Greek:'EL',ja:'JA',el:'EL',Arabic:'AR',ar:'AR',"sv":"SV","Swedish":"SV"};
   const pair=document.getElementById('languagePair');
   if(pair)pair.dataset.short=(codes[ui]||String(ui).slice(0,2).toUpperCase())+' → '+(codes[target]||String(target).slice(0,2).toUpperCase());
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;

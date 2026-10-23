@@ -7,7 +7,7 @@ const SCOPE = "https://www.googleapis.com/auth/cloud-platform";
 let cachedToken = "";
 let cachedTokenExpiry = 0;
 
-const LANGUAGE_LOCALES = {greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',
+const LANGUAGE_LOCALES = {swedish:'sv-SE',svenska:'sv-SE',sv:'sv-SE','sv-se':'sv-SE',greek:'el-GR',el:'el-GR','el-gr':'el-GR',ελληνικα:'el-GR',
   english:"en-GB", en:"en-GB", "en-gb":"en-GB",
   catalan:"ca-ES", catala:"ca-ES", ca:"ca-ES", "ca-es":"ca-ES",
   spanish:"es-ES", espanol:"es-ES", es:"es-ES", "es-es":"es-ES",

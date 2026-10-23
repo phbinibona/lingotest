@@ -1200,7 +1200,7 @@ scoreSome:'عمل جيد. استمع مرة أخرى وتحقق من الكلم�
 firstAttempt:'بعد محاولتين غير صحيحتين ستظهر الجملة الصحيحة.',
 levelSelected:'تم اختيار المستوى'
 }
-};
+,"sv":{"tagline":"Lär dig vilket språk som helst på ditt sätt","changeLanguages":"Aktiviteter / byt språk","title":"Lyssna & fyll i","intro":"Lyssna på tre meningar och fyll i de två viktiga saknade orden i varje mening.","choose":"Välj nivå och ämne","ownTopic":"Skriv ditt eget ämne","topicPlaceholder":"Till exempel: resor, teknik, natur, mat...","beginner":"Nybörjare (A1–A2)","intermediate":"Medel (B1–B2)","advanced":"Avancerad (C1–C2)","inspiration":"Behöver du inspiration?","travel":"Resor","technology":"Teknik","nature":"Natur","food":"Mat","exerciseTitle":"Lyssna och fyll i","generate":"Generera 3 meningar","generating":"Genererar dina meningar…","waiting":"Din övning kommer att visas här.","listen":"🔊 Lyssna","sentence":"Mening","check":"Kontrollera svar","retry":"Försök igen","newExercise":"Ny övning","correct":"Korrekt.","wrong":"Kontrollera de saknade orden.","showAnswer":"Korrekt mening","score":"Poäng","restart":"Starta om","clear":"Rensa allt","selectLevel":"Välj en nivå först.","enterTopic":"Skriv ett ämne eller välj ett exempel.","serverError":"Övningen kunde inte genereras.","playing":"Spelar upp mening…","noSpeech":"Taluppspelning är inte tillgänglig i den här webbläsaren.","scorePerfect":"Utmärkt. Alla sex ord är korrekta.","scoreSome":"Bra jobbat. Lyssna igen och kontrollera de återstående orden.","firstAttempt":"Efter två misslyckade kontroller blir den korrekta meningen tillgänglig.","levelSelected":"Nivå vald"}};
 const uiNames={
 en:'English',
 ca:'Català',
@@ -1212,7 +1212,7 @@ pt:'Português',
 eu:'Euskara',
 ja:'日本語',el:'Ελληνικά',
 ar:'العربية'
-};
+,"sv":"Swedish"};
 const targetNames={
 English:'English',
 Catalan:'Català',
@@ -1224,7 +1224,7 @@ Portuguese:'Português',
 Basque:'Euskara',
 Japanese:'日本語',Greek:'Ελληνικά',
 Arabic:'العربية'
-};
+,"Swedish":"Swedish"};
 const voices={
 English:'en-GB',
 Catalan:'ca-ES',
@@ -1236,7 +1236,7 @@ Portuguese:'pt-PT',
 Basque:'eu-ES',
 Japanese:'ja-JP',Greek:'el-GR',
 Arabic:'ar-SA'
-};
+,"Swedish":"sv-SE"};
 const targetAliases={
   en:'English',english:'English',
   ca:'Catalan',catalan:'Catalan',català:'Catalan',
@@ -1248,7 +1248,7 @@ const targetAliases={
   eu:'Basque',basque:'Basque',euskara:'Basque',
   ja:'Japanese',el:'Greek',japanese:'Japanese',greek:'Greek','日本語':'Japanese','Ελληνικά':'Greek',
   ar:'Arabic',arabic:'Arabic','العربية':'Arabic'
-};
+,"sv":"Swedish","swedish":"Swedish","svenska":"Swedish","sv-se":"Swedish"};
 function normalizeTarget(value){
   const raw=String(value||'').trim();
   if(targetNames[raw])return raw;
@@ -1672,7 +1672,7 @@ applyLanguage();
 });
 </script>
 <script id="lingototal-new-lingoreal-level-gate">(function(){
-const UI=['en','ca','es','fr','de','it','pt','eu','ja','ar'];
+const UI=['en','ca','es','fr','de','it','pt','eu','ja','ar',"sv"];
 const S={
 en:{choose:'Start by choosing your level',lead:'Choose the option that feels right for you today.',basic:'Revising\nthe basics',basicNote:'Notice useful, natural language in simple everyday situations.',conf:'Building\nconfidence',confNote:'Understand more natural reactions, tone and everyday expressions.'},
 ca:{choose:'Comença triant el teu nivell',lead:'Tria l’opció que et vagi millor avui.',basic:'Repassar\nles bases',basicNote:'Descobreix llenguatge útil i natural en situacions quotidianes senzilles.',conf:'Guanyar\nconfiança',confNote:'Entén reaccions, tons i expressions quotidianes més naturals.'},
@@ -1684,7 +1684,7 @@ pt:{choose:'Comece por escolher o seu nível',lead:'Escolha a opção que lhe pa
 eu:{choose:'Hasi zure maila aukeratuz',lead:'Aukeratu gaur ondoen datorkizun aukera.',basic:'Oinarriak\nberrikusi',basicNote:'Ohartu eguneroko egoera errazetako hizkuntza erabilgarri eta naturalaz.',conf:'Konfiantza irabazi',confNote:'Ulertu erreakzio, tonu eta eguneroko adierazpen naturalagoak.'},
 ja:{choose:'まずレベルを選びましょう',lead:'今日の自分に合うものを選んでください。',basic:'基礎を復習する',basicNote:'簡単な日常場面で役立つ自然な表現に気づきます。',conf:'自信をつける',confNote:'より自然な反応、口調、日常表現を理解します。'},
 ar:{choose:'ابدأ باختيار مستواك',lead:'اختر الخيار الأنسب لك اليوم.',basic:'مراجعة\nالأساسيات',basicNote:'لاحظ اللغة المفيدة والطبيعية في مواقف يومية بسيطة.',conf:'بناء\nالثقة',confNote:'افهم ردود الفعل والنبرة والتعبيرات اليومية الطبيعية.'}
-};
+,"sv":{"choose":"Börja med att välja din nivå","lead":"Välj det alternativ som känns rätt för dig idag.","basic":"Repetera\ngrunderna","basicNote":"Lägg märke till användbart, naturligt språk i enkla vardagssituationer.","conf":"Bygga\nförtroende","confNote":"Förstå mer naturliga reaktioner, ton och vardagsuttryck."}};
 function currentUI(){const q=new URLSearchParams(location.search);let u=q.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';if(!UI.includes(u))u='en';return u}
 function init(){const ui=currentUI(),t=S[ui];document.documentElement.lang=ui;document.documentElement.dir=ui==='ar'?'rtl':'ltr';
  document.querySelectorAll('[data-shell-i18n]').forEach(el=>{
@@ -1746,7 +1746,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(location.search);
   const ui=params.get('ui')||localStorage.getItem('lingototal_ui_language')||'en';
   const target=params.get('target')||localStorage.getItem('lingototal_target_language')||'English';
-  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Greek:'EL',Arabic:'AR'};
+  const targetCodes={English:'EN',Catalan:'CA',Spanish:'ES',French:'FR',German:'DE',Italian:'IT',Portuguese:'PT',Basque:'EU',Welsh:'CY',Gaelic:'GD','Scottish Gaelic':'GD',Japanese:'JA',Greek:'EL',Arabic:'AR',"Swedish":"SV"};
   const pair=document.getElementById('languagePair');
   if(pair)pair.dataset.short=ui.toUpperCase()+' → '+(targetCodes[target]||target.slice(0,2).toUpperCase());
   const indexURL=`index.html?ui=${encodeURIComponent(ui)}&target=${encodeURIComponent(target)}`;

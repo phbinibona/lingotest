@@ -6,6 +6,7 @@ const SCOPE = 'https://www.googleapis.com/auth/cloud-platform';
 
 const ALLOWED_LOCALES = new Set([
   'en-GB',
+  'sv-SE',
   'ca-ES',
   'es-ES',
   'fr-FR',

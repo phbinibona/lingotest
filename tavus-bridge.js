@@ -19,7 +19,7 @@
   const labels = { en: ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'],
     es: ['Probar avatar Tavus', 'Terminar Tavus', 'Conectando con Tavus…', 'Profesor Tavus preparado'],
     ca: ['Prova l’avatar Tavus', 'Atura Tavus', 'Connectant amb Tavus…', 'Professor Tavus preparat'],
-    fr: ['Essayer l’avatar Tavus', 'Arrêter Tavus', 'Connexion à Tavus…', 'Professeur Tavus prêt'] }[ui] ||
+    fr: ['Essayer l’avatar Tavus', 'Arrêter Tavus', 'Connexion à Tavus…', 'Professeur Tavus prêt'] ,"sv":["Prova Tavus avatar","Avsluta Tavus","Ansluter till Tavus…","Tavus-lärare redo"]}[ui] ||
     ['Try Tavus avatar', 'End Tavus', 'Connecting to Tavus…', 'Tavus teacher ready'];
   startButton.textContent = labels[0]; stopButton.textContent = labels[1];
   const setStatus = message => { status.textContent = message; };
