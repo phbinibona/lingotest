@@ -13,7 +13,7 @@ function cookieValue(request){return (request.headers.get('cookie')||'').split('
 export default async function(request,context={}){
  if(request.method!=='POST')return reply(405,{ok:false});
  const raw=await request.text();if(raw.length>4096)return reply(413,{ok:false});let b;try{b=JSON.parse(raw)}catch{return reply(400,{ok:false})}
- if(b.action==='check')return reply(valid(cookieValue(request))?200:401,{ok:valid(cookieValue(request))});
+ if(b.action==='check'){const ok=valid(b.sessionToken||cookieValue(request));return reply(ok?200:401,{ok});}
  if(b.action!=='login')return reply(400,{ok:false});
  const ip=context.ip||'unknown',now=Date.now();let count=attempts.get(ip);if(!count||count.until<now)count={n:0,until:now+300000};if(count.n>=10)return reply(429,{ok:false});
  count.n++;attempts.set(ip,count);if(attempts.size>1000)for(const [k,v]of attempts)if(v.until<now)attempts.delete(k);
